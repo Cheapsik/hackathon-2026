@@ -12,7 +12,16 @@ public sealed class BackgroundJobRunner(
     {
         await foreach (Guid jobId in queue.ReadAllAsync(stoppingToken))
         {
-            await RunAsync(jobId, stoppingToken);
+            try
+            {
+                await RunAsync(jobId, stoppingToken);
+            }
+            catch (Exception exception) when (!stoppingToken.IsCancellationRequested)
+            {
+                // An exception leaving ExecuteAsync stops the whole host, API included; the next start-up marks the
+                // job failed, so the runner logs it and takes the next one.
+                logger.LogError(exception, "Job {JobId} failed and could not be marked failed.", jobId);
+            }
         }
     }
 
@@ -20,7 +29,6 @@ public sealed class BackgroundJobRunner(
     {
         await using AsyncServiceScope scope = scopeFactory.CreateAsyncScope();
         CastorDbContext db = scope.ServiceProvider.GetRequiredService<CastorDbContext>();
-        IClock clock = scope.ServiceProvider.GetRequiredService<IClock>();
 
         BackgroundJob? job = await db.BackgroundJobs.SingleOrDefaultAsync(candidate => candidate.Id == jobId, stoppingToken);
         if (job is null || job.Status != BackgroundJobStatus.QUEUED)
@@ -49,8 +57,27 @@ public sealed class BackgroundJobRunner(
         catch (Exception exception)
         {
             logger.LogError(exception, "{JobKind} job {JobId} failed.", job.Kind, job.Id);
-            job.Fail(exception.Message, clock.UtcNow);
-            await db.SaveChangesAsync(CancellationToken.None);
+            await MarkFailedAsync(job.Id, exception.Message);
         }
+    }
+
+    /// <summary>
+    /// In a context of its own: the job's context may still hold the changes that made it fail, and saving them again
+    /// would fail again. A job the database already shows finished is left as it is.
+    /// </summary>
+    private async Task MarkFailedAsync(Guid jobId, string error)
+    {
+        await using AsyncServiceScope scope = scopeFactory.CreateAsyncScope();
+        CastorDbContext db = scope.ServiceProvider.GetRequiredService<CastorDbContext>();
+        IClock clock = scope.ServiceProvider.GetRequiredService<IClock>();
+
+        BackgroundJob? job = await db.BackgroundJobs.SingleOrDefaultAsync(candidate => candidate.Id == jobId, CancellationToken.None);
+        if (job is null || job.IsFinished)
+        {
+            return;
+        }
+
+        job.Fail(error, clock.UtcNow);
+        await db.SaveChangesAsync(CancellationToken.None);
     }
 }

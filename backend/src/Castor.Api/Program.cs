@@ -85,6 +85,8 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
 
 int publicAiPermitLimit = builder.Configuration.GetValue("RateLimiting:PublicAi:PermitLimit", 10);
 int publicAiWindowSeconds = builder.Configuration.GetValue("RateLimiting:PublicAi:WindowSeconds", 60);
+int trackingCodePermitLimit = builder.Configuration.GetValue("RateLimiting:TrackingCode:PermitLimit", 30);
+int trackingCodeWindowSeconds = builder.Configuration.GetValue("RateLimiting:TrackingCode:WindowSeconds", 60);
 builder.Services.AddRateLimiter(options =>
 {
     options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
@@ -100,6 +102,16 @@ builder.Services.AddRateLimiter(options =>
         {
             PermitLimit = publicAiPermitLimit,
             Window = TimeSpan.FromSeconds(publicAiWindowSeconds),
+            QueueLimit = 0,
+        });
+    });
+    options.AddPolicy(RateLimitPolicies.TrackingCode, httpContext =>
+    {
+        string clientAddress = httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown";
+        return RateLimitPartition.GetFixedWindowLimiter(clientAddress, _ => new FixedWindowRateLimiterOptions
+        {
+            PermitLimit = trackingCodePermitLimit,
+            Window = TimeSpan.FromSeconds(trackingCodeWindowSeconds),
             QueueLimit = 0,
         });
     });
@@ -128,6 +140,7 @@ builder.Services.Configure<MatchingOptions>(builder.Configuration.GetSection(Mat
 builder.Services.AddScoped<InnovationCandidatesQuery>();
 builder.Services.AddScoped<ProblemClassifier>();
 builder.Services.AddScoped<Matchmaker>();
+builder.Services.AddScoped<ProblemReportMatching>();
 builder.Services.AddScoped<GenomeGenerator>();
 builder.Services.AddScoped<FitAssessor>();
 builder.Services.AddScoped<FitAssistant>();

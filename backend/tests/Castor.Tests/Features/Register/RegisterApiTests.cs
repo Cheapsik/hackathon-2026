@@ -14,10 +14,10 @@ public sealed class RegisterApiTests(PostgresFixture postgres)
         HttpClient client = factory.CreateClient(TestApi.Cookies);
 
         HttpResponseMessage registered = await client.PostAsJsonAsync(
-            "/auth/register",
+            "/api/auth/register",
             new RegisterRequest("ada-register@example.com", "password1"));
         RegisterResponse? account = await registered.Content.ReadFromJsonAsync<RegisterResponse>();
-        HttpResponseMessage signedOut = await client.PostAsync("/auth/sign-out", null);
+        HttpResponseMessage signedOut = await client.PostAsync("/api/auth/sign-out", null);
 
         Assert.Equal(HttpStatusCode.Created, registered.StatusCode);
         Assert.NotEqual(Guid.Empty, account!.UserId);
@@ -31,10 +31,10 @@ public sealed class RegisterApiTests(PostgresFixture postgres)
         HttpClient client = factory.CreateClient(TestApi.Cookies);
 
         HttpResponseMessage first = await client.PostAsJsonAsync(
-            "/auth/register",
+            "/api/auth/register",
             new RegisterRequest("jan-register@example.com", "password1"));
         HttpResponseMessage second = await client.PostAsJsonAsync(
-            "/auth/register",
+            "/api/auth/register",
             new RegisterRequest("  JAN-Register@Example.com ", "password2"));
 
         Assert.Equal(HttpStatusCode.Created, first.StatusCode);
@@ -48,7 +48,7 @@ public sealed class RegisterApiTests(PostgresFixture postgres)
         HttpClient client = factory.CreateClient(TestApi.Cookies);
 
         HttpResponseMessage registered = await client.PostAsJsonAsync(
-            "/auth/register",
+            "/api/auth/register",
             new RegisterRequest("short-password@example.com", "short"));
 
         Assert.Equal(HttpStatusCode.BadRequest, registered.StatusCode);

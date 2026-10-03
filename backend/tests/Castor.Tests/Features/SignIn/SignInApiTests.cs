@@ -14,16 +14,16 @@ public sealed class SignInApiTests(PostgresFixture postgres)
         ApiFactory factory = await TestApi.FactoryAsync(postgres);
         HttpClient registering = factory.CreateClient(TestApi.Cookies);
         HttpResponseMessage registered = await registering.PostAsJsonAsync(
-            "/auth/register",
+            "/api/auth/register",
             new RegisterRequest("ada-sign-in@example.com", "password1"));
         RegisterResponse? account = await registered.Content.ReadFromJsonAsync<RegisterResponse>();
         HttpClient client = factory.CreateClient(TestApi.Cookies);
 
         HttpResponseMessage signedIn = await client.PostAsJsonAsync(
-            "/auth/sign-in",
+            "/api/auth/sign-in",
             new SignInRequest("ADA-sign-in@example.com", "password1"));
         SignInResponse? session = await signedIn.Content.ReadFromJsonAsync<SignInResponse>();
-        HttpResponseMessage signedOut = await client.PostAsync("/auth/sign-out", null);
+        HttpResponseMessage signedOut = await client.PostAsync("/api/auth/sign-out", null);
 
         Assert.Equal(HttpStatusCode.OK, signedIn.StatusCode);
         Assert.Equal(account!.UserId, session!.UserId);
@@ -39,10 +39,10 @@ public sealed class SignInApiTests(PostgresFixture postgres)
         HttpClient client = factory.CreateClient(TestApi.Cookies);
 
         HttpResponseMessage wrongPassword = await client.PostAsJsonAsync(
-            "/auth/sign-in",
+            "/api/auth/sign-in",
             new SignInRequest("jan-sign-in@example.com", "password2"));
         HttpResponseMessage unknownEmail = await client.PostAsJsonAsync(
-            "/auth/sign-in",
+            "/api/auth/sign-in",
             new SignInRequest("nobody-sign-in@example.com", "password1"));
         string wrongPasswordBody = await wrongPassword.Content.ReadAsStringAsync();
         string unknownEmailBody = await unknownEmail.Content.ReadAsStringAsync();

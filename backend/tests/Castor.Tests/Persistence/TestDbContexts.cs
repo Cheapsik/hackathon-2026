@@ -10,7 +10,7 @@ internal static class TestDbContexts
     public static CastorDbContext Production(string connectionString)
     {
         DbContextOptions<CastorDbContext> options = new DbContextOptionsBuilder<CastorDbContext>()
-            .UseNpgsql(connectionString)
+            .UseNpgsql(connectionString, npgsql => npgsql.UseVector())
             .Options;
 
         return new CastorDbContext(options);

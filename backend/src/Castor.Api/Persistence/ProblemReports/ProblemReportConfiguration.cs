@@ -33,6 +33,7 @@ public sealed class ProblemReportConfiguration : IEntityTypeConfiguration<Proble
 
         builder.Ignore(report => report.AwaitsAnswers);
         builder.Ignore(report => report.IsReadyForMatching);
+        builder.Ignore(report => report.AwaitsMatching);
         builder.Ignore(report => report.MainChallengeAreaCode);
     }
 }

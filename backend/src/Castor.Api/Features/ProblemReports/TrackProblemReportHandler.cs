@@ -2,8 +2,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Castor.Api.Features.ProblemReports;
 
-/// <summary>"Śledź zgłoszenie": the tracking code alone opens the report, without an account.</summary>
-public sealed class TrackProblemReportHandler(CastorDbContext db, CurrentUser currentUser, ProblemReportViewQuery viewQuery)
+/// <summary>
+/// "Śledź zgłoszenie": the tracking code alone opens the report, without an account. A report whose matching the
+/// language model cut off is matched again first.
+/// </summary>
+public sealed class TrackProblemReportHandler(
+    CastorDbContext db,
+    CurrentUser currentUser,
+    ProblemReportMatching matching,
+    ProblemReportViewQuery viewQuery)
 {
     public async Task<ProblemReportResponse> HandleAsync(string trackingCode, CancellationToken cancellationToken)
     {
@@ -14,10 +21,14 @@ public sealed class TrackProblemReportHandler(CastorDbContext db, CurrentUser cu
         }
 
         ProblemReport report = await db.ProblemReports
-                .AsNoTracking()
                 .Include(candidate => candidate.Municipality)
                 .SingleOrDefaultAsync(candidate => candidate.TrackingCode == normalized, cancellationToken)
             ?? throw new DomainException("The problem report does not exist.", StatusCodes.Status404NotFound);
+
+        if (report.AwaitsMatching)
+        {
+            await matching.CompleteAsync(report, cancellationToken);
+        }
 
         ProblemReportView view = await viewQuery.OfAsync(report, cancellationToken);
         bool showOriginal = report.ShowsOriginalTo(currentUser.UserIdOrNull, currentUser.IsAdmin);

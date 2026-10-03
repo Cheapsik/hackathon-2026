@@ -92,6 +92,7 @@ public sealed class Matchmaker(
         IReadOnlyList<RankedInnovation> returned = ranking.Matches ?? [];
         List<RankedInnovation> accepted = [.. returned
             .Where(ranked => candidates.Any(candidate => candidate.Id == ranked.InnovationId))
+            .Where(ranked => ranked.Score is not null)
             .Where(ranked => !string.IsNullOrWhiteSpace(ranked.Justification))
             .DistinctBy(ranked => ranked.InnovationId)
             .OrderByDescending(ranked => ranked.Score)
@@ -100,7 +101,7 @@ public sealed class Matchmaker(
         if (accepted.Count < returned.Count)
         {
             logger.LogWarning(
-                "Ranking for problem report {ReportId} returned {DroppedCount} matches outside the candidates or without a justification; they were dropped.",
+                "Ranking for problem report {ReportId} returned {DroppedCount} matches outside the candidates or without a score or justification; they were dropped.",
                 report.Id,
                 returned.Count - accepted.Count);
         }
@@ -109,7 +110,7 @@ public sealed class Matchmaker(
         foreach (RankedInnovation ranked in accepted)
         {
             Innovation innovation = candidates.First(candidate => candidate.Id == ranked.InnovationId);
-            int score = Math.Clamp(ranked.Score, MatchResult.MinScore, MatchResult.MaxScore);
+            int score = Math.Clamp(ranked.Score!.Value, MatchResult.MinScore, MatchResult.MaxScore);
             var match = MatchResult.ForProblemReport(
                 report,
                 innovation,

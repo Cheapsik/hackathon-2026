@@ -88,6 +88,12 @@ public sealed class ProblemReport
 
     public bool IsReadyForMatching => ClassifiedAt is not null && QuestionsSettledAt is not null && MatchedAt is null;
 
+    /// <summary>
+    /// Classification or matching did not run to the end — the language model failed — and nobody is waiting to
+    /// answer questions, so opening the report runs the missing step again.
+    /// </summary>
+    public bool AwaitsMatching => ClassifiedAt is null || IsReadyForMatching;
+
     public string? MainChallengeAreaCode => ChallengeAreaCodes.Count > 0 ? ChallengeAreaCodes[0] : null;
 
     /// <param name="dictated">The description was dictated with the microphone.</param>

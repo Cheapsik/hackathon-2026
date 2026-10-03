@@ -17,7 +17,9 @@ public sealed class GenerateGenomesJob(
         ArgumentNullException.ThrowIfNull(job);
 
         List<ChallengeArea> challengeAreas = await db.ChallengeAreas.AsNoTracking().OrderBy(area => area.Number).ToListAsync(cancellationToken);
+        // Not tracked: a tracked innovation would point at a refused genome and bring it back into the next save.
         List<Innovation> withoutGenome = await db.Innovations
+            .AsNoTracking()
             .Where(innovation => innovation.Genome == null)
             .OrderBy(innovation => innovation.Title)
             .ToListAsync(cancellationToken);
@@ -46,19 +48,30 @@ public sealed class GenerateGenomesJob(
         logger.LogInformation("Genome job {JobId}: {Done} generated, {Failed} failed.", job.Id, job.Done, job.Failed);
     }
 
+    /// <summary>
+    /// Generates and saves one genome. A genome the database refuses is detached again, so it does not fail the save
+    /// of every innovation after it.
+    /// </summary>
     private async Task<bool> GenerateOneAsync(
         Innovation innovation,
         IReadOnlyList<ChallengeArea> challengeAreas,
         CancellationToken cancellationToken)
     {
+        InnovationGenome? genome = null;
         try
         {
-            InnovationGenome genome = await generator.GenerateAsync(innovation, challengeAreas, clock.UtcNow, cancellationToken);
+            genome = await generator.GenerateAsync(innovation, challengeAreas, clock.UtcNow, cancellationToken);
             db.InnovationGenomes.Add(genome);
+            await db.SaveChangesAsync(cancellationToken);
             return true;
         }
-        catch (Exception exception) when (exception is not OperationCanceledException)
+        catch (Exception exception) when (!cancellationToken.IsCancellationRequested)
         {
+            if (genome is not null)
+            {
+                db.Entry(genome).State = EntityState.Detached;
+            }
+
             logger.LogError(exception, "Genome for innovation {InnovationId} could not be generated.", innovation.Id);
             return false;
         }

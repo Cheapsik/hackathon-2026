@@ -33,8 +33,13 @@ public sealed class DatabaseStartup(
 
         if (configuration.GetValue<bool>("Seed:OnStartup"))
         {
-            string seedPath = configuration["Seed:Path"]
-                ?? throw new InvalidOperationException("Seed:OnStartup is true but Seed:Path is not set.");
+            // appsettings.json holds an empty path, which would otherwise resolve to the content root.
+            string? seedPath = configuration["Seed:Path"];
+            if (string.IsNullOrWhiteSpace(seedPath))
+            {
+                throw new InvalidOperationException("Seed:OnStartup is true but Seed:Path is not set.");
+            }
+
             string fullSeedPath = Path.GetFullPath(seedPath, environment.ContentRootPath);
             SeedImporter importer = services.GetRequiredService<SeedImporter>();
             await importer.ImportAsync(fullSeedPath, cancellationToken);

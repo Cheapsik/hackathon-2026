@@ -2,11 +2,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Castor.Api.Features.ProblemReports;
 
-/// <summary>Answers (or skips) the clarifying questions, then matches the report — once.</summary>
+/// <summary>
+/// Answers (or skips) the clarifying questions, then matches the report — once. The answers are saved before
+/// matching, so a failure of the language model does not lose them.
+/// </summary>
 public sealed class AnswerProblemReportQuestionsHandler(
     CastorDbContext db,
     CurrentUser currentUser,
-    Matchmaker matchmaker,
+    ProblemReportMatching matching,
     ProblemReportViewQuery viewQuery,
     IClock clock)
 {
@@ -30,12 +33,9 @@ public sealed class AnswerProblemReportQuestionsHandler(
         }
 
         report.AnswerQuestions(request.Answers ?? [], clock.UtcNow);
-
-        IReadOnlyList<MatchResult> matches = await matchmaker.MatchAsync(report, clock.UtcNow, cancellationToken);
-        db.MatchResults.AddRange(matches);
-        report.RecordMatches(clock.UtcNow);
-
         await db.SaveChangesAsync(cancellationToken);
+
+        await matching.CompleteAsync(report, cancellationToken);
 
         ProblemReportView view = await viewQuery.OfAsync(report, cancellationToken);
         bool showOriginal = report.ShowsOriginalTo(userId, isAdmin);

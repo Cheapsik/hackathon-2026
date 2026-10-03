@@ -21,7 +21,9 @@ public sealed class ListMunicipalitiesHandler(CastorDbContext db)
 
         if (!string.IsNullOrWhiteSpace(request.Search))
         {
-            string pattern = $"{request.Search.Trim()}%";
+            // Typed % and _ are letters here, not wildcards; backslash is PostgreSQL's default LIKE escape.
+            string typed = request.Search.Trim().Replace(@"\", @"\\").Replace("%", @"\%").Replace("_", @"\_");
+            string pattern = $"{typed}%";
             query = query
                 .Where(municipality => EF.Functions.ILike(EF.Functions.Unaccent(municipality.Name), EF.Functions.Unaccent(pattern)))
                 .Take(SuggestionLimit);

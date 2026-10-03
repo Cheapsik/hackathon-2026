@@ -4,10 +4,13 @@ using Testcontainers.PostgreSql;
 
 namespace Castor.Tests;
 
-/// <summary>One real PostgreSQL 17 instance shared by the integration tests; every test gets its own database.</summary>
+/// <summary>
+/// One real PostgreSQL 17 instance shared by the integration tests; every test gets its own database. The same image
+/// as docker-compose.yml, because the migrations need pgvector.
+/// </summary>
 public sealed class PostgresFixture : IAsyncLifetime
 {
-    private readonly PostgreSqlContainer container = new PostgreSqlBuilder("postgres:17")
+    private readonly PostgreSqlContainer container = new PostgreSqlBuilder("pgvector/pgvector:pg17")
         .WithCommand("-c", "max_connections=1000")
         .Build();
 

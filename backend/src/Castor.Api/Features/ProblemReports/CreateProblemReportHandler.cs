@@ -6,12 +6,12 @@ namespace Castor.Api.Features.ProblemReports;
 /// <summary>
 /// "Opisz problem": the report is stored with its thread and announced to administrators first, then classified;
 /// without clarifying questions it is matched at once. Only the anonymized description reaches the language model.
+/// When the model fails, the author still gets the stored report with its tracking code.
 /// </summary>
 public sealed class CreateProblemReportHandler(
     CastorDbContext db,
     CurrentUser currentUser,
-    ProblemClassifier classifier,
-    Matchmaker matchmaker,
+    ProblemReportMatching matching,
     ProblemReportViewQuery viewQuery,
     IHubContext<LiveHub> hub,
     IClock clock)
@@ -42,25 +42,7 @@ public sealed class CreateProblemReportHandler(
         ProblemReportCreatedEvent created = report.ToCreatedEvent();
         await hub.Clients.Group(LiveHub.AdminsGroup).SendAsync(LiveEvents.ProblemReportCreated, created, cancellationToken);
 
-        List<ChallengeArea> challengeAreas = await db.ChallengeAreas.AsNoTracking().OrderBy(area => area.Number).ToListAsync(cancellationToken);
-        ProblemClassification classification = await classifier.ClassifyAsync(report.Description, challengeAreas, cancellationToken);
-        report.Classify(
-            classification.ChallengeAreas,
-            classification.RootCauses,
-            classification.TargetGroup,
-            classification.Urgency,
-            classification.Keywords,
-            classification.ClarifyingQuestions,
-            clock.UtcNow);
-
-        if (report.IsReadyForMatching)
-        {
-            IReadOnlyList<MatchResult> matches = await matchmaker.MatchAsync(report, clock.UtcNow, cancellationToken);
-            db.MatchResults.AddRange(matches);
-            report.RecordMatches(clock.UtcNow);
-        }
-
-        await db.SaveChangesAsync(cancellationToken);
+        await matching.CompleteAsync(report, cancellationToken);
 
         ProblemReportView view = await viewQuery.OfAsync(report, cancellationToken);
         bool showOriginal = report.ShowsOriginalTo(authorId, currentUser.IsAdmin);

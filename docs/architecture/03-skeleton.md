@@ -36,8 +36,9 @@ Konfiguracja (zmienne środowiskowe w konwencji `Sekcja__Klucz`):
 | `DataProtection:KeysPath` | katalog kluczy podpisujących cookie; bez niego klucze żyją w pamięci i restart wylogowuje wszystkich |
 | `Llm:Provider` | adapter `ILlmClient`; zaimplementowany jest `placeholder` (domyślny w `appsettings.json`), nieznana wartość zatrzymuje start |
 | `Seed:Path`, `Seed:OnStartup` | import `data/seed` przy starcie; w `Development` włączony ze ścieżką `../../../data/seed` |
-| `Matching:HybridThreshold`, `Matching:CandidateLimit`, `Matching:MaxMatches` | próg krzyżówki (50), liczba kandydatów dla rankingu (30), liczba wyników (5) |
+| `Matching:HybridThreshold`, `Matching:CandidateLimit`, `Matching:MaxMatches` | próg krzyżówki (50), liczba kandydatów dla rankingu (150 — bez embeddingów cała biblioteka, SPEC §6.4), liczba wyników (5) |
 | `RateLimiting:PublicAi:PermitLimit`, `…:WindowSeconds` | limit na IP dla publicznych endpointów z LLM (10 na 60 s) |
+| `RateLimiting:TrackingCode:PermitLimit`, `…:WindowSeconds` | limit na IP dla otwierania zgłoszenia kodem śledzenia (30 na 60 s) |
 | `Bootstrap:AdminEmail`, `Bootstrap:AdminPassword` | pierwszy administrator (z sekretów, nie z repo) |
 | `Embeddings:*` | zarezerwowane — dostawca embeddingów do ustalenia ([`../TODO.md`](../TODO.md)) |
 

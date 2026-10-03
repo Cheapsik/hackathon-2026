@@ -37,6 +37,7 @@ public sealed class ProblemReportsController(
 
     [AllowAnonymous]
     [HttpGet("{problemReportId:guid}")]
+    [EnableRateLimiting(RateLimitPolicies.TrackingCode)]
     public Task<ProblemReportResponse> GetById(
         Guid problemReportId,
         [FromHeader(Name = TrackingCodeHeader)] string? trackingCode,
@@ -59,6 +60,7 @@ public sealed class ProblemReportsController(
 
     [AllowAnonymous]
     [HttpGet("track/{trackingCode}")]
+    [EnableRateLimiting(RateLimitPolicies.TrackingCode)]
     public Task<ProblemReportResponse> Track(string trackingCode, CancellationToken cancellationToken)
     {
         return track.HandleAsync(trackingCode, cancellationToken);

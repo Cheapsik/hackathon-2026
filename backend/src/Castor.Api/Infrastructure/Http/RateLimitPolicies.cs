@@ -7,4 +7,11 @@ public static class RateLimitPolicies
     /// bill (SPEC 9). Window and limit come from <c>RateLimiting:PublicAi</c>.
     /// </summary>
     public const string PublicAi = "public-ai";
+
+    /// <summary>
+    /// Public endpoints that open a problem report: the tracking code works like a password, so a limit per client IP
+    /// keeps it from being guessed. Opening may also retry matching. Window and limit come from
+    /// <c>RateLimiting:TrackingCode</c>.
+    /// </summary>
+    public const string TrackingCode = "tracking-code";
 }

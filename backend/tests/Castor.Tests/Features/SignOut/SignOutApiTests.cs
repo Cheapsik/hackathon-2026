@@ -10,8 +10,8 @@ public sealed class SignOutApiTests(PostgresFixture postgres)
     {
         HttpClient client = await TestApi.SignedInAsync(postgres, "ada-sign-out@example.com");
 
-        HttpResponseMessage signedOut = await client.PostAsync("/auth/sign-out", null);
-        HttpResponseMessage again = await client.PostAsync("/auth/sign-out", null);
+        HttpResponseMessage signedOut = await client.PostAsync("/api/auth/sign-out", null);
+        HttpResponseMessage again = await client.PostAsync("/api/auth/sign-out", null);
 
         Assert.Equal(HttpStatusCode.NoContent, signedOut.StatusCode);
         Assert.Equal(HttpStatusCode.Unauthorized, again.StatusCode);
