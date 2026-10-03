@@ -82,4 +82,9 @@ Brakujące segmenty zostaną z głosem syntetycznym, więc można podmieniać je
 
 ## Muzyka
 
-Narzędzia nie dodają muzyki. Najprościej dołożyć ją w Clipchampie do gotowego `castor-film.mp4`: muzyka bez praw autorskich, ściszona pod głosem.
+Połóż plik jako `tools/film/music.mp3`. Działa każdy format audio, nazwa musi zaczynać się od `music.`. Potem uruchom `tools/film/film.ps1 -SkipScenes -SkipVoice`.
+
+- Montaż bierze pierwsze 15 sekund utworu i kładzie je pod koniec filmu, z wyciszeniem na początku i na końcu, ciszej niż głos.
+- Długość i głośność zmienisz w `montage.py`: `MUSIC_SECONDS`, `MUSIC_VOLUME`.
+
+Używaj tylko muzyki, do której macie prawo w publicznym zgłoszeniu: z biblioteki bez opłat licencyjnych (YouTube Audio Library, Pixabay Music) albo kupionej z licencją. Utwór zgrany z teledysku na YouTube może zablokować film na platformie i narusza prawa autorskie. Plik `music.*` nie trafia do gita.

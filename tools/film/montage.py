@@ -4,7 +4,8 @@ plus out/castor-film.srt and a lighter out/castor-film-podglad.mp4 for sharing.
 Each segment lasts max(narration + PAD, video / MAX_SPEED): a longer recording is sped up (at most MAX_SPEED),
 a shorter one holds its last frame. Narration starts VOICE_DELAY seconds into the segment; captions split the narration
 time in proportion to their length. A file voice-own/<id>.<any audio extension> replaces the synthetic voice of that
-segment, so a narrator can record some or all of them.
+segment, so a narrator can record some or all of them. A file music.<any audio extension> next to this script adds
+its first MUSIC_SECONDS under the end of the film.
 """
 import json
 import pathlib
@@ -17,6 +18,8 @@ PAD = 1.4
 VOICE_DELAY = 0.4
 MAX_SPEED = 1.9
 END_HOLD = 1.6
+MUSIC_SECONDS = 15.0
+MUSIC_VOLUME = 0.55
 
 
 def run(args: list[str]) -> None:
@@ -131,6 +134,22 @@ def build_segment(number: int, segment: dict, last: bool, clock: float, srt: lis
     return piece, length
 
 
+def add_music(film: pathlib.Path, music: pathlib.Path, length: float, out: pathlib.Path) -> None:
+    """The first MUSIC_SECONDS of music.* under the end of the film: faded in and out, quieter than the voice."""
+    seconds = min(MUSIC_SECONDS, length)
+    start_ms = int((length - seconds) * 1000)
+    chain = (
+        f"[1:a]atrim=0:{seconds:.3f},asetpts=PTS-STARTPTS,afade=t=in:d=0.4,afade=t=out:st={seconds - 2:.3f}:d=2,"
+        f"volume={MUSIC_VOLUME},adelay={start_ms}|{start_ms},aformat=sample_rates=48000:channel_layouts=stereo[music];"
+        "[0:a][music]amix=inputs=2:duration=first:normalize=0[aud]"
+    )
+    run([
+        "-i", str(film), "-i", str(music), "-filter_complex", chain,
+        "-map", "0:v", "-map", "[aud]", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", str(out),
+    ])
+    print(f"music: {music.name}, first {seconds:.0f} s at the end")
+
+
 def main() -> None:
     script = json.loads((FILM / "script.json").read_text(encoding="utf-8"))
     work = OUT / "work"
@@ -148,7 +167,13 @@ def main() -> None:
     listing = work / "pieces.txt"
     listing.write_text("".join(f"file '{piece.as_posix()}'\n" for piece in pieces), encoding="utf-8")
     film = OUT / "castor-film.mp4"
-    run(["-f", "concat", "-safe", "0", "-i", str(listing), "-c", "copy", "-movflags", "+faststart", str(film)])
+    music = sorted(FILM.glob("music.*"))
+    if music:
+        joined = work / "joined.mp4"
+        run(["-f", "concat", "-safe", "0", "-i", str(listing), "-c", "copy", str(joined)])
+        add_music(joined, music[0], clock, film)
+    else:
+        run(["-f", "concat", "-safe", "0", "-i", str(listing), "-c", "copy", "-movflags", "+faststart", str(film)])
     run(["-i", str(film), "-c:v", "libx264", "-preset", "slow", "-crf", "27", "-c:a", "aac", "-b:a", "128k",
          "-movflags", "+faststart", str(OUT / "castor-film-podglad.mp4")])
     (OUT / "castor-film.srt").write_text("\n".join(srt), encoding="utf-8")

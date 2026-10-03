@@ -1,4 +1,6 @@
 # Everything the pipeline generates: recordings, voice, overlays, the film itself.
 out/
+# Music stays local: its licence decides whether it may be published at all.
+music.*
 node_modules/
 __pycache__/
