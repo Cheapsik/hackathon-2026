@@ -32,10 +32,12 @@ jobs:
 
       - name: Validate deployment configuration
         env:
-          CASTOR_ENV_FILE: ${{ github.workspace }}/.env
           CASTOR_IMAGE_TAG: validation
           POSTGRES_PASSWORD: validation
-        run: docker compose -f deploy/docker-compose.prod.yml config --quiet
+        run: |
+          install -m 600 .env.example deploy/.env
+          trap 'rm -f deploy/.env' EXIT
+          docker compose -f deploy/docker-compose.prod.yml config --quiet
 
       - name: Build application images
         run: |
@@ -83,25 +85,28 @@ jobs:
       - name: Upload deployment bundle
         run: |
           staging_dir="${DEPLOY_PATH}/incoming/${GITHUB_SHA}"
+          incoming_compose="${DEPLOY_PATH}/docker-compose.${GITHUB_SHA}.yml.new"
           ssh -o BatchMode=yes -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes \
             -i "${HOME}/.ssh/deploy_key" -p "${DEPLOY_PORT}" \
-            "${DEPLOY_USER}@${DEPLOY_HOST}" "mkdir -p -- '${staging_dir}'"
+            "${DEPLOY_USER}@${DEPLOY_HOST}" "mkdir -p -- '${staging_dir}' '${DEPLOY_PATH}'"
           scp -o BatchMode=yes -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes \
             -i "${HOME}/.ssh/deploy_key" -P "${DEPLOY_PORT}" \
             dist/castor-images.tar.gz \
-            deploy/docker-compose.prod.yml \
             deploy/remote-deploy.sh \
             "${DEPLOY_USER}@${DEPLOY_HOST}:${staging_dir}/"
+          scp -o BatchMode=yes -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes \
+            -i "${HOME}/.ssh/deploy_key" -P "${DEPLOY_PORT}" \
+            deploy/docker-compose.prod.yml \
+            "${DEPLOY_USER}@${DEPLOY_HOST}:${incoming_compose}"
 
       - name: Activate release
-        env:
-          CASTOR_ENV_FILE: ${{ github.workspace }}/.env
         run: |
           staging_dir="${DEPLOY_PATH}/incoming/${GITHUB_SHA}"
+          incoming_compose="${DEPLOY_PATH}/docker-compose.${GITHUB_SHA}.yml.new"
           ssh -o BatchMode=yes -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes \
             -i "${HOME}/.ssh/deploy_key" -p "${DEPLOY_PORT}" \
             "${DEPLOY_USER}@${DEPLOY_HOST}" \
-            "bash '${staging_dir}/remote-deploy.sh' '${DEPLOY_PATH}' '${GITHUB_SHA}' '${staging_dir}/castor-images.tar.gz' '${staging_dir}/docker-compose.prod.yml'"
+            "bash '${staging_dir}/remote-deploy.sh' '${DEPLOY_PATH}' '${GITHUB_SHA}' '${staging_dir}/castor-images.tar.gz' '${incoming_compose}'"
 
       - name: Remove temporary SSH key
         if: always()

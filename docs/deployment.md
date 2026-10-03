@@ -8,7 +8,7 @@ The PostgreSQL/pgvector image remains a public third-party dependency and is pul
 
 - A Linux server with Docker Engine and a current Docker Compose v2 release supporting `--wait` and `--wait-timeout`.
 - An unprivileged deployment user with access to the Docker daemon.
-- A writable deployment directory (by default `/opt/castor`).
+- A writable deployment directory (by default `/opt/castor`) containing the production `.env`.
 - TCP port 8080 available, or a different `HTTP_PORT` configured in `.env`.
 
 ## Provision with CloudFormation
@@ -58,7 +58,7 @@ sudo -u castor install -m 0600 /dev/null /opt/castor/.env
 sudo -u castor editor /opt/castor/.env
 ```
 
-The manual commands are unnecessary when the CloudFormation template provisioned the host. Otherwise, replace `castor` with the deployment user. Populate `.env` from [`.env.example`](../.env.example), using a strong, unique `POSTGRES_PASSWORD`. Keep this file only on the server. The deployment does not overwrite it.
+The manual commands are unnecessary when the CloudFormation template provisioned the host. Otherwise, replace `castor` with the deployment user. Populate `.env` from [`.env.example`](../.env.example), using a strong, unique `POSTGRES_PASSWORD`. Keep this file only on the server. The deployment requires `/opt/castor/.env` and does not overwrite it.
 
 ## GitHub production environment
 
@@ -81,12 +81,13 @@ Every push to `main` deploys automatically. The same workflow can be started man
 
 The remote script:
 
-1. validates the server `.env` and Compose configuration;
+1. receives the versioned Compose candidate directly in `/opt/castor` and validates it against `/opt/castor/.env`;
 2. loads the two application images from the SSH bundle;
-3. waits for PostgreSQL and the frontend health checks;
-4. verifies that the database, backend, and frontend containers remain running;
-5. rolls back to the previous image tag and Compose file if activation fails;
-6. keeps the current and previous image versions for recovery.
+3. atomically installs it as `/opt/castor/docker-compose.yml` while keeping the previous Compose file;
+4. waits for PostgreSQL and the frontend health checks;
+5. verifies that the database, backend, and frontend containers remain running;
+6. rolls back to the previous image tag and Compose file if activation fails;
+7. keeps the current and previous image versions for recovery.
 
 Database migrations run automatically when the backend starts. An application rollback cannot undo a database migration, so migrations must remain backward compatible with the preceding release.
 

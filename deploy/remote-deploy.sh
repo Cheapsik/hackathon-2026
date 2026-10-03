@@ -42,14 +42,16 @@ previous_version_file="${deploy_dir}/.previous-version"
 lock_file="${deploy_dir}/deploy.lock"
 staging_dir=$(dirname "${image_bundle}")
 expected_staging_dir="${deploy_dir}/incoming/${version}"
+expected_incoming_compose="${deploy_dir}/docker-compose.${version}.yml.new"
 
-if [[ ${staging_dir} != "${expected_staging_dir}" || $(dirname "${incoming_compose}") != "${expected_staging_dir}" ]]; then
-  echo "Deployment files must be inside ${expected_staging_dir}." >&2
+if [[ ${staging_dir} != "${expected_staging_dir}" || ${incoming_compose} != "${expected_incoming_compose}" ]]; then
+  echo "Deployment files are outside their expected locations." >&2
   exit 2
 fi
 
 cleanup() {
   rm -rf -- "${staging_dir}"
+  rm -f -- "${incoming_compose}"
 }
 trap cleanup EXIT
 

@@ -24,7 +24,7 @@ services:
       db:
         condition: service_healthy
     env_file:
-      - path: ${CASTOR_ENV_FILE:?CASTOR_ENV_FILE is required}
+      - path: .env
         required: true
     environment:
       ConnectionStrings__Castor: Host=db;Port=5432;Database=castor;Username=castor;Password=${POSTGRES_PASSWORD}
