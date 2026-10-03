@@ -2,10 +2,6 @@ AWSTemplateFormatVersion: '2010-09-09'
 Description: Castor production host with Docker, a dedicated VPC, and a stable public IPv4 address.
 
 Parameters:
-  KeyName:
-    Type: AWS::EC2::KeyPair::KeyName
-    Description: Existing EC2 key pair used to authenticate the castor deployment user over SSH.
-
   SshAllowedCidr:
     Type: String
     Description: Trusted IPv4 CIDR allowed to connect over SSH, for example 203.0.113.10/32.
@@ -48,6 +44,15 @@ Parameters:
     Description: Regional SSM parameter resolving to the current Ubuntu 24.04 LTS amd64 AMI.
 
 Resources:
+  DeploymentKeyPair:
+    Type: AWS::EC2::KeyPair
+    Properties:
+      KeyName: !Sub ${AWS::StackName}-deployment
+      PublicKeyMaterial: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCvpMAQ3R71xmiEw0k3PdHzoodeCNMyHct4n5JX8Ms3YcxnCqHAAODj4nC4smieSCU7uOx/vt/a6JG/nnefZmNnnN4B5RFMo8SoV2KzU0bz5kA42Smmllkf33gzza7IJhjHFQlmAzg1Sk8GgY7CrORDebgVQrmzSCV6xv0EdIbkSGc1e7uaD4SvmT133K5bxl4MrmPDEw3gPr2I7XYa78EKecgo5HcgRiinSHnpmVWR2jnYP28VKfGqaaRLB9U0SBgbNfHK5kqT2RmPlk0MQ63oLggTlDMrrA/Yry3Fh2q/BepKRkFz/ZnCs+X6nrKxa/ZGwjggXnemxHTGzUqp86fH mwronski@opgksoftware.com'
+      Tags:
+        - Key: Name
+          Value: !Sub ${AWS::StackName}-deployment
+
   Vpc:
     Type: AWS::EC2::VPC
     Properties:
@@ -135,7 +140,7 @@ Resources:
     Properties:
       ImageId: !Ref LatestAmiId
       InstanceType: !Ref InstanceType
-      KeyName: !Ref KeyName
+      KeyName: !Ref DeploymentKeyPair
       SubnetId: !Ref PublicSubnet
       SecurityGroupIds:
         - !Ref ApplicationSecurityGroup
@@ -190,6 +195,14 @@ Resources:
       InstanceId: !Ref ApplicationInstance
 
 Outputs:
+  DeploymentKeyPairName:
+    Description: Name of the EC2 key pair imported by this stack.
+    Value: !Ref DeploymentKeyPair
+
+  DeploymentKeyFingerprint:
+    Description: Fingerprint of the imported SSH public key.
+    Value: !GetAtt DeploymentKeyPair.KeyFingerprint
+
   InstanceId:
     Description: EC2 instance ID.
     Value: !Ref ApplicationInstance

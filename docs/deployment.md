@@ -13,20 +13,21 @@ The PostgreSQL/pgvector image remains a public third-party dependency and is pul
 
 ## Provision with CloudFormation
 
-[`../infra/cloudformation.yml`](../infra/cloudformation.yml) creates a dedicated VPC, public subnet, EC2 security group, Ubuntu 24.04 LTS instance, and an Elastic IP. The instance bootstrap installs Docker with Compose v2 and creates the `castor` deployment user and `/opt/castor/.env`.
+[`../infra/cloudformation.yml`](../infra/cloudformation.yml) creates a dedicated VPC, public subnet, EC2 security group, Ubuntu 24.04 LTS instance, imported EC2 key pair, and an Elastic IP. The instance bootstrap installs Docker with Compose v2 and creates the `castor` deployment user and `/opt/castor/.env`.
 
-Create an EC2 key pair in the target AWS Region, determine the trusted public IPv4 CIDR that should be allowed to use SSH, and deploy the stack:
+The template imports the repository's configured RSA public key as `${AWS::StackName}-deployment`. CloudFormation never receives or returns the matching private key. Make sure that private key is available locally and in the GitHub `DEPLOY_SSH_KEY` secret.
+
+Determine the trusted public IPv4 CIDR that should be allowed to use SSH, and deploy the stack:
 
 ```bash
 aws cloudformation deploy \
   --stack-name castor-production \
   --template-file infra/cloudformation.yml \
   --parameter-overrides \
-    KeyName=castor-production \
     SshAllowedCidr=203.0.113.10/32
 ```
 
-Replace the example key name and CIDR. Do not use `0.0.0.0/0` for `SshAllowedCidr`. After the stack reaches `CREATE_COMPLETE`, get its outputs:
+Replace the example CIDR. Do not use `0.0.0.0/0` for `SshAllowedCidr`. After the stack reaches `CREATE_COMPLETE`, get its outputs:
 
 ```bash
 aws cloudformation describe-stacks \
@@ -35,7 +36,7 @@ aws cloudformation describe-stacks \
   --output table
 ```
 
-Use the `PublicIp` output as `DEPLOY_HOST`, `castor` as `DEPLOY_USER`, and the key pair's private key as `DEPLOY_SSH_KEY`. Before the first deployment, connect over SSH, wait for `sudo cloud-init status --wait`, and populate `/opt/castor/.env`.
+Use the `PublicIp` output as `DEPLOY_HOST`, `castor` as `DEPLOY_USER`, and the private key matching `DeploymentKeyFingerprint` as `DEPLOY_SSH_KEY`. Before the first deployment, connect over SSH, wait for `sudo cloud-init status --wait`, and populate `/opt/castor/.env`.
 
 The `ApplicationPort` parameter must match `HTTP_PORT` in the server `.env`. The Elastic IP remains allocated until the stack is deleted. The application port is public by default; set `ApplicationAllowedCidr` when access should be restricted. For internet-facing production traffic, terminate TLS in a reverse proxy and restrict the exposed application port appropriately.
 
