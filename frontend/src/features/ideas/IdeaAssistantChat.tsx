@@ -1,11 +1,14 @@
-import { useId, useState, type FormEvent } from 'react'
+import { useState, type FormEvent } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
+import { Sparkles } from 'lucide-react'
 import {
   getGetApiIdeasIdeaIdAssistantQueryKey,
   useGetApiIdeasIdeaIdAssistant,
   usePostApiIdeasIdeaIdAssistant,
 } from '@/api/generated/castor'
+import { CeramicCard, SoftButton, TextAreaField } from '@/design-system'
 import { errorMessage } from '@/lib/error-message'
+import { cn } from '@/lib/utils'
 
 const messageMaxLength = 2000
 const visualizationRequest = 'Opisz wizualizację mojego pomysłu: jak mogłaby wyglądać ta usługa w praktyce?'
@@ -16,7 +19,6 @@ export function IdeaAssistantChat({ ideaId }: { ideaId: string }) {
   const queryClient = useQueryClient()
   const history = useGetApiIdeasIdeaIdAssistant(ideaId)
   const ask = usePostApiIdeasIdeaIdAssistant()
-  const messageId = useId()
   const messages = history.data?.data ?? []
 
   function send(text: string) {
@@ -37,58 +39,85 @@ export function IdeaAssistantChat({ ideaId }: { ideaId: string }) {
   }
 
   return (
-    <section aria-labelledby="idea-assistant-title">
-      <h2 id="idea-assistant-title">Asystent Kreatora</h2>
-      <p>
-        Asystent podpowie, czego brakuje w Canvasie, i pomoże opisać pomysł. Nie wpisuj danych osobowych - imiona,
-        telefony i adresy usuwamy, zanim wiadomość trafi do modelu językowego.
-      </p>
-
-      <div aria-live="polite">
-        {history.isPending && (
-          <p>
-            <output>Wczytuję rozmowę…</output>
+    <CeramicCard asChild padding="lg">
+      <section aria-labelledby="idea-assistant-title" className="grid max-w-default gap-4">
+        <div className="grid gap-1">
+          <h2 id="idea-assistant-title" className="flex items-center gap-2 font-display text-section-title tracking-display">
+            <Sparkles aria-hidden className="size-icon text-accent" />
+            Asystent Kreatora
+          </h2>
+          <p className="text-body-sm text-text-muted">
+            Asystent podpowie, czego brakuje w Canvasie, i pomoże opisać pomysł. Nie wpisuj danych osobowych - imiona,
+            telefony i adresy usuwamy, zanim wiadomość trafi do modelu językowego.
           </p>
-        )}
-        {messages.length > 0 && (
-          <ol>
-            {messages.map((entry) => (
-              <li key={entry.id}>
-                <strong>{entry.role === 'USER' ? 'Ty' : 'Asystent'}:</strong> {entry.text}
-              </li>
-            ))}
-          </ol>
-        )}
-        {ask.isPending && (
-          <p>
-            <output>Asystent pisze odpowiedź…</output>
-          </p>
-        )}
-        {ask.isError && <p role="alert">{errorMessage(ask.error, { 400: 'Napisz wiadomość do asystenta.' })}</p>}
-      </div>
+        </div>
 
-      <p>
-        <button type="button" onClick={() => send(visualizationRequest)} disabled={ask.isPending}>
-          Poproś o opis wizualizacji pomysłu
-        </button>
-      </p>
-      <form onSubmit={submit}>
-        <label htmlFor={messageId}>Twoja wiadomość</label>
-        <br />
-        <textarea
-          id={messageId}
-          rows={3}
-          cols={60}
-          required
-          maxLength={messageMaxLength}
-          value={message}
-          onChange={(event) => setMessage(event.target.value)}
-        />
-        <br />
-        <button type="submit" disabled={ask.isPending}>
-          Zapytaj asystenta
-        </button>
-      </form>
-    </section>
+        <div aria-live="polite" className="grid gap-3 empty:hidden">
+          {history.isPending && (
+            <p className="text-body-sm text-text-muted">
+              <output>Wczytuję rozmowę…</output>
+            </p>
+          )}
+          {messages.length > 0 && (
+            <ol className="grid gap-3">
+              {messages.map((entry) => {
+                const mine = entry.role === 'USER'
+                return (
+                  <li
+                    key={entry.id}
+                    className={cn(
+                      'grid max-w-[85%] gap-1 rounded-card px-4 py-3 text-body-sm',
+                      mine ? 'justify-self-end bg-surface-active text-text-inverse' : 'justify-self-start bg-chip',
+                    )}
+                  >
+                    <span className={cn('text-label font-medium', mine ? 'text-text-inverse' : 'text-text-muted')}>
+                      {mine ? 'Ty' : 'Asystent'}
+                    </span>
+                    <span className="whitespace-pre-line">{entry.text}</span>
+                  </li>
+                )
+              })}
+            </ol>
+          )}
+          {ask.isPending && (
+            <p className="text-body-sm text-text-muted">
+              <output>Asystent pisze odpowiedź…</output>
+            </p>
+          )}
+          {ask.isError && (
+            <p role="alert" className="rounded-control bg-danger-soft p-3 text-body-sm text-danger">
+              {errorMessage(ask.error, { 400: 'Napisz wiadomość do asystenta.' })}
+            </p>
+          )}
+        </div>
+
+        <div>
+          <SoftButton
+            type="button"
+            variant="secondary"
+            disabled={ask.isPending}
+            onClick={() => send(visualizationRequest)}
+          >
+            Poproś o opis wizualizacji pomysłu
+          </SoftButton>
+        </div>
+
+        <form className="grid gap-3" onSubmit={submit}>
+          <TextAreaField
+            label="Twoja wiadomość"
+            rows={3}
+            required
+            maxLength={messageMaxLength}
+            value={message}
+            onChange={(event) => setMessage(event.target.value)}
+          />
+          <div>
+            <SoftButton type="submit" variant="primary" loading={ask.isPending}>
+              Zapytaj asystenta
+            </SoftButton>
+          </div>
+        </form>
+      </section>
+    </CeramicCard>
   )
 }

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
+import { ArrowLeft } from 'lucide-react'
 import { Link, useParams } from 'react-router'
 import {
   getGetApiIdeasIdeaIdQueryKey,
@@ -9,6 +10,12 @@ import {
   usePutApiIdeasIdeaId,
   type IdeaResponse,
 } from '@/api/generated/castor'
+import {
+  CeramicCard,
+  ErrorState,
+  LoadingState,
+  SoftButton,
+} from '@/design-system'
 import { canvasRequestOf, canvasValuesOf } from '@/features/ideas/canvas-values'
 import { IdeaAdminActions } from '@/features/ideas/IdeaAdminActions'
 import { IdeaAssistantChat } from '@/features/ideas/IdeaAssistantChat'
@@ -31,22 +38,28 @@ export function IdeaPage() {
   usePageTitle(card?.title ?? 'Pomysł')
 
   if (idea.isPending) {
-    return (
-      <p>
-        <output>Wczytuję pomysł…</output>
-      </p>
-    )
+    return <LoadingState label="Wczytuję pomysł…" />
   }
 
   if (idea.isError || !card) {
     return (
-      <>
-        <h1>Pomysł</h1>
-        <p role="alert">{errorMessage(idea.error, { 401: 'Zaloguj się, aby zobaczyć pomysł.', 404: 'Nie znaleźliśmy tego pomysłu.' })}</p>
-        <p>
-          <Link to="/pomysly">Wróć do Kreatora pomysłów</Link>
-        </p>
-      </>
+      <div className="grid gap-6">
+        <SoftButton asChild variant="ghost" icon={<ArrowLeft aria-hidden />}>
+          <Link to="/pomysly">Kreator pomysłów</Link>
+        </SoftButton>
+        <header className="grid max-w-default gap-2">
+          <h1 className="font-display text-page-title tracking-display">Pomysł</h1>
+        </header>
+        <ErrorState
+          description={errorMessage(idea.error, {
+            401: 'Zaloguj się, aby zobaczyć pomysł.',
+            404: 'Nie znaleźliśmy tego pomysłu.',
+          })}
+          onRetry={() => {
+            void idea.refetch()
+          }}
+        />
+      </div>
     )
   }
 
@@ -66,96 +79,149 @@ function IdeaDetails({ idea }: { idea: IdeaResponse }) {
   }
 
   return (
-    <>
-      <p>
+    <div className="grid gap-8">
+      <SoftButton asChild variant="ghost" icon={<ArrowLeft aria-hidden />}>
         <Link to="/pomysly">Kreator pomysłów</Link>
-      </p>
-      <h1>{idea.title}</h1>
-      <p>
-        Status: {ideaStatusLabel(idea.status)}
-        {idea.submittedAt && `, zgłoszony ${formatDateTime(idea.submittedAt)}`}. Współautorów: {idea.coAuthorCount}.
-      </p>
-      {idea.fromHybridOf.length > 0 && <p>Pomysł powstał z krzyżówki innowacji: {idea.fromHybridOf.map((innovation) => innovation.title).join(', ')}.</p>}
+      </SoftButton>
 
-      <div aria-live="polite">
-        {join.isError && <p role="alert">{errorMessage(join.error, { 409: 'Już jesteś współautorem albo pomysł nie przyjmuje współautorów.' })}</p>}
-        {join.isSuccess && <p>Dołączyłeś do autorów pomysłu.</p>}
+      <header className="grid max-w-default gap-2">
+        <h1 className="font-display text-page-title tracking-display">{idea.title}</h1>
+        <p className="text-body text-text-muted">
+          Status: {ideaStatusLabel(idea.status)}
+          {idea.submittedAt && `, zgłoszony ${formatDateTime(idea.submittedAt)}`}. Współautorów: {idea.coAuthorCount}.
+        </p>
+        {idea.fromHybridOf.length > 0 && (
+          <p className="text-body-sm text-text-muted">
+            Pomysł powstał z krzyżówki innowacji: {idea.fromHybridOf.map((innovation) => innovation.title).join(', ')}.
+          </p>
+        )}
+      </header>
+
+      <div aria-live="polite" className="grid gap-3 empty:hidden">
+        {join.isError && (
+          <p role="alert" className="rounded-control bg-danger-soft p-3 text-body-sm text-danger">
+            {errorMessage(join.error, { 409: 'Już jesteś współautorem albo pomysł nie przyjmuje współautorów.' })}
+          </p>
+        )}
+        {join.isSuccess && <p className="text-body-sm text-text-muted">Dołączyłeś do autorów pomysłu.</p>}
       </div>
       {idea.canJoin && (
-        <p>
-          <button type="button" onClick={() => join.mutate({ ideaId: idea.id }, { onSuccess: (response) => updated(response.data) })} disabled={join.isPending}>
+        <div>
+          <SoftButton
+            type="button"
+            variant="secondary"
+            loading={join.isPending}
+            onClick={() => join.mutate({ ideaId: idea.id }, { onSuccess: (response) => updated(response.data) })}
+          >
             Dołącz do autorów tego pomysłu
-          </button>
-        </p>
+          </SoftButton>
+        </div>
       )}
 
-      <section aria-labelledby="idea-canvas-title">
-        <h2 id="idea-canvas-title">Canvas innowacji</h2>
-        <div aria-live="polite">
-          {revise.isError && <p role="alert">{errorMessage(revise.error, { 400: 'Sprawdź pola Canvasu: zgłoszony pomysł musi mieć wszystkie wymagane pola.', 409: 'Tego pomysłu nie można już zmieniać.' })}</p>}
-        </div>
-        {editing ? (
-          <IdeaCanvasForm
-            key={idea.updatedAt}
-            initial={canvasValuesOf(idea)}
-            submitLabel="Zapisz zmiany"
-            pending={revise.isPending}
-            onCancel={() => setEditing(false)}
-            onSubmit={(values) =>
-              revise.mutate(
-                { ideaId: idea.id, data: canvasRequestOf(values) },
-                {
-                  onSuccess: (response) => {
-                    updated(response.data)
-                    setEditing(false)
-                  },
-                },
-              )
-            }
-          />
-        ) : (
-          <>
-            <IdeaCardView idea={idea} />
-            {idea.canEdit && (
-              <button type="button" onClick={() => setEditing(true)}>
-                Edytuj Canvas
-              </button>
-            )}
-          </>
-        )}
-      </section>
-
-      {idea.canSubmit && (
-        <section aria-labelledby="idea-submit-title">
-          <h2 id="idea-submit-title">Zgłoszenie pomysłu</h2>
-          {idea.missingForSubmission.length > 0 ? (
-            <>
-              <p>Zanim zgłosisz pomysł, uzupełnij:</p>
-              <ul>
-                {idea.missingForSubmission.map((field) => (
-                  <li key={field}>{missingFieldLabels[field] ?? field}</li>
-                ))}
-              </ul>
-            </>
-          ) : (
-            <p>Canvas jest kompletny. Po zgłoszeniu pomysł zobaczą inni zalogowani użytkownicy, eksperci jego obszarów i ROPS.</p>
-          )}
-          <button
-            type="button"
-            onClick={() => submit.mutate({ ideaId: idea.id }, { onSuccess: (response) => updated(response.data) })}
-            disabled={submit.isPending || idea.missingForSubmission.length > 0}
-          >
-            Zgłoś pomysł
-          </button>
-          <div aria-live="polite">
-            {submit.isPending && (
-              <p>
-                <output>Sprawdzam podobne pomysły i zgłaszam…</output>
+      <CeramicCard asChild padding="lg">
+        <section aria-labelledby="idea-canvas-title" className="grid gap-4">
+          <h2 id="idea-canvas-title" className="font-display text-section-title tracking-display">
+            Canvas innowacji
+          </h2>
+          <div aria-live="polite" className="grid gap-3 empty:hidden">
+            {revise.isError && (
+              <p role="alert" className="rounded-control bg-danger-soft p-3 text-body-sm text-danger">
+                {errorMessage(revise.error, {
+                  400: 'Sprawdź pola Canvasu: zgłoszony pomysł musi mieć wszystkie wymagane pola.',
+                  409: 'Tego pomysłu nie można już zmieniać.',
+                })}
               </p>
             )}
-            {submit.isError && <p role="alert">{errorMessage(submit.error, { 400: 'Uzupełnij brakujące pola Canvasu.', 409: 'Ten pomysł jest już zgłoszony.' })}</p>}
           </div>
+          {editing ? (
+            <IdeaCanvasForm
+              key={idea.updatedAt}
+              initial={canvasValuesOf(idea)}
+              submitLabel="Zapisz zmiany"
+              pending={revise.isPending}
+              onCancel={() => setEditing(false)}
+              onSubmit={(values) =>
+                revise.mutate(
+                  { ideaId: idea.id, data: canvasRequestOf(values) },
+                  {
+                    onSuccess: (response) => {
+                      updated(response.data)
+                      setEditing(false)
+                    },
+                  },
+                )
+              }
+            />
+          ) : (
+            <div className="grid gap-4">
+              <IdeaCardView idea={idea} />
+              {idea.canEdit && (
+                <div>
+                  <SoftButton type="button" variant="secondary" onClick={() => setEditing(true)}>
+                    Edytuj Canvas
+                  </SoftButton>
+                </div>
+              )}
+            </div>
+          )}
         </section>
+      </CeramicCard>
+
+      {idea.canSubmit && (
+        <CeramicCard asChild padding="lg">
+          <section aria-labelledby="idea-submit-title" className="grid gap-4">
+            <div className="grid gap-1">
+              <h2 id="idea-submit-title" className="font-display text-section-title tracking-display">
+                Zgłoszenie pomysłu
+              </h2>
+              {idea.missingForSubmission.length > 0 ? (
+                <div className="grid gap-2">
+                  <p className="text-body-sm text-text-muted">Zanim zgłosisz pomysł, uzupełnij:</p>
+                  <ul className="grid gap-1 text-body-sm">
+                    {idea.missingForSubmission.map((field) => (
+                      <li key={field} className="text-text-primary">
+                        {missingFieldLabels[field] ?? field}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : (
+                <p className="text-body-sm text-text-muted">
+                  Canvas jest kompletny. Po zgłoszeniu pomysł zobaczą inni zalogowani użytkownicy, eksperci jego obszarów
+                  i ROPS.
+                </p>
+              )}
+            </div>
+            <div>
+              <SoftButton
+                type="button"
+                variant="primary"
+                loading={submit.isPending}
+                disabled={idea.missingForSubmission.length > 0}
+                onClick={() =>
+                  submit.mutate({ ideaId: idea.id }, { onSuccess: (response) => updated(response.data) })
+                }
+              >
+                Zgłoś pomysł
+              </SoftButton>
+            </div>
+            <div aria-live="polite" className="grid gap-3 empty:hidden">
+              {submit.isPending && (
+                <p className="text-body-sm text-text-muted">
+                  <output>Sprawdzam podobne pomysły i zgłaszam…</output>
+                </p>
+              )}
+              {submit.isError && (
+                <p role="alert" className="rounded-control bg-danger-soft p-3 text-body-sm text-danger">
+                  {errorMessage(submit.error, {
+                    400: 'Uzupełnij brakujące pola Canvasu.',
+                    409: 'Ten pomysł jest już zgłoszony.',
+                  })}
+                </p>
+              )}
+            </div>
+          </section>
+        </CeramicCard>
       )}
 
       {seesWork && <IdeaSimilarSection idea={idea} onUpdated={updated} />}
@@ -164,6 +230,6 @@ function IdeaDetails({ idea }: { idea: IdeaResponse }) {
       <IdeaAdminActions idea={idea} onUpdated={updated} />
       <IdeaSeeksTestersSection idea={idea} onUpdated={updated} />
       <IdeaGrantApplicationsSection idea={idea} />
-    </>
+    </div>
   )
 }

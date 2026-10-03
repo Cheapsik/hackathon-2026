@@ -1,4 +1,5 @@
 import { useGetApiIdeasCanvas, type CanvasOptionResponse, type CanvasScaleLevelResponse, type IdeaResponse } from '@/api/generated/castor'
+import { LoadingState } from '@/design-system'
 
 /** The Canvas of a saved idea, read-only, with the labels the form showed. */
 export function IdeaCardView({ idea }: { idea: IdeaResponse }) {
@@ -6,45 +7,45 @@ export function IdeaCardView({ idea }: { idea: IdeaResponse }) {
   const options = canvas.data?.data
 
   if (!options) {
-    return (
-      <p>
-        <output>Wczytuję Canvas…</output>
-      </p>
-    )
+    return <LoadingState label="Wczytuję Canvas…" />
   }
 
   const recipients = [...labelsOf(options.recipients, idea.recipients), ...(idea.otherRecipients ? [idea.otherRecipients] : [])]
 
+  const rows = [
+    {
+      label: 'Obszar wyzwań',
+      value: idea.challengeAreas.length > 0 ? idea.challengeAreas.map((area) => area.name).join(', ') : 'nie wybrano',
+    },
+    { label: 'Natężenie problemu', value: levelLabel(options.intensity, idea.problemIntensity) },
+    { label: 'Częstotliwość problemu', value: levelLabel(options.frequency, idea.problemFrequency) },
+    { label: 'Skala problemu', value: levelLabel(options.scale, idea.problemScale) },
+    { label: 'Odbiorcy', value: recipients.length > 0 ? recipients.join(', ') : 'nie wybrano' },
+    { label: 'Rozwiązanie', value: idea.solution ?? 'jeszcze nie opisano' },
+    { label: 'Etap rozwoju', value: labelsOf(options.stages, [idea.stage]).join('') || idea.stage },
+    { label: 'Sojusznicy', value: idea.supporters ?? '-' },
+    { label: 'Przeciwnicy', value: idea.opponents ?? '-' },
+    {
+      label: 'Wartości emocjonalne',
+      value: labelsOf(options.emotionalValues, idea.emotionalValues).join(', ') || '-',
+    },
+    {
+      label: 'Wartości funkcjonalne',
+      value: labelsOf(options.functionalValues, idea.functionalValues).join(', ') || '-',
+    },
+    ...(idea.differenceNote
+      ? [{ label: 'Czym różni się od podobnych', value: idea.differenceNote }]
+      : []),
+  ]
+
   return (
-    <dl>
-      <dt>Obszar wyzwań</dt>
-      <dd>{idea.challengeAreas.length > 0 ? idea.challengeAreas.map((area) => area.name).join(', ') : 'nie wybrano'}</dd>
-      <dt>Natężenie problemu</dt>
-      <dd>{levelLabel(options.intensity, idea.problemIntensity)}</dd>
-      <dt>Częstotliwość problemu</dt>
-      <dd>{levelLabel(options.frequency, idea.problemFrequency)}</dd>
-      <dt>Skala problemu</dt>
-      <dd>{levelLabel(options.scale, idea.problemScale)}</dd>
-      <dt>Odbiorcy</dt>
-      <dd>{recipients.length > 0 ? recipients.join(', ') : 'nie wybrano'}</dd>
-      <dt>Rozwiązanie</dt>
-      <dd>{idea.solution ?? 'jeszcze nie opisano'}</dd>
-      <dt>Etap rozwoju</dt>
-      <dd>{labelsOf(options.stages, [idea.stage]).join('') || idea.stage}</dd>
-      <dt>Sojusznicy</dt>
-      <dd>{idea.supporters ?? '-'}</dd>
-      <dt>Przeciwnicy</dt>
-      <dd>{idea.opponents ?? '-'}</dd>
-      <dt>Wartości emocjonalne</dt>
-      <dd>{labelsOf(options.emotionalValues, idea.emotionalValues).join(', ') || '-'}</dd>
-      <dt>Wartości funkcjonalne</dt>
-      <dd>{labelsOf(options.functionalValues, idea.functionalValues).join(', ') || '-'}</dd>
-      {idea.differenceNote && (
-        <>
-          <dt>Czym różni się od podobnych</dt>
-          <dd>{idea.differenceNote}</dd>
-        </>
-      )}
+    <dl className="grid gap-3">
+      {rows.map((row) => (
+        <div key={row.label} className="grid gap-1 border-b border-border-subtle pb-3 last:border-0 last:pb-0">
+          <dt className="text-label font-medium text-text-muted">{row.label}</dt>
+          <dd className="text-body text-text-primary">{row.value}</dd>
+        </div>
+      ))}
     </dl>
   )
 }
