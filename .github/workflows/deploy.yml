@@ -64,16 +64,30 @@ jobs:
             *[!A-Za-z0-9_./-]*) echo "DEPLOY_PATH contains unsupported characters" >&2; exit 1 ;;
           esac
           install -m 700 -d "${HOME}/.ssh"
-          printf '%s\n' "${DEPLOY_SSH_KEY}" > "${HOME}/.ssh/id_ed25519"
-          chmod 600 "${HOME}/.ssh/id_ed25519"
+          key_file="${HOME}/.ssh/deploy_key"
+          umask 077
+          if ! printf '%s' "${DEPLOY_SSH_KEY}" | base64 --decode > "${key_file}"; then
+            rm -f "${key_file}"
+            echo "DEPLOY_SSH_KEY is not valid Base64" >&2
+            exit 1
+          fi
+          chmod 600 "${key_file}"
+          if ! ssh-keygen -y -f "${key_file}" >/dev/null; then
+            rm -f "${key_file}"
+            echo "Decoded DEPLOY_SSH_KEY is not a valid OpenSSH private key" >&2
+            exit 1
+          fi
           printf '%s\n' "${DEPLOY_KNOWN_HOSTS}" > "${HOME}/.ssh/known_hosts"
           chmod 600 "${HOME}/.ssh/known_hosts"
 
       - name: Upload deployment bundle
         run: |
           staging_dir="${DEPLOY_PATH}/incoming/${GITHUB_SHA}"
-          ssh -p "${DEPLOY_PORT}" "${DEPLOY_USER}@${DEPLOY_HOST}" "mkdir -p -- '${staging_dir}'"
-          scp -P "${DEPLOY_PORT}" \
+          ssh -o BatchMode=yes -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes \
+            -i "${HOME}/.ssh/deploy_key" -p "${DEPLOY_PORT}" \
+            "${DEPLOY_USER}@${DEPLOY_HOST}" "mkdir -p -- '${staging_dir}'"
+          scp -o BatchMode=yes -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes \
+            -i "${HOME}/.ssh/deploy_key" -P "${DEPLOY_PORT}" \
             dist/castor-images.tar.gz \
             deploy/docker-compose.prod.yml \
             deploy/remote-deploy.sh \
@@ -82,9 +96,11 @@ jobs:
       - name: Activate release
         run: |
           staging_dir="${DEPLOY_PATH}/incoming/${GITHUB_SHA}"
-          ssh -p "${DEPLOY_PORT}" "${DEPLOY_USER}@${DEPLOY_HOST}" \
+          ssh -o BatchMode=yes -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes \
+            -i "${HOME}/.ssh/deploy_key" -p "${DEPLOY_PORT}" \
+            "${DEPLOY_USER}@${DEPLOY_HOST}" \
             "bash '${staging_dir}/remote-deploy.sh' '${DEPLOY_PATH}' '${GITHUB_SHA}' '${staging_dir}/castor-images.tar.gz' '${staging_dir}/docker-compose.prod.yml'"
 
       - name: Remove temporary SSH key
         if: always()
-        run: rm -f "${HOME}/.ssh/id_ed25519"
+        run: rm -f "${HOME}/.ssh/deploy_key"

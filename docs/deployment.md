@@ -15,7 +15,7 @@ The PostgreSQL/pgvector image remains a public third-party dependency and is pul
 
 [`../infra/cloudformation.yml`](../infra/cloudformation.yml) creates a dedicated VPC, public subnet, EC2 security group, Ubuntu 24.04 LTS instance, imported EC2 key pair, and an Elastic IP. The instance bootstrap installs Docker with Compose v2 and creates the `castor` deployment user and `/opt/castor/.env`.
 
-The template imports the repository's configured RSA public key as `${AWS::StackName}-deployment`. CloudFormation never receives or returns the matching private key. Make sure that private key is available locally and in the GitHub `DEPLOY_SSH_KEY` secret.
+The template imports the repository's configured RSA public key as `${AWS::StackName}-deployment`. CloudFormation never receives or returns the matching private key. Make sure that private key is available locally and in the GitHub `DEPLOY_SSH_KEY` secret as a single-line Base64 value.
 
 Determine the trusted public IPv4 CIDR that should be allowed to use SSH, and deploy the stack:
 
@@ -36,7 +36,15 @@ aws cloudformation describe-stacks \
   --output table
 ```
 
-Use the `PublicIp` output as `DEPLOY_HOST`, `castor` as `DEPLOY_USER`, and the private key matching `DeploymentKeyFingerprint` as `DEPLOY_SSH_KEY`. Before the first deployment, connect over SSH, wait for `sudo cloud-init status --wait`, and populate `/opt/castor/.env`.
+Use the `PublicIp` output as `DEPLOY_HOST`, `castor` as `DEPLOY_USER`, and the private key matching `DeploymentKeyFingerprint` as `DEPLOY_SSH_KEY`. Encode the complete private-key file on Linux before copying it into the GitHub secret:
+
+```bash
+base64 -w 0 ~/.ssh/id_rsa
+```
+
+Base64 is transport encoding, not encryption; GitHub Secrets remains the security boundary. During a deployment, the workflow decodes the secret into the runner's temporary `~/.ssh/deploy_key` file with mode `0600`, validates it with `ssh-keygen`, uses it explicitly for SSH and SCP, and removes it in an `always()` cleanup step.
+
+Before the first deployment, connect over SSH, wait for `sudo cloud-init status --wait`, and populate `/opt/castor/.env`.
 
 The `ApplicationPort` parameter must match `HTTP_PORT` in the server `.env`. The Elastic IP remains allocated until the stack is deleted. The application port is public by default; set `ApplicationAllowedCidr` when access should be restricted. For internet-facing production traffic, terminate TLS in a reverse proxy and restrict the exposed application port appropriately.
 
@@ -60,7 +68,7 @@ Create a GitHub environment named `production`. Protect it with required reviewe
 | --- | --- | --- |
 | `DEPLOY_HOST` | Secret | Server hostname or IP address. |
 | `DEPLOY_USER` | Secret | Unprivileged SSH deployment user. |
-| `DEPLOY_SSH_KEY` | Secret | Private SSH key dedicated to deployment. |
+| `DEPLOY_SSH_KEY` | Secret | Complete, non-interactive private SSH key encoded as single-line Base64. |
 | `DEPLOY_KNOWN_HOSTS` | Secret | Pinned server host-key line in OpenSSH `known_hosts` format. Obtain it through a trusted channel and verify its fingerprint. |
 | `DEPLOY_PORT` | Variable | SSH port; defaults to `22`. |
 | `DEPLOY_PATH` | Variable | Absolute server directory; defaults to `/opt/castor`. Only letters, digits, `_`, `.`, `/`, and `-` are accepted. |
