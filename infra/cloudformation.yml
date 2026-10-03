@@ -1,0 +1,211 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Castor production host with Docker, a dedicated VPC, and a stable public IPv4 address.
+
+Parameters:
+  KeyName:
+    Type: AWS::EC2::KeyPair::KeyName
+    Description: Existing EC2 key pair used to authenticate the castor deployment user over SSH.
+
+  SshAllowedCidr:
+    Type: String
+    Description: Trusted IPv4 CIDR allowed to connect over SSH, for example 203.0.113.10/32.
+    AllowedPattern: '^(?:25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])){3}/(?:[0-9]|[12][0-9]|3[0-2])$'
+    ConstraintDescription: Must be a valid IPv4 CIDR.
+
+  ApplicationAllowedCidr:
+    Type: String
+    Default: 0.0.0.0/0
+    Description: IPv4 CIDR allowed to reach the application port.
+    AllowedPattern: '^(?:25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])){3}/(?:[0-9]|[12][0-9]|3[0-2])$'
+    ConstraintDescription: Must be a valid IPv4 CIDR.
+
+  ApplicationPort:
+    Type: Number
+    Default: 8080
+    MinValue: 1
+    MaxValue: 65535
+    Description: Public TCP port exposed by the Castor frontend.
+
+  InstanceType:
+    Type: String
+    Default: t3.small
+    AllowedValues:
+      - t3.small
+      - t3.medium
+      - t3.large
+    Description: EC2 instance size for the application, API, and PostgreSQL containers.
+
+  RootVolumeSize:
+    Type: Number
+    Default: 30
+    MinValue: 20
+    MaxValue: 200
+    Description: Root gp3 volume size in GiB. Docker images and PostgreSQL data share this retained volume.
+
+  LatestAmiId:
+    Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
+    Default: /aws/service/canonical/ubuntu/server/noble/stable/current/amd64/hvm/ebs-gp3/ami-id
+    Description: Regional SSM parameter resolving to the current Ubuntu 24.04 LTS amd64 AMI.
+
+Resources:
+  Vpc:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.42.0.0/16
+      EnableDnsHostnames: true
+      EnableDnsSupport: true
+      InstanceTenancy: default
+      Tags:
+        - Key: Name
+          Value: !Sub ${AWS::StackName}-vpc
+
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+        - Key: Name
+          Value: !Sub ${AWS::StackName}-igw
+
+  VpcGatewayAttachment:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      InternetGatewayId: !Ref InternetGateway
+      VpcId: !Ref Vpc
+
+  PublicSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: !Select [0, !GetAZs '']
+      CidrBlock: 10.42.0.0/24
+      MapPublicIpOnLaunch: true
+      VpcId: !Ref Vpc
+      Tags:
+        - Key: Name
+          Value: !Sub ${AWS::StackName}-public
+
+  PublicRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref Vpc
+      Tags:
+        - Key: Name
+          Value: !Sub ${AWS::StackName}-public
+
+  PublicDefaultRoute:
+    Type: AWS::EC2::Route
+    DependsOn: VpcGatewayAttachment
+    Properties:
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref InternetGateway
+      RouteTableId: !Ref PublicRouteTable
+
+  PublicSubnetRouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref PublicRouteTable
+      SubnetId: !Ref PublicSubnet
+
+  ApplicationSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Castor SSH and application ingress
+      VpcId: !Ref Vpc
+      SecurityGroupIngress:
+        - Description: Restricted SSH access
+          IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: !Ref SshAllowedCidr
+        - Description: Castor frontend
+          IpProtocol: tcp
+          FromPort: !Ref ApplicationPort
+          ToPort: !Ref ApplicationPort
+          CidrIp: !Ref ApplicationAllowedCidr
+      SecurityGroupEgress:
+        - Description: Required for operating system updates and container image pulls
+          IpProtocol: -1
+          CidrIp: 0.0.0.0/0
+      Tags:
+        - Key: Name
+          Value: !Sub ${AWS::StackName}-host
+
+  ApplicationInstance:
+    Type: AWS::EC2::Instance
+    DependsOn: PublicDefaultRoute
+    Properties:
+      ImageId: !Ref LatestAmiId
+      InstanceType: !Ref InstanceType
+      KeyName: !Ref KeyName
+      SubnetId: !Ref PublicSubnet
+      SecurityGroupIds:
+        - !Ref ApplicationSecurityGroup
+      MetadataOptions:
+        HttpEndpoint: enabled
+        HttpTokens: required
+      BlockDeviceMappings:
+        - DeviceName: /dev/sda1
+          Ebs:
+            DeleteOnTermination: false
+            Encrypted: true
+            VolumeSize: !Ref RootVolumeSize
+            VolumeType: gp3
+      UserData:
+        Fn::Base64: |
+          #!/usr/bin/env bash
+          set -euxo pipefail
+
+          export DEBIAN_FRONTEND=noninteractive
+          apt-get update
+          apt-get install --yes docker.io docker-compose-v2
+          systemctl enable --now docker
+
+          id --user castor >/dev/null 2>&1 || useradd --create-home --shell /bin/bash castor
+          usermod --append --groups docker castor
+
+          install --directory --owner castor --group castor --mode 0750 /opt/castor
+          install --mode 0600 --owner castor --group castor /dev/null /opt/castor/.env
+          install --directory --owner castor --group castor --mode 0700 /home/castor/.ssh
+          install --mode 0600 --owner castor --group castor /home/ubuntu/.ssh/authorized_keys /home/castor/.ssh/authorized_keys
+
+          docker compose version
+      Tags:
+        - Key: Name
+          Value: !Sub ${AWS::StackName}-host
+        - Key: Application
+          Value: Castor
+
+  PublicIp:
+    Type: AWS::EC2::EIP
+    DependsOn: VpcGatewayAttachment
+    Properties:
+      Domain: vpc
+      Tags:
+        - Key: Name
+          Value: !Sub ${AWS::StackName}-public-ip
+
+  PublicIpAssociation:
+    Type: AWS::EC2::EIPAssociation
+    Properties:
+      AllocationId: !GetAtt PublicIp.AllocationId
+      InstanceId: !Ref ApplicationInstance
+
+Outputs:
+  InstanceId:
+    Description: EC2 instance ID.
+    Value: !Ref ApplicationInstance
+
+  PublicIp:
+    Description: Stable public IPv4 address to use as the GitHub DEPLOY_HOST secret.
+    Value: !Ref PublicIp
+
+  DeploymentUser:
+    Description: SSH user created for deployments.
+    Value: castor
+
+  SshCommand:
+    Description: Example SSH command. Add the matching private key option when it is not loaded by ssh-agent.
+    Value: !Sub ssh castor@${PublicIp}
+
+  ApplicationUrl:
+    Description: Public application URL before adding TLS and a domain name.
+    Value: !Sub http://${PublicIp}:${ApplicationPort}
