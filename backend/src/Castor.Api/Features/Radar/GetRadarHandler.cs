@@ -52,9 +52,10 @@ public sealed class GetRadarHandler(CastorDbContext db, IClock clock, IOptions<M
             reports.Count(report => report.MainChallengeAreaCode == area.Code && IsUnmatched(report, matchedIds)),
             genomeAreas.Count(codes => codes.Contains(area.Code))))];
 
+        // Grouped by key, not by the Municipality instance: a no-tracking query gives every report its own copy.
         List<MunicipalityNeedResponse> byMunicipality = [.. reports
             .Where(report => report.Municipality is not null)
-            .GroupBy(report => report.Municipality!)
+            .GroupBy(report => new { report.Municipality!.Teryt, report.Municipality.QualifiedName })
             .Select(group => new MunicipalityNeedResponse(
                 group.Key.Teryt,
                 group.Key.QualifiedName,
