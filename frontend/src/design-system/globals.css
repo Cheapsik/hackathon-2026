@@ -1,0 +1,219 @@
+/*
+ * Base element styles and surface recipes. Surfaces are utilities, so a component writes `surface-ceramic`
+ * instead of repeating background + border + shadow. None of them is blurred or translucent.
+ */
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    /* In px on purpose: in rem it grows with the A+/A++ text size and forces a horizontal scroll on phones. */
+    min-width: 320px;
+    min-height: 100dvh;
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+    letter-spacing: var(--tracking-ui);
+    color: var(--color-text-primary);
+    background-color: var(--color-canvas);
+  }
+
+  *,
+  ::before,
+  ::after {
+    border-color: var(--color-border-subtle);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background-color: color-mix(in srgb, var(--color-accent) 22%, transparent);
+  }
+
+  /* A visible focus on everything reachable by keyboard. Media surfaces swap --color-focus for a light ring. */
+  :focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-focus);
+    outline-offset: 3px;
+  }
+}
+
+/* The main product surface and grouped content: the lighter of the two neutrals, one shadow layer. */
+@utility surface-glass {
+  background-color: var(--color-surface-glass);
+  border: 1px solid var(--surface-border, var(--color-border-highlight));
+  box-shadow: var(--shadow-card);
+}
+
+/* Fields and controls that sit on another surface. */
+@utility surface-glass-strong {
+  background-color: var(--color-surface-glass-strong);
+  border: 1px solid var(--surface-border, var(--color-border-highlight));
+  box-shadow: var(--shadow-control);
+}
+
+/* Readable foreground surface for content and forms. */
+@utility surface-ceramic {
+  background-color: var(--color-surface-ceramic);
+  border: 1px solid var(--surface-border, var(--color-border-subtle));
+  box-shadow: var(--shadow-card);
+}
+
+/* Layer above everything else: bottom dock, tooltips, toasts. */
+@utility surface-floating {
+  background-color: var(--color-surface-glass-strong);
+  border: 1px solid var(--surface-border, var(--color-border-highlight));
+  box-shadow: var(--shadow-floating);
+}
+
+/* Readable content above a scrim, or a popover: the opaque surface with floating depth. */
+@utility surface-overlay {
+  background-color: var(--color-surface-ceramic);
+  border: 1px solid var(--surface-border, var(--color-border-subtle));
+  box-shadow: var(--shadow-floating);
+}
+
+/* Controls laid over a photo or the media fallback (hero controls, category orbit). */
+@utility surface-on-media {
+  color: var(--color-on-media);
+  background-color: var(--color-on-media-glass);
+  border: 1px solid var(--color-on-media-border);
+  box-shadow: var(--shadow-on-media);
+  --color-focus: var(--color-on-media);
+}
+
+/* Plain page background for pages that do not use the AppShell (design-system preview). */
+@utility ambient-light {
+  background-color: var(--color-app);
+}
+
+/*
+ * Border tone for any surface-* element. Surfaces draw their border through --surface-border, so these never
+ * fight the material utility over the `border` property.
+ */
+@utility surface-invalid {
+  --surface-border: var(--color-danger);
+}
+
+@utility surface-field {
+  --surface-border: var(--color-border-strong);
+}
+
+@utility surface-danger-zone {
+  --surface-border: color-mix(in srgb, var(--color-danger) 45%, transparent);
+}
+
+/* Neutral stand-in for a missing photo: graphite-grey with one soft light spot, never a coloured orb. */
+@utility media-fallback {
+  color: var(--color-on-media);
+  background-color: var(--color-media);
+  background-image: radial-gradient(70% 60% at 30% 25%, var(--color-on-media-glass), transparent 70%),
+    radial-gradient(60% 50% at 85% 90%, var(--color-scrim), transparent 75%);
+}
+
+/* Loading placeholder; the light band travels left, slowed to nothing under reduced motion. */
+@utility skeleton {
+  background-color: var(--color-skeleton);
+  background-image: linear-gradient(
+    90deg,
+    transparent 25%,
+    color-mix(in srgb, var(--color-surface-glass-strong) 70%, transparent) 50%,
+    transparent 75%
+  );
+  background-size: 200% 100%;
+  animation: var(--animate-shimmer);
+}
+
+@utility tabular {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+@utility transition-control {
+  transition-property: transform, color, background-color, border-color, box-shadow, opacity;
+  transition-duration: var(--duration-fast);
+  transition-timing-function: var(--ease-standard);
+}
+
+/* Pressed feedback for anything clickable. */
+@utility press {
+  &:active:not(:disabled, [aria-disabled='true']) {
+    transform: translateY(1px);
+  }
+}
+
+/* Extends a compact control's hit area to the 44 × 44 px touch target without changing how it looks. */
+@utility touch-hitbox {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 50% auto auto 50%;
+    width: max(100%, var(--spacing-touch));
+    height: max(100%, var(--spacing-touch));
+    transform: translate(-50%, -50%);
+  }
+}
+
+@utility scrollbar-none {
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/*
+ * Geometry of the immersive detail screen (reference: Sleep), shared by ImmersiveHero, CategoryOrbit and
+ * CurvedContentSheet. The sheet's element starts `--sheet-overlap` above the hero's bottom; its visible edge
+ * sits 0.5 rem above the hero's bottom in the middle and ~2 rem higher at the sides. The orbit follows that arc.
+ */
+@utility immersive-geometry {
+  --sheet-arc-depth: 7.75rem;
+  --sheet-overlap: 8.25rem;
+  --orbit-arc: 1.25rem;
+}
+
+/* Scrim that keeps white hero copy at 4.5:1 even over a bright photo, lighter in the middle of the image. */
+@utility media-scrim {
+  background-image: linear-gradient(
+    to bottom,
+    var(--color-scrim-strong) 0%,
+    var(--color-scrim-strong) 45%,
+    var(--color-scrim) 65%,
+    var(--color-scrim-strong) 100%
+  );
+}
+
+/* One item of CategoryOrbit, raised along the sheet's arc; --orbit-lift is 0 in the middle, 1 at the ends. */
+@utility orbit-item {
+  translate: 0 calc(var(--orbit-arc, 0rem) * var(--orbit-lift, 0) * -1);
+}
+
+/*
+ * Concave top edge of the content sheet of the immersive detail screen: the middle dips below the sides by
+ * about 2 rem. The mask cuts a wide ellipse out of the sheet's top; the parent draws the shadow with
+ * drop-shadow, which follows the masked shape.
+ */
+@utility sheet-arc {
+  -webkit-mask-image: radial-gradient(
+    75% var(--sheet-arc-depth) at 50% 0,
+    transparent calc(100% - 1px),
+    #000 100%
+  );
+  mask-image: radial-gradient(75% var(--sheet-arc-depth) at 50% 0, transparent calc(100% - 1px), #000 100%);
+}

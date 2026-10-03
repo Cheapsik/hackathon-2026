@@ -1,71 +1,47 @@
 import { useEffect, useRef } from 'react'
-import { Link, NavLink, Outlet, useLocation } from 'react-router'
+import { House } from 'lucide-react'
+import { Link, Outlet, useLocation } from 'react-router'
+import { BrandMark } from '@/components/layout/BrandMark'
 import { DisplayControls } from '@/components/layout/DisplayControls'
-import { cn } from '@/lib/utils'
+import { AppShell, type AppShellNavItem } from '@/design-system'
+import { useDisplayPreferences } from '@/hooks/use-display-preferences'
 
-const navigation = [{ to: '/', label: 'Strona główna' }]
+const navigation: AppShellNavItem[] = [{ to: '/', label: 'Strona główna', icon: House, end: true }]
 
 /**
- * Landmarks, skip link and display switches shared by every page. After a navigation the focus moves to <main>,
- * so a screen reader starts reading the new page instead of staying on the clicked link.
+ * Castor's chrome around every page (AppShell from the design system). After a navigation the focus moves to
+ * <main>, so a screen reader starts reading the new page instead of staying on the clicked link.
  */
 export function AppLayout() {
   const mainRef = useRef<HTMLElement>(null)
   const location = useLocation()
-  const isFirstRender = useRef(true)
+  // Compared with the previous path, not a "first render" flag: StrictMode runs effects twice on mount, which
+  // used the flag up and moved focus (and scroll) to <main> on the very first load.
+  const previousPathname = useRef(location.pathname)
+  const [preferences, setPreferences] = useDisplayPreferences()
 
   useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false
+    if (previousPathname.current === location.pathname) {
       return
     }
 
+    previousPathname.current = location.pathname
     mainRef.current?.focus()
   }, [location.pathname])
 
   return (
-    <div className="flex min-h-svh flex-col">
-      <a
-        href="#main"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"
-      >
-        Przejdź do treści
-      </a>
-
-      <header className="border-b">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-4 py-3">
-          <Link to="/" className="flex flex-col leading-tight">
-            <span className="text-xl font-bold">Castor</span>
-            <span className="text-sm text-muted-foreground">Małopolski Hub Innowacji Społecznych</span>
-          </Link>
-          <nav aria-label="Główna">
-            <ul className="flex flex-wrap gap-4">
-              {navigation.map((item) => (
-                <li key={item.to}>
-                  <NavLink
-                    to={item.to}
-                    end
-                    className={({ isActive }) => cn('underline-offset-4 hover:underline', isActive && 'font-semibold underline')}
-                  >
-                    {item.label}
-                  </NavLink>
-                </li>
-              ))}
-            </ul>
-          </nav>
-          <DisplayControls />
-        </div>
-      </header>
-
-      <main id="main" ref={mainRef} tabIndex={-1} className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 outline-none">
-        <Outlet />
-      </main>
-
-      <footer className="border-t">
-        <div className="mx-auto max-w-6xl px-4 py-6 text-sm text-muted-foreground">
-          Regionalny Ośrodek Polityki Społecznej w Krakowie
-        </div>
-      </footer>
-    </div>
+    <AppShell
+      brand={
+        <Link to="/" aria-label="Castor, strona główna" className="rounded-button pr-2">
+          <BrandMark />
+        </Link>
+      }
+      navigation={navigation}
+      utilities={<DisplayControls preferences={preferences} onChange={setPreferences} />}
+      footer="Regionalny Ośrodek Polityki Społecznej w Krakowie"
+      mainRef={mainRef}
+    >
+      <Outlet />
+    </AppShell>
   )
 }
