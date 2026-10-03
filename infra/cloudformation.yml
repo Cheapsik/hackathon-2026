@@ -174,7 +174,7 @@ Resources:
 
           export DEBIAN_FRONTEND=noninteractive
           apt-get update
-          apt-get install --yes docker.io docker-compose-v2
+          apt-get install --yes docker.io docker-compose-v2 openssl
           systemctl enable --now docker
 
           id --user castor >/dev/null 2>&1 || useradd --create-home --shell /bin/bash castor

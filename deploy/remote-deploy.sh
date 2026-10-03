@@ -21,7 +21,7 @@ if [[ ! -f ${image_bundle} || ! -f ${incoming_compose} ]]; then
   exit 2
 fi
 
-for required_command in docker gzip flock; do
+for required_command in docker gzip flock openssl; do
   if ! command -v "${required_command}" >/dev/null 2>&1; then
     echo "Required command is not installed: ${required_command}" >&2
     exit 2
@@ -35,6 +35,8 @@ fi
 
 mkdir -p "${deploy_dir}"
 env_file="${deploy_dir}/.env"
+certificate_file="${deploy_dir}/certs/fullchain.pem"
+private_key_file="${deploy_dir}/certs/privkey.pem"
 compose_file="${deploy_dir}/docker-compose.yml"
 previous_compose_file="${deploy_dir}/docker-compose.previous.yml"
 current_version_file="${deploy_dir}/.current-version"
@@ -68,6 +70,28 @@ fi
 
 if ! grep -Eq '^POSTGRES_PASSWORD=.+$' "${env_file}"; then
   echo "POSTGRES_PASSWORD must be set in ${env_file}." >&2
+  exit 1
+fi
+
+if [[ ! -s ${certificate_file} || ! -s ${private_key_file} ]]; then
+  echo "Install the TLS certificate in ${deploy_dir}/certs before deployment." >&2
+  exit 1
+fi
+
+if ! openssl x509 -in "${certificate_file}" -noout -checkend 0 >/dev/null 2>&1; then
+  echo "The TLS certificate is invalid or expired: ${certificate_file}" >&2
+  exit 1
+fi
+
+if ! openssl pkey -in "${private_key_file}" -passin pass: -noout >/dev/null 2>&1; then
+  echo "The TLS private key must be valid and unencrypted: ${private_key_file}" >&2
+  exit 1
+fi
+
+certificate_public_key=$(openssl x509 -in "${certificate_file}" -pubkey -noout)
+private_public_key=$(openssl pkey -in "${private_key_file}" -passin pass: -pubout)
+if [[ ${certificate_public_key} != "${private_public_key}" ]]; then
+  echo "The TLS certificate and private key do not match." >&2
   exit 1
 fi
 
