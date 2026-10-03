@@ -32,7 +32,7 @@ jobs:
 
       - name: Validate deployment configuration
         env:
-          CASTOR_ENV_FILE: ${{ github.workspace }}/.env.example
+          CASTOR_ENV_FILE: ${{ github.workspace }}/.env
           CASTOR_IMAGE_TAG: validation
           POSTGRES_PASSWORD: validation
         run: docker compose -f deploy/docker-compose.prod.yml config --quiet
@@ -94,6 +94,8 @@ jobs:
             "${DEPLOY_USER}@${DEPLOY_HOST}:${staging_dir}/"
 
       - name: Activate release
+        env:
+          CASTOR_ENV_FILE: ${{ github.workspace }}/.env
         run: |
           staging_dir="${DEPLOY_PATH}/incoming/${GITHUB_SHA}"
           ssh -o BatchMode=yes -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes \
