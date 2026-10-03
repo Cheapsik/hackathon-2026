@@ -40,7 +40,7 @@ export function IdeaAssistantChat({ ideaId }: { ideaId: string }) {
     <section aria-labelledby="idea-assistant-title">
       <h2 id="idea-assistant-title">Asystent Kreatora</h2>
       <p>
-        Asystent podpowie, czego brakuje w Canvasie, i pomoże opisać pomysł. Nie wpisuj danych osobowych — imiona,
+        Asystent podpowie, czego brakuje w Canvasie, i pomoże opisać pomysł. Nie wpisuj danych osobowych - imiona,
         telefony i adresy usuwamy, zanim wiadomość trafi do modelu językowego.
       </p>
 

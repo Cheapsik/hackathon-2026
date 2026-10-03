@@ -53,7 +53,12 @@ export function AppLayout() {
   // used the flag up and moved focus (and scroll) to <main> on the very first load.
   const previousPathname = useRef(location.pathname)
   const [preferences, setPreferences] = useDisplayPreferences()
-  const fullBleed = location.pathname === '/'
+  const fullBleed =
+    location.pathname === '/' ||
+    location.pathname === '/logowanie' ||
+    location.pathname === '/rejestracja' ||
+    location.pathname === '/biblioteka' ||
+    location.pathname.startsWith('/admin')
   const session = useSession()
   const links = navigationFor(session)
 

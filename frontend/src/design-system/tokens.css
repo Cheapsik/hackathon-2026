@@ -150,8 +150,60 @@
   --ambient-light: none;
 }
 
-/* High contrast (DisplayControls): black on white, every boundary at full strength. */
+/*
+ * Dark theme (DisplayControls → Motyw). Same warm green neutrals, inverted: light ink on dark surfaces,
+ * lifted primary so the main action stays obvious. Applied via data-theme on <html>; high contrast below
+ * wins when both are on.
+ */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --color-canvas: #141816;
+  --color-app: #141816;
+  --color-surface-glass: #1c211e;
+  --color-surface-glass-strong: #252b27;
+  --color-surface-ceramic: #252b27;
+  --color-surface-solid: #1c211e;
+  --color-chip: #3a5248;
+  --color-surface-active: #2f6b5c;
+  --color-primary-hover: #3a7d6c;
+  --color-text-primary: #f0f2ed;
+  --color-text-muted: #a3aaa5;
+  --color-text-faint: #a3aaa5;
+  --color-text-inverse: #fcfcf8;
+  --color-border-subtle: rgb(240 242 237 / 0.14);
+  --color-border-highlight: rgb(240 242 237 / 0.14);
+  --color-border-strong: #8a928c;
+  --color-accent: #9ec9b4;
+  --color-focus: #9ec9b4;
+  --color-success: #6fbf8f;
+  --color-success-soft: #24362d;
+  --color-warning: #e0c36a;
+  --color-warning-soft: #3a3420;
+  --color-danger: #e07070;
+  --color-danger-soft: rgb(224 112 112 / 0.16);
+  --color-scrim: rgb(0 0 0 / 0.55);
+  --color-scrim-strong: rgb(0 0 0 / 0.78);
+  --color-skeleton: rgb(240 242 237 / 0.1);
+  --color-media: #3a433e;
+  --color-on-media: #fcfcf8;
+  --color-on-media-muted: rgb(252 252 248 / 0.86);
+  --color-on-media-glass: rgb(0 0 0 / 0.4);
+  --color-on-media-border: rgb(252 252 248 / 0.3);
+
+  --shadow-contact: 0 1px 0 rgb(0 0 0 / 0.35);
+  --shadow-control: none;
+  --shadow-control-raised: 0 2px 8px -2px rgb(0 0 0 / 0.45);
+  --shadow-primary: inset 0 1px 0 rgb(255 255 255 / 0.12);
+  --shadow-card: 0 12px 32px -16px rgb(0 0 0 / 0.55);
+  --shadow-floating: 0 16px 40px -16px rgb(0 0 0 / 0.65);
+  --drop-shadow-sheet: 0 -10px 24px rgb(0 0 0 / 0.35);
+}
+
+/* High contrast (DisplayControls): black on white, every boundary at full strength. Wins over data-theme. */
 :root[data-contrast='high'] {
+  color-scheme: light;
+
   --color-canvas: #ffffff;
   --color-app: #ffffff;
   --color-surface-glass: #ffffff;

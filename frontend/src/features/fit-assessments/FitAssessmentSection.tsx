@@ -17,7 +17,7 @@ import { errorMessage } from '@/lib/error-message'
 const municipalityParam = 'gmina'
 
 /**
- * "Sprawdź dla mojej gminy": choose a gmina, then see its stored card or — when signed in — generate it. The gmina lives
+ * "Sprawdź dla mojej gminy": choose a gmina, then see its stored card or - when signed in - generate it. The gmina lives
  * in the URL (?gmina=TERYT), so a card can be shared as a link.
  */
 export function FitAssessmentSection({ innovationId }: { innovationId: string }) {

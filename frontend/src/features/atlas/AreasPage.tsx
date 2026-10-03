@@ -1,5 +1,7 @@
 import { Link } from 'react-router'
+import { Map } from 'lucide-react'
 import { useGetApiChallengeAreas } from '@/api/generated/castor'
+import { CeramicCard, EmptyState, ErrorState, LoadingState, SoftButton } from '@/design-system'
 import { usePageTitle } from '@/hooks/use-page-title'
 import { errorMessage } from '@/lib/error-message'
 
@@ -7,41 +9,58 @@ import { errorMessage } from '@/lib/error-message'
 export function AreasPage() {
   usePageTitle('Atlas wyzwań')
   const areas = useGetApiChallengeAreas()
+  const rows = areas.data?.data ?? []
+  const pageStatus =
+    areas.isPending && !areas.data ? 'loading' : areas.isError ? 'error' : rows.length === 0 ? 'empty' : 'ready'
 
   return (
-    <>
-      <h1>Atlas wyzwań</h1>
-      <p>
-        Osiem obszarów Mapy Wyzwań Społecznych ROPS. Dane opisów są krajowe. Wybierz obszar, żeby zobaczyć personę, dane
-        swojej gminy i pasujące innowacje.
-      </p>
-      <p>
-        <Link to="/biblioteka">Biblioteka innowacji</Link>
-        {' · '}
-        <Link to="/mapa">Mapa gminy</Link>
-        {' · '}
-        <Link to="/materialy">Materiały edukacyjne</Link>
-      </p>
-      <div aria-live="polite">
-        {areas.isPending && (
-          <p>
-            <output>Wczytuję obszary…</output>
+    <div className="grid gap-6">
+      <header className="grid gap-4 md:flex md:items-end md:justify-between">
+        <div className="grid max-w-default gap-2">
+          <h1 className="font-display text-page-title tracking-display">Atlas wyzwań</h1>
+          <p className="text-body text-text-muted">
+            Osiem obszarów Mapy Wyzwań Społecznych ROPS. Wybierz obszar, żeby zobaczyć personę, dane gminy i innowacje.
           </p>
-        )}
-        {areas.isError && <p role="alert">{errorMessage(areas.error)}</p>}
-      </div>
-      <ul>
-        {(areas.data?.data ?? []).map((area) => (
-          <li key={area.code}>
-            <h2>
-              <Link to={`/obszary/${area.code}`}>
-                {area.number}. {area.name}
-              </Link>
-            </h2>
-            <p>{area.definition.slice(0, 280)}…</p>
-          </li>
-        ))}
-      </ul>
-    </>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          <SoftButton asChild variant="secondary">
+            <Link to="/biblioteka">Biblioteka</Link>
+          </SoftButton>
+          <SoftButton asChild variant="secondary">
+            <Link to="/mapa">Mapa gminy</Link>
+          </SoftButton>
+          <SoftButton asChild variant="ghost">
+            <Link to="/materialy">Materiały</Link>
+          </SoftButton>
+        </div>
+      </header>
+
+      {pageStatus === 'loading' && <LoadingState label="Wczytuję obszary…" />}
+      {pageStatus === 'error' && (
+        <ErrorState
+          description={errorMessage(areas.error)}
+          onRetry={() => {
+            void areas.refetch()
+          }}
+        />
+      )}
+      {pageStatus === 'empty' && <EmptyState title="Brak obszarów" icon={Map} />}
+
+      {pageStatus === 'ready' && (
+        <ul className="grid gap-3 sm:grid-cols-2">
+          {rows.map((area) => (
+            <li key={area.code} className="min-w-0">
+              <CeramicCard asChild interactive padding="lg" className="h-full">
+                <Link to={`/obszary/${area.code}`} className="grid h-full gap-2">
+                  <span className="text-label font-medium text-text-muted">Obszar {area.number}</span>
+                  <span className="font-display text-section-title tracking-display">{area.name}</span>
+                  <span className="line-clamp-3 text-body-sm text-text-muted">{area.definition}</span>
+                </Link>
+              </CeramicCard>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
   )
 }

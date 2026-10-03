@@ -18,7 +18,7 @@ export function IdeaSeeksTestersSection({ idea, onUpdated }: { idea: IdeaRespons
 
   return (
     <section aria-labelledby="idea-testers-title">
-      <h2 id="idea-testers-title">Poletko — szukam testerów</h2>
+      <h2 id="idea-testers-title">Poletko - szukam testerów</h2>
       <p>
         {idea.seeksTesters
           ? 'Pomysł jest na liście testów. Osoby z profilem testera mogą się zapisać.'

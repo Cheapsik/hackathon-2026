@@ -91,7 +91,7 @@ export function TokenSpecimens() {
         </CeramicCard>
       </Section>
 
-      <Section titleAs="h3" title="Odstępy i promienie" description="Tylko skala 4–64 px. Promienie: control 10 < button i pole 14 < card 16 < panel 22. Koło tylko dla statusu i przełącznika.">
+      <Section titleAs="h3" title="Odstępy i promienie" description="Tylko skala 4-64 px. Promienie: control 10 < button i pole 14 < card 16 < panel 22. Koło tylko dla statusu i przełącznika.">
         <div className="grid gap-4 lg:grid-cols-2">
           <CeramicCard padding="lg" className="grid gap-2">
             {spacingSteps.map((step) => (

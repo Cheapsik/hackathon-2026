@@ -96,7 +96,7 @@ export function IdeaCanvasForm({ initial, submitLabel, pending, onSubmit, onCanc
           <label key={stage.code}>
             <input type="radio" name="stage" value={stage.code} checked={values.stage === stage.code} onChange={() => set('stage', stage.code)} />{' '}
             {stage.label}
-            {stage.hint && ` — ${stage.hint}`}
+            {stage.hint && ` - ${stage.hint}`}
             <br />
           </label>
         ))}
@@ -177,7 +177,7 @@ function ScaleGroup({
       {levels.map((level) => (
         <label key={level.level}>
           <input type="radio" name={name} checked={value === Number(level.level)} onChange={() => onChange(Number(level.level))} />{' '}
-          {level.level}. {level.label} — {level.hint}
+          {level.level}. {level.label} - {level.hint}
           <br />
         </label>
       ))}
@@ -214,7 +214,7 @@ function ChoiceGroup({
               onChange={(event) => onChange(event.target.checked ? [...selected, option.code] : selected.filter((code) => code !== option.code))}
             />{' '}
             {option.label}
-            {option.hint && ` — ${option.hint}`}
+            {option.hint && ` - ${option.hint}`}
             <br />
           </label>
         )

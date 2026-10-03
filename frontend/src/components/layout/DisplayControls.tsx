@@ -1,5 +1,5 @@
 import { SegmentedControl, SwitchField, type SegmentedOption } from '@/design-system'
-import type { DisplayPreferences, TextSize } from '@/lib/display-preferences'
+import type { ColorScheme, DisplayPreferences, TextSize } from '@/lib/display-preferences'
 
 /** Each size is shown at its own scale, so the choice previews itself. */
 const textSizes: SegmentedOption<TextSize>[] = [
@@ -8,12 +8,18 @@ const textSizes: SegmentedOption<TextSize>[] = [
   { value: 'larger', label: <span className="text-section-title">A++</span>, ariaLabel: 'Tekst największy' },
 ]
 
+const colorSchemes: SegmentedOption<ColorScheme>[] = [
+  { value: 'light', label: 'Jasny' },
+  { value: 'dark', label: 'Ciemny' },
+  { value: 'system', label: 'System' },
+]
+
 type DisplayControlsProps = {
   preferences: DisplayPreferences
   onChange: (preferences: DisplayPreferences) => void
 }
 
-/** Text size, high contrast and reduced motion, remembered in this browser. Lives in the "Dostępność" panel. */
+/** Text size, theme, high contrast and reduced motion, remembered in this browser. Lives in "Dostępność". */
 export function DisplayControls({ preferences, onChange }: DisplayControlsProps) {
   return (
     <div className="grid gap-4">
@@ -27,9 +33,19 @@ export function DisplayControls({ preferences, onChange }: DisplayControlsProps)
           fullWidth
         />
       </div>
+      <div className="grid gap-2">
+        <p className="text-label font-medium text-text-muted">Motyw</p>
+        <SegmentedControl
+          label="Motyw kolorystyczny"
+          options={colorSchemes}
+          value={preferences.colorScheme}
+          onValueChange={(colorScheme) => onChange({ ...preferences, colorScheme })}
+          fullWidth
+        />
+      </div>
       <SwitchField
         label="Wysoki kontrast"
-        description="Czarny tekst na białym tle, wyraźne krawędzie."
+        description="Czarny tekst na białym tle, wyraźne krawędzie. Nadpisuje jasny i ciemny motyw."
         checked={preferences.highContrast}
         onCheckedChange={(highContrast) => onChange({ ...preferences, highContrast })}
       />

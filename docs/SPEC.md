@@ -29,7 +29,7 @@ Platforma Małopolskiego Hubu Innowacji Społecznych (ROPS Kraków). Mieszkaniec
 | UI                     | **shadcn/ui + Tailwind CSS** (Radix pod spodem, dostępność)                                                                                 |
 | Kontrakt API           | **REST + OpenAPI** z .NET pod prefiksem `/api`; `backend/openapi/Castor.Api.json` powstaje przy buildzie backendu i jest commitowany; frontend generuje z niego klienta **orval** + **TanStack Query** |
 | Logowanie i role       | **Sesja w cookie** (`Castor.Auth`) + `PasswordHasher<User>`, bez ASP.NET Core Identity jako frameworka i bez JWT ([ADR 0001](adr/0001-cookie-session-instead-of-jwt.md)); role w sekcji 5 |
-| LLM                    | **Za abstrakcją z adapterami** (`ILlmClient` w `Shared/Ai/`). Dostawca, model, klucz i URL z sekretów. Nie wiązać kodu z jednym dostawcą. **Pierwszy dostawca do ustalenia** ([TODO](TODO.md)) |
+| LLM                    | **Za abstrakcją z adapterami** (`ILlmClient` w `Shared/Ai/`). Dostawca, model, klucz i URL z sekretów. Nie wiązać kodu z jednym dostawcą. Zaimplementowane: `placeholder` i OpenAI Responses API (`openai`) |
 | Embeddingi             | **Do ustalenia** ([TODO](TODO.md)). Interfejs `IEmbeddingClient` (`Shared/Ai/`) z adapterami jak przy LLM; model i wymiar wektora z konfiguracji. Nie hardkoduj wymiaru |
 | Czas rzeczywisty       | **SignalR**. Bez e-maili, SMS-ów i push: tylko aktualizacje na żywo w aplikacji                                                             |
 | Głos                   | **Web Speech API** w przeglądarce (`pl-PL`), zawsze z polem tekstowym jako alternatywą                                                      |

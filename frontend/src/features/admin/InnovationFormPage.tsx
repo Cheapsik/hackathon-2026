@@ -95,7 +95,7 @@ function InnovationForm({ innovation }: { innovation?: InnovationResponse }) {
         <Link to="/admin/wiedza">Wróć do wiedzy</Link>
       </p>
       <h1>{innovation ? `Edycja: ${innovation.title}` : 'Nowa innowacja'}</h1>
-      {innovation && <p>Zmiana karty nie zmienia genomu — przelicz go po zapisie, jeśli treść zmieniła się istotnie.</p>}
+      {innovation && <p>Zmiana karty nie zmienia genomu - przelicz go po zapisie, jeśli treść zmieniła się istotnie.</p>}
       <form onSubmit={submit}>
         {textFields.map((field) => (
           <p key={field.key}>

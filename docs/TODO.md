@@ -55,14 +55,14 @@ Kolumna `embedding vector(N)` genomu jeszcze nie istnieje — dojdzie migracją 
 - **Lista zapisanych testerów dla zespołu** (poza samym `signedUp` na liście publicznej): brak osobnego widoku zgłoszeń testerów z profilami.
 - **Powiadomienie SignalR** o nowym zapisie albo opinii: brak; zespół odświeża podsumowanie ręcznie.
 
-## LLM — dostawca i pierwsze adaptery
+## LLM — kolejne adaptery
 
-SPEC §1 i §3 wymagają abstrakcji `ILlmClient` z adapterami wybieranymi przez `Llm__Provider`. Nie ustalono, którego dostawcę obsługujemy pierwszego ani do którego jest klucz na demo.
+SPEC §1 i §3 wymagają abstrakcji `ILlmClient` z adapterami wybieranymi przez `Llm__Provider`. Zaimplementowane są `placeholder` oraz `openai` korzystający z OpenAI Responses API. Model i klucz dla demo pozostają konfiguracją środowiska, nie częścią repozytorium.
 
-Propozycja z sesji projektowej: adapter `anthropic` i `openai-compatible` (obejmuje OpenAI, Ollama, vLLM) na `HttpClient`, bez SDK dostawców.
+Do ewentualnego dodania pozostają adaptery `anthropic` i `openai-compatible` dla Ollama lub vLLM.
 
-Stan: działa dostawca `placeholder` (`Shared/Ai/Placeholder/`, SPEC D-19) — bez usługi zewnętrznej, z deterministycznymi odpowiedziami z pokrycia słów. Dzięki niemu przepływy modułu I działają od końca do końca, ale wyniki są tylko wiarygodne, nie trafne.
+`placeholder` (`Shared/Ai/Placeholder/`, SPEC D-19) pozostaje domyślny, bez usługi zewnętrznej i z deterministycznymi odpowiedziami z pokrycia słów. Dzięki niemu przepływy działają bez klucza, ale wyniki są tylko wiarygodne, nie trafne.
 
-Prawdziwy adapter dokłada się w `Shared/Ai/` jako kolejna implementacja `ILlmClient` i kolejny `case` w `Program.cs` (`Llm:Provider`); prompty i potoki (`ProblemClassifier`, `Matchmaker`, `GenomeGenerator`) zostają bez zmian. Wymagania z SPEC §9: timeout, ponowienie przy 429/5xx, log czasu i tokenów bez treści.
+Kolejny adapter dokłada się w `Shared/Ai/` jako następna implementacja `ILlmClient` i kolejny `case` w `Program.cs` (`Llm:Provider`); prompty i potoki zostają bez zmian. Każdy adapter musi zachować wymagania z SPEC §9: timeout, ponowienie przy 429/5xx, log czasu i tokenów bez treści.
 
-Blokuje: **trafność** każdej funkcji AI — klasyfikacji i rankingu zgłoszeń (moduł I), genomów innowacji, karty dopasowania (moduł VII), asystentów, szkiców odpowiedzi i naborów (moduł VI), trybu „Prościej”. Po podłączeniu adaptera genomy policzone placeholderem trzeba przeliczyć (usunąć wiersze `InnovationGenomes`; zadanie po imporcie policzy brakujące).
+Po włączeniu `openai` genomy policzone placeholderem trzeba przeliczyć (usunąć wiersze `InnovationGenomes`; zadanie po imporcie policzy brakujące).

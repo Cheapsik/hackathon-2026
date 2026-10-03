@@ -1,4 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query'
+import { ArrowLeft } from 'lucide-react'
 import { Link, useParams } from 'react-router'
 import {
   getGetApiConversationsConversationIdQueryKey,
@@ -10,6 +11,13 @@ import {
 import { ConversationThread } from '@/features/conversations/ConversationThread'
 import { conversationKindLabels } from '@/features/conversations/labels'
 import { StatusTimeline } from '@/features/problem-reports/StatusTimeline'
+import {
+  Badge,
+  CeramicCard,
+  ErrorState,
+  LoadingState,
+  SoftButton,
+} from '@/design-system'
 import { usePageTitle } from '@/hooks/use-page-title'
 import { errorMessage } from '@/lib/error-message'
 
@@ -22,29 +30,38 @@ export function ConversationPage() {
   usePageTitle(title)
 
   return (
-    <>
-      <p>
-        <Link to="/watki">Wróć do wątków</Link>
-      </p>
-      {conversation.isPending && (
-        <p>
-          <output>Wczytuję wątek…</output>
-        </p>
-      )}
+    <div className="grid gap-6">
+      <SoftButton asChild variant="ghost" icon={<ArrowLeft aria-hidden />}>
+        <Link to="/watki">Moje wątki</Link>
+      </SoftButton>
+
+      {conversation.isPending && <LoadingState label="Wczytuję wątek…" />}
       {conversation.isError && (
         <>
-          <h1>Wątek</h1>
-          <p role="alert">{errorMessage(conversation.error, { 404: 'Nie ma takiego wątku albo nie masz do niego dostępu.' })}</p>
+          <h1 className="font-display text-page-title tracking-display">Wątek</h1>
+          <ErrorState
+            description={errorMessage(conversation.error, {
+              404: 'Nie ma takiego wątku albo nie masz do niego dostępu.',
+            })}
+            onRetry={() => {
+              void conversation.refetch()
+            }}
+          />
         </>
       )}
       {item && (
         <>
-          <h1>{title}</h1>
+          <header className="grid gap-3">
+            <div className="flex flex-wrap items-center gap-2">
+              <Badge>{conversationKindLabels[item.kind] ?? item.kind}</Badge>
+            </div>
+            <h1 className="font-display text-page-title tracking-display">{title}</h1>
+          </header>
           <ConversationContext conversation={item} />
           <ConversationThread conversationId={item.id} headingLevel={2} />
         </>
       )}
-    </>
+    </div>
   )
 }
 
@@ -64,34 +81,51 @@ function ConversationContext({ conversation }: { conversation: ConversationRespo
   }
 
   return (
-    <p>
-      {kind}
-      {conversation.challengeArea && <>, obszar wyzwań: {conversation.challengeArea.name}</>}
-      {conversation.innovation && (
-        <>
-          : <Link to={`/innowacje/${conversation.innovation.id}`}>{conversation.innovation.title}</Link>
-        </>
-      )}
-      .
-    </p>
+    <CeramicCard padding="lg">
+      <p className="text-body text-text-muted">
+        {kind}
+        {conversation.challengeArea && <> · obszar: {conversation.challengeArea.name}</>}
+        {conversation.innovation && (
+          <>
+            {' · '}
+            <Link
+              to={`/innowacje/${conversation.innovation.id}`}
+              className="font-medium text-text-primary underline-offset-4 hover:underline"
+            >
+              {conversation.innovation.title}
+            </Link>
+          </>
+        )}
+      </p>
+    </CeramicCard>
   )
 }
 
-function ProblemReportContext({ conversation, report }: { conversation: ConversationResponse; report: ConversationProblemReportResponse }) {
+function ProblemReportContext({
+  conversation,
+  report,
+}: {
+  conversation: ConversationResponse
+  report: ConversationProblemReportResponse
+}) {
   return (
-    <section aria-labelledby="report-title">
-      <h2 id="report-title">Zgłoszenie</h2>
-      <p>{report.description}</p>
+    <CeramicCard padding="lg" className="grid gap-4">
+      <div className="grid gap-2">
+        <h2 className="text-section-title font-medium">Zgłoszenie</h2>
+        <p className="whitespace-pre-line text-body text-text-primary">{report.description}</p>
+      </div>
       <StatusTimeline status={report.status} />
-      {conversation.senderRole === 'ADMIN' && (
-        <p>
-          <Link to={`/admin/zgloszenia/${report.id}`}>Otwórz zgłoszenie w skrzynce</Link>
-        </p>
-      )}
-      {conversation.senderRole === 'EXPERT' && report.status === 'WITH_EXPERT' && (
-        <MarkAnsweredButton conversationId={conversation.id} problemReportId={report.id} />
-      )}
-    </section>
+      <div className="flex flex-wrap gap-3">
+        {conversation.senderRole === 'ADMIN' && (
+          <SoftButton asChild variant="secondary">
+            <Link to={`/admin/zgloszenia/${report.id}`}>Otwórz w skrzynce</Link>
+          </SoftButton>
+        )}
+        {conversation.senderRole === 'EXPERT' && report.status === 'WITH_EXPERT' && (
+          <MarkAnsweredButton conversationId={conversation.id} problemReportId={report.id} />
+        )}
+      </div>
+    </CeramicCard>
   )
 }
 
@@ -112,18 +146,18 @@ function MarkAnsweredButton({ conversationId, problemReportId }: { conversationI
   }
 
   return (
-    <>
-      <p>Gdy odpowiesz w wątku, oznacz zgłoszenie jako odpowiedziane.</p>
-      <p>
-        <button type="button" onClick={mark} disabled={markAnswered.isPending}>
+    <div className="grid gap-2">
+      <p className="text-body-sm text-text-muted">Gdy odpowiesz w wątku, oznacz zgłoszenie jako odpowiedziane.</p>
+      <div className="flex flex-wrap gap-3">
+        <SoftButton type="button" variant="primary" loading={markAnswered.isPending} onClick={mark}>
           Oznacz jako odpowiedziane
-        </button>
-      </p>
-      <div aria-live="polite">
-        {markAnswered.isError && (
-          <p role="alert">{errorMessage(markAnswered.error, { 409: 'Zgłoszenie nie jest już u eksperta.' })}</p>
-        )}
+        </SoftButton>
       </div>
-    </>
+      {markAnswered.isError && (
+        <p role="alert" className="text-body-sm text-danger">
+          {errorMessage(markAnswered.error)}
+        </p>
+      )}
+    </div>
   )
 }

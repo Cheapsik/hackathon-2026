@@ -54,7 +54,7 @@ export function InnovationTestingSection({
 
   return (
     <section aria-labelledby="testing-title" className="no-print">
-      <h2 id="testing-title">Poletko — ocena i testy</h2>
+      <h2 id="testing-title">Poletko - ocena i testy</h2>
       {innovation.seeksTesters && (
         <p>
           Zespół szuka testerów. <Link to="/testy">Zapisz się na liście testów</Link>

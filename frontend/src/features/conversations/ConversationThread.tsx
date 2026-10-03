@@ -1,4 +1,4 @@
-import { useId, useState, type FormEvent } from 'react'
+import { useState, type FormEvent } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import {
   getGetApiConversationsConversationIdQueryKey,
@@ -7,6 +7,7 @@ import {
   type ConversationResponse,
 } from '@/api/generated/castor'
 import { senderLabel } from '@/features/conversations/labels'
+import { CeramicCard, EmptyState, ErrorState, LoadingState, SoftButton, TextAreaField } from '@/design-system'
 import { useLiveEvent } from '@/hooks/use-live-event'
 import { errorMessage } from '@/lib/error-message'
 import { formatDateTime } from '@/lib/format'
@@ -27,19 +28,15 @@ export function ConversationThread({ conversationId, trackingCode, headingLevel 
   const Heading = headingLevel === 2 ? 'h2' : 'h3'
 
   return (
-    <section aria-labelledby="thread-title">
-      <Heading id="thread-title">Wiadomości</Heading>
-      <div aria-live="polite">
-        {conversation.isPending && (
-          <p>
-            <output>Wczytuję wiadomości…</output>
-          </p>
-        )}
-        {conversation.isError && (
-          <p role="alert">{errorMessage(conversation.error, { 404: 'Nie masz dostępu do tego wątku.' })}</p>
-        )}
-        {conversation.isSuccess && <MessageList conversation={conversation.data.data} />}
-      </div>
+    <section aria-labelledby="thread-title" className="grid gap-4">
+      <Heading id="thread-title" className="text-section-title font-medium">
+        Wiadomości
+      </Heading>
+      {conversation.isPending && <LoadingState label="Wczytuję wiadomości…" />}
+      {conversation.isError && (
+        <ErrorState description={errorMessage(conversation.error, { 404: 'Nie masz dostępu do tego wątku.' })} />
+      )}
+      {conversation.isSuccess && <MessageList conversation={conversation.data.data} />}
       {conversation.isSuccess && (
         <MessageForm conversation={conversation.data.data} trackingCode={trackingCode} />
       )}
@@ -79,21 +76,26 @@ function isMessageInAnotherConversation(payload: unknown, conversationId: string
 
 function MessageList({ conversation }: { conversation: ConversationResponse }) {
   if (conversation.messages.length === 0) {
-    return <p>Nie ma jeszcze wiadomości.</p>
+    return <EmptyState title="Nie ma jeszcze wiadomości" description="Napisz pierwszą wiadomość poniżej." />
   }
 
   return (
-    <ol>
-      {conversation.messages.map((message) => (
-        <li key={message.id}>
-          <p>
-            <strong>{senderLabel(message.senderRole, message.mine, conversation.kind)}</strong>,{' '}
-            <time dateTime={message.postedAt}>{formatDateTime(message.postedAt)}</time>
-          </p>
-          <p className="whitespace-pre-line">{message.text}</p>
-        </li>
-      ))}
-    </ol>
+    <CeramicCard asChild padding="none" className="p-1">
+      <ol className="grid divide-y divide-border-subtle">
+        {conversation.messages.map((message) => (
+          <li key={message.id} className="grid gap-2 px-3 py-3">
+            <p className="text-label text-text-muted">
+              <span className="font-medium text-text-primary">
+                {senderLabel(message.senderRole, message.mine, conversation.kind)}
+              </span>
+              {' · '}
+              <time dateTime={message.postedAt}>{formatDateTime(message.postedAt)}</time>
+            </p>
+            <p className="whitespace-pre-line text-body text-text-primary">{message.text}</p>
+          </li>
+        ))}
+      </ol>
+    </CeramicCard>
   )
 }
 
@@ -101,10 +103,13 @@ function MessageForm({ conversation, trackingCode }: { conversation: Conversatio
   const [text, setText] = useState('')
   const queryClient = useQueryClient()
   const post = usePostApiConversationsConversationIdMessages()
-  const textId = useId()
 
   if (!conversation.acceptsMessages) {
-    return <p>Zgłoszenie jest zamknięte, więc wątek jest tylko do odczytu.</p>
+    return (
+      <p className="rounded-control bg-surface-glass-strong p-3 text-body-sm text-text-muted">
+        Zgłoszenie jest zamknięte, więc wątek jest tylko do odczytu.
+      </p>
+    )
   }
 
   function submit(event: FormEvent<HTMLFormElement>) {
@@ -125,38 +130,30 @@ function MessageForm({ conversation, trackingCode }: { conversation: Conversatio
   }
 
   return (
-    <form onSubmit={submit}>
-      <label htmlFor={textId}>Nowa wiadomość</label>
-      <br />
-      <textarea
-        id={textId}
+    <form className="grid gap-4" onSubmit={submit}>
+      <TextAreaField
+        label="Nowa wiadomość"
         rows={5}
-        cols={70}
         maxLength={messageMaxLength}
         value={text}
-        onChange={(event) => setText(event.target.value)}
         required
+        onChange={(event) => setText(event.target.value)}
+        hint={`Do ${messageMaxLength} znaków.`}
       />
-      <br />
-      <button type="submit" disabled={post.isPending || text.trim().length === 0}>
-        Wyślij wiadomość
-      </button>
-      <div aria-live="polite">
-        {post.isSuccess && (
-          <p>
-            <output>Wiadomość wysłana.</output>
-          </p>
-        )}
-        {post.isError && (
-          <p role="alert">
-            {errorMessage(post.error, {
-              400: `Napisz wiadomość (najwyżej ${messageMaxLength} znaków).`,
-              404: 'Nie masz dostępu do tego wątku.',
-              409: 'Zgłoszenie jest już zamknięte, więc nie można dopisać wiadomości.',
-            })}
-          </p>
-        )}
+      <div className="flex flex-wrap gap-3">
+        <SoftButton type="submit" variant="primary" loading={post.isPending} disabled={text.trim().length === 0}>
+          Wyślij wiadomość
+        </SoftButton>
       </div>
+      {post.isError && (
+        <p role="alert" className="rounded-control bg-danger-soft p-3 text-body-sm text-danger">
+          {errorMessage(post.error, {
+            400: `Napisz wiadomość (najwyżej ${messageMaxLength} znaków).`,
+            404: 'Nie masz dostępu do tego wątku.',
+            409: 'Zgłoszenie jest już zamknięte, więc nie można dopisać wiadomości.',
+          })}
+        </p>
+      )}
     </form>
   )
 }

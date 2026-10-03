@@ -90,7 +90,7 @@ export function PatternSpecimens() {
       <Section
         title="BandSection i RuledList"
         titleAs="h3"
-        description="Sekcja pasa informacyjnego: tytuł w kolumnach 1–3, wiersze z liniami w kolumnach 4–12. Zamiast kart."
+        description="Sekcja pasa informacyjnego: tytuł w kolumnach 1-3, wiersze z liniami w kolumnach 4-12. Zamiast kart."
       >
         <div className="divide-y divide-border-subtle border-y border-border-subtle bg-surface-solid">
           <BandSection title="Jak to działa">
@@ -126,7 +126,7 @@ export function PatternSpecimens() {
 
       <ChartPanel
         titleAs="h3"
-        title="ChartPanel — zgłoszenia w czasie"
+        title="ChartPanel - zgłoszenia w czasie"
         description="Najedź albo użyj strzałek na wykresie. Te same dane są w tabeli."
         seriesLabel="Liczba zgłoszeń"
         categoryLabel="Miesiąc"

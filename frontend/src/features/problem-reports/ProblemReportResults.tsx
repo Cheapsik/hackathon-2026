@@ -7,11 +7,11 @@ interface ProblemReportResultsProps {
   report: ProblemReportResponse
   /** The heading level of this block, so it fits the page it is on. */
   headingLevel: 2 | 3
-  /** Whether the reader may turn the hybrid into their own idea — the reporter, not ROPS reviewing it. */
+  /** Whether the reader may turn the hybrid into their own idea - the reporter, not ROPS reviewing it. */
   developable?: boolean
 }
 
-/** The tracking code, status and matches of a report: 3–5 innovations, the similar-reports counter and a hybrid. */
+/** The tracking code, status and matches of a report: 3-5 innovations, the similar-reports counter and a hybrid. */
 export function ProblemReportResults({ report, headingLevel, developable = true }: ProblemReportResultsProps) {
   const Heading = `h${headingLevel}` as const
   const Subheading = `h${headingLevel + 1}` as 'h3' | 'h4'
@@ -22,7 +22,7 @@ export function ProblemReportResults({ report, headingLevel, developable = true 
       <Heading id={`report-${report.id}-results`}>Wyniki dla Twojego zgłoszenia</Heading>
 
       <p>
-        Kod śledzenia: <strong>{report.trackingCode}</strong>. Zapisz go — dzięki niemu sprawdzisz status zgłoszenia bez
+        Kod śledzenia: <strong>{report.trackingCode}</strong>. Zapisz go - dzięki niemu sprawdzisz status zgłoszenia bez
         logowania.
       </p>
       <p>Status: {statusLabel(report.status)}</p>

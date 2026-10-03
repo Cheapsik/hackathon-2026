@@ -130,9 +130,28 @@ switch (llmProvider)
     case LlmProviders.Placeholder:
         builder.Services.AddSingleton<ILlmClient, PlaceholderLlmClient>();
         break;
+    case LlmProviders.OpenAi:
+        builder.Services.AddOptions<OpenAiLlmOptions>()
+            .Bind(builder.Configuration.GetSection(OpenAiLlmOptions.Section))
+            .Validate(options => !string.IsNullOrWhiteSpace(options.Model), "Llm:Model is required for the OpenAI provider.")
+            .Validate(options => !string.IsNullOrWhiteSpace(options.ApiKey), "Llm:ApiKey is required for the OpenAI provider.")
+            .Validate(
+                options => Uri.TryCreate(options.BaseUrl, UriKind.Absolute, out Uri? uri)
+                    && uri.Scheme == Uri.UriSchemeHttps,
+                "Llm:BaseUrl must be an absolute HTTPS URL for the OpenAI provider.")
+            .Validate(
+                options => options.MaxOutputTokens is > 0 and <= 128_000,
+                "Llm:MaxOutputTokens must be between 1 and 128000.")
+            .Validate(
+                options => options.TimeoutSeconds is > 0 and <= 600,
+                "Llm:TimeoutSeconds must be between 1 and 600.")
+            .ValidateOnStart();
+        builder.Services.AddHttpClient<ILlmClient, OpenAiLlmClient>();
+        break;
     default:
         throw new InvalidOperationException(
-            $"Llm:Provider '{llmProvider}' is not supported. Known providers: {LlmProviders.Placeholder}.");
+            $"Llm:Provider '{llmProvider}' is not supported. Known providers: "
+            + $"{LlmProviders.Placeholder}, {LlmProviders.OpenAi}.");
 }
 
 // AI pipelines

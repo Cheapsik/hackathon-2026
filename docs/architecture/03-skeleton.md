@@ -34,7 +34,7 @@ Konfiguracja (zmienne środowiskowe w konwencji `Sekcja__Klucz`):
 | `ConnectionStrings:Castor` | połączenie z bazą; domyślnie `localhost:5432`, baza/użytkownik/hasło `castor` |
 | `Database:MigrateOnStartup` | `true` — API wykonuje migracje przy starcie (w kontenerze); lokalnie domyślnie `false` |
 | `DataProtection:KeysPath` | katalog kluczy podpisujących cookie; bez niego klucze żyją w pamięci i restart wylogowuje wszystkich |
-| `Llm:Provider` | adapter `ILlmClient`; zaimplementowany jest `placeholder` (domyślny w `appsettings.json`), nieznana wartość zatrzymuje start |
+| `Llm:Provider` | adapter `ILlmClient`; zaimplementowane są `placeholder` (domyślny w `appsettings.json`) i `openai`; nieznana wartość albo brak wymaganej konfiguracji zatrzymuje start |
 | `Seed:Path`, `Seed:OnStartup` | import `data/seed` przy starcie; w `Development` włączony ze ścieżką `../../../data/seed` |
 | `Matching:HybridThreshold`, `Matching:CandidateLimit`, `Matching:MaxMatches` | próg krzyżówki (50), liczba kandydatów dla rankingu (150 — bez embeddingów cała biblioteka, SPEC §6.4), liczba wyników (5) |
 | `RateLimiting:PublicAi:PermitLimit`, `…:WindowSeconds` | limit na IP dla publicznych endpointów z LLM (10 na 60 s) |
@@ -48,7 +48,7 @@ Konfiguracja (zmienne środowiskowe w konwencji `Sekcja__Klucz`):
 |---|---|
 | `Domain/` | `DomainException` (kod HTTP, domyślnie 400), `NamedEnum.TryParse` (enum tylko po nazwie), `Identity/User` (e-mail znormalizowany, hash hasła, rola), `Identity/UserRole`, `Identity/PasswordPolicy` (min. 8 znaków) |
 | `Persistence/` | `CastorDbContext` (jedyny kontekst; rozszerzenia `vector`, `unaccent`, `pg_trgm`), `ModelConventions` (decimal `NUMERIC(19,4)`, `DateOnly` → `date`, `DateTimeOffset` → `timestamptz`, klucze `Guid` bez generowania, enumy jako tekst), `PostgresErrors.IsUniqueViolation`, `Identity/UserConfiguration` (unikalny e-mail) |
-| `Shared/Ai/` | `ILlmClient`, `LlmPrompt`, `IEmbeddingClient` — same kontrakty; adaptery czekają na wybór dostawców ([`../TODO.md`](../TODO.md)) |
+| `Shared/Ai/` | `ILlmClient`, `LlmPrompt`, `IEmbeddingClient`; adapter OpenAI używa Responses API, a adapter embeddingów nadal czeka na wybór dostawcy ([`../TODO.md`](../TODO.md)) |
 | `Infrastructure/` | `IClock`/`SystemClock`, `CurrentUser` (id użytkownika z cookie), `SignInCookie` (id, e-mail, rola), `DomainExceptionFilter` (`{ "error": "..." }` z kodem z wyjątku), `Http/ApiRoutePrefixConvention` (prefiks `/api`), `Realtime/LiveHub` (`/hubs/live`, grupy `user:{id}` i `admins`) |
 | `Features/` | `Register`, `SignIn`, `SignOut` — `POST /api/auth/register` (201 + cookie, 409 dla zajętego e-maila), `POST /api/auth/sign-in` (200 + cookie, 401 jednakowe dla złego hasła i nieznanego e-maila), `POST /api/auth/sign-out` (204) |
 | `Migrations/` | `Initial` — tabela `Users` z unikalnym indeksem na `Email`; `UserRoleAndSearchExtensions` — kolumna `Role` (istniejące konta dostają `RESIDENT`) i rozszerzenia `vector`, `unaccent`, `pg_trgm` |
@@ -63,7 +63,7 @@ Moduł I dołożył (SPEC §7 I):
 | `Domain/Jobs/` | `BackgroundJob` — stan i postęp zadania w tle |
 | `Persistence/` | mapowanie nowych encji; `Seeding/SeedImporter` (treści dopisywane, gminy upsertowane, potem zlecenie genomów); kolumna `Innovations.SearchVector` (`tsvector`, `simple` + `castor_unaccent`, GIN) |
 | `Queries/` | `InnovationCandidatesQuery` (pełnotekstowe po prefiksach słów → obszar → reszta), `ProblemReportViewQuery` (wyniki, obszary, podobne zgłoszenia) |
-| `Shared/Ai/` | prompty `Prompts/*.md` (zasoby assembly), kontrakty wejścia i wyjścia (`Contracts/`), `ProblemClassifier`, `Matchmaker`, `GenomeGenerator`, `Placeholder/PlaceholderLlmClient` |
+| `Shared/Ai/` | prompty `Prompts/*.md` (zasoby assembly), kontrakty wejścia i wyjścia (`Contracts/`), potoki AI, `Placeholder/PlaceholderLlmClient`, `OpenAi/OpenAiLlmClient` |
 | `Shared/Jobs/` | `BackgroundJobQueue` (`Channel`), `BackgroundJobScheduler`, `BackgroundJobRunner` (`BackgroundService`), `GenerateGenomesJob` |
 | `Infrastructure/` | `Startup/DatabaseStartup` (migracje, zadania przerwane restartem → `FAILED`, import seedu — jako `IHostedService`, którego generator OpenAPI i dotnet-ef nie uruchamiają), `RateLimitPolicies`, `LiveEvents`, `CurrentUser.UserIdOrNull` i `IsAdmin` |
 | `Features/` | `ProblemReports` (tworzenie, odpowiedzi, odczyt, śledzenie kodem, przypięcie, moje), `Municipalities` (wyszukiwarka gmin), `Session` (`GET /api/auth/session`) |

@@ -3,7 +3,7 @@ import type { ChartPoint, MediaRailItem, OrbitCategory } from '@/design-system'
 
 /*
  * Neutral, clearly fictional sample content for the design-system preview only ("Gmina Przykładowa",
- * invented innovations). Never import this into feature code — real screens use real data.
+ * invented innovations). Never import this into feature code - real screens use real data.
  */
 
 export const sampleCategories: OrbitCategory[] = [
