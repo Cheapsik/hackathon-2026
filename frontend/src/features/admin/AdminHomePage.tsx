@@ -8,7 +8,7 @@ export function AdminHomePage() {
     <>
       <h1>Panel administratora</h1>
       <p>
-        Zacznij od <Link to="/admin/zgloszenia">skrzynki zgłoszeń</Link> — nowe zgłoszenia pojawiają się w niej na żywo.
+        Zacznij od <Link to="/admin/zgloszenia">skrzynki zgłoszeń</Link> - nowe zgłoszenia pojawiają się w niej na żywo.
       </p>
     </>
   )

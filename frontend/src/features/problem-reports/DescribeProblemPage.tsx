@@ -133,8 +133,8 @@ function DescribeProblemForm({ pending, initialDescription, onSubmit }: Describe
         <label htmlFor={descriptionId}>Opisz, co nie działa</label>
       </p>
       <p id={descriptionHintId}>
-        Od {descriptionMinLength} do {descriptionMaxLength} znaków. Nie podawaj imion, nazwisk, adresów ani telefonów —
-        i tak je usuniemy, zanim opis trafi dalej.
+        Od {descriptionMinLength} do {descriptionMaxLength} znaków. Nie podawaj imion, nazwisk, adresów ani telefonów
+        - i tak je usuniemy, zanim opis trafi dalej.
       </p>
       <textarea
         id={descriptionId}

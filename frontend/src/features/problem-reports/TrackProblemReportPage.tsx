@@ -16,7 +16,7 @@ import { usePageTitle } from '@/hooks/use-page-title'
 import { errorMessage } from '@/lib/error-message'
 
 /**
- * "Śledź zgłoszenie": the tracking code opens a report without an account (SPEC §7 I) — its status, refreshed live,
+ * "Śledź zgłoszenie": the tracking code opens a report without an account (SPEC §7 I) - its status, refreshed live,
  * and its thread with ROPS (SPEC §7 V).
  */
 export function TrackProblemReportPage() {

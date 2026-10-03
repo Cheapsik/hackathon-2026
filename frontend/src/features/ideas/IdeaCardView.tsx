@@ -32,13 +32,13 @@ export function IdeaCardView({ idea }: { idea: IdeaResponse }) {
       <dt>Etap rozwoju</dt>
       <dd>{labelsOf(options.stages, [idea.stage]).join('') || idea.stage}</dd>
       <dt>Sojusznicy</dt>
-      <dd>{idea.supporters ?? '—'}</dd>
+      <dd>{idea.supporters ?? '-'}</dd>
       <dt>Przeciwnicy</dt>
-      <dd>{idea.opponents ?? '—'}</dd>
+      <dd>{idea.opponents ?? '-'}</dd>
       <dt>Wartości emocjonalne</dt>
-      <dd>{labelsOf(options.emotionalValues, idea.emotionalValues).join(', ') || '—'}</dd>
+      <dd>{labelsOf(options.emotionalValues, idea.emotionalValues).join(', ') || '-'}</dd>
       <dt>Wartości funkcjonalne</dt>
-      <dd>{labelsOf(options.functionalValues, idea.functionalValues).join(', ') || '—'}</dd>
+      <dd>{labelsOf(options.functionalValues, idea.functionalValues).join(', ') || '-'}</dd>
       {idea.differenceNote && (
         <>
           <dt>Czym różni się od podobnych</dt>

@@ -291,7 +291,7 @@ export function FormFlowExample({ state }: ExampleProps) {
         required
         placeholder="Np. starsi mieszkańcy naszej wsi nie mają jak dojechać do lekarza."
         hint="Nie podawaj imion, nazwisk ani adresów."
-        error={showErrors ? 'Opisz problem — to pole nie może być puste.' : undefined}
+        error={showErrors ? 'Opisz problem - to pole nie może być puste.' : undefined}
       />
       <SelectField label="Gmina" placeholder="Wybierz gminę (opcjonalnie)" options={sampleMunicipalities} />
       <CheckboxField label="Zgłaszam w czyimś imieniu" hint="Na przykład za sąsiada, który nie korzysta z internetu." />

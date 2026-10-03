@@ -33,7 +33,7 @@ export function IdeaSimilarSection({ idea, onUpdated }: IdeaSimilarSectionProps)
       {idea.similarCheckedAt ? (
         <p>
           Sprawdzono {formatDateTime(idea.similarCheckedAt)}.
-          {!idea.similarIsCurrent && ' Od tego czasu karta się zmieniła — sprawdź ponownie.'}
+          {!idea.similarIsCurrent && ' Od tego czasu karta się zmieniła - sprawdź ponownie.'}
         </p>
       ) : (
         <p>Jeszcze nie sprawdzaliśmy. Sprawdzimy też automatycznie przy zgłaszaniu pomysłu.</p>
@@ -63,7 +63,7 @@ export function IdeaSimilarSection({ idea, onUpdated }: IdeaSimilarSectionProps)
             <li key={`${similar.kind}-${similar.targetId}`}>
               {similar.kind === 'INNOVATION' ? 'Innowacja' : 'Pomysł'}{' '}
               <Link to={similar.kind === 'INNOVATION' ? `/innowacje/${similar.targetId}` : `/pomysly/${similar.targetId}`}>„{similar.title}”</Link>
-              {' '}— podobieństwo {similar.score} na 100. {similar.justification}
+              {' - '}podobieństwo {similar.score} na 100. {similar.justification}
               {similar.kind === 'IDEA' && ' Możesz otworzyć ten pomysł i dołączyć do jego autorów.'}
               {similar.kind === 'INNOVATION' && idea.canEdit && idea.startingInnovation?.id !== similar.targetId && (
                 <>

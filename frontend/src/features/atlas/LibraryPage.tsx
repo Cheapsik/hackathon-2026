@@ -34,6 +34,13 @@ export function LibraryPage() {
     }
     return [...names].sort((left, right) => left.localeCompare(right, 'pl'))
   }, [catalog.data])
+  const areaNameByCode = useMemo(() => {
+    const map = new Map<string, string>()
+    for (const challengeArea of areas.data?.data ?? []) {
+      map.set(challengeArea.code, challengeArea.name)
+    }
+    return map
+  }, [areas.data])
   const rows = innovations.data?.data ?? []
 
   return (
@@ -121,9 +128,15 @@ export function LibraryPage() {
                 )}
                 {innovation.shortDescription && <p>{innovation.shortDescription}</p>}
                 <p className="text-label text-text-muted">
-                  {innovation.categories.join(', ')}
-                  {innovation.categories.length > 0 && ' · '}
-                  {stageLabels[innovation.stage] ?? innovation.stage}
+                  {[
+                    innovation.challengeAreaCodes.length > 0
+                      ? innovation.challengeAreaCodes.map((code) => areaNameByCode.get(code) ?? code).join(', ')
+                      : null,
+                    innovation.categories.length > 0 ? innovation.categories.join(', ') : null,
+                    stageLabels[innovation.stage] ?? innovation.stage,
+                  ]
+                    .filter(Boolean)
+                    .join(' · ')}
                 </p>
               </article>
             </li>

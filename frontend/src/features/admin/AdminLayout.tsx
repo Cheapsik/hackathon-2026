@@ -10,7 +10,7 @@ const sections = [
   { to: '/admin/uzytkownicy', label: 'Użytkownicy i role' },
 ]
 
-/** "Ogrodnik" — the administrator's panel (module VI). The API refuses everyone else anyway; this only explains it. */
+/** "Ogrodnik" - the administrator's panel (module VI). The API refuses everyone else anyway; this only explains it. */
 export function AdminLayout() {
   const session = useSession()
 

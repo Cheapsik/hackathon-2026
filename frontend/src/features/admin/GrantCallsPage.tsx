@@ -59,7 +59,7 @@ export function GrantCallsPage() {
               <th scope="row">{grantCall.title}</th>
               <td>{grantCallStatusLabels[grantCall.status]}</td>
               <td>
-                {grantCall.opensOn ?? '—'} – {grantCall.closesOn ?? '—'}
+                {grantCall.opensOn ?? '-'} - {grantCall.closesOn ?? '-'}
               </td>
               <td>
                 <ul>

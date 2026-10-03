@@ -8,6 +8,7 @@ import {
   useGetApiInnovations,
   usePostApiAdminJobsGenomes,
 } from '@/api/generated/castor'
+import { SoftButton } from '@/design-system'
 import { genomeStatusLabels, stageLabels } from '@/features/admin/labels'
 import { AreaPlainLanguage } from '@/features/admin/PlainLanguageSection'
 import { usePageTitle } from '@/hooks/use-page-title'
@@ -98,7 +99,7 @@ export function KnowledgePage() {
         <ul>
           {(genomes.data?.data ?? []).map((genome) => (
             <li key={genome.id}>
-              <Link to={`/admin/wiedza/genomy/${genome.id}`}>{genome.innovationTitle}</Link> — {genomeStatusLabels[genome.status]}
+              <Link to={`/admin/wiedza/genomy/${genome.id}`}>{genome.innovationTitle}</Link> - {genomeStatusLabels[genome.status]}
             </li>
           ))}
         </ul>
@@ -109,7 +110,9 @@ export function KnowledgePage() {
       <section aria-labelledby="innovations-title">
         <h2 id="innovations-title">Innowacje</h2>
         <p>
-          <Link to="/admin/wiedza/innowacje/nowa">Dodaj innowację</Link>
+          <SoftButton asChild variant="primary">
+            <Link to="/admin/wiedza/innowacje/nowa">Dodaj innowację</Link>
+          </SoftButton>
         </p>
         <label>
           Szukaj po tytule <input type="search" value={search} onChange={(event) => setSearch(event.target.value)} />

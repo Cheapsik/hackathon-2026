@@ -214,7 +214,7 @@ export function ChartPanel({
 
           <div className="max-h-64 overflow-auto rounded-card surface-ceramic">
             <table className="w-full text-left text-body-sm">
-              <caption className="sr-only">{`${seriesLabel} — dane z wykresu`}</caption>
+              <caption className="sr-only">{`${seriesLabel} - dane z wykresu`}</caption>
               <thead className="sticky top-0 bg-surface-ceramic text-label text-text-muted">
                 <tr>
                   <th scope="col" className="px-4 py-2 font-medium">

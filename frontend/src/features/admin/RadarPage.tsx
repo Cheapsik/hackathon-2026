@@ -65,7 +65,7 @@ export function RadarPage() {
       {data && (
         <>
           <p>
-            Okres {data.from} – {data.to}: {data.reports} zgłoszeń po klasyfikacji.
+            Okres {data.from} - {data.to}: {data.reports} zgłoszeń po klasyfikacji.
           </p>
 
           <table>
@@ -84,7 +84,7 @@ export function RadarPage() {
                   <th scope="row">{area.name}</th>
                   <td>{area.reports}</td>
                   <td>{area.unmatched}</td>
-                  <td>{Number(area.innovations) === 0 ? '0 — biała plama' : area.innovations}</td>
+                  <td>{Number(area.innovations) === 0 ? '0 - biała plama' : area.innovations}</td>
                 </tr>
               ))}
             </tbody>

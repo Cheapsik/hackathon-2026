@@ -3,6 +3,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import { Link, useParams } from 'react-router'
 import {
   getGetApiInnovationsInnovationIdQueryKey,
+  useGetApiChallengeAreas,
   useGetApiInnovationsInnovationId,
   type InnovationResponse,
 } from '@/api/generated/castor'
@@ -51,7 +52,11 @@ export function InnovationPage() {
 function InnovationCard({ card }: { card: InnovationResponse }) {
   const [plain, setPlain] = useState(false)
   const queryClient = useQueryClient()
+  const areas = useGetApiChallengeAreas()
   const video = card.videoUrl ? youtubeId(card.videoUrl) : null
+  const areaNames = card.challengeAreaCodes.map(
+    (code) => areas.data?.data.find((area) => area.code === code)?.name ?? code,
+  )
 
   function updated(next: InnovationResponse) {
     queryClient.setQueryData(getGetApiInnovationsInnovationIdQueryKey(next.id), { data: next, status: 200, headers: new Headers() })
@@ -64,9 +69,10 @@ function InnovationCard({ card }: { card: InnovationResponse }) {
       </p>
       <h1>{card.title}</h1>
       {card.shortDescription && <p>{card.shortDescription}</p>}
+      {areaNames.length > 0 && <p>{areaNames.join(', ')}</p>}
       {card.categories.length > 0 && <p>Kategoria Biblioteki ROPS: {card.categories.join(', ')}</p>}
       {card.source === 'USER' && <p>Innowacja wyrosła z pomysłu zgłoszonego w Kreatorze pomysłów.</p>}
-      {card.seeksTesters && <p>Zespół szuka testerów — zapisz się na liście testów albo oceń innowację poniżej.</p>}
+      {card.seeksTesters && <p>Zespół szuka testerów - zapisz się na liście testów albo oceń innowację poniżej.</p>}
       {card.featured && <p>Innowacja wybrana do upowszechniania.</p>}
       {card.inServiceModel && <p>Innowacja jest częścią Małopolskich Modeli Usług Społecznych.</p>}
       {card.plainText && (

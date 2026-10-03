@@ -9,7 +9,7 @@ interface MunicipalityPickerProps {
 const minimumSearchLength = 2
 
 /**
- * Optional gmina of a report: a search field and the matching gminy as radio buttons — plain controls a keyboard and
+ * Optional gmina of a report: a search field and the matching gminy as radio buttons - plain controls a keyboard and
  * a screen reader handle without a custom combobox.
  */
 export function MunicipalityPicker({ selected, onSelect }: MunicipalityPickerProps) {

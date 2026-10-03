@@ -17,7 +17,7 @@ const contents = [
 /**
  * Development-only reference of the design system (route registered only when import.meta.env.DEV): tokens,
  * every primitive and pattern with its states, and all page templates at real viewport widths.
- * Update it whenever the system gains a variant — it is the visual regression baseline.
+ * Update it whenever the system gains a variant - it is the visual regression baseline.
  */
 export function DesignSystemPage() {
   usePageTitle('Design system')

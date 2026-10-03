@@ -29,10 +29,10 @@ export function NewIdeaPage() {
       <h1>Nowy pomysł</h1>
       <p>
         Wypełnij Canvas innowacji. Do zapisania szkicu wystarczy nazwa; resztę uzupełnisz później. Szkic widzisz tylko Ty
-        i współautorzy — inni zobaczą pomysł dopiero, gdy go zgłosisz.
+        i współautorzy - inni zobaczą pomysł dopiero, gdy go zgłosisz.
       </p>
       <div aria-live="polite">
-        {create.isError && <p role="alert">{errorMessage(create.error, { 400: 'Sprawdź pola formularza: nazwa jest wymagana, a obszary — najwyżej trzy.' })}</p>}
+        {create.isError && <p role="alert">{errorMessage(create.error, { 400: 'Sprawdź pola formularza: nazwa jest wymagana, a obszary - najwyżej trzy.' })}</p>}
       </div>
       <IdeaCanvasForm
         initial={emptyCanvas}

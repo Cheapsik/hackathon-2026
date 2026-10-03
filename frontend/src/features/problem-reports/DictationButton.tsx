@@ -8,7 +8,7 @@ interface DictationButtonProps {
 
 /**
  * The microphone of "Opisz problem": Polish dictation with the Web Speech API. Always next to the text field, never
- * instead of it — in a browser without the API it only says so.
+ * instead of it - in a browser without the API it only says so.
  */
 export function DictationButton({ onPhrase }: DictationButtonProps) {
   const [listening, setListening] = useState(false)

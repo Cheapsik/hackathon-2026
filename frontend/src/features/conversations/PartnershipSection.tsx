@@ -10,7 +10,7 @@ const messageMaxLength = 4000
 
 /**
  * "Napisz do zespołu innowacji": a thread with ROPS administrators, who pass the message on to the innovation's
- * authors — they have no accounts on the platform yet.
+ * authors - they have no accounts on the platform yet.
  */
 export function PartnershipSection({ innovationId, innovationTitle }: { innovationId: string; innovationTitle: string }) {
   const session = useSession()

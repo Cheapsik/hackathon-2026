@@ -1,6 +1,6 @@
 import type { RuledListItem } from '@/design-system'
 
-/** The three steps of "Jak to działa" — a real sequence, so the list is numbered. */
+/** The three steps of "Jak to działa" - a real sequence, so the list is numbered. */
 export const steps: RuledListItem[] = [
   {
     id: 'describe',

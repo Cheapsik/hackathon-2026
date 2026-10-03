@@ -37,7 +37,7 @@ Nazwy `surface-glass*` są historyczne: wszystkie powierzchnie są nieprzezroczy
 
 Zmierzone kontrasty (WCAG): ink na bg 15,2:1; muted na bg 4,64:1, na surface 5,05:1, na surface-strong 5,42:1; tekst przycisku głównego 11,3:1; obrys `border-strong` 3,20:1 na bg i 3,74:1 na surface-strong (WCAG 1.4.11); danger 7,3:1; focus na bg 9,7:1. Zakres 4,5:1 dla muted na bg jest wąski, więc nie jaśniej.
 
-Kolor nigdy nie niesie znaczenia sam. Wysoki kontrast podmienia tokeny na czarno-białe (`:root[data-contrast='high']`).
+Kolor nigdy nie niesie znaczenia sam. Ciemny motyw podmienia te same tokeny (`:root[data-theme='dark']`). Wysoki kontrast podmienia tokeny na czarno-białe (`:root[data-contrast='high']`) i wygrywa z motywem.
 
 ## 4. Typografia
 
@@ -53,6 +53,8 @@ Jedna rodzina: **Satoshi** (Indian Type Foundry, Fontshare), self-hosted: `src/a
 | `text-body` | 16–18 px | 400/500 | Tekst główny i tekst w polu. |
 | `text-body-sm`, `text-label` | 15–16 px, 14–16 px | 400/500 | Opisy, etykiety. Nic poniżej 14 px. |
 | przycisk | 15–16 px | 600 | `text-body-sm` z `font-semibold`. |
+
+W treściach UI (etykiety, opisy, komunikaty, tytuły) **nie używamy długich myślników**: ani pauzy (`—`), ani półpauzy (`–`). Zamiast nich: zwykły dywiz z odstępami (` - `), przecinek, kropka albo dwukropek. Zakresy liczb w dokumentacji technicznej mogą zostać przy półpauzie; w copy produktu zawsze dywiz (`1-3`, nie `1–3`).
 
 ## 5. Układ
 
@@ -86,7 +88,7 @@ Szablon `ImmersiveDetailTemplate` (ze zdjęciem) zostaje do ekranów szczegół�
 
 ## 8. Dostępność jako część systemu
 
-- Panel „Dostępność": rozmiar tekstu (A / A+ / A++), wysoki kontrast, ograniczenie animacji (`data-motion="reduce"`, obok ustawienia systemu). Wybór zapamiętuje przeglądarka.
+- Panel „Dostępność": rozmiar tekstu (A / A+ / A++), motyw (Jasny / Ciemny / System → `data-theme`), wysoki kontrast, ograniczenie animacji (`data-motion="reduce"`, obok ustawienia systemu). Wybór zapamiętuje przeglądarka.
 - Układ w `rem`, więc tekst skaluje wszystko; `body` ma `min-width: 320px` (w px celowo), a przy dużym tekście przycisk przechodzi do własnego wiersza.
 - Focus: 2 px `focus` (3 px w wysokim kontraście), offset 3 px; przy polu obwódka otacza całą powierzchnię.
 - Cele dotykowe min. 44 × 44 px; skip link „Przejdź do treści".

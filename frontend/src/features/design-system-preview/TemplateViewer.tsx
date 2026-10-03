@@ -16,7 +16,7 @@ const frameHeight: Record<Viewport, number> = {
 }
 
 /**
- * Renders one template in an iframe at a real viewport width — media queries inside respond as on a device.
+ * Renders one template in an iframe at a real viewport width - media queries inside respond as on a device.
  * Wider frames scroll inside the panel; the page itself never overflows.
  */
 export function TemplateViewer() {

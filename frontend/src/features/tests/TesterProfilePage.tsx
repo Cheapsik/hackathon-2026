@@ -10,6 +10,7 @@ import {
 } from '@/api/generated/castor'
 import { ApiError } from '@/api/castor-fetch'
 import { MunicipalityPicker } from '@/components/MunicipalityPicker'
+import { SoftButton } from '@/design-system'
 import { usePageTitle } from '@/hooks/use-page-title'
 import { useSession } from '@/hooks/use-session'
 import { errorMessage } from '@/lib/error-message'
@@ -44,7 +45,9 @@ export function TesterProfilePage() {
   return (
     <>
       <p>
-        <Link to="/testy">Poletko — testy</Link>
+        <SoftButton asChild>
+          <Link to="/testy">Poletko - testy</Link>
+        </SoftButton>
       </p>
       <h1>Profil testera</h1>
       <p>Wiek, gmina, potrzeby dostępności i sprzęt zapisujesz raz. Przy kolejnym zapisie na test użyjemy tego samego profilu.</p>

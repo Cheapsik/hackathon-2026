@@ -13,7 +13,7 @@ export const reviewRecommendationLabels: Record<string, string> = {
 
 /** The request fields the API names in missingForSubmission, as the Canvas calls them. */
 export const missingFieldLabels: Record<string, string> = {
-  challengeAreaCodes: 'obszar wyzwań (1–3)',
+  challengeAreaCodes: 'obszar wyzwań (1-3)',
   problemIntensity: 'natężenie problemu',
   problemFrequency: 'częstotliwość problemu',
   problemScale: 'skala problemu',

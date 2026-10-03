@@ -1,5 +1,6 @@
 import { Link } from 'react-router'
 import { useGetApiIdeas, useGetApiIdeasForReview, useGetApiIdeasSubmitted, type IdeaSummaryResponse } from '@/api/generated/castor'
+import { SoftButton } from '@/design-system'
 import { ideaStatusLabel } from '@/features/ideas/labels'
 import { usePageTitle } from '@/hooks/use-page-title'
 import { useSession } from '@/hooks/use-session'
@@ -36,7 +37,9 @@ export function IdeasPage() {
       <h1>Kreator pomysłów</h1>
       <p>Opisz pomysł na Canvasie innowacji, sprawdź, czy podobny już istnieje, i zgłoś go do oceny ekspertów i ROPS.</p>
       <p>
-        <Link to="/pomysly/nowy">Nowy pomysł</Link>
+        <SoftButton asChild variant="primary">
+          <Link to="/pomysly/nowy">Nowy pomysł</Link>
+        </SoftButton>
       </p>
       <MyIdeas />
       {session.role === 'EXPERT' && <IdeasForReview />}
@@ -82,7 +85,7 @@ function SubmittedIdeas() {
   return (
     <IdeaList
       id="submitted-ideas"
-      title="Pomysły innych — możesz dołączyć"
+      title="Pomysły innych - możesz dołączyć"
       empty="Nikt inny nie zgłosił jeszcze pomysłu."
       pending={ideas.isPending}
       error={ideas.isError ? errorMessage(ideas.error) : null}
@@ -117,7 +120,7 @@ function IdeaList({ id, title, empty, pending, error, ideas }: IdeaListProps) {
         <ul>
           {ideas.map((idea) => (
             <li key={idea.id}>
-              <Link to={`/pomysly/${idea.id}`}>{idea.title}</Link> — {ideaStatusLabel(idea.status)}, zmieniony {formatDateTime(idea.updatedAt)}
+              <Link to={`/pomysly/${idea.id}`}>{idea.title}</Link> - {ideaStatusLabel(idea.status)}, zmieniony {formatDateTime(idea.updatedAt)}
               {idea.reviewedByMe && ' (oceniony przez Ciebie)'}
             </li>
           ))}

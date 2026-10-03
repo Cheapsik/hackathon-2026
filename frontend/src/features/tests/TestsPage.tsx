@@ -7,6 +7,7 @@ import {
   usePostApiTestsTargetIdSignups,
 } from '@/api/generated/castor'
 import { ApiError } from '@/api/castor-fetch'
+import { SoftButton } from '@/design-system'
 import { stageLabels } from '@/features/admin/labels'
 import { usePageTitle } from '@/hooks/use-page-title'
 import { useSession } from '@/hooks/use-session'
@@ -14,7 +15,7 @@ import { errorMessage } from '@/lib/error-message'
 
 /** Poletko: innovations and ideas looking for testers, with "Chcę testować". */
 export function TestsPage() {
-  usePageTitle('Poletko — testy')
+  usePageTitle('Poletko - testy')
   const session = useSession()
   const tests = useGetApiTests()
   const profile = useGetApiMeTesterProfile({ query: { enabled: Boolean(session?.signedIn), retry: false } })
@@ -33,12 +34,14 @@ export function TestsPage() {
 
   return (
     <>
-      <h1>Poletko — testy innowacji</h1>
+      <h1>Poletko - testy innowacji</h1>
       <p>Tu zgłaszasz chęć przetestowania innowacji albo pomysłu z Kreatora. Zespół szuka osób do pierwszej próby.</p>
       {session?.signedIn ? (
-        <p>
-          <Link to="/profil-testera">{hasProfile ? 'Twój profil testera' : 'Uzupełnij profil testera'}</Link>
-          {profileMissing && ' — potrzebny przed pierwszym zapisem.'}
+        <p className="flex flex-wrap items-center gap-3">
+          <SoftButton asChild variant={hasProfile ? 'secondary' : 'primary'}>
+            <Link to="/profil-testera">{hasProfile ? 'Twój profil testera' : 'Uzupełnij profil testera'}</Link>
+          </SoftButton>
+          {profileMissing && <span className="text-label text-text-muted">Potrzebny przed pierwszym zapisem.</span>}
         </p>
       ) : (
         <p>

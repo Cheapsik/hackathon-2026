@@ -7,6 +7,7 @@ import {
   type MunicipalityResponse,
 } from '@/api/generated/castor'
 import { MunicipalityPicker } from '@/components/MunicipalityPicker'
+import { SoftButton } from '@/design-system'
 import { stageLabels } from '@/features/admin/labels'
 import { usePageTitle } from '@/hooks/use-page-title'
 import { useSession } from '@/hooks/use-session'
@@ -145,12 +146,14 @@ export function AreaPage() {
         <ul>
           {(innovations.data?.data ?? []).map((innovation) => (
             <li key={innovation.id}>
-              <Link to={`/innowacje/${innovation.id}`}>{innovation.title}</Link> — {stageLabels[innovation.stage] ?? innovation.stage}
+              <Link to={`/innowacje/${innovation.id}`}>{innovation.title}</Link> - {stageLabels[innovation.stage] ?? innovation.stage}
             </li>
           ))}
         </ul>
         <p>
-          <Link to={`/biblioteka?obszar=${card.code}`}>Otwórz te innowacje w Bibliotece</Link>
+          <SoftButton asChild>
+            <Link to={`/biblioteka?obszar=${card.code}`}>Otwórz te innowacje w Bibliotece</Link>
+          </SoftButton>
         </p>
       </section>
     </>

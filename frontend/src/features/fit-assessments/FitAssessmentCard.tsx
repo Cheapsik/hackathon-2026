@@ -19,7 +19,7 @@ export function FitAssessmentCard({ card }: { card: FitAssessmentResponse }) {
   return (
     <article aria-labelledby={`fit-${card.id}`}>
       <h3 id={`fit-${card.id}`}>
-        Karta dopasowania: {card.innovationTitle} — {card.municipality.name}
+        Karta dopasowania: {card.innovationTitle} - {card.municipality.name}
       </h3>
       <p>
         Dopasowanie: <strong>{fitLabels[card.fit] ?? card.fit}</strong>

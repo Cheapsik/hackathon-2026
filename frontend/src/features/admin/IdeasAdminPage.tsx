@@ -72,7 +72,7 @@ export function IdeasAdminPage() {
                 </th>
                 <td>{ideaStatusLabel(row.status)}</td>
                 <td>{row.challengeAreaCodes.join(', ')}</td>
-                <td>{row.submittedAt ? formatDateTime(row.submittedAt) : '—'}</td>
+                <td>{row.submittedAt ? formatDateTime(row.submittedAt) : '-'}</td>
               </tr>
             ))}
           </tbody>
