@@ -21,7 +21,7 @@ Szkielet **już istnieje** w `backend/`, `frontend/` i w korzeniu repo — ten d
 | `dotnet-tools.json` | lokalne `dotnet-ef` 10.0.11 — wołane jako `chop dotnet dotnet-ef` |
 | `Directory.Build.props` | `EnforceCodeStyleInBuild` + StyleCop (tylko SA1402, SA1649) |
 | `.editorconfig` | reguły stylu jako błędy builda; `Migrations/` jako kod generowany |
-| `Dockerfile`, `.dockerignore` | obraz API (`sdk:10.0` → `aspnet:10.0`, port 8080, użytkownik `app`) |
+| `Dockerfile`, `Dockerfile.dockerignore` | obraz API (`sdk:10.0` → `aspnet:10.0`, port 8080, użytkownik `app`); budowany z korzenia repo, niesie `data/seed` w `/app/seed` |
 | `openapi/Castor.Api.json` | dokument OpenAPI zapisywany przy każdym `dotnet build`; commitowany, wejście generatora klienta frontendu |
 | `.gitignore` | z `dotnet new gitignore` |
 

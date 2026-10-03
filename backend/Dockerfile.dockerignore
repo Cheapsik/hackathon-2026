@@ -1,0 +1,13 @@
+# Build context of the API image (the repository root; it only needs backend/ and data/seed/).
+.git/
+.env
+frontend/
+deploy/
+data/raw/
+**/node_modules/
+**/bin/
+**/obj/
+**/.vs/
+**/*.user
+backend/tests/
+backend/openapi/

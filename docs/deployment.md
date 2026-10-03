@@ -79,6 +79,19 @@ Llm__TimeoutSeconds=120
 
 Do not add the key to GitHub Actions variables or repository files; the deployment preserves the server-side `.env`. The backend validates all required OpenAI settings during start-up. It sends requests through the Responses API, does not persist responses through the API (`store: false`), retries HTTP 429 and 5xx responses, and logs duration, token counts, and request IDs without prompt or response content.
 
+## Seed and demo content
+
+The backend image carries the committed `data/seed` in `/app/seed`, and the production Compose file imports it on every start (`Seed__Path`, `Seed__OnStartup`). The import only adds content and upserts statistics, so restarts are safe. It loads the challenge areas, all Małopolska municipalities with their indicators, and the innovation library. Innovation genomes are then generated in the background by the configured LLM, so enable OpenAI first; otherwise the library gets placeholder genomes.
+
+Demo accounts and content (`data/seed/demo_content.json`: reports, ideas, grant calls, conversations) are opt-in. Add them only in `/opt/castor/.env`:
+
+```dotenv
+Seed__DemoContent=true
+Seed__DemoPassword=YOUR_DEMO_PASSWORD
+```
+
+The backend refuses to start when demo content is on and the password is missing or too weak. Demo reports are matched when first opened, so open them only after the genome job has finished.
+
 ## GitHub production environment
 
 Create a GitHub environment named `production`. Protect it with required reviewers if deployments need approval, then configure:

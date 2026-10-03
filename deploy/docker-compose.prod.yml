@@ -30,6 +30,10 @@ services:
       ConnectionStrings__Castor: Host=db;Port=5432;Database=castor;Username=castor;Password=${POSTGRES_PASSWORD}
       Database__MigrateOnStartup: "true"
       DataProtection__KeysPath: /var/castor/keys
+      # The seed baked into the image; the import only adds content and upserts statistics (ADR 0003).
+      # Demo accounts and content are opt-in in the server .env: Seed__DemoContent=true + Seed__DemoPassword.
+      Seed__Path: /app/seed
+      Seed__OnStartup: "true"
     volumes:
       - backend-keys:/var/castor/keys
 

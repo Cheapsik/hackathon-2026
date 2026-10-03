@@ -1,11 +1,12 @@
+# Built from the repository root (`docker build --file backend/Dockerfile .`), so the image can carry data/seed.
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 
-COPY global.json Directory.Build.props .editorconfig ./
-COPY src/Castor.Api/Castor.Api.csproj src/Castor.Api/
+COPY backend/global.json backend/Directory.Build.props backend/.editorconfig ./
+COPY backend/src/Castor.Api/Castor.Api.csproj src/Castor.Api/
 RUN dotnet restore src/Castor.Api/Castor.Api.csproj
 
-COPY src/ src/
+COPY backend/src/ src/
 # The OpenAPI document is generated on a developer build and committed; the image does not need it.
 RUN dotnet publish src/Castor.Api/Castor.Api.csproj -c Release -o /app --no-restore -p:OpenApiGenerateDocuments=false
 
@@ -16,6 +17,8 @@ WORKDIR /app
 RUN mkdir -p /var/castor/keys && chown app /var/castor/keys
 
 COPY --from=build /app .
+# The committed seed travels with the release; Seed__Path=/app/seed and Seed__OnStartup turn the import on.
+COPY data/seed/ seed/
 
 ENV ASPNETCORE_HTTP_PORTS=8080
 EXPOSE 8080

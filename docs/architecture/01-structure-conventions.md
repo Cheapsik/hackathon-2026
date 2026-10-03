@@ -15,7 +15,7 @@
 │   └── architecture/          jak budujemy — rozstrzygnięte
 ├── backend/
 │   ├── AGENTS.md, CLAUDE.md   zasady backendu (węższe niż AGENTS.md w korzeniu)
-│   ├── .editorconfig, .gitignore, .dockerignore, Directory.Build.props, Dockerfile, dotnet-tools.json, global.json
+│   ├── .editorconfig, .gitignore, Directory.Build.props, Dockerfile, Dockerfile.dockerignore, dotnet-tools.json, global.json
 │   ├── Castor.slnx
 │   ├── openapi/               Castor.Api.json z buildu — wejście generatora klienta frontendu
 │   └── src/Castor.Api/

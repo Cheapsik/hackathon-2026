@@ -58,7 +58,8 @@ jobs:
           docker build --pull \
             --tag "castor-backend:${GITHUB_SHA}" \
             --tag "castor-backend:${CASTOR_BRANCH_TAG}" \
-            backend
+            --file backend/Dockerfile \
+            .
           docker build --pull \
             --tag "castor-frontend:${GITHUB_SHA}" \
             --tag "castor-frontend:${CASTOR_BRANCH_TAG}" \
