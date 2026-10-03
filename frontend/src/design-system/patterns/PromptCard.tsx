@@ -75,7 +75,7 @@ export function PromptCard({
           aria-invalid={error ? true : undefined}
           aria-describedby={[error ? errorId : undefined, voice ? statusId : undefined].filter(Boolean).join(' ') || undefined}
           onChange={(event) => onValueChange(event.target.value)}
-          className="mt-2 block max-h-72 min-h-24 w-full resize-none bg-transparent text-body text-text-primary field-sizing-content outline-none placeholder:text-text-faint"
+          className="mt-2 block max-h-72 min-h-24 w-full resize-none border-0 bg-transparent p-0 text-body text-text-primary shadow-none field-sizing-content outline-none placeholder:text-text-faint"
         />
 
         {/* Container query in rem: when the field is too narrow for both buttons (phone, large text), the main one takes its own row. */}

@@ -70,32 +70,7 @@ export function AppShell({
           {brand}
 
           <div className="flex items-center gap-2">
-            {showNavigation && (
-              <nav aria-label={navigationLabel} className="hidden lg:block">
-                <ul className="flex items-center gap-1">
-                  {navigation.map((item) => (
-                    <li key={item.to}>
-                      <NavLink
-                        to={item.to}
-                        end={item.end}
-                        className={({ isActive }) =>
-                          cn(
-                            'inline-flex min-h-touch items-center gap-2 rounded-button px-4 text-body-sm font-medium transition-control press',
-                            isActive
-                              ? 'bg-surface-active text-text-inverse'
-                              : 'text-text-muted hover:bg-surface-solid hover:text-text-primary',
-                          )
-                        }
-                      >
-                        {item.icon && <item.icon aria-hidden className="size-icon" />}
-                        {item.label}
-                      </NavLink>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
-            )}
-            {account && <div className="hidden text-label text-text-muted lg:block">{account}</div>}
+            {account && <div className="hidden text-label text-text-muted md:block">{account}</div>}
             {utilities && (
               <UtilityMenu label={utilitiesLabel} title={utilitiesLabel}>
                 {utilities}
@@ -103,7 +78,7 @@ export function AppShell({
             )}
             {showNavigation && (
               <IconButton
-                className="lg:hidden"
+                className="xl:hidden"
                 label="Menu"
                 icon={Menu}
                 aria-haspopup="dialog"
@@ -113,6 +88,35 @@ export function AppShell({
             )}
           </div>
         </PageContainer>
+
+        {/* Own row that wraps: a single header strip overflows once there are many destinations. */}
+        {showNavigation && (
+          <PageContainer className="hidden pb-3 xl:block">
+            <nav aria-label={navigationLabel}>
+              <ul className="flex flex-wrap items-center gap-1">
+                {navigation.map((item) => (
+                  <li key={item.to}>
+                    <NavLink
+                      to={item.to}
+                      end={item.end}
+                      className={({ isActive }) =>
+                        cn(
+                          'inline-flex min-h-10 items-center gap-2 rounded-button px-3 text-label font-medium whitespace-nowrap transition-control press',
+                          isActive
+                            ? 'bg-surface-active text-text-inverse'
+                            : 'text-text-muted hover:bg-surface-solid hover:text-text-primary',
+                        )
+                      }
+                    >
+                      {item.icon && <item.icon aria-hidden className="size-icon-lg shrink-0" strokeWidth={1.75} />}
+                      {item.label}
+                    </NavLink>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </PageContainer>
+        )}
       </header>
 
       <main id="main" ref={mainRef} tabIndex={-1} className="flex-1 outline-none">

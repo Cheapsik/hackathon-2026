@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { Link, useSearchParams } from 'react-router'
 import { useGetApiChallengeAreas, useGetApiInnovations } from '@/api/generated/castor'
+import { SearchAndFilters, SelectField, TextField } from '@/design-system'
 import { stageLabels } from '@/features/admin/labels'
 import { youtubeId } from '@/features/atlas/youtube'
 import { usePageTitle } from '@/hooks/use-page-title'
@@ -39,17 +40,33 @@ export function LibraryPage() {
     <>
       <h1>Biblioteka innowacji</h1>
       <p>Rozwiązania z Biblioteki ROPS i pomysły z Kreatora, które ROPS przyjął jako innowacje.</p>
-      <form onSubmit={(event) => event.preventDefault()}>
-        <p>
-          <label>
-            Szukaj po tytule <input type="search" value={search} onChange={(event) => setSearch(event.target.value)} />
-          </label>
-        </p>
-        <p>
-          <label>
-            Obszar{' '}
-            <select
+
+      <SearchAndFilters
+        searchLabel="Szukaj po tytule"
+        placeholder="Np. transport do lekarza"
+        query={search}
+        onQueryChange={setSearch}
+        searching={innovations.isPending}
+        resultSummary={
+          innovations.isPending
+            ? 'Wczytuję bibliotekę…'
+            : innovations.isSuccess && rows.length === 0
+              ? 'Brak innowacji dla wybranych filtrów.'
+              : innovations.isSuccess
+                ? `Innowacji: ${rows.length}.`
+                : null
+        }
+        filters={
+          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+            <SelectField
+              label="Obszar"
               value={area}
+              placeholder="wszystkie"
+              loading={areas.isPending}
+              options={(areas.data?.data ?? []).map((challengeArea) => ({
+                value: challengeArea.code,
+                label: challengeArea.name,
+              }))}
               onChange={(event) => {
                 const next = new URLSearchParams(searchParams)
                 if (event.target.value) {
@@ -59,60 +76,41 @@ export function LibraryPage() {
                 }
                 setSearchParams(next)
               }}
-            >
-              <option value="">wszystkie</option>
-              {(areas.data?.data ?? []).map((challengeArea) => (
-                <option key={challengeArea.code} value={challengeArea.code}>
-                  {challengeArea.name}
-                </option>
-              ))}
-            </select>
-          </label>{' '}
-          <label>
-            Kategoria{' '}
-            <select value={category} onChange={(event) => setCategory(event.target.value)}>
-              <option value="">wszystkie</option>
-              {categories.map((name) => (
-                <option key={name} value={name}>
-                  {name}
-                </option>
-              ))}
-            </select>
-          </label>{' '}
-          <label>
-            Etap{' '}
-            <select value={stage} onChange={(event) => setStage(event.target.value)}>
-              <option value="">wszystkie</option>
-              {Object.entries(stageLabels).map(([value, label]) => (
-                <option key={value} value={value}>
-                  {label}
-                </option>
-              ))}
-            </select>
-          </label>
-        </p>
-        <p>
-          <label>
-            Grupa docelowa <input type="search" value={targetGroup} onChange={(event) => setTargetGroup(event.target.value)} />
-          </label>
-        </p>
-      </form>
-      <div aria-live="polite">
-        {innovations.isPending && (
-          <p>
-            <output>Wczytuję bibliotekę…</output>
-          </p>
-        )}
-        {innovations.isError && <p role="alert">{errorMessage(innovations.error, { 400: 'Wybierz etap z listy.' })}</p>}
-        {innovations.isSuccess && rows.length === 0 && <p>Brak innowacji dla wybranych filtrów.</p>}
-        {rows.length > 0 && <p>Innowacji: {rows.length}.</p>}
-      </div>
-      <ul>
+            />
+            <SelectField
+              label="Kategoria"
+              value={category}
+              placeholder="wszystkie"
+              options={categories.map((name) => ({ value: name, label: name }))}
+              onChange={(event) => setCategory(event.target.value)}
+            />
+            <SelectField
+              label="Etap"
+              value={stage}
+              placeholder="wszystkie"
+              options={Object.entries(stageLabels).map(([value, label]) => ({ value, label }))}
+              onChange={(event) => setStage(event.target.value)}
+            />
+            <TextField
+              label="Grupa docelowa"
+              type="search"
+              value={targetGroup}
+              onChange={(event) => setTargetGroup(event.target.value)}
+            />
+          </div>
+        }
+      />
+
+      {innovations.isError && (
+        <p role="alert">{errorMessage(innovations.error, { 400: 'Wybierz etap z listy.' })}</p>
+      )}
+
+      <ul className="grid gap-6">
         {rows.map((innovation) => {
           const video = innovation.videoUrl ? youtubeId(innovation.videoUrl) : null
           return (
             <li key={innovation.id}>
-              <article aria-labelledby={`library-${innovation.id}`}>
+              <article aria-labelledby={`library-${innovation.id}`} className="grid gap-2">
                 <h2 id={`library-${innovation.id}`}>
                   <Link to={`/innowacje/${innovation.id}`}>{innovation.title}</Link>
                 </h2>
@@ -122,7 +120,7 @@ export function LibraryPage() {
                   </p>
                 )}
                 {innovation.shortDescription && <p>{innovation.shortDescription}</p>}
-                <p>
+                <p className="text-label text-text-muted">
                   {innovation.categories.join(', ')}
                   {innovation.categories.length > 0 && ' · '}
                   {stageLabels[innovation.stage] ?? innovation.stage}

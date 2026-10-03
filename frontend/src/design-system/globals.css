@@ -50,6 +50,48 @@
     outline: var(--focus-ring-width) solid var(--color-focus);
     outline-offset: 3px;
   }
+
+  /*
+   * Tailwind Preflight clears borders and backgrounds on form controls. Many feature pages still use native
+   * <input>/<textarea>/<select>; without this they blend into the canvas (only a resize handle remains).
+   * Keep these compact: design-system fields opt into the full touch-target look via controlClassName.
+   */
+  input:not([type='checkbox']):not([type='radio']):not([type='range']):not([type='file']):not([type='color']):not(
+      [type='hidden']
+    ):not([type='submit']):not([type='button']):not([type='reset']):not([type='image']),
+  textarea,
+  select {
+    box-sizing: border-box;
+    max-width: 100%;
+    min-height: 2.5rem;
+    padding: 0.375rem 0.75rem;
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-control);
+    background-color: var(--color-surface-glass-strong);
+    color: var(--color-text-primary);
+    vertical-align: middle;
+    font: inherit;
+    font-size: var(--text-body-sm);
+    line-height: var(--text-body-sm--line-height);
+  }
+
+  textarea {
+    min-height: 7.5rem;
+    resize: vertical;
+    line-height: var(--text-body--line-height);
+  }
+
+  select {
+    appearance: auto;
+    width: auto;
+  }
+
+  input:disabled,
+  textarea:disabled,
+  select:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
 }
 
 /* The main product surface and grouped content: the lighter of the two neutrals, one shadow layer. */
