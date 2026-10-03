@@ -63,7 +63,7 @@ Długość każdej sceny dopasowuje się do głosu. Nagranie przyspiesza się co
 
 ## Zmiana głosu
 
-W `script.json` zmień `"voice"`. Polskie głosy to `pl-PL-ZofiaNeural` (kobiecy, ustawiony) i `pl-PL-MarekNeural` (męski). Tempo zmienisz, dopisując na przykład `"rate": "+8%"` obok `"voice"`; da się to też ustawić dla pojedynczego segmentu. Potem uruchom `tools/film/film.ps1 -SkipScenes`.
+W `script.json` zmień `"voice"`. Polskie głosy to `pl-PL-MarekNeural` (męski, ustawiony) i `pl-PL-ZofiaNeural` (kobiecy). Tempo zmienisz, dopisując na przykład `"rate": "+8%"` obok `"voice"`; da się to też ustawić dla pojedynczego segmentu. Potem uruchom `tools/film/film.ps1 -SkipScenes`.
 
 ## Własny lektor
 
