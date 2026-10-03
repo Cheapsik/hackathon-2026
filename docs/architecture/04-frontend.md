@@ -21,12 +21,11 @@ Wymagania produktu dla UI (dostępność WCAG 2.1 AA, język, etykiety, mobile f
 frontend/
 ├── src/
 │   ├── main.tsx                punkt wejścia: QueryClientProvider + RouterProvider
-│   ├── index.css               Tailwind + import design-system (tokeny, wysoki kontrast, rozmiar tekstu, druk karty)
+│   ├── index.css               Tailwind (domyślny motyw) + wysoki kontrast, rozmiar tekstu, ograniczenie animacji, druk karty
 │   ├── app/                    router.tsx (wszystkie trasy), query-client.ts
 │   ├── api/
 │   │   ├── castor-fetch.ts     fetch, przez który idzie każde wywołanie klienta; błąd → ApiError
 │   │   └── generated/          klient orval — generowany, poza gitem
-│   ├── design-system/          tokeny, primitives, patterns i szablony stron (zasady: ../design/DESIGN.md; podgląd: /design-system w dev)
 │   ├── components/
 │   │   ├── ui/                 komponenty shadcn (dodawane CLI)
 │   │   └── layout/             AppLayout, BrandMark, DisplayControls, AccountLinks — wspólne dla wszystkich stron

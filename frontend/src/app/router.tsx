@@ -22,7 +22,6 @@ import { AreasPage } from '@/features/atlas/AreasPage'
 import { ChallengeMapPage } from '@/features/atlas/ChallengeMapPage'
 import { LibraryPage } from '@/features/atlas/LibraryPage'
 import { MaterialsPage } from '@/features/atlas/MaterialsPage'
-import { HomePage } from '@/features/home/HomePage'
 import { GrantApplicationPage } from '@/features/ideas/GrantApplicationPage'
 import { IdeaPage } from '@/features/ideas/IdeaPage'
 import { IdeasPage } from '@/features/ideas/IdeasPage'
@@ -34,6 +33,7 @@ import { MyProblemReportsPage } from '@/features/problem-reports/MyProblemReport
 import { TrackProblemReportPage } from '@/features/problem-reports/TrackProblemReportPage'
 import { TesterProfilePage } from '@/features/tests/TesterProfilePage'
 import { TestsPage } from '@/features/tests/TestsPage'
+import { KrakowAbovePage } from '@/features/krakow-above/KrakowAbovePage'
 
 /*
  * Design-system preview: development only. import.meta.env.DEV is replaced at build time, so in production this
@@ -59,9 +59,12 @@ const developmentRoutes: RouteObject[] = import.meta.env.DEV
 export const router = createBrowserRouter([
   ...developmentRoutes,
   {
+    path: '/',
+    element: <KrakowAbovePage />,
+  },
+  {
     element: <AppLayout />,
     children: [
-      { index: true, element: <HomePage /> },
       { path: 'opisz-problem', element: <DescribeProblemPage /> },
       { path: 'sledz', element: <TrackProblemReportPage /> },
       { path: 'zgloszenie/:trackingCode', element: <TrackProblemReportPage /> },
