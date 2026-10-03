@@ -56,6 +56,7 @@ public sealed class PlaceholderLlmClient(ILogger<PlaceholderLlmClient> logger) :
             Type type when type == typeof(GrantCallDraftResult) => DraftGrantCall(LlmJson.Deserialize<GrantCallDraftInput>(prompt.Input)),
             Type type when type == typeof(SimilarityResult) => FindSimilar(LlmJson.Deserialize<SimilarityInput>(prompt.Input)),
             Type type when type == typeof(GrantApplicationDraftResult) => DraftGrantApplication(LlmJson.Deserialize<GrantApplicationDraftInput>(prompt.Input)),
+            Type type when type == typeof(FeedbackSummaryResult) => SummariseFeedback(LlmJson.Deserialize<FeedbackSummaryInput>(prompt.Input)),
             _ => throw new NotSupportedException($"The placeholder language model cannot answer with {typeof(TResult).Name}."),
         };
 
@@ -366,6 +367,27 @@ public sealed class PlaceholderLlmClient(ILogger<PlaceholderLlmClient> logger) :
     private static int Overlap(HashSet<string> left, HashSet<string> right)
     {
         return left.Count(right.Contains);
+    }
+
+    private static FeedbackSummaryResult SummariseFeedback(FeedbackSummaryInput input)
+    {
+        List<string> improvements = [.. input.Feedback
+            .Select(entry => entry.WhatToImprove)
+            .Where(text => !string.IsNullOrWhiteSpace(text))
+            .Cast<string>()
+            .Select(text => text.Trim())
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .Take(8)];
+
+        if (improvements.Count == 0 && input.Feedback.Count > 0)
+        {
+            double average = input.Feedback.Average(entry => entry.Stars);
+            improvements.Add(average < 3
+                ? "Sprawdź, co w ocenach powtarza się jako problem, i uprość pierwszy kontakt z usługą."
+                : "Zachowaj to, co testerzy chwalą, i doprecyzuj instrukcję wdrożenia.");
+        }
+
+        return new FeedbackSummaryResult(improvements);
     }
 
     /// <summary>Keeps the first words of each sentence, so the placeholder still shortens a long description.</summary>

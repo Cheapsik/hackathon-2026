@@ -97,6 +97,9 @@ public sealed class Idea
 
     public DateTimeOffset? DecidedAt { get; private set; }
 
+    /// <summary>The idea looks for people to try it (Poletko). Only IDEA and PROTOTYPE stages allow it.</summary>
+    public bool SeeksTesters { get; private set; }
+
     public DateTimeOffset CreatedAt { get; private set; }
 
     public DateTimeOffset UpdatedAt { get; private set; }
@@ -271,7 +274,34 @@ public sealed class Idea
 
         Status = decision;
         DecidedAt = decidedAt;
+        if (decision == IdeaStatus.REJECTED)
+        {
+            SeeksTesters = false;
+        }
+
         UpdatedAt = decidedAt;
+    }
+
+    /// <summary>Authors or ROPS turn "szukam testerów" on for an early-stage idea that is not a draft or rejected.</summary>
+    public void SetSeeksTesters(Guid editorId, bool seeksTesters, DateTimeOffset changedAt, bool asAdmin = false)
+    {
+        if (!asAdmin && !IsAuthoredBy(editorId))
+        {
+            throw new DomainException("The idea does not exist.", StatusCodes.Status404NotFound);
+        }
+
+        if (Status is IdeaStatus.DRAFT or IdeaStatus.REJECTED)
+        {
+            throw new DomainException("Only a submitted or accepted idea looks for testers.", StatusCodes.Status409Conflict);
+        }
+
+        if (seeksTesters && Stage is not (InnovationStage.IDEA or InnovationStage.PROTOTYPE))
+        {
+            throw new DomainException("Only an idea or a prototype can look for testers.");
+        }
+
+        SeeksTesters = seeksTesters;
+        UpdatedAt = changedAt;
     }
 
     public void RecordSimilarity(IReadOnlyList<IdeaSimilarity> similar, DateTimeOffset checkedAt)
@@ -481,6 +511,11 @@ public sealed class Idea
         OtherRecipients = Optional(canvas.OtherRecipients, OtherRecipientsMaxLength, "Other recipients");
         Solution = Optional(canvas.Solution, SolutionMaxLength, "The essence of the solution");
         Stage = canvas.Stage;
+        if (Stage is not (InnovationStage.IDEA or InnovationStage.PROTOTYPE))
+        {
+            SeeksTesters = false;
+        }
+
         Supporters = Optional(canvas.Supporters, ActorsMaxLength, "Supporters");
         Opponents = Optional(canvas.Opponents, ActorsMaxLength, "Opponents");
         EmotionalValues = Choices(canvas.EmotionalValues, CanvasOptions.EmotionalValues, CanvasOptions.MaxValues, "emotional values");

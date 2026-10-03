@@ -2,7 +2,7 @@ namespace Castor.Api.Features.Innovations;
 
 internal static class InnovationConverter
 {
-    public static InnovationResponse ToResponse(this Innovation innovation)
+    public static InnovationResponse ToResponse(this Innovation innovation, bool canToggleSeeksTesters = false)
     {
         string stage = innovation.Stage.ToString();
         string source = innovation.Source.ToString();
@@ -30,6 +30,7 @@ internal static class InnovationConverter
             areas,
             source,
             innovation.SeeksTesters,
+            canToggleSeeksTesters,
             innovation.PlainTextStatus == PlainTextStatus.APPROVED ? innovation.PlainText : null);
     }
 }

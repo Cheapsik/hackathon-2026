@@ -26,6 +26,9 @@ public sealed class User
     /// <summary>The challenge areas of an <see cref="UserRole.EXPERT"/>; empty for every other role.</summary>
     public List<string> ChallengeAreaCodes { get; private set; } = [];
 
+    /// <summary>Filled once for the Poletko; reused on every "Chcę testować".</summary>
+    public TesterProfile? TesterProfile { get; private set; }
+
     public DateTimeOffset CreatedAt { get; private set; }
 
     public DateTimeOffset UpdatedAt { get; private set; }
@@ -98,6 +101,12 @@ public sealed class User
         Role = role;
         MunicipalityId = role == UserRole.MUNICIPAL_OFFICER ? municipality!.Id : null;
         ChallengeAreaCodes = role == UserRole.EXPERT ? [.. challengeAreas.Select(area => area.Code).Distinct()] : [];
+        UpdatedAt = changedAt;
+    }
+
+    public void SaveTesterProfile(int age, Municipality municipality, string? accessibilityNeeds, string? equipment, DateTimeOffset changedAt)
+    {
+        TesterProfile = TesterProfile.Write(age, municipality, accessibilityNeeds, equipment);
         UpdatedAt = changedAt;
     }
 }

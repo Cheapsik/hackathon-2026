@@ -131,6 +131,19 @@ Moduł II dołożył (SPEC §7 II):
 
 Frontend modułu II: `features/atlas/` (obszary, strona obszaru, biblioteka, mapa, materiały), „Prościej” i film na karcie innowacji, mini-mapa na karcie dopasowania, mapa zgłoszeń w radarze, zatwierdzanie tekstów w panelu. Leaflet.
 
+Moduł IV dołożył (SPEC §7 IV):
+
+| Miejsce | Zawartość |
+|---|---|
+| `Domain/Identity/` | `TesterProfile` (owned na `User`) |
+| `Domain/Tests/` | `TestSignup`, `TestTargetKind`; `Feedback` (opinia: gwiazdki, co działa / co poprawić, `dictated`) |
+| `Domain/Ideas/`, `Domain/Knowledge/` | `SetSeeksTesters` na `Idea` i `Innovation` (etapy `IDEA` \| `PROTOTYPE`) |
+| `Shared/Ai/` | `FeedbackSummariser`, prompt `summarise-feedback.md` |
+| `Features/` | `Tests` (`/api/tests`), `TesterProfile` (`/api/me/tester-profile`), `Feedback` (`/api/innovations/{id}/feedback`, summary, `seeks-testers`), `Ideas` (`PUT …/seeks-testers`); `InnovationResponse.CanToggleSeeksTesters` |
+| `Migrations/` | `Poletko` |
+
+Frontend modułu IV: `features/tests/` (lista testów, profil testera, ocena i podsumowanie na karcie innowacji, przełącznik na pomyśle), pozycja nawigacji „Testy innowacji”.
+
 Workspace'ów i globalnego filtra izolacji **nie ma** — dane platformy są wspólne ([`00-stack.md`](00-stack.md) · Dostęp do danych).
 
 ## Co jest w `frontend/`

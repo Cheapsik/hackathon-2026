@@ -5,6 +5,7 @@ using Castor.Api.Features.BackgroundJobs;
 using Castor.Api.Features.ChallengeAreas;
 using Castor.Api.Features.Conversations;
 using Castor.Api.Features.FitAssessments;
+using Castor.Api.Features.Feedback;
 using Castor.Api.Features.GrantApplications;
 using Castor.Api.Features.GrantCalls;
 using Castor.Api.Features.Ideas;
@@ -17,6 +18,8 @@ using Castor.Api.Features.Radar;
 using Castor.Api.Features.Register;
 using Castor.Api.Features.Session;
 using Castor.Api.Features.SignIn;
+using Castor.Api.Features.TesterProfile;
+using Castor.Api.Features.Tests;
 using Castor.Api.Features.Users;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.DataProtection;
@@ -135,6 +138,7 @@ builder.Services.AddScoped<DuplicateChecker>();
 builder.Services.AddScoped<IdeaAssistant>();
 builder.Services.AddScoped<GrantApplicationWriter>();
 builder.Services.AddScoped<PlainTextWriter>();
+builder.Services.AddScoped<FeedbackSummariser>();
 
 // Start-up: schema, interrupted jobs, seed — registered before the job runner, so the runner starts on a ready database.
 // The build-time OpenAPI generator (GetDocument.Insider) and dotnet-ef (ef) run this file too; they get no database.
@@ -206,6 +210,7 @@ builder.Services.AddScoped<GetInnovationPlainTextHandler>();
 builder.Services.AddScoped<GenerateInnovationPlainTextHandler>();
 builder.Services.AddScoped<ReviseInnovationPlainTextHandler>();
 builder.Services.AddScoped<ApproveInnovationPlainTextHandler>();
+builder.Services.AddScoped<SetInnovationSeeksTestersHandler>();
 
 // Obserwator indicators (the Atlas map)
 builder.Services.AddScoped<ListIndicatorsHandler>();
@@ -265,6 +270,7 @@ builder.Services.AddScoped<JoinIdeaHandler>();
 builder.Services.AddScoped<ListIdeaAssistantMessagesHandler>();
 builder.Services.AddScoped<AskIdeaAssistantHandler>();
 builder.Services.AddScoped<ReviewIdeaHandler>();
+builder.Services.AddScoped<SetIdeaSeeksTestersHandler>();
 builder.Services.AddScoped<ListAdminIdeasHandler>();
 builder.Services.AddScoped<DecideIdeaHandler>();
 builder.Services.AddScoped<ConvertIdeaToInnovationHandler>();
@@ -274,6 +280,15 @@ builder.Services.AddScoped<CreateGrantApplicationHandler>();
 builder.Services.AddScoped<GetGrantApplicationHandler>();
 builder.Services.AddScoped<ReviseGrantApplicationHandler>();
 builder.Services.AddScoped<ListGrantCallApplicationsHandler>();
+
+// Poletko (tester profile, tests, feedback)
+builder.Services.AddScoped<GetTesterProfileHandler>();
+builder.Services.AddScoped<SaveTesterProfileHandler>();
+builder.Services.AddScoped<ListTestsHandler>();
+builder.Services.AddScoped<CreateTestSignupHandler>();
+builder.Services.AddScoped<WriteFeedbackHandler>();
+builder.Services.AddScoped<ListFeedbackHandler>();
+builder.Services.AddScoped<GetFeedbackSummaryHandler>();
 
 // Each resource adds its queries and handlers here, one line each.
 

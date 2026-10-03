@@ -295,14 +295,14 @@ Wyszukiwanie pełnotekstowe (6.4 krok 2): konfiguracja `simple` + `unaccent` + `
 
 ### IV. Tester innowacji — „Poletko”
 
-- **Ekrany:** lista innowacji/pomysłów szukających testerów (etap prototyp); karta z opisem i przyciskiem „Chcę testować”; profil testera (wiek, gmina, potrzeby dostępności, sprzęt); formularz oceny: gwiazdki + „co działa / co poprawić” (tekst lub głos).
-- **Kontakt z zespołem innowacji:** wątek wiadomości z organizacją/autorem (moduł V).
-- **AI:** zbiorcze podsumowanie opinii na listę usprawnień dla autora.
+- **Ekrany:** lista innowacji/pomysłów szukających testerów (`/testy`); profil testera (`/profil-testera`: wiek, gmina, potrzeby dostępności, sprzęt); na karcie innowacji ocena (gwiazdki + „co działa / co poprawić”, tekst lub głos) i przełącznik „szukam testerów”; na karcie pomysłu ten sam przełącznik.
+- **Kontakt z zespołem innowacji:** wątek partnerstwa (moduł V).
+- **AI:** zbiorcze podsumowanie opinii na listę usprawnień dla zespołu i admina.
 - **Reguły:**
-  - Testerów szuka innowacja albo pomysł na etapie `PROTOTYPE`, gdy autor albo admin włączy „szukam testerów” (`seeksTesters`).
-  - Profil testera (wiek, gmina, potrzeby dostępności, sprzęt) zapisujemy raz, przy koncie, i używamy przy kolejnych zapisach.
-  - Opinię wystawia każdy zalogowany, do dowolnej innowacji („ocena istniejących rozwiązań”, REQUIREMENTS §IV). Podsumowanie AI widzą autor i admin.
-- **API:** `GET /api/tests`, `POST /api/tests/{id}/signups`, `POST /api/innovations/{id}/feedback`, `GET /api/innovations/{id}/feedback/summary`.
+  - Testerów szuka innowacja albo pomysł na etapie `IDEA` albo `PROTOTYPE`, gdy autor (pomysł / zespół innowacji z Kreatora) albo admin włączy „szukam testerów” (`seeksTesters`).
+  - Profil testera zapisujemy raz przy koncie; zapis na test wymaga profilu.
+  - Opinię wystawia każdy zalogowany, do dowolnej innowacji (nadpisuje swoją poprzednią). Podsumowanie AI widzą zespół innowacji (autorzy pomysłu źródłowego) i admin.
+- **API:** `GET /api/tests`, `POST /api/tests/{id}/signups` `{ kind: INNOVATION|IDEA }`, `GET`/`PUT /api/me/tester-profile`, `GET`/`POST /api/innovations/{id}/feedback`, `GET /api/innovations/{id}/feedback/summary`, `PUT /api/innovations/{id}/seeks-testers`, `PUT /api/ideas/{id}/seeks-testers`.
 
 
 
@@ -483,3 +483,13 @@ Moduł II — 2026-10-03:
 | D-52 | „Prościej” to jeden tekst na innowację (sekcje karty) i jeden na obszar (definicja). Szkic do zatwierdzenia przez admina; zmiana karty innowacji kasuje tekst | §6.8 |
 | D-53 | Mapa: uproszczone granice gmin Małopolski z PRG, bez podkładu kafelkowego; kartogram wskaźnika, mini-mapa na karcie dopasowania, mapa zgłoszeń w radarze. Obok zawsze tabela | §7 II, VI, VII |
 | D-54 | Pytania do raportów (RAG) zostają odłożone do decyzji o embeddingach. Materiały edukacyjne to odnośniki do stron ROPS, bez kopiowania PDF | §6.7, §7 II, [TODO](TODO.md) |
+
+Moduł IV — 2026-10-03:
+
+| # | Decyzja | Gdzie |
+|---|---|---|
+| D-55 | Lista testów łączy innowacje i pomysły z `seeksTesters`; zapis wymaga `kind` (`INNOVATION` \| `IDEA`) i profilu testera | §7 IV |
+| D-56 | Profil testera jest częścią konta (`PUT /api/me/tester-profile`): wiek 13–120, gmina, potrzeby, sprzęt | §7 IV |
+| D-57 | Jedna opinia na parę (użytkownik, innowacja); ponowny `POST` nadpisuje. Dyktowanie ustawia `dictated` | §7 IV |
+| D-58 | Podsumowanie AI i przełącznik „szukam testerów” na innowacji: admin albo autorzy pomysłu źródłowego; na pomyśle: autor albo admin | §7 IV |
+| D-59 | Szukanie testerów dozwolone na etapach `IDEA` i `PROTOTYPE` (nie tylko prototyp) | §7 IV, A-39 |

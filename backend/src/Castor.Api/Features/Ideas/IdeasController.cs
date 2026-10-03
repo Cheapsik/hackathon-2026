@@ -1,4 +1,5 @@
 using Castor.Api.Features.Conversations;
+using Castor.Api.Features.Feedback;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
@@ -25,7 +26,8 @@ public sealed class IdeasController(
     JoinIdeaHandler join,
     ListIdeaAssistantMessagesHandler listAssistantMessages,
     AskIdeaAssistantHandler askAssistant,
-    ReviewIdeaHandler review) : ControllerBase
+    ReviewIdeaHandler review,
+    SetIdeaSeeksTestersHandler seeksTesters) : ControllerBase
 {
     [AllowAnonymous]
     [HttpGet("canvas")]
@@ -130,5 +132,11 @@ public sealed class IdeasController(
     public Task<IdeaResponse> Review(Guid ideaId, [FromBody] ReviewIdeaRequest request, CancellationToken cancellationToken)
     {
         return review.HandleAsync(ideaId, request, cancellationToken);
+    }
+
+    [HttpPut("{ideaId:guid}/seeks-testers")]
+    public Task<IdeaResponse> SeeksTesters(Guid ideaId, [FromBody] SetSeeksTestersRequest request, CancellationToken cancellationToken)
+    {
+        return seeksTesters.HandleAsync(ideaId, request, cancellationToken);
     }
 }

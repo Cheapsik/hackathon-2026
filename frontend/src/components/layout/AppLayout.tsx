@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { BookOpen, CircleHelp, Files, House, Library, Lightbulb, Map, MessageSquareText, MessagesSquare, Search, ShieldCheck } from 'lucide-react'
+import { BookOpen, CircleHelp, Files, FlaskConical, House, Library, Lightbulb, Map, MessageSquareText, MessagesSquare, Search, ShieldCheck } from 'lucide-react'
 import { Link, Outlet, useLocation } from 'react-router'
 import type { SessionResponse } from '@/api/generated/castor'
 import { AccountLinks } from '@/components/layout/AccountLinks'
@@ -17,6 +17,7 @@ const navigation: AppShellNavItem[] = [
   { to: '/obszary', label: 'Atlas wyzwań', icon: Map },
   { to: '/biblioteka', label: 'Biblioteka innowacji', icon: Library },
   { to: '/materialy', label: 'Materiały', icon: BookOpen },
+  { to: '/testy', label: 'Testy innowacji', icon: FlaskConical },
 ]
 
 /** Threads need an account; a report sent without one has its thread on "Śledź zgłoszenie". */

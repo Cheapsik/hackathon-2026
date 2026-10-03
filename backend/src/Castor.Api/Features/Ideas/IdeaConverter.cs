@@ -31,6 +31,9 @@ internal static class IdeaConverter
         bool canDecide = reader.IsAdmin && idea.Status == IdeaStatus.SUBMITTED;
         bool canConvert = reader.IsAdmin && idea.Status == IdeaStatus.ACCEPTED && view.InnovationId is null;
         bool canApply = isAuthor && idea.Status != IdeaStatus.REJECTED;
+        bool canToggleSeeks = (isAuthor || reader.IsAdmin)
+            && idea.Status is IdeaStatus.SUBMITTED or IdeaStatus.ACCEPTED
+            && idea.Stage is InnovationStage.IDEA or InnovationStage.PROTOTYPE;
 
         return new IdeaResponse(
             idea.Id,
@@ -64,6 +67,8 @@ internal static class IdeaConverter
             canDecide,
             canConvert,
             canApply,
+            idea.SeeksTesters,
+            canToggleSeeks,
             reviews,
             myReviewResponse,
             view.InnovationId,

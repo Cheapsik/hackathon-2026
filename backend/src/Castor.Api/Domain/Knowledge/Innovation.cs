@@ -240,7 +240,24 @@ public sealed class Innovation
         CardPdfUrl = NullIfBlank(links.CardPdfUrl);
         TermsUrl = NullIfBlank(links.TermsUrl);
         Stage = stage;
+        if (stage is not (InnovationStage.IDEA or InnovationStage.PROTOTYPE))
+        {
+            SeeksTesters = false;
+        }
+
         DropPlainText();
+        UpdatedAt = changedAt;
+    }
+
+    /// <summary>Turns "szukam testerów" on or off. Only early stages can seek testers.</summary>
+    public void SetSeeksTesters(bool seeksTesters, DateTimeOffset changedAt)
+    {
+        if (seeksTesters && Stage is not (InnovationStage.IDEA or InnovationStage.PROTOTYPE))
+        {
+            throw new DomainException("Only an idea or a prototype can look for testers.");
+        }
+
+        SeeksTesters = seeksTesters;
         UpdatedAt = changedAt;
     }
 

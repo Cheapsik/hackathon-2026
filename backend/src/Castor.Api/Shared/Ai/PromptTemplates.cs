@@ -33,6 +33,8 @@ public static class PromptTemplates
 
     public const string RewritePlain = "rewrite-plain";
 
+    public const string SummariseFeedback = "summarise-feedback";
+
     private static readonly ConcurrentDictionary<string, string> Loaded = new(StringComparer.Ordinal);
 
     public static string Get(string name)

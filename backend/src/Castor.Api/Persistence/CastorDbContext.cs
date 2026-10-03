@@ -52,6 +52,10 @@ public sealed class CastorDbContext : DbContext
 
     public DbSet<GrantApplication> GrantApplications => Set<GrantApplication>();
 
+    public DbSet<TestSignup> TestSignups => Set<TestSignup>();
+
+    public DbSet<Feedback> Feedback => Set<Feedback>();
+
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {
         ModelConventions.ApplyTo(configurationBuilder);

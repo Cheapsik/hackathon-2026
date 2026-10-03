@@ -18,6 +18,7 @@ import { IdeaGrantApplicationsSection } from '@/features/ideas/IdeaGrantApplicat
 import { IdeaReviewsSection } from '@/features/ideas/IdeaReviewsSection'
 import { IdeaSimilarSection } from '@/features/ideas/IdeaSimilarSection'
 import { ideaStatusLabel, missingFieldLabels } from '@/features/ideas/labels'
+import { IdeaSeeksTestersSection } from '@/features/tests/IdeaSeeksTestersSection'
 import { usePageTitle } from '@/hooks/use-page-title'
 import { errorMessage } from '@/lib/error-message'
 import { formatDateTime } from '@/lib/format'
@@ -161,6 +162,7 @@ function IdeaDetails({ idea }: { idea: IdeaResponse }) {
       {idea.isAuthor && <IdeaAssistantChat ideaId={idea.id} />}
       <IdeaReviewsSection idea={idea} onUpdated={updated} />
       <IdeaAdminActions idea={idea} onUpdated={updated} />
+      <IdeaSeeksTestersSection idea={idea} onUpdated={updated} />
       <IdeaGrantApplicationsSection idea={idea} />
     </>
   )

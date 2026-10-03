@@ -50,6 +50,11 @@ Kolumna `embedding vector(N)` genomu jeszcze nie istnieje — dojdzie migracją 
 - **Wycofanie się współautora** i usunięcie szkicu: brak; pomysł i współautorstwo zostają.
 - **Formularze bez React Hook Form i Zod** — jak w module I (D-26).
 
+## Moduł IV — co zostało
+
+- **Lista zapisanych testerów dla zespołu** (poza samym `signedUp` na liście publicznej): brak osobnego widoku zgłoszeń testerów z profilami.
+- **Powiadomienie SignalR** o nowym zapisie albo opinii: brak; zespół odświeża podsumowanie ręcznie.
+
 ## LLM — dostawca i pierwsze adaptery
 
 SPEC §1 i §3 wymagają abstrakcji `ILlmClient` z adapterami wybieranymi przez `Llm__Provider`. Nie ustalono, którego dostawcę obsługujemy pierwszego ani do którego jest klucz na demo.

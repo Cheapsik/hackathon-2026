@@ -1,9 +1,15 @@
 import { useState } from 'react'
+import { useQueryClient } from '@tanstack/react-query'
 import { Link, useParams } from 'react-router'
-import { useGetApiInnovationsInnovationId, type InnovationResponse } from '@/api/generated/castor'
+import {
+  getGetApiInnovationsInnovationIdQueryKey,
+  useGetApiInnovationsInnovationId,
+  type InnovationResponse,
+} from '@/api/generated/castor'
 import { youtubeId } from '@/features/atlas/youtube'
 import { PartnershipSection } from '@/features/conversations/PartnershipSection'
 import { FitAssessmentSection } from '@/features/fit-assessments/FitAssessmentSection'
+import { InnovationTestingSection } from '@/features/tests/InnovationTestingSection'
 import { usePageTitle } from '@/hooks/use-page-title'
 import { errorMessage } from '@/lib/error-message'
 
@@ -44,7 +50,12 @@ export function InnovationPage() {
 
 function InnovationCard({ card }: { card: InnovationResponse }) {
   const [plain, setPlain] = useState(false)
+  const queryClient = useQueryClient()
   const video = card.videoUrl ? youtubeId(card.videoUrl) : null
+
+  function updated(next: InnovationResponse) {
+    queryClient.setQueryData(getGetApiInnovationsInnovationIdQueryKey(next.id), { data: next, status: 200, headers: new Headers() })
+  }
 
   return (
     <>
@@ -55,7 +66,7 @@ function InnovationCard({ card }: { card: InnovationResponse }) {
       {card.shortDescription && <p>{card.shortDescription}</p>}
       {card.categories.length > 0 && <p>Kategoria Biblioteki ROPS: {card.categories.join(', ')}</p>}
       {card.source === 'USER' && <p>Innowacja wyrosła z pomysłu zgłoszonego w Kreatorze pomysłów.</p>}
-      {card.seeksTesters && <p>Zespół szuka miejsc do przetestowania innowacji — napisz do niego poniżej.</p>}
+      {card.seeksTesters && <p>Zespół szuka testerów — zapisz się na liście testów albo oceń innowację poniżej.</p>}
       {card.featured && <p>Innowacja wybrana do upowszechniania.</p>}
       {card.inServiceModel && <p>Innowacja jest częścią Małopolskich Modeli Usług Społecznych.</p>}
       {card.plainText && (
@@ -136,6 +147,7 @@ function InnovationCard({ card }: { card: InnovationResponse }) {
       </div>
 
       <FitAssessmentSection innovationId={card.id} />
+      <InnovationTestingSection innovation={card} onUpdated={updated} />
       <PartnershipSection innovationId={card.id} innovationTitle={card.title} />
     </>
   )

@@ -24,4 +24,5 @@ public sealed record InnovationResponse(
     IReadOnlyList<string> ChallengeAreaCodes,
     string Source,
     bool SeeksTesters,
+    bool CanToggleSeeksTesters,
     string? PlainText);

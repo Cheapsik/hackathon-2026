@@ -119,6 +119,180 @@
         }
       }
     },
+    "/api/tests": {
+      "get": {
+        "tags": [
+          "Tests"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TestOpportunityResponse"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TestOpportunityResponse"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TestOpportunityResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tests/{targetId}/signups": {
+      "post": {
+        "tags": [
+          "Tests"
+        ],
+        "parameters": [
+          {
+            "name": "targetId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTestSignupRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTestSignupRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTestSignupRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/TestSignupResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TestSignupResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TestSignupResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/me/tester-profile": {
+      "get": {
+        "tags": [
+          "TesterProfile"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/TesterProfileResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TesterProfileResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TesterProfileResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "TesterProfile"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SaveTesterProfileRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SaveTesterProfileRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SaveTesterProfileRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/TesterProfileResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TesterProfileResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TesterProfileResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/auth/sign-out": {
       "post": {
         "tags": [
@@ -2510,6 +2684,66 @@
         }
       }
     },
+    "/api/ideas/{ideaId}/seeks-testers": {
+      "put": {
+        "tags": [
+          "Ideas"
+        ],
+        "parameters": [
+          {
+            "name": "ideaId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetSeeksTestersRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetSeeksTestersRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetSeeksTestersRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdeaResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdeaResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdeaResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/admin/grant-calls": {
       "get": {
         "tags": [
@@ -3408,6 +3642,213 @@
                   "items": {
                     "$ref": "#/components/schemas/FitAssistantMessageResponse"
                   }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/innovations/{innovationId}/feedback": {
+      "get": {
+        "tags": [
+          "InnovationFeedback"
+        ],
+        "parameters": [
+          {
+            "name": "innovationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FeedbackResponse"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FeedbackResponse"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FeedbackResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "InnovationFeedback"
+        ],
+        "parameters": [
+          {
+            "name": "innovationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WriteFeedbackRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WriteFeedbackRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/WriteFeedbackRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FeedbackResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FeedbackResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FeedbackResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/innovations/{innovationId}/feedback/summary": {
+      "get": {
+        "tags": [
+          "InnovationFeedback"
+        ],
+        "parameters": [
+          {
+            "name": "innovationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FeedbackSummaryResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FeedbackSummaryResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FeedbackSummaryResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/innovations/{innovationId}/seeks-testers": {
+      "put": {
+        "tags": [
+          "InnovationFeedback"
+        ],
+        "parameters": [
+          {
+            "name": "innovationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetSeeksTestersRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetSeeksTestersRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetSeeksTestersRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/InnovationResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InnovationResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InnovationResponse"
                 }
               }
             }
@@ -5011,6 +5452,20 @@
           }
         }
       },
+      "CreateTestSignupRequest": {
+        "required": [
+          "kind"
+        ],
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
       "DecideIdeaRequest": {
         "required": [
           "decision"
@@ -5043,6 +5498,95 @@
               "null",
               "string"
             ]
+          }
+        }
+      },
+      "FeedbackResponse": {
+        "required": [
+          "id",
+          "stars",
+          "whatWorks",
+          "whatToImprove",
+          "dictated",
+          "mine",
+          "updatedAt"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "stars": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "whatWorks": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "whatToImprove": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "dictated": {
+            "type": "boolean"
+          },
+          "mine": {
+            "type": "boolean"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "FeedbackSummaryResponse": {
+        "required": [
+          "innovationId",
+          "innovationTitle",
+          "ratings",
+          "averageStars",
+          "improvements"
+        ],
+        "type": "object",
+        "properties": {
+          "innovationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "innovationTitle": {
+            "type": "string"
+          },
+          "ratings": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "averageStars": {
+            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?(?:[eE][+-]?\\d+)?$",
+            "type": [
+              "number",
+              "string"
+            ],
+            "format": "double"
+          },
+          "improvements": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         }
       },
@@ -5675,6 +6219,8 @@
           "canDecide",
           "canConvert",
           "canApply",
+          "seeksTesters",
+          "canToggleSeeksTesters",
           "reviews",
           "myReview",
           "innovationId",
@@ -5848,6 +6394,12 @@
             "type": "boolean"
           },
           "canApply": {
+            "type": "boolean"
+          },
+          "seeksTesters": {
+            "type": "boolean"
+          },
+          "canToggleSeeksTesters": {
             "type": "boolean"
           },
           "reviews": {
@@ -6378,6 +6930,7 @@
           "challengeAreaCodes",
           "source",
           "seeksTesters",
+          "canToggleSeeksTesters",
           "plainText"
         ],
         "type": "object",
@@ -6486,6 +7039,9 @@
             "type": "string"
           },
           "seeksTesters": {
+            "type": "boolean"
+          },
+          "canToggleSeeksTesters": {
             "type": "boolean"
           },
           "plainText": {
@@ -7663,6 +8219,44 @@
           }
         }
       },
+      "SaveTesterProfileRequest": {
+        "required": [
+          "age",
+          "municipalityTeryt",
+          "accessibilityNeeds",
+          "equipment"
+        ],
+        "type": "object",
+        "properties": {
+          "age": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "null",
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "municipalityTeryt": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "accessibilityNeeds": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "equipment": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
       "SessionResponse": {
         "required": [
           "signedIn",
@@ -7700,6 +8294,17 @@
               "null",
               "string"
             ]
+          }
+        }
+      },
+      "SetSeeksTestersRequest": {
+        "required": [
+          "seeksTesters"
+        ],
+        "type": "object",
+        "properties": {
+          "seeksTesters": {
+            "type": "boolean"
           }
         }
       },
@@ -7784,6 +8389,99 @@
           }
         }
       },
+      "TesterProfileResponse": {
+        "required": [
+          "age",
+          "municipalityTeryt",
+          "municipalityName",
+          "accessibilityNeeds",
+          "equipment"
+        ],
+        "type": "object",
+        "properties": {
+          "age": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "municipalityTeryt": {
+            "type": "string"
+          },
+          "municipalityName": {
+            "type": "string"
+          },
+          "accessibilityNeeds": {
+            "type": "string"
+          },
+          "equipment": {
+            "type": "string"
+          }
+        }
+      },
+      "TestOpportunityResponse": {
+        "required": [
+          "id",
+          "kind",
+          "title",
+          "shortDescription",
+          "stage",
+          "signedUp"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "kind": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "shortDescription": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "stage": {
+            "type": "string"
+          },
+          "signedUp": {
+            "type": "boolean"
+          }
+        }
+      },
+      "TestSignupResponse": {
+        "required": [
+          "id",
+          "targetId",
+          "kind",
+          "joinedAt"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "targetId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "kind": {
+            "type": "string"
+          },
+          "joinedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
       "UserMunicipalityResponse": {
         "required": [
           "teryt",
@@ -7841,12 +8539,53 @@
             "format": "date-time"
           }
         }
+      },
+      "WriteFeedbackRequest": {
+        "required": [
+          "stars",
+          "whatWorks",
+          "whatToImprove",
+          "dictated"
+        ],
+        "type": "object",
+        "properties": {
+          "stars": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "null",
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "whatWorks": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "whatToImprove": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "dictated": {
+            "type": "boolean"
+          }
+        }
       }
     }
   },
   "tags": [
     {
       "name": "Users"
+    },
+    {
+      "name": "Tests"
+    },
+    {
+      "name": "TesterProfile"
     },
     {
       "name": "SignOut"
@@ -7901,6 +8640,9 @@
     },
     {
       "name": "FitAssessments"
+    },
+    {
+      "name": "InnovationFeedback"
     },
     {
       "name": "Conversations"

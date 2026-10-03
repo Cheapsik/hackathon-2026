@@ -40,6 +40,8 @@ public sealed record IdeaResponse(
     bool CanDecide,
     bool CanConvert,
     bool CanApply,
+    bool SeeksTesters,
+    bool CanToggleSeeksTesters,
     IReadOnlyList<IdeaReviewResponse>? Reviews,
     IdeaReviewResponse? MyReview,
     Guid? InnovationId,

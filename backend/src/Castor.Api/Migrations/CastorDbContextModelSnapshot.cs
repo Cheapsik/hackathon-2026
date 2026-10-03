@@ -174,6 +174,53 @@ namespace Castor.Api.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Castor.Api.Domain.Feedback", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("AuthorId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamptz");
+
+                    b.Property<bool>("Dictated")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid>("InnovationId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Stars")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("timestamptz");
+
+                    b.Property<string>("WhatToImprove")
+                        .HasMaxLength(4000)
+                        .HasColumnType("character varying(4000)");
+
+                    b.Property<string>("WhatWorks")
+                        .HasMaxLength(4000)
+                        .HasColumnType("character varying(4000)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("InnovationId", "AuthorId")
+                        .IsUnique()
+                        .HasDatabaseName("IX_Feedback_OnePerUserAndInnovation");
+
+                    b.ToTable("Feedback", t =>
+                        {
+                            t.HasCheckConstraint("CK_Feedback_HasComment", "\"WhatWorks\" IS NOT NULL OR \"WhatToImprove\" IS NOT NULL");
+
+                            t.HasCheckConstraint("CK_Feedback_Stars", "\"Stars\" BETWEEN 1 AND 5");
+                        });
+                });
+
             modelBuilder.Entity("Castor.Api.Domain.FitAssessment", b =>
                 {
                     b.Property<Guid>("Id")
@@ -415,6 +462,9 @@ namespace Castor.Api.Migrations
                     b.PrimitiveCollection<List<string>>("Recipients")
                         .IsRequired()
                         .HasColumnType("text[]");
+
+                    b.Property<bool>("SeeksTesters")
+                        .HasColumnType("boolean");
 
                     b.Property<DateTimeOffset?>("SimilarCheckedAt")
                         .HasColumnType("timestamptz");
@@ -1093,6 +1143,49 @@ namespace Castor.Api.Migrations
                     b.ToTable("ProblemReports");
                 });
 
+            modelBuilder.Entity("Castor.Api.Domain.TestSignup", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("IdeaId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("InnovationId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("JoinedAt")
+                        .HasColumnType("timestamptz");
+
+                    b.Property<string>("TargetKind")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdeaId");
+
+                    b.HasIndex("InnovationId");
+
+                    b.HasIndex("UserId", "IdeaId")
+                        .IsUnique()
+                        .HasDatabaseName("IX_TestSignups_OnePerUserAndIdea")
+                        .HasFilter("\"IdeaId\" IS NOT NULL");
+
+                    b.HasIndex("UserId", "InnovationId")
+                        .IsUnique()
+                        .HasDatabaseName("IX_TestSignups_OnePerUserAndInnovation")
+                        .HasFilter("\"InnovationId\" IS NOT NULL");
+
+                    b.ToTable("TestSignups", t =>
+                        {
+                            t.HasCheckConstraint("CK_TestSignups_OneTarget", "(\"TargetKind\" = 'INNOVATION' AND \"InnovationId\" IS NOT NULL AND \"IdeaId\" IS NULL) OR (\"TargetKind\" = 'IDEA' AND \"IdeaId\" IS NOT NULL AND \"InnovationId\" IS NULL)");
+                        });
+                });
+
             modelBuilder.Entity("Castor.Api.Domain.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1162,6 +1255,21 @@ namespace Castor.Api.Migrations
                     b.Navigation("Innovation");
 
                     b.Navigation("ProblemReport");
+                });
+
+            modelBuilder.Entity("Castor.Api.Domain.Feedback", b =>
+                {
+                    b.HasOne("Castor.Api.Domain.User", null)
+                        .WithMany()
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Castor.Api.Domain.Innovation", null)
+                        .WithMany()
+                        .HasForeignKey("InnovationId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Castor.Api.Domain.FitAssessment", b =>
@@ -1528,12 +1636,70 @@ namespace Castor.Api.Migrations
                     b.Navigation("Municipality");
                 });
 
+            modelBuilder.Entity("Castor.Api.Domain.TestSignup", b =>
+                {
+                    b.HasOne("Castor.Api.Domain.Idea", null)
+                        .WithMany()
+                        .HasForeignKey("IdeaId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Castor.Api.Domain.Innovation", null)
+                        .WithMany()
+                        .HasForeignKey("InnovationId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Castor.Api.Domain.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Castor.Api.Domain.User", b =>
                 {
                     b.HasOne("Castor.Api.Domain.Municipality", null)
                         .WithMany()
                         .HasForeignKey("MunicipalityId")
                         .OnDelete(DeleteBehavior.Restrict);
+
+                    b.OwnsOne("Castor.Api.Domain.TesterProfile", "TesterProfile", b1 =>
+                        {
+                            b1.Property<Guid>("UserId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("AccessibilityNeeds")
+                                .IsRequired()
+                                .HasMaxLength(1000)
+                                .HasColumnType("character varying(1000)");
+
+                            b1.Property<int>("Age")
+                                .HasColumnType("integer");
+
+                            b1.Property<string>("Equipment")
+                                .IsRequired()
+                                .HasMaxLength(1000)
+                                .HasColumnType("character varying(1000)");
+
+                            b1.Property<Guid>("MunicipalityId")
+                                .HasColumnType("uuid");
+
+                            b1.HasKey("UserId");
+
+                            b1.HasIndex("MunicipalityId");
+
+                            b1.ToTable("Users");
+
+                            b1.HasOne("Castor.Api.Domain.Municipality", null)
+                                .WithMany()
+                                .HasForeignKey("MunicipalityId")
+                                .OnDelete(DeleteBehavior.Restrict)
+                                .IsRequired();
+
+                            b1.WithOwner()
+                                .HasForeignKey("UserId");
+                        });
+
+                    b.Navigation("TesterProfile");
                 });
 
             modelBuilder.Entity("Castor.Api.Domain.Idea", b =>

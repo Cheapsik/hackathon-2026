@@ -32,6 +32,8 @@ import { NotFoundPage } from '@/features/not-found/NotFoundPage'
 import { DescribeProblemPage } from '@/features/problem-reports/DescribeProblemPage'
 import { MyProblemReportsPage } from '@/features/problem-reports/MyProblemReportsPage'
 import { TrackProblemReportPage } from '@/features/problem-reports/TrackProblemReportPage'
+import { TesterProfilePage } from '@/features/tests/TesterProfilePage'
+import { TestsPage } from '@/features/tests/TestsPage'
 
 /*
  * Design-system preview: development only. import.meta.env.DEV is replaced at build time, so in production this
@@ -73,6 +75,8 @@ export const router = createBrowserRouter([
       { path: 'biblioteka', element: <LibraryPage /> },
       { path: 'mapa', element: <ChallengeMapPage /> },
       { path: 'materialy', element: <MaterialsPage /> },
+      { path: 'testy', element: <TestsPage /> },
+      { path: 'profil-testera', element: <TesterProfilePage /> },
       { path: 'pomysly', element: <IdeasPage /> },
       { path: 'pomysly/nowy', element: <NewIdeaPage /> },
       { path: 'pomysly/:ideaId', element: <IdeaPage /> },
