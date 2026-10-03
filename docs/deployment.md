@@ -1,6 +1,6 @@
 # Production deployment over SSH
 
-The production workflow builds the backend and frontend images in GitHub Actions, exports them with `docker save`, and transfers the compressed bundle directly to the server over SSH. Application images are never pushed to or pulled from Docker Hub or another registry.
+The production workflow builds the backend and frontend images in GitHub Actions, exports them with `docker save`, and transfers the compressed bundle directly to the server over SSH. Each application image is bundled with an immutable commit SHA tag and a branch alias such as `main` or `master`. Application images are never pushed to or pulled from Docker Hub or another registry.
 
 The PostgreSQL/pgvector image remains a public third-party dependency and is pulled by the server when it is not already present. This setup avoids an application image registry; it does not provide an air-gapped installation.
 
