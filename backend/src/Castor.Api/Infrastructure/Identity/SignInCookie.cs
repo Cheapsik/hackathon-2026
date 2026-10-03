@@ -12,10 +12,14 @@ public static class SignInCookie
         ArgumentNullException.ThrowIfNull(user);
 
         string userIdText = user.Id.ToString();
+        string roleText = user.Role.ToString();
+
+        // The role travels in the cookie, so a role changed by an administrator applies from the next sign-in.
         var identity = new ClaimsIdentity(
             [
                 new Claim(ClaimTypes.NameIdentifier, userIdText),
                 new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Role, roleText),
             ],
             CookieAuthenticationDefaults.AuthenticationScheme);
 

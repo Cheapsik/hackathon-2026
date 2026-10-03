@@ -6,15 +6,14 @@ Wszystkie przykłady spełniają reguły z [`01-structure-conventions.md`](01-st
 
 ## Kolejność pracy nad wycinkiem
 
-1. **Słownik:** nazwy encji, pól i wartości enum z [`../product.md`](../product.md). Brakujące — dopisz.
-2. **Test domeny** dla reguł encji (bez bazy) i **test API** dla przypadku użycia — choćby szkic z oczekiwanymi kodami HTTP.
-3. **`Domain/<Temat>/`** — encja, enumy, ewentualny typ reguły.
-4. **`Persistence/<Temat>/`** — `…Configuration`, `DbSet` w `CastorDbContext`.
-5. **Migracja** — `chop dotnet dotnet-ef migrations add <Nazwa> --project src/Castor.Api`, przejrzenie wygenerowanego pliku.
-6. **`Queries/<Temat>/`** — tylko jeśli odczyt jest potrzebny w więcej niż jednym handlerze.
-7. **`Features/<Zasoby>/`** — żądania, odpowiedź, konwerter, handlery, kontroler.
-8. **`Program.cs`** — rejestracja handlerów i zapytań.
-9. `chop dotnet build`, `chop dotnet test`, sprawdzenie w Scalar.
+1. **Słownik:** nazwy encji, pól i wartości enum z [`../../GLOSSARY.md`](../../GLOSSARY.md), reguły z [`../SPEC.md`](../SPEC.md). Brakujące — dopisz do słownika.
+2. **`Domain/<Temat>/`** — encja, enumy, ewentualny typ reguły.
+3. **`Persistence/<Temat>/`** — `…Configuration`, `DbSet` w `CastorDbContext`.
+4. **Migracja** — `chop dotnet dotnet-ef migrations add <Nazwa> --project src/Castor.Api`, przejrzenie wygenerowanego pliku.
+5. **`Queries/<Temat>/`** — tylko jeśli odczyt jest potrzebny w więcej niż jednym handlerze.
+6. **`Features/<Zasoby>/`** — żądania, odpowiedź, konwerter, handlery, kontroler.
+7. **`Program.cs`** — rejestracja handlerów i zapytań.
+8. `chop dotnet build` (zapisuje też `backend/openapi/Castor.Api.json` — commitujesz go razem z kodem), sprawdzenie w Scalar.
 
 ## Domain — enum
 
@@ -764,7 +763,7 @@ public sealed class ArchiveRoomHandler(CastorDbContext db, IClock clock)
 }
 ```
 
-Naruszenia klucza obcego nigdzie nie łapiemy: gdyby wystąpiło, znaczyłoby, że handler zapomniał sprawdzić zależności, i ma wyjść jako 500 w teście.
+Naruszenia klucza obcego nigdzie nie łapiemy: gdyby wystąpiło, znaczyłoby, że handler zapomniał sprawdzić zależności, i ma wyjść jako 500.
 
 ## Features — usunięcie liścia
 
@@ -828,13 +827,14 @@ public sealed class BookingsController(
     }
 
     [HttpPost]
+    [ProducesResponseType<BookingResponse>(StatusCodes.Status201Created)]
     public async Task<ActionResult<BookingResponse>> Post(
         [FromBody] CreateBookingRequest request,
         CancellationToken cancellationToken)
     {
         BookingResponse booking = await create.HandleAsync(request, cancellationToken);
 
-        return Created($"/bookings/{booking.Id}", booking);
+        return Created($"/api/bookings/{booking.Id}", booking);
     }
 
     [HttpPost("{bookingId:guid}/reschedule")]
@@ -853,6 +853,7 @@ public sealed class BookingsController(
     }
 
     [HttpDelete("{bookingId:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> Delete(Guid bookingId, CancellationToken cancellationToken)
     {
         await delete.HandleAsync(bookingId, cancellationToken);
@@ -879,13 +880,14 @@ public sealed class RoomsController(
     ArchiveRoomHandler archive) : ControllerBase
 {
     [HttpPost]
+    [ProducesResponseType<RoomResponse>(StatusCodes.Status201Created)]
     public async Task<ActionResult<RoomResponse>> Post(
         [FromBody] CreateRoomRequest request,
         CancellationToken cancellationToken)
     {
         RoomResponse room = await create.HandleAsync(request, cancellationToken);
 
-        return Created($"/rooms/{room.Id}", room);
+        return Created($"/api/rooms/{room.Id}", room);
     }
 
     [HttpPatch("{roomId:guid}")]
@@ -901,6 +903,8 @@ public sealed class RoomsController(
     }
 }
 ```
+
+Trasy w tabeli są względne: `ApiRoutePrefixConvention` dokleja do każdej `/api`. Kod inny niż 200 deklaruje `[ProducesResponseType]`, bo z dokumentu OpenAPI powstaje klient frontendu.
 
 | Czynność | HTTP | Handler | Odpowiedź |
 |---|---|---|---|
@@ -932,174 +936,3 @@ builder.Services.AddScoped<DeleteBookingHandler>();
 builder.Services.AddScoped<GetBookingHandler>();
 builder.Services.AddScoped<ListBookingsHandler>();
 ```
-
-## Testy — domena bez bazy
-
-`tests/Castor.Tests/Domain/Bookings/RoomScheduleTests.cs`
-
-```csharp
-using Microsoft.AspNetCore.Http;
-
-namespace Castor.Tests;
-
-public sealed class RoomScheduleTests
-{
-    private static readonly Guid UserId = Guid.CreateVersion7();
-
-    private static readonly DateTimeOffset Now = new(2026, 10, 2, 12, 0, 0, TimeSpan.Zero);
-
-    private static readonly DateOnly Monday = new(2026, 10, 5);
-
-    [Fact]
-    public void A_slot_touching_another_at_its_edge_is_free()
-    {
-        var room = Room.Create("Room A", 8, Now);
-        var morning = Booking.Book(room, UserId, Monday, new TimeOnly(9, 0), new TimeOnly(10, 0), Now);
-        var schedule = new RoomSchedule([morning]);
-
-        schedule.EnsureFree(Monday, new TimeOnly(10, 0), new TimeOnly(11, 0), movedBookingId: null);
-    }
-
-    [Fact]
-    public void An_overlapping_slot_is_refused_with_a_conflict()
-    {
-        var room = Room.Create("Room A", 8, Now);
-        var morning = Booking.Book(room, UserId, Monday, new TimeOnly(9, 0), new TimeOnly(10, 0), Now);
-        var schedule = new RoomSchedule([morning]);
-
-        DomainException refusal = Assert.Throws<DomainException>(() =>
-        {
-            schedule.EnsureFree(Monday, new TimeOnly(9, 30), new TimeOnly(10, 30), movedBookingId: null);
-        });
-
-        Assert.Equal(StatusCodes.Status409Conflict, refusal.StatusCode);
-    }
-
-    [Fact]
-    public void A_booking_moved_within_its_own_slot_does_not_collide_with_itself()
-    {
-        var room = Room.Create("Room A", 8, Now);
-        var morning = Booking.Book(room, UserId, Monday, new TimeOnly(9, 0), new TimeOnly(10, 0), Now);
-        var schedule = new RoomSchedule([morning]);
-
-        schedule.EnsureFree(Monday, new TimeOnly(9, 30), new TimeOnly(10, 30), morning.Id);
-    }
-}
-```
-
-## Testy — przypadek użycia przez API
-
-`tests/Castor.Tests/Features/Bookings/BookingApiTests.cs`
-
-```csharp
-using System.Net;
-using System.Net.Http.Json;
-using Castor.Api.Features.Bookings;
-using Castor.Api.Features.Rooms;
-
-namespace Castor.Tests;
-
-[Collection(PostgresCollection.Name)]
-public sealed class BookingApiTests(PostgresFixture postgres)
-{
-    private static readonly DateOnly Monday = new(2026, 10, 5);
-
-    [Fact]
-    public async Task A_slot_taken_by_another_booking_is_refused_with_a_conflict()
-    {
-        HttpClient client = await TestApi.SignedInAsync(postgres, "booking-overlap@example.com");
-        Guid roomId = await CreateRoomAsync(client, "Room A");
-
-        HttpResponseMessage first = await client.PostAsJsonAsync(
-            "/bookings",
-            new CreateBookingRequest(roomId, Monday, new TimeOnly(9, 0), new TimeOnly(10, 0)));
-        HttpResponseMessage overlapping = await client.PostAsJsonAsync(
-            "/bookings",
-            new CreateBookingRequest(roomId, Monday, new TimeOnly(9, 30), new TimeOnly(11, 0)));
-        HttpResponseMessage adjacent = await client.PostAsJsonAsync(
-            "/bookings",
-            new CreateBookingRequest(roomId, Monday, new TimeOnly(10, 0), new TimeOnly(11, 0)));
-
-        Assert.Equal(HttpStatusCode.Created, first.StatusCode);
-        Assert.Equal(HttpStatusCode.Conflict, overlapping.StatusCode);
-        Assert.Equal(HttpStatusCode.Created, adjacent.StatusCode);
-    }
-
-    [Fact]
-    public async Task A_booking_of_a_room_that_does_not_exist_is_not_found()
-    {
-        HttpClient client = await TestApi.SignedInAsync(postgres, "booking-no-room@example.com");
-        Guid unknownRoomId = Guid.CreateVersion7();
-
-        HttpResponseMessage booked = await client.PostAsJsonAsync(
-            "/bookings",
-            new CreateBookingRequest(unknownRoomId, Monday, new TimeOnly(9, 0), new TimeOnly(10, 0)));
-        BookingResponse[]? bookings = await client.GetFromJsonAsync<BookingResponse[]>("/bookings");
-
-        Assert.Equal(HttpStatusCode.NotFound, booked.StatusCode);
-        Assert.Empty(bookings!);
-    }
-
-    private static async Task<Guid> CreateRoomAsync(HttpClient client, string name)
-    {
-        HttpResponseMessage response = await client.PostAsJsonAsync("/rooms", new CreateRoomRequest(name, 8));
-        response.EnsureSuccessStatusCode();
-        RoomResponse? room = await response.Content.ReadFromJsonAsync<RoomResponse>();
-
-        return room!.Id;
-    }
-}
-```
-
-`tests/Castor.Tests/Features/Rooms/RoomApiTests.cs`
-
-```csharp
-using System.Net;
-using System.Net.Http.Json;
-using Castor.Api.Features.Bookings;
-using Castor.Api.Features.Rooms;
-
-namespace Castor.Tests;
-
-[Collection(PostgresCollection.Name)]
-public sealed class RoomApiTests(PostgresFixture postgres)
-{
-    [Fact]
-    public async Task A_field_left_out_of_a_patch_stays_as_it_is()
-    {
-        HttpClient client = await TestApi.SignedInAsync(postgres, "room-patch@example.com");
-        HttpResponseMessage created = await client.PostAsJsonAsync("/rooms", new CreateRoomRequest("Room A", 8));
-        RoomResponse? room = await created.Content.ReadFromJsonAsync<RoomResponse>();
-
-        HttpResponseMessage renamed = await client.PatchAsJsonAsync($"/rooms/{room!.Id}", new UpdateRoomRequest("Room B", null));
-        RoomResponse? changed = await renamed.Content.ReadFromJsonAsync<RoomResponse>();
-
-        Assert.Equal(HttpStatusCode.OK, renamed.StatusCode);
-        Assert.Equal("Room B", changed!.Name);
-        Assert.Equal(8, changed.Capacity);
-    }
-
-    [Fact]
-    public async Task A_room_with_an_upcoming_booking_is_archived_only_after_the_booking_is_cancelled()
-    {
-        HttpClient client = await TestApi.SignedInAsync(postgres, "room-archive@example.com");
-        HttpResponseMessage created = await client.PostAsJsonAsync("/rooms", new CreateRoomRequest("Room A", 8));
-        RoomResponse? room = await created.Content.ReadFromJsonAsync<RoomResponse>();
-        DateOnly nextWeek = DateOnly.FromDateTime(DateTime.UtcNow).AddDays(7);
-        HttpResponseMessage booked = await client.PostAsJsonAsync(
-            "/bookings",
-            new CreateBookingRequest(room!.Id, nextWeek, new TimeOnly(9, 0), new TimeOnly(10, 0)));
-        BookingResponse? booking = await booked.Content.ReadFromJsonAsync<BookingResponse>();
-
-        HttpResponseMessage refused = await client.PostAsync($"/rooms/{room.Id}/archive", null);
-        HttpResponseMessage cancelled = await client.PostAsync($"/bookings/{booking!.Id}/cancel", null);
-        HttpResponseMessage archived = await client.PostAsync($"/rooms/{room.Id}/archive", null);
-
-        Assert.Equal(HttpStatusCode.Conflict, refused.StatusCode);
-        Assert.Equal(HttpStatusCode.OK, cancelled.StatusCode);
-        Assert.Equal(HttpStatusCode.OK, archived.StatusCode);
-    }
-}
-```
-
-Każdy test API dostaje własną bazę (`TestApi.SignedInAsync`) i własny adres e-mail — testy nie dzielą stanu i mogą biec równolegle w ramach kolekcji. Jeśli produkt zawęża, kto widzi zasób, odmowa (404) ma własny test API.

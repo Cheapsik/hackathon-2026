@@ -1,0 +1,3 @@
+# Sesja w cookie zamiast ASP.NET Core Identity + JWT
+
+SPEC §1 pierwotnie zakładał ASP.NET Core Identity + JWT, ale szkielet Castor miał już sesję w cookie (`Castor.Auth`, `HttpOnly`, `SameSite=Lax`) z samym `PasswordHasher<User>`. Zostajemy przy cookie (decyzja zespołu z 2026-10-03). Frontend, API i hub SignalR stoją pod jednym originem: w kontenerze za nginx, lokalnie za proxy Vite. Cookie działa więc bez CORS i bez przekazywania tokenu w query stringu WebSocketu, a w przeglądarce nie ma tokenu dostępnego dla skryptów (XSS). Rola użytkownika jedzie w claimie cookie, więc zmiana roli działa od następnego logowania.

@@ -1,22 +1,23 @@
 # Castor — backend
 
-REST API for the HubMI platform (.NET 10, ASP.NET Core controllers, EF Core, PostgreSQL 17).
+REST API for the Castor platform of the Małopolska Social Innovation Hub (.NET 10, ASP.NET Core controllers, EF Core, PostgreSQL 17 + pgvector, SignalR).
 
 ## Run locally
 
-From `backend/` (the team runs every command through [`chop`](https://getchop.run/)):
+The database comes from the compose file in the repository root; the API runs from `backend/` (the team runs every command through [`chop`](https://getchop.run/)):
 
 ```bash
-chop docker compose up -d --wait                                 # PostgreSQL 17 on localhost:5432
+chop docker compose up -d --wait db                              # from the repository root: PostgreSQL 17 + pgvector on 127.0.0.1:5432
 chop dotnet dotnet-ef database update --project src/Castor.Api   # apply migrations
 chop dotnet run --project src/Castor.Api                         # API on http://localhost:5256
-chop dotnet test                                                 # needs Docker (Testcontainers)
 ```
 
-API reference (Development only): http://localhost:5256/scalar/v1 · OpenAPI document: `/openapi/v1.json`.
+The whole demo (database, API, frontend behind nginx) starts from the repository root with `chop docker compose up -d --build --wait` on http://localhost:8080.
 
-Endpoints so far: `POST /auth/register`, `POST /auth/sign-in`, `POST /auth/sign-out` (cookie session `Castor.Auth`).
+API reference (Development only): http://localhost:5256/scalar/v1 · OpenAPI document: `/openapi/v1.json`. Every `dotnet build` also writes it to `openapi/Castor.Api.json`, which is committed — the frontend generates its client from it.
 
-Configuration: the connection string is `ConnectionStrings:Castor` (environment variable `ConnectionStrings__Castor`).
+Every route is under `/api`. Endpoints so far: `POST /api/auth/register`, `POST /api/auth/sign-in`, `POST /api/auth/sign-out` (cookie session `Castor.Auth`), and the SignalR hub `/hubs/live`.
+
+Configuration: the connection string is `ConnectionStrings:Castor` (environment variable `ConnectionStrings__Castor`); the other keys are listed in [`../docs/architecture/03-skeleton.md`](../docs/architecture/03-skeleton.md) and [`../.env.example`](../.env.example).
 
 Rules for working on this code: [`AGENTS.md`](AGENTS.md) and [`../docs/architecture/`](../docs/architecture/).

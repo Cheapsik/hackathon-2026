@@ -18,6 +18,8 @@ public sealed class User
 
     public string PasswordHash { get; private set; } = null!;
 
+    public UserRole Role { get; private set; }
+
     public DateTimeOffset CreatedAt { get; private set; }
 
     public DateTimeOffset UpdatedAt { get; private set; }
@@ -48,6 +50,7 @@ public sealed class User
         {
             Id = Guid.CreateVersion7(),
             Email = normalized,
+            Role = UserRole.RESIDENT,
             CreatedAt = createdAt,
             UpdatedAt = createdAt,
         };

@@ -1,0 +1,52 @@
+name: castor
+
+# The whole demo: `docker compose up -d --build` → http://localhost:8080.
+# Backend development: `docker compose up -d --wait db` and run the API from backend/ (see backend/README.md).
+services:
+  db:
+    image: pgvector/pgvector:pg17
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: castor
+      POSTGRES_USER: castor
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-castor}
+    # Local machine only: the backend reaches the database over the compose network.
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U castor -d castor"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build: ./backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      ConnectionStrings__Castor: Host=db;Port=5432;Database=castor;Username=castor;Password=${POSTGRES_PASSWORD:-castor}
+      Database__MigrateOnStartup: "true"
+      DataProtection__KeysPath: /var/castor/keys
+    volumes:
+      - backend-keys:/var/castor/keys
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "8080:80"
+
+volumes:
+  db-data:
+  backend-keys:

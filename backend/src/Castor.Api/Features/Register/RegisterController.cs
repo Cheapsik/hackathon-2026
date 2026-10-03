@@ -9,6 +9,7 @@ namespace Castor.Api.Features.Register;
 public sealed class RegisterController(RegisterHandler handler) : ControllerBase
 {
     [HttpPost("register")]
+    [ProducesResponseType<RegisterResponse>(StatusCodes.Status201Created)]
     public async Task<ActionResult<RegisterResponse>> Register(
         [FromBody] RegisterRequest request,
         CancellationToken cancellationToken)

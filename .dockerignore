@@ -1,0 +1,9 @@
+# Build context of the frontend image (docker-compose.yml builds it from the repository root).
+.git/
+.env
+**/node_modules/
+**/bin/
+**/obj/
+frontend/dist/
+frontend/src/api/generated/
+data/raw/

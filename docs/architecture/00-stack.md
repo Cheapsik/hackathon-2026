@@ -4,13 +4,15 @@ Decyzje obowiązujące. Nie są propozycją i nie wymagają potwierdzenia przed 
 
 | Warstwa | Wybór |
 |---|---|
-| Baza danych | **PostgreSQL 17** (obraz `postgres:17`) |
+| Baza danych | **PostgreSQL 17 + pgvector** (obraz `pgvector/pgvector:pg17`); rozszerzenia `vector`, `unaccent`, `pg_trgm` włącza migracja |
 | Backend | **.NET 10**, C#, `Nullable` i `ImplicitUsings` włączone; SDK przypięty do 10.0.x w `backend/global.json` |
-| ORM i migracje | **EF Core** + `Npgsql.EntityFrameworkCore.PostgreSQL`; narzędzie `dotnet-ef` lokalnie w `backend/dotnet-tools.json` |
-| API | **REST — kontrolery**, nie Minimal API |
-| Testy | **xUnit**; testy integracyjne na prawdziwym PostgreSQL przez **Testcontainers**; granice architektury przez **NetArchTest** |
-| Środowisko lokalne | **Docker Compose** z `postgres:17` |
-| Dokumentacja API | **OpenAPI** (`Microsoft.AspNetCore.OpenApi`) + UI **Scalar**, wyłącznie w `Development` |
+| ORM i migracje | **EF Core** + `Npgsql.EntityFrameworkCore.PostgreSQL` + `Pgvector.EntityFrameworkCore`; narzędzie `dotnet-ef` lokalnie w `backend/dotnet-tools.json` |
+| API | **REST — kontrolery**, nie Minimal API; wszystkie trasy pod prefiksem **`/api`** |
+| Czas rzeczywisty | **SignalR**, hub `/hubs/live` |
+| Testy | **Brak** — decyzja zespołu na hackathon (SPEC §1) |
+| Środowisko lokalne | **Docker Compose** w korzeniu repo — do pracy nad backendem sama usługa `db` |
+| Dokumentacja API | **OpenAPI** (`Microsoft.AspNetCore.OpenApi`) + UI **Scalar**, wyłącznie w `Development`; dokument generowany też przy buildzie do `backend/openapi/` (`Microsoft.Extensions.ApiDescription.Server`) |
+| Frontend | Vite + React + TypeScript — [`04-frontend.md`](04-frontend.md) |
 | Styl kodu | `.editorconfig` + `EnforceCodeStyleInBuild` + StyleCop (tylko SA1402, SA1649) — błędy stylu wychodzą w `dotnet build` |
 
 Bez MediatR, AutoMappera, Swashbuckle, repozytoriów generycznych i ASP.NET Core Identity jako frameworka.
@@ -33,7 +35,7 @@ Bez MediatR, AutoMappera, Swashbuckle, repozytoriów generycznych i ASP.NET Core
 
 `float`, `double` i `real` nie występują w wartościach biznesowych w żadnej postaci.
 
-> **Precyzję ustawia globalna konwencja, nie atrybut na encji.** EF Core bez jawnej konfiguracji potrafi zmapować `decimal` na węższą kolumnę i **po cichu obciąć wartość**. Konwencja rozróżnia skalę **po typie CLR**, nie po nazwie pola: goły `decimal` to kwota, inna skala wymaga własnego typu. Konwencję pokrywa test zapisujący i odczytujący wartość o pełnej precyzji.
+> **Precyzję ustawia globalna konwencja, nie atrybut na encji.** EF Core bez jawnej konfiguracji potrafi zmapować `decimal` na węższą kolumnę i **po cichu obciąć wartość**. Konwencja rozróżnia skalę **po typie CLR**, nie po nazwie pola: goły `decimal` to kwota, inna skala wymaga własnego typu.
 
 **Zaokrąglanie:** mnożenie w pełnej precyzji, zaokrąglenie **raz, na końcu**, trybem `MidpointRounding.AwayFromZero`. Wartość podana przez użytkownika z nadmiarem miejsc jest błędem wejścia — odrzucamy ją, nie zaokrąglamy po cichu. Sumy pokazywane użytkownikowi liczymy z tych samych zaokrąglonych wartości, które widzi w wierszach.
 
@@ -57,7 +59,7 @@ Warianty enumów piszemy `UPPER_SNAKE_CASE` — tak samo w C#, w bazie i w JSON.
 | Godzina biznesowa | `TimeOnly` | `time` |
 | Znacznik techniczny (`CreatedAt`, `UpdatedAt`) | `DateTimeOffset` | `timestamptz`, w UTC |
 
-Bieżący czas daje `IClock` (`Infrastructure/`), nie `DateTimeOffset.UtcNow` — test może go ustawić.
+Bieżący czas daje `IClock` (`Infrastructure/`), nie `DateTimeOffset.UtcNow` — jedno miejsce, które zna bieżący czas.
 
 ## Nazewnictwo w bazie
 
@@ -69,7 +71,7 @@ Nazwy constraintów i indeksów, które mają znaczenie biznesowe, nadajemy jawn
 
 **Dane platformy są wspólne.** Nie ma podziału na workspace'y ani globalnego filtra izolacji: problemy, pomysły i innowacje są widoczne w całym regionie, a dopasowanie z definicji przeszukuje zgłoszenia wszystkich użytkowników. Decyzja zespołu z 2026-10-03, podjęta przed pierwszą encją.
 
-- Ograniczenie widoczności, które wynika z produktu (np. trendy tylko dla administratora, wątek tylko dla jego uczestników), sprawdza **handler** tej czynności — jawnie, w kodzie, z testem API na odmowę.
+- Ograniczenie widoczności, które wynika z produktu (np. trendy tylko dla administratora, wątek tylko dla jego uczestników), sprawdza **handler** tej czynności — jawnie, w kodzie.
 - Konflikt równoczesnych zapisów rozstrzyga baza: unikalność i `CHECK`, a naruszenie unikalności z wyścigu handler zamienia na 409.
 
 ## Uwierzytelnianie
@@ -81,18 +83,24 @@ Nazwy constraintów i indeksów, które mają znaczenie biznesowe, nadajemy jawn
 | Hashowanie hasła | `PasswordHasher<T>` z `Microsoft.AspNetCore.Identity` — **sama klasa**, jako narzędzie |
 | Sesja | cookie (`AddAuthentication().AddCookie()`), `HttpOnly`, `SameSite=Lax` |
 | Odpowiedź bez sesji | `401` / `403`, nie przekierowanie na stronę logowania |
-| Endpointy | `POST /auth/register`, `POST /auth/sign-in`, `POST /auth/sign-out` |
+| Endpointy | `POST /api/auth/register`, `POST /api/auth/sign-in`, `POST /api/auth/sign-out` |
 | Domyślnie | globalny `AuthorizeFilter` — każdy kontroler wymaga zalogowania, wyjątki mają `[AllowAnonymous]` |
 
-Cookie niesie `NameIdentifier` (id użytkownika) i e-mail. Handler bierze id użytkownika z `CurrentUser`.
+Cookie niesie `NameIdentifier` (id użytkownika), e-mail i rolę (`ClaimTypes.Role`). Handler bierze id użytkownika z `CurrentUser`. Dlaczego cookie, a nie JWT: [ADR 0001](../adr/0001-cookie-session-instead-of-jwt.md).
 
-**Role** (mieszkaniec/NGO, samorząd, ekspert, administrator) dochodzą razem z pierwszą funkcją, która ich wymaga; sposób ich przechowywania i sprawdzania zapisujemy wtedy tutaj.
+**Role:** każdy użytkownik ma dokładnie jedną — kolumna `User.Role` z enumem `UserRole` (`RESIDENT`, `MUNICIPAL_OFFICER`, `EXPERT`, `ADMIN`). Rejestracja daje `RESIDENT`, pozostałe nadaje administrator. Endpoint dostępny dla jednej roli ma `[Authorize(Roles = nameof(UserRole.ADMIN))]`; zawężenie zależne od danych (np. ekspert tylko ze swoich obszarów) sprawdza handler. Rola jedzie w cookie, więc jej zmiana działa od następnego logowania. Gmina pracownika JST i obszary eksperta dochodzą razem z encjami `Municipality` i `ChallengeArea`.
 
 **Nie instalujemy ASP.NET Core Identity jako frameworka** ani JWT. Reset hasła, potwierdzenie e-mail, 2FA i usunięcie konta są poza zakresem, nawet jeśli framework daje je gotowe.
 
 ## Dokumentacja API
 
 Dokument OpenAPI pod `/openapi/v1.json`, UI Scalar pod `/scalar/v1`. Oba mapowane **tylko gdy `app.Environment.IsDevelopment()`**, z jawnym `AllowAnonymous()`.
+
+**`dotnet build` zapisuje ten sam dokument do `backend/openapi/Castor.Api.json`** — plik jest commitowany, a frontend generuje z niego klienta (orval) bez działającego backendu. Po zmianie endpointu commitujesz go razem z kodem. Kody odpowiedzi inne niż 200 deklarujesz `[ProducesResponseType]` (201 przy `Created`, 204 przy `NoContent`), bo inaczej dokument i wygenerowany klient kłamią.
+
+## Prefiks `/api`
+
+`ApiRoutePrefixConvention` (`Infrastructure/Http/`) dokleja `api` do trasy każdego kontrolera. Kontroler deklaruje tylko zasób: `[Route("bookings")]` daje `/api/bookings`. Ścieżka w przeglądarce, w nginx, w proxy Vite i w dokumencie OpenAPI jest ta sama; nagłówek `Location` piszesz z prefiksem (`Created($"/api/bookings/{booking.Id}", booking)`).
 
 ## Błędy HTTP
 

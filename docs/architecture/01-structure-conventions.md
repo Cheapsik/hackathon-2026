@@ -4,34 +4,39 @@
 
 ```
 <repo>/
-├── AGENTS.md, README.md, .gitignore, .gitattributes   ← wspólne dla całego zespołu
+├── AGENTS.md, README.md, GLOSSARY.md, .gitignore, .gitattributes   ← wspólne dla całego zespołu
+├── docker-compose.yml, .env.example, .dockerignore                 ← całe demo: db + backend + frontend
 ├── docs/
 │   ├── REQUIREMENTS.md, LINKS.md   treść zadania HubMI i linki do zasobów ROPS
-│   ├── product.md             co budujemy — źródło prawdy (powstaje przed pierwszą funkcją)
+│   ├── SPEC.md                co budujemy — źródło prawdy dla „co”
+│   ├── TODO.md                decyzje odłożone na później i to, co blokują
 │   ├── assumptions.md         założenia agenta do weryfikacji
-│   └── architecture/          jak budujemy backend — rozstrzygnięte
-└── backend/
-    ├── AGENTS.md, CLAUDE.md   zasady backendu (węższe niż AGENTS.md w korzeniu)
-    ├── .editorconfig, .gitignore, Directory.Build.props, docker-compose.yml, dotnet-tools.json, global.json
-    ├── Castor.slnx
-    ├── src/Castor.Api/
-    └── tests/Castor.Tests/
+│   ├── adr/                   decyzje trudne do odwrócenia
+│   └── architecture/          jak budujemy — rozstrzygnięte
+├── backend/
+│   ├── AGENTS.md, CLAUDE.md   zasady backendu (węższe niż AGENTS.md w korzeniu)
+│   ├── .editorconfig, .gitignore, .dockerignore, Directory.Build.props, Dockerfile, dotnet-tools.json, global.json
+│   ├── Castor.slnx
+│   ├── openapi/               Castor.Api.json z buildu — wejście generatora klienta frontendu
+│   └── src/Castor.Api/
+├── frontend/                  Vite + React + TS — patrz 04-frontend.md
+└── data/                      scrapers/ (Python), seed/ (JSON), geo/ (GeoJSON gmin)
 ```
 
 ## Jeden projekt — monolit
 
-Backend jest **jednym projektem** z jedną bazą i jednym wdrożeniem. **Nie dzielimy go na moduły ani osobne projekty** (`.Domain.csproj`, `.Application.csproj`) z portami między nimi. Granice pilnuje test architektury na namespace'ach, a reguł pilnują encje, nie foldery.
+Backend jest **jednym projektem** z jedną bazą i jednym wdrożeniem. **Nie dzielimy go na moduły ani osobne projekty** (`.Domain.csproj`, `.Application.csproj`) z portami między nimi. Katalogi porządkują kod według roli, a reguł pilnują encje, nie foldery.
 
 ## Układ kodu
 
 ```
 backend/src/Castor.Api/
-├── Domain/              encje, typy wartości, enumy, reguły — bez EF Core i HTTP
+├── Domain/              encje, typy wartości, enumy, reguły
 │   ├── DomainException.cs, NamedEnum.cs
-│   ├── Identity/        User, PasswordPolicy
+│   ├── Identity/        User, UserRole, PasswordPolicy
 │   └── <Temat>/         podfoldery tematyczne
 │
-├── Persistence/         DbContext, konwencje, mapowanie (…Configuration), seedy danych referencyjnych
+├── Persistence/         DbContext, konwencje, mapowanie (…Configuration), import seedu (Seeding/)
 │   └── <Temat>/
 │
 ├── Queries/             odczyty używane przez wiele handlerów (…Query)
@@ -43,7 +48,11 @@ backend/src/Castor.Api/
 │   ├── SignOut/         ┘
 │   └── <Zasoby>/        kontroler, żądania, odpowiedzi, handlery, konwerter zasobu
 │
-├── Infrastructure/      mechanika żądania: filtr wyjątków, cookie, CurrentUser, zegar
+├── Shared/              usługi wykonujące czynność używaną przez kilka funkcji: Ai/ (LLM, embeddingi,
+│                        prompty, potoki dopasowania), Jobs/ (zadania w tle)
+│
+├── Infrastructure/      mechanika żądania: filtr wyjątków, prefiks /api, cookie, CurrentUser, zegar,
+│                        hub SignalR (Realtime/)
 │
 ├── Migrations/          migracje EF Core — jedna historia
 ├── GlobalUsings.cs
@@ -63,14 +72,16 @@ backend/src/Castor.Api/
 - **Za spójność na zewnątrz encji odpowiada ten, kto woła jej metodę.** Encja nie tworzy innego agregatu ani nie pośredniczy w jego walidacji.
 - **Dane, z których encja liczy własną treść, mogą być parametrem jej metody** — to obliczenie tego, czym encja jest, a nie sprawdzenie cudzego faktu.
 - **Stan encji zmienia się wyłącznie przez jej metody.** Właściwości mają `private set`, konstruktor jest prywatny (dla EF), encja powstaje przez statyczną metodę fabryczną o nazwie czynności (`Booking.Book`, `Room.Create`).
-- **Domena nie czyta bazy.** Dane referencyjne (słowniki) leżą w tabelach wypełnianych seedem w migracji; encja sięga do nich przez nawigację, a nie przez plik.
+- **Domena nie czyta bazy.** Dane referencyjne (obszary wyzwań, gminy, wskaźniki) leżą w tabelach wypełnianych importem seedu ([ADR 0003](../adr/0003-seed-import-without-overwriting-content.md)); encja sięga do nich przez nawigację, a nie przez plik.
 - **Kryterium, które musi być warunkiem zapytania** (np. które rezerwacje są aktywne) jest zapisane **raz**, w `Domain/`, jako `Expression<Func<T, bool>>` przy encji, i używane przez wszystkie zapytania. Dwa zapytania z tym samym warunkiem przepisanym ręcznie to zduplikowana reguła.
 
 ### `Persistence/` — baza
 
-`CastorDbContext` z `DbSet` dla wszystkich tabel, globalne konwencje (precyzja, enumy jako tekst, klucze, daty), mapowanie encji (`…Configuration : IEntityTypeConfiguration<T>`), konwertery wartości i seedy danych referencyjnych. `Domain/` nie zna EF Core, więc mapowanie nie leży obok encji.
+`CastorDbContext` z `DbSet` dla wszystkich tabel, globalne konwencje (precyzja, enumy jako tekst, klucze, daty), mapowanie encji (`…Configuration : IEntityTypeConfiguration<T>`), konwertery wartości i seedy danych referencyjnych. Mapowanie leży tutaj, nie obok encji — encja opisuje stan i reguły, nie kolumny.
 
 **`Persistence/` opisuje, jak model leży w bazie — nie odpowiada na pytania.** Zapytań tu nie ma.
+
+**Import seedu** (`Persistence/Seeding/`) czyta JSON-y z `Seed__Path` przy starcie, gdy `Seed__OnStartup=true`. Treści (innowacje, raporty z badań, obszary, persony) tylko dopisuje po kluczu źródłowym, statystyki (gminy, wskaźniki, wartości) upsertuje — [ADR 0003](../adr/0003-seed-import-without-overwriting-content.md). Genomów nie liczy: zleca je jako zadanie w tle.
 
 ### `Queries/` — odczyty wspólne
 
@@ -84,7 +95,7 @@ backend/src/Castor.Api/
 
 - **Folder obejmuje jeden zasób i jego operacje**, nie jedną czynność: utworzenie, lista, zmiana i usunięcie rezerwacji leżą w `Features/Bookings/`. Nazwa to rzeczownik zasobu w liczbie mnogiej, nazwa encji, nie słowo z UI. Wyjątek: `Register`, `SignIn`, `SignOut`.
 - **Zasób o wielu typach dzieli się na podfoldery typów** (np. `Payments/Card/`, `Payments/Transfer/`), z własnym kontrolerem, żądaniami i handlerami. W folderze nadrzędnym leży to, co wspólne dla typów (lista, szczegóły, usunięcie, `Converters/` z odpowiedzią wspólną). **Podfolder może sięgać do folderu nadrzędnego, nie do rodzeństwa.**
-- **Foldery funkcji nie współdzielą kodu między sobą** — wspólne idzie do `Domain/` albo `Queries/`.
+- **Kod potrzebny kilku folderom funkcji przenosisz** do `Domain/` (reguła), `Queries/` (odczyt) albo `Shared/` (czynność, np. potok AI), zamiast sięgać do cudzego folderu funkcji.
 - **Przypadek użycia, który zapisuje encje z kilku obszarów, to jeden handler** — tworzy obie encje przez ich metody i zapisuje je w jednej transakcji. Bez pośrednika i bez portów.
 
 Pliki w folderze funkcji:
@@ -107,7 +118,7 @@ Czasowniki: `Create`, `Get`, `List`, `Update` (PATCH), `Revise` (PUT), `Archive`
 - **Żądanie opisuje intencję, nie gotowy zapis.** Formularz podaje to, co wie użytkownik; to, co wynika z reguł (status, wyliczone pola), nadaje domena.
 - **Konwersja jednego typu na drugi to metoda rozszerzająca w klasie `…Converter`** wewnątrz folderu funkcji. Konwersja przepisuje i parsuje pola; reguły należą do `Domain/`. Globalnego katalogu konwersji nie ma.
 - **Użytkownik nie jest parametrem handlera.** Mówi, kto pyta, a nie o co — handler bierze go z `CurrentUser`.
-- **Ograniczenie widoczności sprawdza handler jawnie.** Dane są wspólne (patrz [`00-stack.md`](00-stack.md), „Dostęp do danych”); jeśli produkt zawęża, kto widzi zasób, handler sprawdza to sam i odmawia 404, a test API pokrywa odmowę.
+- **Ograniczenie widoczności sprawdza handler jawnie.** Dane są wspólne (patrz [`00-stack.md`](00-stack.md), „Dostęp do danych”); jeśli produkt zawęża, kto widzi zasób, handler sprawdza to sam i odmawia 404.
 - **Handler czyta się bez skakania po plikach.** Wczytanie i zapis piszemy w każdym handlerze, nawet kosztem powtórzeń; handler nie woła innego handlera. Zduplikowane reguły biznesowe — nie; zduplikowane „wczytaj/zapisz” — tak.
 - **`HandleAsync` czyta się jak spis kroków.** Długi, zamknięty blok (sprawdzenie warunków przed zapisem, zmiana kilku pól naraz) trafia do prywatnej metody tego samego handlera nazwanej tym, co robi (`EnsureNoOverlapAsync`, `ApplyChanges`). Pojedynczego wywołania nie opakowujesz w metodę.
 
@@ -158,27 +169,29 @@ Wyjątki od reguły o zagnieżdżonych wywołaniach: lambda w zapytaniu EF (drze
 
 > **Do rozstrzygnięcia przy pierwszej takiej regule:** walidacja „odczytaj stan, sprawdź, zapisz”, której nie da się wyrazić constraintem bazy (np. limit zgłoszeń), jest podatna na wyścig dwóch równoczesnych zapisów. Gdy pojawi się pierwsza, zespół wybiera mechanizm (np. `pg_advisory_xact_lock` na identyfikatorze pilnowanego agregatu) i zapisuje go tutaj.
 
+## `Shared/` — czynności wielu funkcji
+
+Usługa, która **wykonuje czynność** potrzebną kilku funkcjom, a nie jest ani regułą (`Domain/`), ani odczytem (`Queries/`). Nie jest workiem na pomocników — „Helpers” i „Utils” nadal nie istnieją ([ADR 0002](../adr/0002-shared-folder-and-no-dependency-rules.md)).
+
+- **`Shared/Ai/`** — `ILlmClient` i `IEmbeddingClient` z adapterami wybieranymi w DI po `Llm:Provider` / `Embeddings:Provider` (brak klucza albo nieznany dostawca = czytelny błąd przy starcie); prompty jako pliki `Shared/Ai/Prompts/*.md` osadzone w assembly, nie stringi w kodzie; potoki wołane przez kilka funkcji (`Matchmaker` — dopasowanie zgłoszeń i pomysłów, `GenomeGenerator`, `FitAssessor`). Do LLM trafia wyłącznie tekst po anonimizacji (typ reguły w `Domain/`); w logach czas i tokeny, nigdy treść. Dostawcy i adaptery: [TODO](../TODO.md).
+- **`Shared/Jobs/`** — długie operacje (genomy, embeddingi raportów) w procesie: `BackgroundService` czyta zlecenia z `Channel`, stan i postęp zapisuje w tabeli zadań, którą czyta panel admina. Zadanie przerwane restartem dostaje `FAILED` i można je uruchomić ponownie — każde jest idempotentne. Bez Hangfire i zewnętrznych kolejek.
+
+Namespace: `Castor.Api.Shared`.
+
 ## `Infrastructure/` — mechanika żądania
 
-Filtr zamieniający `DomainException` na odpowiedź, cookie logowania, `CurrentUser`, zegar. Nie trafiają tu encje ani przypadki użycia.
+Filtr zamieniający `DomainException` na odpowiedź, `ApiRoutePrefixConvention` (prefiks `/api`), cookie logowania, `CurrentUser`, zegar, hub SignalR. Nie trafiają tu encje ani przypadki użycia.
+
+**SignalR:** `LiveHub` pod `/hubs/live`. Połączenie zalogowanego dołącza do grupy `user:{id}`, administratora także do `admins`; anonim łączy się, żeby śledzić jedno zgłoszenie po kodzie (`report:{trackingCode}`), a ekspert dochodzi do `experts:{obszar}` razem z obszarami. Handler wysyła zdarzenie przez `IHubContext<LiveHub>` po `SaveChanges` — powiadomienie o zapisie, który się nie udał, byłoby fałszywe.
 
 ## Namespace
 
-- **Wspólny dla katalogu w korzeniu:** `Castor.Api.Domain`, `Castor.Api.Persistence`, `Castor.Api.Queries`, `Castor.Api.Infrastructure`. Podfoldery organizują pliki, nie tworzą namespace'ów (typ o nazwie folderu dawałby `CS0118`). `Domain`, `Persistence` i `Infrastructure` są w `GlobalUsings.cs`; `Queries` dopisujesz razem z pierwszym `…Query` (`global using` pustego namespace'u się nie kompiluje).
-- **W `Features/` namespace odpowiada folderowi** (`Castor.Api.Features.Bookings`) — tu folder jest granicą, a test sprawdza ją po namespace'ach.
+- **Wspólny dla katalogu w korzeniu:** `Castor.Api.Domain`, `Castor.Api.Persistence`, `Castor.Api.Queries`, `Castor.Api.Shared`, `Castor.Api.Infrastructure`. Podfoldery organizują pliki, nie tworzą namespace'ów (typ o nazwie folderu dawałby `CS0118`). `Domain`, `Persistence` i `Infrastructure` są w `GlobalUsings.cs`; `Queries` i `Shared` dopisujesz razem z pierwszym użyciem w funkcji (`global using` pustego namespace'u się nie kompiluje).
+- **W `Features/` namespace odpowiada folderowi** (`Castor.Api.Features.Bookings`) — folder grupuje jeden zasób.
 
-## Kierunek zależności
+## Zależności między katalogami
 
-| Kto | Może używać | Nie może używać |
-|---|---|---|
-| `Domain/` | wyłącznie siebie i .NET | EF Core, ASP.NET Core, `Persistence/`, `Queries/`, `Infrastructure/`, `Features/` |
-| `Persistence/` | `Domain/`, EF Core | `Queries/`, `Infrastructure/`, `Features/` |
-| `Queries/` | `Domain/`, `Persistence/`, EF Core | `Infrastructure/`, `Features/` |
-| `Infrastructure/` | `Domain/`, `Persistence/`, ASP.NET Core | `Queries/`, `Features/` |
-| `Features/` | wszystkiego powyżej | innego folderu funkcji; podfolder — rodzeństwa |
-| `Program.cs` | wszystkiego | — |
-
-Wyjątek techniczny: `DomainException` przyjmuje kod HTTP jako `int` ze stałych `StatusCodes` — stała wkompilowuje się jako liczba, więc `Domain/` nie zależy od ASP.NET Core w IL.
+**Każdy katalog może używać każdego** — decyzja zespołu z 2026-10-03 ([ADR 0002](../adr/0002-shared-folder-and-no-dependency-rules.md)). Nie ma tabeli zakazów ani testu architektury. To, gdzie leży kod, wynika z ról katalogów opisanych wyżej i pilnuje tego przegląd kodu, nie kompilator.
 
 ## Konwencje — skrót
 
@@ -191,5 +204,4 @@ Wyjątek techniczny: `DomainException` przyjmuje kod HTTP jako `int` ze stałych
 | Znaczniki techniczne | `DateTimeOffset` → `timestamptz`, UTC, z `IClock` |
 | Nazwy w bazie | domyślne EF Core |
 | Migracje | `chop dotnet dotnet-ef migrations add <Nazwa>` — znacznik czasu dodaje EF; zmergowanej się nie edytuje |
-| Testy | `tests/Castor.Tests`, foldery lustrzane względem kodu |
 | JSON | `camelCase` (domyślny ASP.NET Core), enumy jako tekst |

@@ -9,6 +9,7 @@ namespace Castor.Api.Features.SignOut;
 public sealed class SignOutController : ControllerBase
 {
     [HttpPost("sign-out")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> Post()
     {
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

@@ -1,18 +1,16 @@
-# [nazwa aplikacji] — specyfikacja dla agenta budującego aplikację
+# Castor — specyfikacja dla agenta budującego aplikację
 
-Ten plik mówi agentowi **co** zbudować i **jak**.
+Ten plik mówi agentowi **co** zbudować i jest źródłem prawdy dla „co” (zastępuje `docs/product.md`). **Jak** budujemy, opisuje [`architecture/`](architecture/); nazwy pojęć są w [`../GLOSSARY.md`](../GLOSSARY.md), decyzje trudne do odwrócenia w [`adr/`](adr/), odłożone na później w [`TODO.md`](TODO.md).
 
-Zasada nadrzędna: **nie zmieniaj decyzji z sekcji 1 bez pytania człowieka**. Gdy czegoś tu brakuje, zapytaj albo wybierz najprostsze rozwiązanie i zapisz je w sekcji 13 („Decyzje podjęte przez agenta”).
+Zasada nadrzędna: **nie zmieniaj decyzji z sekcji 1 bez pytania człowieka**. Gdy czegoś tu brakuje, zapytaj albo wybierz najprostsze rozwiązanie i zapisz je w sekcji 11 („Decyzje”).
 
 ---
 
 
 
-## 0. Czym jest [nazwa aplikacji] (w 5 zdaniach)
+## 0. Czym jest Castor (w 5 zdaniach)
 
-Platforma Małopolskiego Hubu Innowacji Społecznych (ROPS Kraków). Mieszkaniec, NGO albo gmina opisuje problem, a system dobiera sprawdzone innowacje z Biblioteki ROPS i wyjaśnia, dlaczego pasują. Gmina dostaje „kartę [nazwa aplikacji]ienia”, czyli ocenę, czy dana innowacja przyjmie się u niej, na podstawie danych z Obserwatora Statystyk Społecznych. Gdy nic nie pasuje, system proponuje hybrydę kilku innowacji („krzyżówka”), która trafia do Kreatora jako szkic pomysłu. Administrator ROPS widzi zgłoszenia na żywo, trendy potrzeb i białe plamy, czyli obszary bez innowacji.
-
-Metafora (tylko marka i grafika, **nie** etykiety w UI): [nazwa aplikacji]ienie drzew. Innowacji nie kopiuje się 1:1, tylko „[nazwa aplikacji]i” na lokalnych zasobach gminy.
+Platforma Małopolskiego Hubu Innowacji Społecznych (ROPS Kraków). Mieszkaniec, NGO albo gmina opisuje problem, a system dobiera sprawdzone innowacje z Biblioteki ROPS i wyjaśnia, dlaczego pasują. Gmina dostaje „kartę dopasowania do gminy”, czyli ocenę, czy dana innowacja przyjmie się u niej, na podstawie danych z Obserwatora Statystyk Społecznych. Gdy nic nie pasuje, system proponuje hybrydę kilku innowacji („krzyżówka”), która trafia do Kreatora jako szkic pomysłu. Administrator ROPS widzi zgłoszenia na żywo, trendy potrzeb i białe plamy, czyli obszary bez innowacji.
 
 ---
 
@@ -23,22 +21,22 @@ Metafora (tylko marka i grafika, **nie** etykiety w UI): [nazwa aplikacji]ienie 
 
 | Obszar                 | Decyzja                                                                                                                                     |
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| Repozytorium           | Jedno repo. Backend w podkatalogu `backend/`                                                                                                |
-| Backend                | **.NET 10**. Backend już powstaje poza tym repo; trafi do `backend/`. **Kontynuuj jego istniejącą architekturę**, nie narzucaj nowej        |
-| Baza                   | **PostgreSQL + pgvector** (powstaje razem z backendem)                                                                                      |
-| ORM / dostęp do danych | Taki, jaki jest już w backendzie (jeśli nic nie ma: EF Core + Npgsql + `Pgvector.EntityFrameworkCore`)                                      |
+| Repozytorium           | Jedno repo. Backend w `backend/`, frontend w `frontend/`                                                                                    |
+| Backend                | **.NET 10**, istniejący szkielet Castor w `backend/`. **Kontynuuj jego architekturę** ([`architecture/`](architecture/)), nie narzucaj nowej |
+| Baza                   | **PostgreSQL 17 + pgvector** (obraz `pgvector/pgvector:pg17`); rozszerzenia `vector`, `unaccent`, `pg_trgm` włączone migracją               |
+| ORM / dostęp do danych | **EF Core + Npgsql + `Pgvector.EntityFrameworkCore`**                                                                                       |
 | Frontend               | **Vite + React + TypeScript** w `frontend/`                                                                                                 |
 | UI                     | **shadcn/ui + Tailwind CSS** (Radix pod spodem, dostępność)                                                                                 |
-| Kontrakt API           | **REST + OpenAPI** z .NET; frontend generuje typy i klienta (np. `orval` lub `openapi-typescript`) + **TanStack Query**                     |
-| Logowanie i role       | **ASP.NET Core Identity + JWT** (role w sekcji 5)                                                                                           |
-| LLM                    | **Za abstrakcją z adapterami** (`ILlmClient`). Dostawca, model, klucz i URL z sekretów. Nie wiązać kodu z jednym dostawcą                   |
-| Embeddingi             | **Do ustalenia.** Zrób interfejs `IEmbeddingClient` z adapterami jak przy LLM; model i wymiar wektora z konfiguracji. Nie hardkoduj wymiaru |
+| Kontrakt API           | **REST + OpenAPI** z .NET pod prefiksem `/api`; `backend/openapi/Castor.Api.json` powstaje przy buildzie backendu i jest commitowany; frontend generuje z niego klienta **orval** + **TanStack Query** |
+| Logowanie i role       | **Sesja w cookie** (`Castor.Auth`) + `PasswordHasher<User>`, bez ASP.NET Core Identity jako frameworka i bez JWT ([ADR 0001](adr/0001-cookie-session-instead-of-jwt.md)); role w sekcji 5 |
+| LLM                    | **Za abstrakcją z adapterami** (`ILlmClient` w `Shared/Ai/`). Dostawca, model, klucz i URL z sekretów. Nie wiązać kodu z jednym dostawcą. **Pierwszy dostawca do ustalenia** ([TODO](TODO.md)) |
+| Embeddingi             | **Do ustalenia** ([TODO](TODO.md)). Interfejs `IEmbeddingClient` (`Shared/Ai/`) z adapterami jak przy LLM; model i wymiar wektora z konfiguracji. Nie hardkoduj wymiaru |
 | Czas rzeczywisty       | **SignalR**. Bez e-maili, SMS-ów i push: tylko aktualizacje na żywo w aplikacji                                                             |
 | Głos                   | **Web Speech API** w przeglądarce (`pl-PL`), zawsze z polem tekstowym jako alternatywą                                                      |
 | Mapa                   | **Leaflet + GeoJSON granic gmin Małopolski**; każda mapa ma obok tabelę z tymi samymi danymi (dostępność)                                   |
 | Import danych          | **Skrypty Python → pliki seed JSON** w `data/seed/`; backend importuje seed przy starcie (idempotentnie)                                    |
 | Język UI               | **Tylko polski, teksty na sztywno** (bez i18n)                                                                                              |
-| Testy                  | **Brak testów** w szkielecie                                                                                                                |
+| Testy                  | **Brak testów** — ani w backendzie, ani we frontendzie                                                                                      |
 | Wdrożenie demo         | **Docker na VPS**: `docker-compose.yml` w korzeniu repo                                                                                     |
 
 
@@ -49,22 +47,24 @@ Metafora (tylko marka i grafika, **nie** etykiety w UI): [nazwa aplikacji]ienie 
 ## 2. Docelowa struktura repo (instrukcja, nie generuj na zapas)
 
 ```
-/backend            .NET 10 (istniejący projekt; nie przebudowuj struktury)
+/backend            .NET 10 (szkielet Castor; nie przebudowuj struktury)
+  /openapi          Castor.Api.json — dokument OpenAPI z buildu (commitowany)
 /frontend           Vite + React + TS + shadcn/ui
 /data
   /scrapers         skrypty Python (requirements.txt)
   /seed             wynikowe JSON-y (commitowane)
   /geo              GeoJSON gmin Małopolski
-/docs               REQUIREMENTS.md, IDEA.md, LINKS.md, SPEC.md, raport
+/docs               REQUIREMENTS.md, LINKS.md, SPEC.md, TODO.md, architecture/, adr/, raport
+GLOSSARY.md         słownik pojęć
 docker-compose.yml
 .env.example        wszystkie zmienne z sekcji 3, bez wartości sekretów
 ```
 
-Usługi w `docker-compose.yml`:
+Usługi w `docker-compose.yml` (jedyny compose w repo):
 
-- `db`: obraz `pgvector/pgvector` (Postgres z pgvector), wolumen na dane, healthcheck.
-- `backend`: build z `backend/`, zależy od `db`, czyta zmienne z `.env`, wystawia API, `/swagger` i `/hubs/*`.
-- `frontend`: build Vite, serwowany przez nginx; nginx proxuje `/api` i `/hubs` (z WebSocketami) do `backend`.
+- `db`: obraz `pgvector/pgvector:pg17`, wolumen na dane, healthcheck, port 5432 tylko na `127.0.0.1` (do pracy lokalnej: `docker compose up -d --wait db`).
+- `backend`: build z `backend/`, zależy od `db`, czyta zmienne z `.env`, migruje bazę przy starcie, wystawia `/api/*` i `/hubs/*` (Scalar tylko w `Development`).
+- `frontend`: build Vite (kontekst: korzeń repo, bo klient powstaje z `backend/openapi/`), serwowany przez nginx; nginx proxuje `/api` i `/hubs` (z WebSocketami) do `backend`. Demo pod `http://localhost:8080`.
 
 Jeden `docker compose up` ma postawić działające demo z zaimportowanym seedem.
 
@@ -79,8 +79,10 @@ Wszystko przez zmienne środowiskowe (konwencja .NET `Sekcja__Klucz`). Wartości
 
 | Zmienna                                                                                  | Znaczenie                                                      |
 | ---------------------------------------------------------------------------------------- | -------------------------------------------------------------- |
-| `ConnectionStrings__Postgres`                                                            | Połączenie do bazy                                             |
-| `Jwt__Issuer`, `Jwt__Audience`, `Jwt__Key`                                               | Tokeny JWT                                                     |
+| `ConnectionStrings__Castor`                                                              | Połączenie do bazy (w compose składane z `POSTGRES_PASSWORD`)  |
+| `POSTGRES_PASSWORD`                                                                      | Hasło bazy w compose; na serwerze zawsze własne                |
+| `Database__MigrateOnStartup`                                                             | `true` w kontenerze: backend sam wykonuje migracje             |
+| `DataProtection__KeysPath`                                                               | katalog kluczy podpisujących cookie (wolumen w kontenerze)     |
 | `Llm__Provider`                                                                          | np. `anthropic`, `openai`, `azure-openai`, `openai-compatible` |
 | `Llm__Model`                                                                             | identyfikator modelu u dostawcy                                |
 | `Llm__ApiKey`, `Llm__BaseUrl`                                                            | klucz i (opcjonalnie) adres API                                |
@@ -89,7 +91,8 @@ Wszystko przez zmienne środowiskowe (konwencja .NET `Sekcja__Klucz`). Wartości
 | `Embeddings__Dimensions`                                                                 | wymiar wektora; kolumny `vector(N)` tworzone z tej wartości    |
 | `Seed__Path`                                                                             | ścieżka do `data/seed` w kontenerze                            |
 | `Seed__OnStartup`                                                                        | `true`/`false`                                                 |
-| `Cors__AllowedOrigins`                                                                   | adres frontendu                                                |
+
+CORS nie jest potrzebny: aplikacja, API i hub są pod jednym originem (nginx w kontenerze, proxy Vite lokalnie).
 
 
 Adaptery LLM i embeddingów wybierane w DI na podstawie `*__Provider`. Brak klucza lub nieznany dostawca = czytelny błąd przy starcie.
@@ -129,23 +132,25 @@ Strony `rops.krakow.pl` i `obserwator.rops.krakow.pl` zwracają **HTTP 403 bez n
 
 ### 4.2. Model danych (minimalny)
 
-Nazwy orientacyjne; dopasuj do konwencji istniejącego backendu.
+Nazwy encji są kanoniczne — definicje w [`../GLOSSARY.md`](../GLOSSARY.md). Pola są orientacyjne; konwencje (klucze, enumy `UPPER_SNAKE_CASE`, daty) są w [`architecture/00-stack.md`](architecture/00-stack.md).
 
 - **ChallengeArea**: 8 obszarów Mapy Wyzwań (kod, nazwa, definicja, kluczowe wyzwania[], powiązane wskaźniki[]).
 - **Persona**: 9 person (imię, wiek, opis, cele, wyzwania, motywacje, obszar). Służą do demo i testu trafności.
-- **Innovation**: tytuł, krótki opis, kategoria biblioteki, 6 sekcji karty, `organization`, URL karty / filmu / ZIP / PDF / zasad, `featured`, `inServiceModel`, `stage` (pomysł/prototyp/przetestowane/gotowe), `source` (`rops` | `user`).
-- **InnovationGenome** (1:1 z Innovation): `rootCauses[]`, `mechanisms[]`, `targetGroups[]`, `requiredSoil[]` (instytucje, ludzie, budżet, infrastruktura), `scale`, `challengeAreas[]`, `summary` (≤ 600 znaków), `embedding vector(N)`, `status` (`draft` | `approved`), `approvedBy`, `approvedAt`.
-- **Gmina**: TERYT, nazwa, typ (miejska/wiejska/miejsko-wiejska), powiat.
+- **Innovation**: tytuł, krótki opis, kategoria Biblioteki, 6 sekcji karty, `organization`, URL karty / filmu / ZIP / PDF / zasad, `featured`, `inServiceModel`, `stage` (`IDEA` | `PROTOTYPE` | `TESTED` | `READY`), `source` (`ROPS` | `USER`), `seeksTesters`, pomysł źródłowy (dla `USER`).
+- **InnovationGenome** (1:1 z Innovation): `rootCauses[]`, `mechanisms[]`, `targetGroups[]`, `requiredResources[]` (instytucje, ludzie, budżet, infrastruktura), `scale`, `challengeAreas[]`, `summary` (≤ 600 znaków), `embedding vector(N)`, `status` (`DRAFT` | `APPROVED`), `approvedBy`, `approvedAt`.
+- **Municipality** (gmina): TERYT, nazwa, typ (miejska/wiejska/miejsko-wiejska), powiat.
 - **Indicator**: id z Obserwatora, nazwa, grupa, jednostka, opis, źródło.
 - **IndicatorValue**: gmina, wskaźnik, rok, wartość.
-- **Report** + **ReportChunk**: raport (metadane, obszary) i fragmenty tekstu ze stroną PDF i `embedding vector(N)`.
-- **ProblemReport** (zgłoszenie): treść (po anonimizacji), opis oryginalny tylko jeśli autor się zgodził, gmina, obszar(y), kanał (`tekst` | `głos` | `asysta`), `submittedOnBehalf`, status, `trackingCode`, autor (opcjonalny), daty.
-- **MatchResult**: zgłoszenie, innowacja, pozycja, `score`, uzasadnienie, cytowane pola karty, `kind` (`match` | `hybrid`).
-- **Idea** (fiszka z Kreatora): pola Canvasu, autor, status, powiązane podobne innowacje/pomysły, `fromHybridOf[]`.
-- **GrantCall** (nabór): tytuł, daty, kryteria, `isOpen`. **Application**: fiszka dopasowana do naboru.
-- **TestSignup** / **Feedback**: zapis na test i ocena/uwagi do innowacji (także transkrypcja głosowa).
-- **Thread** / **Message**: rozmowy (zgłoszenie ↔ ROPS, pytania do mentora, partnerstwa).
-- Tożsamość: tabele ASP.NET Identity + role.
+- **ResearchReport** + **ResearchReportChunk**: raport z badań ROPS (metadane, obszary) i fragmenty tekstu ze stroną PDF i `embedding vector(N)`. Nie mylić ze zgłoszeniem.
+- **ProblemReport** (zgłoszenie): treść (po anonimizacji), opis oryginalny tylko jeśli autor się zgodził, gmina, obszar(y), kanał (`TEXT` | `VOICE` | `ASSISTED`), `submittedOnBehalf`, status, `trackingCode`, autor (opcjonalny), pytania doprecyzowujące i odpowiedzi, daty.
+- **MatchResult**: zgłoszenie albo pomysł, innowacja, pozycja, `score`, uzasadnienie, cytowane pola karty, `kind` (`MATCH` | `HYBRID`).
+- **FitAssessment** (karta dopasowania do gminy): innowacja, gmina, rok danych, wynik z §6.5.
+- **Idea** (pomysł, fiszka z Kreatora): pola Canvasu, autor i współautorzy, status, powiązane podobne innowacje/pomysły, `fromHybridOf[]`, `seeksTesters`.
+- **IdeaReview**: ocena pomysłu przez eksperta (rekomendacja + komentarz).
+- **GrantCall** (nabór): tytuł, daty, kryteria, `isOpen`. **GrantApplication** (wniosek): pomysł dopasowany do naboru.
+- **TestSignup** / **Feedback**: zapis na test i ocena/uwagi do innowacji (także transkrypcja głosowa). Profil testera przy koncie.
+- **Conversation** / **Message**: wątki (zgłoszenie ↔ ROPS, pytanie do eksperta, partnerstwo).
+- **User**: e-mail, hash hasła, rola; pracownik JST ma jedną gminę, ekspert — obszary wyzwań.
 
 ---
 
@@ -154,16 +159,17 @@ Nazwy orientacyjne; dopasuj do konwencji istniejącego backendu.
 ## 5. Role
 
 
-| Rola           | Kto              | Może                                                                                                             |
-| -------------- | ---------------- | ---------------------------------------------------------------------------------------------------------------- |
-| `anon`         | każdy            | przeglądać Atlas i Bibliotekę, zgłosić problem **bez konta** (dostaje kod śledzenia), sprawdzić status po kodzie |
-| `resident`     | mieszkaniec, NGO | jak `anon` + własne zgłoszenia, fiszki, zapisy na testy, wiadomości                                              |
-| `municipality` | pracownik JST    | jak `resident` + karta [nazwa aplikacji]ienia dla swojej gminy, mapa wyzwań gminy                                |
-| `expert`       | ekspert, mentor  | odpowiada w wątkach ze swoich obszarów, ocenia fiszki                                                            |
-| `admin`        | pracownik ROPS   | wszystko + panel administratora, trendy, zatwierdzanie genomów, nabory                                           |
+| Rola                | Kto              | Może                                                                                                             |
+| ------------------- | ---------------- | ---------------------------------------------------------------------------------------------------------------- |
+| (anonim, bez roli)  | każdy            | przeglądać Atlas i Bibliotekę, zgłosić problem **bez konta** (dostaje kod śledzenia), sprawdzić status po kodzie, oglądać wygenerowane karty dopasowania |
+| `RESIDENT`          | mieszkaniec, NGO | jak anonim + własne zgłoszenia, pomysły, zapisy na testy, opinie, wiadomości, generowanie karty dopasowania dla dowolnej gminy |
+| `MUNICIPAL_OFFICER` | pracownik JST    | jak `RESIDENT` + karta dopasowania i mapa wyzwań z podpowiedzianą **swoją** gminą (dokładnie jedną)             |
+| `EXPERT`            | ekspert, mentor  | odpowiada w wątkach ze **swoich obszarów** wyzwań, ocenia pomysły z tych obszarów, przestawia zgłoszenie `WITH_EXPERT → ANSWERED` |
+| `ADMIN`             | pracownik ROPS   | wszystko + panel administratora, trendy, zatwierdzanie genomów, nabory, nadawanie ról                            |
 
-
-Trendy i agregaty potrzeb są **wyłącznie dla** `admin` (wymóg briefu).
+- Każdy użytkownik ma **dokładnie jedną rolę**. Rejestracja daje `RESIDENT`; pozostałe role, gminę pracownika JST i obszary eksperta nadaje administrator.
+- Rola jedzie w cookie sesji, więc jej zmiana działa od następnego logowania.
+- Trendy i agregaty potrzeb są **wyłącznie dla** `ADMIN` (wymóg briefu).
 
 ---
 
@@ -207,9 +213,13 @@ Jednorazowo dla każdej innowacji (po imporcie seedu i po dodaniu nowej): LLM cz
 
 
 
-### 6.5. Karta [nazwa aplikacji]ienia
+### 6.5. Karta dopasowania do gminy (`FitAssessment`)
 
-Wejście: innowacja + gmina. Backend pobiera z SQL portret gminy: wskaźniki powiązane z obszarami innowacji + średnia regionu + rok danych. Przykłady wskaźników: indeks starości, podwójne starzenie, potencjał pielęgnacyjny, gęstość zaludnienia, dzienne domy pomocy, UTW, ŚDS, mieszkania wspomagane, budżet gminy. LLM porównuje je z `requiredSoil` i zwraca JSON: `fit` (wysoka/średnia/niska), co zostaje bez zmian, co dostosować, czego brakuje (z liczbami), model usługi (kto realizuje: OPS/CUS/NGO, forma: zadanie publiczne/usługa), szacunek skali (liczba odbiorców z danych), gminy, które już to wdrożyły (gdy będą takie dane). 9 innowacji z „Małopolskich Modeli Usług Społecznych” podawaj jako przykłady przejścia od innowacji do usługi.
+Wejście: innowacja + gmina. Backend pobiera z SQL portret gminy: wskaźniki powiązane z obszarami innowacji + średnia regionu + rok danych. Przykłady wskaźników: indeks starości, podwójne starzenie, potencjał pielęgnacyjny, gęstość zaludnienia, dzienne domy pomocy, UTW, ŚDS, mieszkania wspomagane, budżet gminy. LLM porównuje je z `requiredResources` i zwraca JSON: `fit` (wysoka/średnia/niska), co zostaje bez zmian, co dostosować, czego brakuje (z liczbami), model usługi (kto realizuje: OPS/CUS/NGO, forma: zadanie publiczne/usługa), szacunek skali (liczba odbiorców z danych), gminy, które już to wdrożyły (gdy będą takie dane). 9 innowacji z „Małopolskich Modeli Usług Społecznych” podawaj jako przykłady przejścia od innowacji do usługi.
+
+- Kartę generuje **każdy zalogowany** dla **dowolnej gminy** (dane Obserwatora są publiczne); pracownikowi JST podpowiadamy jego gminę. Anonim ogląda tylko karty już wygenerowane.
+- Karta jest **zapisywana dla pary (innowacja, gmina, rok danych)** i używana ponownie, zamiast wołać LLM drugi raz; admin może ją przeliczyć.
+- Czat asystenta przy karcie (moduł VII) należy do użytkownika, który go prowadzi.
 
 ### 6.6. Sprawdzanie duplikatów (Kreator)
 
@@ -217,7 +227,7 @@ Ten sam mechanizm co 6.4, ale wejściem jest fiszka. Wynik: „Podobne innowacje
 
 ### 6.7. Pytania do raportów (RAG)
 
-Raporty PDF → tekst po stronach → fragmenty (~800–1200 tokenów, z numerem strony) → embeddingi w `ReportChunk`. Zapytanie: filtr po obszarze/roku → najbliższe fragmenty → LLM odpowiada **wyłącznie** na ich podstawie i zwraca cytaty (raport, strona). Brak podstaw = „Nie znalazłem tego w raportach ROPS”. **Zależy od decyzji o embeddingach.**
+Raporty PDF → tekst po stronach → fragmenty (~800–1200 tokenów, z numerem strony) → embeddingi w `ResearchReportChunk`. Zapytanie: filtr po obszarze/roku → najbliższe fragmenty → LLM odpowiada **wyłącznie** na ich podstawie i zwraca cytaty (raport, strona). Brak podstaw = „Nie znalazłem tego w raportach ROPS”. **Zależy od decyzji o embeddingach.**
 
 ### 6.8. Tryb „Prościej”
 
@@ -229,7 +239,11 @@ LLM przepisuje opis innowacji / obszaru na tekst łatwy do czytania (krótkie zd
 
 ## 7. Moduły
 
-Każdy moduł opisany jest w dwóch wariantach: **Pełny** (działa na prawdziwych danych) i **Makieta** (klikalne ekrany na danych z seedu, bez logiki AI). **O tym, który moduł w jakim wariancie budujemy, decyduje człowiek. Nie zaczynaj modułu bez jego decyzji.** Sugerowana kolejność, jeśli człowiek nie wskaże innej: I → VII → VI → V → III → II → IV.
+Każdy moduł opisany jest w dwóch wariantach: **Pełny** (działa na prawdziwych danych) i **Makieta** (klikalne ekrany na danych z seedu, bez logiki AI).
+
+**Decyzja zespołu (2026-10-03): wszystkie 7 modułów w wariancie Pełnym, w kolejności I → VII → VI → V → III → II → IV.** Warianty „Makieta” poniżej zostają tylko jako plan awaryjny, gdy zabraknie czasu. Wszystkie funkcje AI czekają na wybór dostawcy LLM, a części wektorowe i pytania do raportów — na decyzję o embeddingach ([TODO](TODO.md)).
+
+Wyszukiwanie pełnotekstowe (6.4 krok 2): konfiguracja `simple` + `unaccent` + `pg_trgm` (PostgreSQL nie ma polskiego słownika), a krok klasyfikacji LLM zwraca słowa kluczowe w formie podstawowej i synonimy, żeby nadrobić brak stemmingu.
 
 ### I. Matchmaking — „Opisz problem” (obowiązkowy)
 
@@ -238,6 +252,12 @@ Każdy moduł opisany jest w dwóch wariantach: **Pełny** (działa na prawdziwy
 - **Wyniki:** 3–5 kart innowacji: tytuł, 1 zdanie „dlaczego pasuje”, co dostosować, film, link do karty ROPS; licznik podobnych zgłoszeń; krzyżówka, gdy brak dobrego dopasowania; kod śledzenia zgłoszenia.
 - **API (orientacyjnie):** `POST /api/problem-reports` (tworzy zgłoszenie, zwraca pytania lub wyniki), `POST /api/problem-reports/{id}/answers`, `GET /api/problem-reports/{id}/matches`, `GET /api/problem-reports/track/{code}`.
 - **SignalR:** nowe zgłoszenie → zdarzenie do grupy `admins`.
+- **Reguły zgłoszenia:**
+  - Zgłoszenie powstaje przy wysłaniu, ze statusem `RECEIVED`, i od razu trafia do skrzynki admina (`ProblemReportCreated`). Odpowiedzi na pytania doprecyzowujące je uzupełniają; dopasowania liczą się po odpowiedziach albo po „pomiń pytania”.
+  - LLM zawsze dostaje tylko treść po anonimizacji. Opis oryginalny zapisujemy wyłącznie przy zaznaczonej zgodzie (domyślnie odznaczona); widzą go tylko autor i admin.
+  - „Zgłaszam w czyimś imieniu” = `submittedOnBehalf = true` i kanał `ASSISTED`; autorem jest osoba zgłaszająca.
+  - Zgłoszenie zalogowanego od razu ma autora. Zgłoszenie anonimowe dostaje kod śledzenia i autora nie ma.
+- **Kod śledzenia:** 8 znaków base32 bez mylących znaków (np. `K7QM-2XDF`), unikalny. Działa jak hasło: kto go zna, widzi status, dopasowania i wątek zgłoszenia i może w nim pisać. Zalogowany użytkownik może **raz** przypiąć do konta zgłoszenie bez autora, podając jego kod.
 - **Makieta:** wyniki to stałe dopasowania dla 9 person z seedu.
 
 
@@ -246,8 +266,8 @@ Każdy moduł opisany jest w dwóch wariantach: **Pełny** (działa na prawdziwy
 
 - **Ekrany:** strona główna z 8 obszarami wyzwań; strona obszaru (definicja, kluczowe wyzwania, persona, dane mojej gminy z Obserwatora vs średnia regionu, pasujące innowacje, raporty); Biblioteka (filtry: obszar, kategoria, grupa docelowa, etap; widok kart z miniaturą filmu); karta innowacji (6 sekcji, film osadzony, materiały, przełącznik „Prościej”); materiały edukacyjne (4 publikacje + Canvas); pytania do raportów (6.7).
 - **Mapa wyzwań gminy:** Leaflet, kartogram wybranego wskaźnika, obok tabela.
-- **Admin:** agregacja potrzeb ze zgłoszeń wg obszaru, gminy i czasu (trend), **tylko dla** `admin`.
-- **API:** `GET /api/challenge-areas`, `GET /api/challenge-areas/{code}`, `GET /api/innovations?…`, `GET /api/innovations/{id}`, `GET /api/gminas/{teryt}/profile`, `GET /api/indicators/{id}/values?year=`, `POST /api/reports/ask`.
+- **Admin:** agregacja potrzeb ze zgłoszeń wg obszaru, gminy i czasu (trend), **tylko dla** `ADMIN`.
+- **API:** `GET /api/challenge-areas`, `GET /api/challenge-areas/{code}`, `GET /api/innovations?…`, `GET /api/innovations/{id}`, `GET /api/municipalities/{teryt}/profile`, `GET /api/indicators/{id}/values?year=`, `POST /api/research-reports/ask`.
 - **Makieta:** bez pytań do raportów, reszta na seedzie.
 
 
@@ -259,7 +279,13 @@ Każdy moduł opisany jest w dwóch wariantach: **Pełny** (działa na prawdziwy
 - **Asystent kreatora:** czat obok fiszki: dopytuje pole po polu, proponuje nieoczywiste warianty, generuje opis wizualizacji przedmiotu (generowanie obrazu opcjonalne, za tą samą abstrakcją).
 - **Start z krzyżówki:** fiszka wypełniona wstępnie danymi hybrydy, z listą innowacji źródłowych.
 - **Generator wniosku** widoczny **tylko gdy jakiś** `GrantCall.isOpen`: przekształca fiszkę w wniosek pod kryteria konkretnego naboru (formularz do edycji, nie wysyłka automatyczna).
-- **API:** `POST/GET/PUT /api/ideas`, `POST /api/ideas/{id}/similar`, `POST /api/ideas/{id}/assistant`, `GET /api/grant-calls?open=true`, `POST /api/ideas/{id}/applications`.
+- **Reguły pomysłu:**
+  - Statusy `DRAFT → SUBMITTED → ACCEPTED | REJECTED`. `DRAFT` widzi tylko autor (i współautorzy). Po wysłaniu (`IdeaSubmitted` do `admins`) pomysł widzą wszyscy zalogowani — inaczej sprawdzanie duplikatów nie miałoby czego pokazać.
+  - „Dołącz do istniejącego pomysłu” robi z użytkownika **współautora** tego pomysłu.
+  - Ekspert widzi wysłane pomysły ze swoich obszarów i zostawia ocenę (`IdeaReview`): rekomendację `DEVELOP` | `REVISE` | `DECLINE` i komentarz. Ocenę widzą autor i admin. `ACCEPTED`/`REJECTED` ustawia admin.
+  - Admin może przekształcić pomysł `ACCEPTED` w innowację (`source = USER`) powiązaną z tym pomysłem.
+- **Wniosek** (`GrantApplication`) nie ma obiegu: to edytowalny szkic pod jeden nabór, bez wysyłki i statusów oceny; użytkownik go poprawia i drukuje. Admin widzi listę wniosków w każdym naborze.
+- **API:** `POST/GET/PUT /api/ideas`, `POST /api/ideas/{id}/similar`, `POST /api/ideas/{id}/assistant`, `GET /api/grant-calls?open=true`, `POST /api/ideas/{id}/grant-applications`.
 
 
 
@@ -268,16 +294,30 @@ Każdy moduł opisany jest w dwóch wariantach: **Pełny** (działa na prawdziwy
 - **Ekrany:** lista innowacji/pomysłów szukających testerów (etap prototyp); karta z opisem i przyciskiem „Chcę testować”; profil testera (wiek, gmina, potrzeby dostępności, sprzęt); formularz oceny: gwiazdki + „co działa / co poprawić” (tekst lub głos).
 - **Kontakt z zespołem innowacji:** wątek wiadomości z organizacją/autorem (moduł V).
 - **AI:** zbiorcze podsumowanie opinii na listę usprawnień dla autora.
+- **Reguły:**
+  - Testerów szuka innowacja albo pomysł na etapie `PROTOTYPE`, gdy autor albo admin włączy „szukam testerów” (`seeksTesters`).
+  - Profil testera (wiek, gmina, potrzeby dostępności, sprzęt) zapisujemy raz, przy koncie, i używamy przy kolejnych zapisach.
+  - Opinię wystawia każdy zalogowany, do dowolnej innowacji („ocena istniejących rozwiązań”, REQUIREMENTS §IV). Podsumowanie AI widzą autor i admin.
 - **API:** `GET /api/tests`, `POST /api/tests/{id}/signups`, `POST /api/innovations/{id}/feedback`, `GET /api/innovations/{id}/feedback/summary`.
 
 
 
 ### V. Platforma aktywnej komunikacji — „Śledź zgłoszenie”
 
-- **Śledzenie zgłoszenia jak paczki:** oś statusów `przyjęte → w analizie → u eksperta → odpowiedź → zamknięte`; dostęp kodem bez logowania.
-- **Wątki:** zgłoszenie ↔ ROPS, pytanie do mentora/eksperta (kierowane wg obszaru), propozycja partnerstwa (np. „połącz mnie z gminą, która to wdrożyła”).
+- **Śledzenie zgłoszenia jak paczki:** oś statusów `RECEIVED → IN_ANALYSIS → WITH_EXPERT → ANSWERED → CLOSED` (w UI: przyjęte → w analizie → u eksperta → odpowiedź → zamknięte); dostęp kodem bez logowania.
+  - Admin przestawia status dowolnie do przodu; ekspert tylko `WITH_EXPERT → ANSWERED`; `CLOSED` z każdego stanu ustawia admin.
+  - Wiadomość autora (albo posiadacza kodu) po `ANSWERED` cofa zgłoszenie do `IN_ANALYSIS`.
+- **Wątki** (`Conversation`), trzy rodzaje:
+
+  | Rodzaj | Uczestnicy |
+  |---|---|
+  | `PROBLEM_REPORT` | autor albo posiadacz kodu, admini, przypisany ekspert |
+  | `EXPERT_QUESTION` | pytający, eksperci obszaru (odpowiada którykolwiek), admini |
+  | `PARTNERSHIP` | inicjator, admini, drugi użytkownik, jeśli ma konto |
+
+  Wiadomość do „zespołu innowacji” ROPS (organizacja bez konta) trafia do adminów, którzy pośredniczą; przy innowacji z pomysłu użytkownika — do autora.
 - **SignalR (bez e-maili):** hub `/hubs/live`. Grupy: `admins`, `experts:{obszar}`, `report:{trackingCode}`, `user:{id}`. Zdarzenia: `ProblemReportCreated`, `ProblemReportStatusChanged`, `MessagePosted`, `IdeaSubmitted`.
-- **API:** `GET/POST /api/threads`, `POST /api/threads/{id}/messages`, `PATCH /api/problem-reports/{id}/status`.
+- **API:** `GET/POST /api/conversations`, `POST /api/conversations/{id}/messages`, `PATCH /api/problem-reports/{id}/status`.
 
 
 
@@ -288,11 +328,11 @@ Każdy moduł opisany jest w dwóch wariantach: **Pełny** (działa na prawdziwy
 - **Wiedza:** CRUD innowacji, zatwierdzanie genomów i tekstów „Prościej”, dodanie innowacji z linku do karty ROPS lub z PDF (AI wypełnia pola, admin zatwierdza), ponowne przeliczenie genomu/embeddingów, import raportów do RAG.
 - **Nabory:** CRUD `GrantCall`, otwieranie i zamykanie.
 - **Użytkownicy i role.**
-- **API:** pod `/api/admin/`*, tylko rola `admin`.
+- **API:** pod `/api/admin/*`, tylko rola `ADMIN`.
 
 
 
-### VII. Middleman innowacji — „Karta [nazwa aplikacji]ienia”
+### VII. Middleman innowacji — „Karta dopasowania do gminy”
 
 - **Ekran:** z karty innowacji: „Sprawdź dla mojej gminy” → wybór gminy → karta (6.5): ocena dopasowania, tabela „wymaganie innowacji vs stan gminy (wartość, średnia regionu, rok)”, co dostosować, model usługi, szacunek skali, mini-mapa.
 - **Asystent:** czat dopasowujący innowację do formy usługi pod potrzeby instytucji (np. „mamy 2 opiekunki i budżet X”).
@@ -326,13 +366,15 @@ Każdy moduł opisany jest w dwóch wariantach: **Pełny** (działa na prawdziwy
 
 ## 9. Backend: zasady
 
-- **Kontynuuj istniejącą architekturę** w `backend/`. Dodawaj moduły w jej konwencji.
-- OpenAPI włączone (Swagger UI pod `/swagger`) z poprawnymi schematami odpowiedzi, bo z nich generuje się klient frontendu.
-- Migracje bazy: mechanizm już używany w backendzie; rozszerzenie `vector` włączone migracją.
-- Seed: import z `Seed__Path` przy starcie, gdy `Seed__OnStartup=true`; idempotentny (upsert po kluczu źródłowym).
+- **Kontynuuj istniejącą architekturę** w `backend/` ([`architecture/`](architecture/)). Dodawaj moduły w jej konwencji.
+- OpenAPI z poprawnymi schematami odpowiedzi (także kodami 201/204), bo z nich generuje się klient frontendu. Dokument `backend/openapi/Castor.Api.json` powstaje przy `dotnet build` i jest commitowany; UI Scalar pod `/scalar/v1` tylko w `Development`.
+- Migracje bazy: EF Core (`dotnet dotnet-ef`); rozszerzenia `vector`, `unaccent`, `pg_trgm` włączone migracją.
+- Seed: import z `Seed__Path` przy starcie, gdy `Seed__OnStartup=true`; idempotentny — treści tylko dopisywane, statystyki upsertowane ([ADR 0003](adr/0003-seed-import-without-overwriting-content.md)).
 - Wywołania LLM: timeout, ponowienie przy 429/5xx, logowanie czasu i liczby tokenów (bez treści zgłoszeń w logach).
-- Długie operacje (genomy dla 115 innowacji, embeddingi raportów) jako zadania w tle z postępem w panelu admina.
-- Walidacja wejścia, limity rozmiaru tekstu, rate limiting na publicznych endpointach AI.
+- Długie operacje (genomy dla 115 innowacji, embeddingi raportów) jako zadania w tle z postępem w panelu admina: w procesie (`BackgroundService` + `Channel`), stan i postęp w tabeli zadań; zadanie przerwane restartem dostaje status `FAILED` i można je uruchomić ponownie (jest idempotentne). Bez Hangfire i zewnętrznych kolejek.
+- Walidacja wejścia, limity rozmiaru tekstu, rate limiting na publicznych endpointach AI (wbudowany `RateLimiter` ASP.NET Core, limit na IP).
+- Anonimizacja (6.2 pkt 1) to czysty typ reguły w `Domain/`.
+- „Te same dane wejściowe = wynik z bazy” (6.2 pkt 5) znaczy: dopasowania są zapisane przy zgłoszeniu (`MatchResult`) i nie liczą się drugi raz; nie ma pamięci podręcznej po skrócie tekstu między różnymi zgłoszeniami.
 
 ---
 
@@ -344,6 +386,35 @@ Każdy moduł opisany jest w dwóch wariantach: **Pełny** (działa na prawdziwy
 - Nie kopiuj materiałów ROPS (ZIP, PDF, filmy) do repo ani na serwer; linkuj.
 - Nie dodawaj e-maili, SMS ani powiadomień push.
 - Nie dodawaj i18n.
-- Nie pisz testów (decyzja zespołu na hackathon).
+- Nie pisz testów (decyzja zespołu na hackathon) — ani w backendzie, ani we frontendzie.
 - Nie wiąż kodu z jednym dostawcą LLM ani embeddingów.
+
+---
+
+
+
+## 11. Decyzje
+
+Rozstrzygnięcia z sesji projektowej 2026-10-03. Treść reguł jest już w sekcjach powyżej; tu jest dziennik, skąd się wzięły.
+
+| # | Decyzja | Gdzie |
+|---|---|---|
+| D-1 | Nazwa produktu: **Castor** (jak szkielet backendu). Metafora marki z pierwszej wersji SPEC usunięta; „karta szczepienia” → **karta dopasowania do gminy** | §0, §6.5, VII |
+| D-2 | Sesja w cookie zamiast ASP.NET Core Identity + JWT | §1, [ADR 0001](adr/0001-cookie-session-instead-of-jwt.md) |
+| D-3 | Jedna rola na użytkownika (`RESIDENT`, `MUNICIPAL_OFFICER`, `EXPERT`, `ADMIN`); pracownik JST z jedną gminą, ekspert z obszarami; role nadaje admin | §5 |
+| D-4 | Brak testów w całym repo; projekt `backend/tests/` do usunięcia | §1, §10 |
+| D-5 | Prefiks `/api` dla wszystkich kontrolerów; `openapi.json` z buildu, commitowany; Scalar tylko w `Development` | §1, §9 |
+| D-6 | Jeden `docker-compose.yml` w korzeniu (db, backend, frontend); obraz `pgvector/pgvector:pg17`; zmienna `ConnectionStrings__Castor` | §2, §3 |
+| D-7 | Embeddingi i pierwszy dostawca LLM — odłożone | [TODO](TODO.md) |
+| D-8 | Katalog `Shared/` dla usług używanych przez kilka funkcji; brak zakazów zależności między katalogami | [ADR 0002](adr/0002-shared-folder-and-no-dependency-rules.md) |
+| D-9 | Import seedu przy starcie: treści tylko dopisywane, statystyki upsertowane | §9, [ADR 0003](adr/0003-seed-import-without-overwriting-content.md) |
+| D-10 | Wszystkie 7 modułów w wariancie pełnym, kolejność I → VII → VI → V → III → II → IV | §7 |
+| D-11 | Nazwy encji wg [`GLOSSARY.md`](../GLOSSARY.md): `Municipality`, `ResearchReport`, `Conversation`, `GrantApplication`, `FitAssessment` | §4.2 |
+| D-12 | Cykl życia zgłoszenia, kod śledzenia, przypięcie zgłoszenia anonimowego, opis oryginalny | §7 I, V |
+| D-13 | Full-text: `simple` + `unaccent` + `pg_trgm` + słowa kluczowe z LLM | §7 |
+| D-14 | Karta dopasowania: każdy zalogowany, dowolna gmina, zapisywana dla (innowacja, gmina, rok danych) | §6.5 |
+| D-15 | Pomysł: statusy, widoczność, współautorzy, ocena eksperta, przekształcenie w innowację; wniosek bez obiegu | §7 III |
+| D-16 | Wątki: trzy rodzaje i ich uczestnicy | §7 V |
+| D-17 | Poletko: kto szuka testerów, profil testera, kto wystawia opinie | §7 IV |
+| D-18 | Zadania w tle w procesie; rate limiting wbudowany; anonimizacja w `Domain/` | §9 |
 

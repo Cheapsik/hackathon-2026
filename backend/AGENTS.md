@@ -9,34 +9,38 @@ Przykłady w dokumentacji (sale i rezerwacje: `Room`, `Booking`) pokazują wzorz
 | Ścieżka | Czym jest |
 |---|---|
 | [`../docs/REQUIREMENTS.md`](../docs/REQUIREMENTS.md) | Treść zadania HubMI od organizatora. |
-| [`../docs/product.md`](../docs/product.md) | Co budujemy: zasoby, przypadki użycia, słownik nazw. **Źródło prawdy dla „co”.** Powstaje przed pierwszą funkcją. |
-| [`../docs/architecture/`](../docs/architecture/) | Jak budujemy backend: stack, struktura, konwencje, wzorce kodu. **Źródło prawdy dla „jak”. Rozstrzygnięte.** |
-| [`../docs/assumptions.md`](../docs/assumptions.md) | Dziennik założeń przyjętych przez agenta tam, gdzie `product.md` milczy. |
+| [`../docs/SPEC.md`](../docs/SPEC.md) | Co budujemy: moduły, model danych, role, reguły, API. **Źródło prawdy dla „co”.** |
+| [`../GLOSSARY.md`](../GLOSSARY.md) | Słownik pojęć — kanoniczne nazwy encji i enumów. |
+| [`../docs/architecture/`](../docs/architecture/) | Jak budujemy: stack, struktura, konwencje, wzorce kodu, frontend. **Źródło prawdy dla „jak”. Rozstrzygnięte.** |
+| [`../docs/adr/`](../docs/adr/) | Decyzje trudne do odwrócenia i ich powody. |
+| [`../docs/TODO.md`](../docs/TODO.md) | Decyzje odłożone na później (dostawca LLM, embeddingi) i to, co blokują. |
+| [`../docs/assumptions.md`](../docs/assumptions.md) | Dziennik założeń przyjętych przez agenta tam, gdzie SPEC milczy. |
 | `src/Castor.Api/` | Kod API — jeden projekt. |
-| `tests/Castor.Tests/` | Testy, foldery lustrzane względem kodu. |
+| `openapi/Castor.Api.json` | Dokument OpenAPI z buildu — commitowany razem ze zmianą API. |
 
 ## Zanim napiszesz pierwszą linijkę
 
 1. [`00-stack.md`](../docs/architecture/00-stack.md) — stack, klucze, liczby, enumy, daty, dostęp do danych, uwierzytelnianie.
-2. [`01-structure-conventions.md`](../docs/architecture/01-structure-conventions.md) — układ katalogów, kierunek zależności, handler, zapytania, równoczesne zapisy.
-3. [`02-code-patterns.md`](../docs/architecture/02-code-patterns.md) — wzorce plików, które piszesz codziennie: encja, mapowanie, handler, kontroler, zapytanie, testy.
+2. [`01-structure-conventions.md`](../docs/architecture/01-structure-conventions.md) — układ katalogów (z `Shared/`), handler, zapytania, seed, zadania w tle, SignalR, równoczesne zapisy.
+3. [`02-code-patterns.md`](../docs/architecture/02-code-patterns.md) — wzorce plików, które piszesz codziennie: encja, mapowanie, handler, kontroler, zapytanie.
 4. [`03-skeleton.md`](../docs/architecture/03-skeleton.md) — co już jest w szkielecie i jak go uruchomić.
-5. [`product.md`](../docs/product.md) — zasób albo przypadek użycia, nad którym pracujesz.
+5. [`SPEC.md`](../docs/SPEC.md) i [`GLOSSARY.md`](../GLOSSARY.md) — moduł, zasób albo przypadek użycia, nad którym pracujesz, i jego nazwy.
 
 To, co opisuje `docs/architecture/`, jest rozstrzygnięte. Nie wybierasz tego ponownie i nie proponujesz alternatyw bez prośby — także wtedy, gdy alternatywa byłaby „szybsza na hackathon”.
 
 ## Tempo i zakres
 
-- **Pracujesz pionowymi wycinkami.** Jeden zasób albo jeden przypadek użycia od końca do końca: encja → mapowanie → migracja → handler → kontroler → test. Następny wycinek zaczynasz, gdy poprzedni się buduje i przechodzi testy. Nie rozgrzebujesz kilku funkcji naraz.
-- **Działający mniejszy zakres jest lepszy od rozgrzebanego większego.** Po każdym wycinku `chop dotnet build` i `chop dotnet test` są zielone.
+- **Pracujesz pionowymi wycinkami.** Jeden zasób albo jeden przypadek użycia od końca do końca: encja → mapowanie → migracja → handler → kontroler → sprawdzenie w Scalar. Następny wycinek zaczynasz, gdy poprzedni się buduje i działa. Nie rozgrzebujesz kilku funkcji naraz.
+- **Działający mniejszy zakres jest lepszy od rozgrzebanego większego.** Po każdym wycinku `chop dotnet build` przechodzi bez ostrzeżeń.
+- **Testów nie piszemy** (SPEC §1 i §10, decyzja zespołu na hackathon).
 - **Nie dokładasz rzeczy, o które nikt nie prosił:** reset hasła, potwierdzenie e-mail, 2FA, paginacja, cache, kolejki, soft delete, wersjonowanie API — nawet gdy framework daje je gotowe. Jeśli uważasz, że czegoś brakuje, mówisz o tym, zamiast to budować.
 - **Tempo nie zwalnia z reguł kodu.** Skrót łamiący architekturę (kontroler z `DbContext`, encja z publicznymi setterami, `?? 0` na wartości biznesowej) kosztuje więcej przy debugowaniu przed demem, niż oszczędza.
 
 ## Luki w wymaganiach
 
 - **Pytanie o rdzeń modelu** — co zapisujemy, jakie stany są dozwolone, kto widzi czyje dane — zatrzymuje pracę nad tym wycinkiem. Wypisz pytanie i zapytaj użytkownika. Kod napisany na domyśle o modelu zostałby wyrzucony.
-- **Drobną lukę** zamykasz rozsądnym założeniem i dopisujesz je do [`assumptions.md`](../docs/assumptions.md): co założono, dlaczego, gdzie w kodzie. Domysłu nie wpisujesz do `product.md` jako reguły.
-- **Nazwy encji, pól i wartości enum bierzesz ze słownika w `product.md`.** Brakującą nazwę dopisujesz do słownika i mówisz o tym w odpowiedzi — nie wymyślasz synonimów w kodzie.
+- **Drobną lukę** zamykasz rozsądnym założeniem i dopisujesz je do [`assumptions.md`](../docs/assumptions.md): co założono, dlaczego, gdzie w kodzie. Domysłu nie wpisujesz do `SPEC.md` jako reguły.
+- **Nazwy encji, pól i wartości enum bierzesz z [`GLOSSARY.md`](../GLOSSARY.md) i SPEC §4.2.** Brakującą nazwę dopisujesz do słownika i mówisz o tym w odpowiedzi — nie wymyślasz synonimów w kodzie.
 
 ## Reguły generowania kodu
 
@@ -44,8 +48,9 @@ Szczegóły i uzasadnienia są w `docs/architecture/`. Tu skrót do sprawdzenia 
 
 **Struktura**
 
-- **Pięć katalogów w korzeniu projektu:** `Domain/`, `Persistence/`, `Queries/`, `Features/`, `Infrastructure/` (plus `Migrations/`). Nie ma globalnych folderów `Controllers`, `Services`, `Repositories`, `Helpers`, `Utils`.
-- **Kierunek zależności jest jeden:** `Features` → `Queries` → `Persistence` → `Domain`. `Domain/` nie zna EF Core ani ASP.NET Core. Foldery funkcji nie współdzielą kodu między sobą; wspólne idzie do `Domain/` albo `Queries/`. Pilnuje tego test architektury.
+- **Sześć katalogów w korzeniu projektu:** `Domain/`, `Persistence/`, `Queries/`, `Shared/`, `Features/`, `Infrastructure/` (plus `Migrations/`). Nie ma globalnych folderów `Controllers`, `Services`, `Repositories`, `Helpers`, `Utils`.
+- **Katalogi to role, nie granice:** każdy może używać każdego ([ADR 0002](../docs/adr/0002-shared-folder-and-no-dependency-rules.md)). Kod potrzebny kilku funkcjom przenosisz do `Domain/` (reguła), `Queries/` (odczyt) albo `Shared/` (czynność, np. potok AI), zamiast sięgać do cudzego folderu funkcji.
+- **Trasy kontrolerów bez `api/`** — prefiks dokleja `ApiRoutePrefixConvention`. Kod inny niż 200 deklarujesz `[ProducesResponseType]`, a po zmianie API commitujesz `openapi/Castor.Api.json`.
 - **Nazwy w kodzie to nazwy encji, nie słowa z UI.** Folder funkcji to rzeczownik zasobu w liczbie mnogiej (`Features/Bookings/`), bez `Manage`/`Add`/`Record`.
 
 **Encje i reguły**
@@ -61,7 +66,7 @@ Szczegóły i uzasadnienia są w `docs/architecture/`. Tu skrót do sprawdzenia 
 - **Kontroler tylko tłumaczy HTTP i woła handler** — także przy odczycie. Kontroler nie dostaje `DbContext`.
 - **Handler sam mapuje żądanie.** Konwersja typu na typ to metoda rozszerzająca w klasie `…Converter` wewnątrz folderu funkcji. Metoda wyglądająca na konwersję nie sięga do bazy.
 - **Handler nie przyjmuje `userId`** — bierze go z `CurrentUser`.
-- **Dane platformy są wspólne — nie ma workspace'ów ani globalnego filtra izolacji.** Jeśli produkt zawęża, kto widzi zasób, handler sprawdza to jawnie i odmawia 404; odmowa ma test API.
+- **Dane platformy są wspólne — nie ma workspace'ów ani globalnego filtra izolacji.** Jeśli produkt zawęża, kto widzi zasób, handler sprawdza to jawnie i odmawia 404. Endpoint dla jednej roli ma `[Authorize(Roles = nameof(UserRole.ADMIN))]`.
 - **Zmiana:** `PATCH` + `Update…Handler` dla niezależnych atrybutów — pola żądania nullowalne, **`null` znaczy „nie zmieniaj”**. `PUT` + `Revise…Handler` (albo `POST /{id}/<czynność>` z domenowym czasownikiem) dla treści sprawdzanej w całości — pola wymagane, brak to 400.
 - **Usuwanie:** encja, na którą coś wskazuje, jest archiwizowana (`Archive…Handler`, status `ARCHIVED`), nie usuwana. Twarde `Delete` ma tylko liść. Gdy zależności blokują czynność, handler sprawdza je sam i odmawia z 409; naruszenia klucza obcego (23503) nie łapiesz — to znak brakującego sprawdzenia.
 - **Reguła „odczytaj, sprawdź, zapisz” bez constraintu w bazie** jest podatna na wyścig równoczesnych zapisów. Przy pierwszej takiej regule pytasz zespół o mechanizm ([`01-structure-conventions.md`](../docs/architecture/01-structure-conventions.md) · Równoczesne zapisy), zamiast go wymyślać.
@@ -87,24 +92,17 @@ Szczegóły i uzasadnienia są w `docs/architecture/`. Tu skrót do sprawdzenia 
 - **Reguły przekrojowe egzekwuje także baza:** klucze obce, unikalność, `CHECK`. Naruszenie unikalności z wyścigu zamieniasz na 409.
 - **Migracje:** generuje je `chop dotnet dotnet-ef`, nazwa ze znacznikiem czasu. Zmergowanej migracji się nie edytuje. Wygenerowaną migrację sprawdzasz sam (oczekiwane tabele i constrainty, brak zbędnych indeksów) i krótko opisujesz, co zawiera.
 
-**Testy**
-
-- Kryteria z `product.md` przenosisz na testy przed implementacją albo razem z nią.
-- **Reguła encji → test domeny bez bazy. Przypadek użycia → test API** na prawdziwym PostgreSQL przez Testcontainers.
-- Nazwa testu jest zdaniem o zachowaniu: `A_slot_taken_by_another_booking_is_refused_with_a_conflict`.
-
 ## Definicja ukończenia wycinka
 
-`chop dotnet build` bez ostrzeżeń stylu i `chop dotnet test` przechodzą czysto, migracja wykonuje się na pustej bazie, endpoint jest widoczny w Scalar (`/scalar/v1`), założenia są w `docs/assumptions.md`.
+`chop dotnet build` przechodzi bez ostrzeżeń stylu, migracja wykonuje się na pustej bazie, endpoint działa w Scalar (`/scalar/v1`) z poprawnymi kodami odpowiedzi, `openapi/Castor.Api.json` jest zaktualizowany, założenia są w `docs/assumptions.md`.
 
 ## Komendy
 
 Z katalogu `backend/` (każda przez `chop` — patrz [`../AGENTS.md`](../AGENTS.md)):
 
 ```bash
-chop docker compose up -d --wait           # PostgreSQL 17 lokalnie
-chop dotnet build
-chop dotnet test
+chop docker compose up -d --wait db        # z korzenia repo: PostgreSQL 17 + pgvector
+chop dotnet build                          # zapisuje też openapi/Castor.Api.json
 chop dotnet dotnet-ef migrations add <Nazwa> --project src/Castor.Api
 chop dotnet dotnet-ef database update --project src/Castor.Api
 chop dotnet run --project src/Castor.Api   # Scalar: http://localhost:5256/scalar/v1
