@@ -95,15 +95,28 @@ function TrackedProblemReport({ trackingCode }: { trackingCode: string }) {
     )
   }
 
-  return <TrackedProblemReportDetails trackingCode={trackingCode} report={report.data.data} />
+  return (
+    <TrackedProblemReportDetails
+      trackingCode={trackingCode}
+      report={report.data.data}
+      onRecheck={() => {
+        void report.refetch()
+      }}
+      rechecking={report.isFetching && !report.isPending}
+    />
+  )
 }
 
 function TrackedProblemReportDetails({
   trackingCode,
   report,
+  onRecheck,
+  rechecking,
 }: {
   trackingCode: string
   report: ProblemReportResponse
+  onRecheck: () => void
+  rechecking: boolean
 }) {
   const queryClient = useQueryClient()
   const answerQuestions = usePostApiProblemReportsProblemReportIdAnswers()
@@ -155,7 +168,12 @@ function TrackedProblemReportDetails({
           onSubmit={submitAnswers}
         />
       ) : (
-        <ProblemReportResults report={report} headingLevel={3} />
+        <ProblemReportResults
+          report={report}
+          headingLevel={3}
+          onRecheck={onRecheck}
+          rechecking={rechecking}
+        />
       )}
 
       <div className="grid gap-3">

@@ -1,11 +1,28 @@
 /*
- * Satoshi (Indian Type Foundry, via Fontshare), self-hosted: no request leaves for a third-party CDN.
- * One variable file covers every weight the system uses (400–700).
+ * General Sans (Indian Type Foundry, via Fontshare), self-hosted: no request leaves for a third-party CDN.
+ * The same family as the home page wordmark and headline. Three cuts: 400 text, 500 headings and labels,
+ * 700 the wordmark; `font-semibold` resolves to the bold cut.
  */
 @font-face {
-  font-family: 'Satoshi';
-  src: url('../assets/fonts/Satoshi-Variable.woff2') format('woff2');
-  font-weight: 300 900;
+  font-family: 'General Sans';
+  src: url('../assets/fonts/GeneralSans-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'General Sans';
+  src: url('../assets/fonts/GeneralSans-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'General Sans';
+  src: url('../assets/fonts/GeneralSans-Bold.woff2') format('woff2');
+  font-weight: 700;
   font-style: normal;
   font-display: swap;
 }

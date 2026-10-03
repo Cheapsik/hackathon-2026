@@ -24,6 +24,20 @@ export function timeSince(value: string, now: Date = new Date()): string {
   return `${Math.floor(hours / 24)} dni temu`
 }
 
+/**
+ * The Polish word form for a count: `one` for 1, `few` for 2-4 (but not 12-14) and their tens, `many` otherwise -
+ * "1 innowacja", "3 innowacje", "5 innowacji".
+ */
+export function pluralPl(count: number, one: string, few: string, many: string): string {
+  if (count === 1) {
+    return one
+  }
+
+  const lastDigit = count % 10
+  const lastTwoDigits = count % 100
+  return lastDigit >= 2 && lastDigit <= 4 && (lastTwoDigits < 12 || lastTwoDigits > 14) ? few : many
+}
+
 /** A list edited in a textarea: one item per line. */
 export function linesOf(text: string): string[] {
   return text

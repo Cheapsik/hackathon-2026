@@ -1,45 +1,67 @@
 import { useEffect, useRef } from 'react'
-import { BookOpen, CircleHelp, Files, FlaskConical, House, Library, Lightbulb, Map, MessageSquareText, MessagesSquare, Search, ShieldCheck } from 'lucide-react'
 import { Link, Outlet, useLocation } from 'react-router'
 import type { SessionResponse } from '@/api/generated/castor'
 import { AccountLinks } from '@/components/layout/AccountLinks'
+import { AccountMenu } from '@/components/layout/AccountMenu'
 import { BrandMark } from '@/components/layout/BrandMark'
 import { DisplayControls } from '@/components/layout/DisplayControls'
-import { AppShell, PageContainer, type AppShellNavItem } from '@/design-system'
+import { AppShell, PageContainer, type AppShellNavGroup, type AppShellNavItem } from '@/design-system'
 import { useDisplayPreferences } from '@/hooks/use-display-preferences'
 import { useSession } from '@/hooks/use-session'
 
-const navigation: AppShellNavItem[] = [
-  { to: '/', label: 'Strona główna', icon: House, end: true },
-  { to: '/opisz-problem', label: 'Opisz problem', icon: MessageSquareText },
-  { to: '/sledz', label: 'Śledź zgłoszenie', icon: Search },
-  { to: '/moje-zgloszenia', label: 'Moje zgłoszenia', icon: Files },
-  { to: '/obszary', label: 'Atlas wyzwań', icon: Map },
-  { to: '/biblioteka', label: 'Biblioteka innowacji', icon: Library },
-  { to: '/materialy', label: 'Materiały', icon: BookOpen },
-  { to: '/testy', label: 'Testy innowacji', icon: FlaskConical },
-]
+/**
+ * The destinations of the home page header, in its order and words, each with the pages it holds. Threads and the
+ * idea creator need an account; a report sent without one has its thread on "Śledź zgłoszenie".
+ */
+function navigationFor(session: SessionResponse | undefined): AppShellNavGroup[] {
+  const signedIn = Boolean(session?.signedIn)
+  const only = (condition: boolean, items: AppShellNavItem[]) => (condition ? items : [])
 
-/** Threads need an account; a report sent without one has its thread on "Śledź zgłoszenie". */
-const signedInNavigation: AppShellNavItem[] = [
-  { to: '/watki', label: 'Moje wątki', icon: MessagesSquare },
-  { to: '/zapytaj-eksperta', label: 'Zapytaj eksperta', icon: CircleHelp },
-  { to: '/pomysly', label: 'Kreator pomysłów', icon: Lightbulb },
-]
+  const groups: AppShellNavGroup[] = [
+    {
+      label: 'Rozwiązania',
+      to: '/opisz-problem',
+      items: [
+        { to: '/opisz-problem', label: 'Opisz problem' },
+        { to: '/sledz', label: 'Śledź zgłoszenie' },
+        { to: '/moje-zgloszenia', label: 'Moje zgłoszenia' },
+        ...only(signedIn, [
+          { to: '/watki', label: 'Moje wątki' },
+          { to: '/zapytaj-eksperta', label: 'Zapytaj eksperta' },
+        ]),
+      ],
+      match: ['/zgloszenie'],
+    },
+    {
+      label: 'Wiedza',
+      to: '/biblioteka',
+      items: [
+        { to: '/biblioteka', label: 'Biblioteka innowacji' },
+        { to: '/obszary', label: 'Atlas wyzwań' },
+        { to: '/materialy', label: 'Materiały' },
+      ],
+      match: ['/innowacje', '/mapa'],
+    },
+    {
+      label: 'Pomysły',
+      to: '/pomysly',
+      items: [{ to: '/pomysly', label: 'Kreator pomysłów' }],
+      match: ['/wnioski'],
+    },
+    {
+      label: 'Testy',
+      to: '/testy',
+      items: [{ to: '/testy', label: 'Testy innowacji' }],
+      match: ['/profil-testera'],
+    },
+  ]
 
-/** Shown only to administrators; the API refuses everyone else anyway. */
-const adminNavigation: AppShellNavItem = { to: '/admin', label: 'Panel administratora', icon: ShieldCheck }
-
-function navigationFor(session: SessionResponse | undefined): AppShellNavItem[] {
-  if (!session?.signedIn) {
-    return navigation
+  // Shown only to administrators; the API refuses everyone else anyway.
+  if (session?.role === 'ADMIN') {
+    groups.push({ label: 'Administracja', to: '/admin', items: [{ to: '/admin', label: 'Panel administratora' }] })
   }
 
-  if (session.role === 'ADMIN') {
-    return [...navigation, ...signedInNavigation, adminNavigation]
-  }
-
-  return [...navigation, ...signedInNavigation]
+  return groups
 }
 
 /**
@@ -54,13 +76,12 @@ export function AppLayout() {
   const previousPathname = useRef(location.pathname)
   const [preferences, setPreferences] = useDisplayPreferences()
   const fullBleed =
-    location.pathname === '/' ||
+    location.pathname === '/opisz-problem' ||
     location.pathname === '/logowanie' ||
     location.pathname === '/rejestracja' ||
     location.pathname === '/biblioteka' ||
     location.pathname.startsWith('/admin')
   const session = useSession()
-  const links = navigationFor(session)
 
   useEffect(() => {
     if (previousPathname.current === location.pathname) {
@@ -74,12 +95,13 @@ export function AppLayout() {
   return (
     <AppShell
       brand={
-        <Link to="/" aria-label="Castor, strona główna" className="rounded-button pr-2">
+        <Link to="/" aria-label="Castor, strona główna" className="inline-flex min-h-touch items-center rounded-control">
           <BrandMark />
         </Link>
       }
-      navigation={links}
-      account={<AccountLinks />}
+      navigation={navigationFor(session)}
+      account={<AccountMenu />}
+      accountLinks={<AccountLinks />}
       utilities={<DisplayControls preferences={preferences} onChange={setPreferences} />}
       footer="Regionalny Ośrodek Polityki Społecznej w Krakowie"
       mainRef={mainRef}

@@ -1,11 +1,10 @@
-import { useId, type ReactNode, type Ref } from 'react'
-import { CircleAlert, Mic } from 'lucide-react'
+import { useId, useState, type ReactNode, type Ref } from 'react'
+import { CircleAlert, Mic, Square } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { SoftButton } from '../primitives/SoftButton'
-import { Tooltip } from '../primitives/Tooltip'
 
 export type PromptCardVoice = {
-  /** False where the browser has no speech recognition; the button stays, with an explanation. */
+  /** False where the browser has no speech recognition; the button stays and says what to do instead. */
   supported: boolean
   listening: boolean
   onToggle: () => void
@@ -19,21 +18,30 @@ export type PromptCardProps = {
   value: string
   onValueChange: (value: string) => void
   placeholder?: string
-  /** Text of the one main action; the button submits the surrounding <form>. */
-  submitLabel: string
+  /**
+   * Text of the main action inside the field; the button submits the surrounding <form>. Leave it out when the
+   * form has its action after further fields.
+   */
+  submitLabel?: string
+  /** Caps the text and shows "n / max" in the field's footer. */
+  maxLength?: number
+  /** `lg`: the main input of a page - taller, with the larger text of the home page field. */
+  size?: 'md' | 'lg'
   /** Validation message; announced at once and tied to the field. */
   error?: string
-  /** Quiet line under the field. */
+  /** Quiet line under the field, tied to it. */
   hint?: ReactNode
   voice?: PromptCardVoice
   textAreaRef?: Ref<HTMLTextAreaElement>
   className?: string
 }
 
+const unsupportedVoiceNote = 'Dyktowanie działa w Chrome i Edge. W tej przeglądarce wpisz opis w polu.'
+
 /**
- * The page's main input: one opaque surface with the label, a text area and two actions — dictation (secondary)
- * and the single dark-green action. The surface edge is drawn at 3:1, so the field is recognisable without
- * relying on the fill. Must be placed inside a <form>.
+ * The page's main input, the home page field on a light page: one white surface with the label, a large text area,
+ * dictation and an optional main action. The surface edge is drawn at 3:1, so the field is recognisable without
+ * relying on the fill, and the focus ring wraps the whole surface. Must be placed inside a <form>.
  */
 export function PromptCard({
   label,
@@ -41,6 +49,8 @@ export function PromptCard({
   onValueChange,
   placeholder,
   submitLabel,
+  maxLength,
+  size = 'md',
   error,
   hint,
   voice,
@@ -50,16 +60,24 @@ export function PromptCard({
   const id = useId()
   const errorId = `${id}-error`
   const statusId = `${id}-status`
-  const dictationHint = voice?.supported ? 'Dyktuj opis (działa w Chrome i Edge)' : 'Dyktowanie działa tylko w Chrome i Edge'
+  const hintId = `${id}-hint`
+  const [unsupportedPressed, setUnsupportedPressed] = useState(false)
+  const nearLimit = maxLength !== undefined && value.length >= maxLength * 0.9
+  const voiceStatus =
+    voice &&
+    (voice.message ??
+      (voice.listening ? 'Słucham. Mów po polsku, tekst pojawi się w polu.' : undefined) ??
+      (unsupportedPressed ? unsupportedVoiceNote : undefined))
 
   return (
     <div className={cn('grid gap-3', className)}>
       <div
         className={cn(
-          '@container rounded-panel p-5 surface-ceramic sm:p-6',
+          '@container grid rounded-panel surface-ceramic',
+          size === 'lg' ? 'gap-3 p-5 sm:px-7 sm:pt-6 sm:pb-5' : 'gap-2 p-5 sm:p-6',
           error ? 'surface-invalid' : 'surface-field',
           // The ring wraps the whole field: the textarea itself has no outline of its own.
-          'has-[textarea:focus]:outline-solid has-[textarea:focus]:outline-(length:--focus-ring-width) has-[textarea:focus]:outline-focus has-[textarea:focus]:outline-offset-3',
+          'has-[textarea:focus-visible]:outline-solid has-[textarea:focus-visible]:outline-(length:--focus-ring-width) has-[textarea:focus-visible]:outline-focus has-[textarea:focus-visible]:outline-offset-3',
         )}
       >
         <label htmlFor={id} className="text-label font-medium text-text-muted">
@@ -71,35 +89,56 @@ export function PromptCard({
           id={id}
           value={value}
           rows={3}
+          maxLength={maxLength}
           placeholder={placeholder}
           aria-invalid={error ? true : undefined}
-          aria-describedby={[error ? errorId : undefined, voice ? statusId : undefined].filter(Boolean).join(' ') || undefined}
+          aria-describedby={
+            [error ? errorId : undefined, hint ? hintId : undefined, voice ? statusId : undefined]
+              .filter(Boolean)
+              .join(' ') || undefined
+          }
           onChange={(event) => onValueChange(event.target.value)}
-          className="mt-2 block max-h-72 min-h-24 w-full resize-none border-0 bg-transparent p-0 text-body text-text-primary shadow-none field-sizing-content outline-none placeholder:text-text-faint"
+          className={cn(
+            'block w-full resize-none border-0 bg-transparent p-0 text-text-primary shadow-none field-sizing-content outline-none placeholder:text-text-faint',
+            size === 'lg' ? 'max-h-96 min-h-40 text-lead' : 'max-h-72 min-h-24 text-body',
+          )}
         />
 
-        {/* Container query in rem: when the field is too narrow for both buttons (phone, large text), the main one takes its own row. */}
-        <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
-          {voice ? (
-            <Tooltip content={dictationHint}>
+        {(voice || maxLength !== undefined || submitLabel) && (
+          // Container query in rem: when the field is too narrow for everything (phone, large text), the main action takes its own row.
+          <div className="mt-1 flex flex-wrap items-center gap-3">
+            {voice && (
               <SoftButton
-                variant="secondary"
-                icon={<Mic aria-hidden />}
-                aria-label={voice.listening ? 'Zatrzymaj dyktowanie' : voice.supported ? 'Dyktuj opis' : 'Dyktuj opis (tylko Chrome i Edge)'}
-                aria-pressed={voice.listening}
-                aria-disabled={voice.supported ? undefined : true}
-                onClick={voice.supported ? voice.onToggle : undefined}
+                variant={voice.listening ? 'primary' : 'secondary'}
+                icon={voice.listening ? <Square aria-hidden className="fill-current" /> : <Mic aria-hidden />}
+                aria-pressed={voice.supported ? voice.listening : undefined}
+                className={cn(voice.listening && 'bg-brick not-disabled:hover:bg-brick')}
+                onClick={voice.supported ? voice.onToggle : () => setUnsupportedPressed(true)}
               >
-                {voice.listening ? 'Zatrzymaj' : 'Dyktuj'}
+                {voice.listening ? 'Zatrzymaj dyktowanie' : 'Dyktuj'}
               </SoftButton>
-            </Tooltip>
-          ) : (
-            <span />
-          )}
-          <SoftButton type="submit" variant="primary" size="lg" className="@max-[20rem]:w-full">
-            {submitLabel}
-          </SoftButton>
-        </div>
+            )}
+
+            {maxLength !== undefined && (
+              <p className={cn('ml-auto text-label tabular', nearLimit ? 'font-medium text-warning' : 'text-text-muted')}>
+                <span className="sr-only">Wpisano znaków: </span>
+                {value.length} / {maxLength}
+              </p>
+            )}
+
+            {submitLabel && (
+              <SoftButton
+                type="submit"
+                variant="primary"
+                size="lg"
+                forward
+                className={cn(maxLength === undefined && 'ml-auto', '@max-[24rem]:w-full')}
+              >
+                {submitLabel}
+              </SoftButton>
+            )}
+          </div>
+        )}
       </div>
 
       {error && (
@@ -111,11 +150,15 @@ export function PromptCard({
 
       {voice && (
         <p id={statusId} aria-live="polite" className="text-label text-text-muted empty:hidden">
-          {voice.message ?? (voice.listening ? 'Słucham. Mów, a tekst pojawi się w polu.' : '')}
+          {voiceStatus}
         </p>
       )}
 
-      {hint && <p className="text-label text-text-muted">{hint}</p>}
+      {hint && (
+        <p id={hintId} className="text-label text-text-muted">
+          {hint}
+        </p>
+      )}
     </div>
   )
 }

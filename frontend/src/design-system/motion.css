@@ -12,6 +12,15 @@
   --animate-sheet-in: ds-sheet-in var(--duration-slow) var(--ease-standard) both;
   --animate-sheet-out: ds-sheet-out var(--duration-base) var(--ease-standard) both;
   --animate-shimmer: ds-shimmer 1.6s linear infinite;
+  /* The next step of a flow, after the person sends the previous one: it rises into place, once. */
+  --animate-step-in: ds-step-in 480ms var(--ease-emphasis) both;
+
+  @keyframes ds-step-in {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+  }
 
   @keyframes ds-enter {
     from {

@@ -21,47 +21,59 @@
   --container-*: initial;
 
   /*
-   * Colour: warm, slightly green neutrals; dark green only for the main action, active states and the brand.
-   * The names `surface-glass*` are historical — every surface is opaque now; they keep the components that use
-   * them working. Contrast: muted text 4.6:1 on bg, 5.4:1 on surface-strong; primary vs surface-strong 11:1;
-   * border-strong 3.2:1 on bg, 3.7:1 on surface-strong (WCAG 1.4.11 for field edges).
+   * Colour, taken from the home page photo of Rynek at dusk: the dusk sky frames every page (`frame`), the
+   * page itself is a sheet of pale limestone (`canvas`), fields are white paper. Green is the one colour of
+   * action; lamplight marks the current place on the dark frame only.
+   * The names `surface-glass*` are historical: every surface is opaque; they keep the components that use
+   * them working. Contrast: ink 14.8:1 and muted 5.7:1 on canvas; muted 5.2:1 on surface; white on primary
+   * 6.4:1; border-strong 3.5:1 on canvas, 3.9:1 on white (WCAG 1.4.11 for field edges).
    */
-  --color-canvas: #e9ebe5;
-  --color-app: #e9ebe5;
-  --color-surface-glass: #f4f4ef;
-  --color-surface-glass-strong: #fcfcf8;
-  --color-surface-ceramic: #fcfcf8;
-  --color-surface-solid: #f4f4ef;
-  --color-chip: #c8d8cf;
-  --color-surface-active: #173f38;
-  --color-primary-hover: #0f302b;
-  --color-text-primary: #111613;
-  --color-text-muted: #626a65;
-  --color-text-faint: #626a65;
-  --color-text-inverse: #fcfcf8;
-  --color-border-subtle: rgb(17 22 19 / 0.12);
-  --color-border-highlight: rgb(17 22 19 / 0.12);
-  --color-border-strong: #7c847f;
-  --color-accent: #173f38;
-  --color-focus: #173f38;
-  --color-success: #1b5e3a;
-  --color-success-soft: #c8d8cf;
+  --color-canvas: #f3f3ef;
+  --color-app: #f3f3ef;
+  --color-surface-glass: #e9eae4;
+  --color-surface-glass-strong: #ffffff;
+  --color-surface-ceramic: #ffffff;
+  --color-surface-solid: #e9eae4;
+  --color-chip: #d3e4d7;
+  --color-surface-active: #2f6b42;
+  --color-primary-hover: #24563a;
+  --color-text-primary: #18202a;
+  --color-text-muted: #57606b;
+  --color-text-faint: #57606b;
+  --color-text-inverse: #ffffff;
+  --color-border-subtle: rgb(24 32 42 / 0.12);
+  --color-border-highlight: rgb(24 32 42 / 0.12);
+  --color-border-strong: #7b838d;
+  --color-accent: #2f6b42;
+  --color-focus: #2f6b42;
+  --color-success: #1f6b3e;
+  --color-success-soft: #d3e4d7;
   --color-warning: #6b4e00;
-  --color-warning-soft: #efe3be;
+  --color-warning-soft: #f1e5c3;
   --color-danger: #9b2c2c;
   --color-danger-soft: rgb(155 44 44 / 0.1);
-  --color-scrim: rgb(17 22 19 / 0.4);
-  --color-scrim-strong: rgb(17 22 19 / 0.66);
-  --color-skeleton: rgb(17 22 19 / 0.08);
-  --color-media: #59635d;
-  --color-on-media: #fcfcf8;
-  --color-on-media-muted: rgb(252 252 248 / 0.86);
-  --color-on-media-glass: rgb(17 22 19 / 0.28);
-  --color-on-media-border: rgb(252 252 248 / 0.3);
+  --color-scrim: rgb(14 19 26 / 0.45);
+  --color-scrim-strong: rgb(14 19 26 / 0.7);
+  --color-skeleton: rgb(24 32 42 / 0.08);
+  --color-media: #3a4553;
+  --color-on-media: #ffffff;
+  --color-on-media-muted: rgb(255 255 255 / 0.86);
+  --color-on-media-glass: rgb(14 19 26 / 0.3);
+  --color-on-media-border: rgb(255 255 255 / 0.3);
 
-  /* Typography — one family. Hierarchy comes from size, weight and spacing. */
-  --font-sans: 'Satoshi', system-ui, sans-serif;
-  --font-display: 'Satoshi', system-ui, sans-serif;
+  /* The dusk frame around every page: header, the sheet's edge, footer, and the tracking-code ticket. */
+  --color-frame: #1b2430;
+  --color-on-frame: #ffffff;
+  --color-on-frame-muted: rgb(255 255 255 / 0.78);
+  --color-on-frame-line: rgb(255 255 255 / 0.18);
+  /* Lamplight from the windows on Rynek: the current place on the frame, the tracking code. Never on light. */
+  --color-lamp: #ffc66b;
+  /* Brick of the basilica towers: dictation while it listens, as on the home page. */
+  --color-brick: #9a3f2b;
+
+  /* Typography: General Sans, as on the home page. Hierarchy comes from size, weight and spacing. */
+  --font-sans: 'General Sans', system-ui, sans-serif;
+  --font-display: 'General Sans', system-ui, sans-serif;
   --font-mono: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
 
   --text-label: clamp(0.875rem, 0.86rem + 0.08vw, 1rem);
@@ -72,44 +84,45 @@
   --text-body--line-height: 1.55;
   --text-lead: clamp(1.125rem, 1.04rem + 0.35vw, 1.25rem);
   --text-lead--line-height: 1.5;
-  --text-section-title: clamp(1.375rem, 1.2rem + 0.8vw, 1.75rem);
-  --text-section-title--line-height: 1.2;
-  --text-page-title: clamp(1.75rem, 1.4rem + 1.4vw, 2.25rem);
-  --text-page-title--line-height: 1.1;
+  --text-section-title: clamp(1.5rem, 1.3rem + 0.8vw, 1.875rem);
+  --text-section-title--line-height: 1.15;
+  /* Page headings speak like the home page headline: large, medium weight, tight. */
+  --text-page-title: clamp(2.375rem, 1.6rem + 2.4vw, 3.5rem);
+  --text-page-title--line-height: 1.05;
   --text-value: clamp(2rem, 1.8rem + 0.8vw, 2.5rem);
   --text-value--line-height: 1;
   --text-hero: clamp(2.75rem, 5vw, 4.5rem);
   --text-hero--line-height: 1.05;
   --text-eyebrow: 0.875rem;
   --text-eyebrow--line-height: 1.3;
-  --text-logo: 1.5rem;
+  --text-logo: 1.25rem;
   --text-logo--line-height: 1;
 
   --tracking-ui: 0;
-  --tracking-display: -0.02em;
-  --tracking-hero: -0.02em;
+  --tracking-display: -0.025em;
+  --tracking-hero: -0.04em;
 
   /*
-   * Radius hierarchy: control < button/input < card < panel (the main product surface). Circles are only for
-   * statuses, the switch and avatars; there is no pill radius.
+   * Radius hierarchy, from the home page: frame sheet (shell) > main field (panel) > card > input > control.
+   * Buttons are full pills, like the actions in the home page field.
    */
-  --radius-control: 0.625rem;
-  --radius-button: 0.875rem;
-  --radius-input: 0.875rem;
-  --radius-card: 1rem;
-  --radius-panel: 1.375rem;
-  --radius-shell: 1.375rem;
+  --radius-control: 0.75rem;
+  --radius-button: 999px;
+  --radius-input: 1rem;
+  --radius-card: 1.25rem;
+  --radius-panel: 1.75rem;
+  --radius-shell: 2rem;
 
-  /* Depth: one layer at most, never black, never a glow. */
-  --shadow-contact: 0 1px 0 rgb(17 22 19 / 0.04);
+  /* Depth: one layer at most, tinted with the dusk ink, never a glow. */
+  --shadow-contact: 0 1px 0 rgb(24 32 42 / 0.04);
   --shadow-control: none;
-  --shadow-control-raised: 0 2px 8px -2px rgb(17 22 19 / 0.18);
+  --shadow-control-raised: 0 2px 8px -2px rgb(24 32 42 / 0.18);
   --shadow-primary: inset 0 1px 0 rgb(255 255 255 / 0.14);
-  --shadow-card: 0 12px 32px -16px rgb(17 22 19 / 0.22);
-  --shadow-floating: 0 16px 40px -16px rgb(17 22 19 / 0.3);
+  --shadow-card: 0 18px 40px -24px rgb(24 32 42 / 0.32);
+  --shadow-floating: 0 20px 48px -20px rgb(14 19 26 / 0.38);
   --shadow-on-media: none;
   /* Follows a masked shape (the curved sheet of the immersive detail screen), which box-shadow cannot. */
-  --drop-shadow-sheet: 0 -10px 24px rgb(17 22 19 / 0.1);
+  --drop-shadow-sheet: 0 -10px 24px rgb(24 32 42 / 0.1);
 
   /* No blurred surfaces: values stay for components that still name a blur, at zero. */
   --blur-card: 0px;
@@ -118,10 +131,14 @@
 
   --ease-standard: cubic-bezier(0.2, 0.7, 0.2, 1);
   --ease-spring: cubic-bezier(0.2, 0.7, 0.2, 1);
+  /* The home page curve, for a step of a flow arriving after the person's action. */
+  --ease-emphasis: cubic-bezier(0.16, 1, 0.3, 1);
 
   /* Layout. Spacing uses Tailwind's 0.25rem step; allowed steps: 1 2 3 4 5 6 8 10 12 16 24. */
   --spacing-gutter: 1.25rem;
   --spacing-gutter-section: 2rem;
+  /* The dusk edge around the page sheet, as around the home page photo. */
+  --spacing-frame: clamp(0.5rem, 1.1vw, 1rem);
   --spacing-touch: 2.75rem;
   --spacing-icon-sm: 1rem;
   --spacing-icon: 1.125rem;
@@ -151,45 +168,48 @@
 }
 
 /*
- * Dark theme (DisplayControls → Motyw). Same warm green neutrals, inverted: light ink on dark surfaces,
- * lifted primary so the main action stays obvious. Applied via data-theme on <html>; high contrast below
- * wins when both are on.
+ * Dark theme (DisplayControls → Motyw). The sheet turns to dusk and the frame to night, so the page keeps its
+ * edge. Applied via data-theme on <html>; high contrast below wins when both are on.
+ * Contrast: ink 15:1 and muted 7.4:1 on canvas; white on primary 5.7:1; primary 3:1 against canvas.
  */
 :root[data-theme='dark'] {
   color-scheme: dark;
 
-  --color-canvas: #141816;
-  --color-app: #141816;
-  --color-surface-glass: #1c211e;
-  --color-surface-glass-strong: #252b27;
-  --color-surface-ceramic: #252b27;
-  --color-surface-solid: #1c211e;
-  --color-chip: #3a5248;
-  --color-surface-active: #2f6b5c;
-  --color-primary-hover: #3a7d6c;
-  --color-text-primary: #f0f2ed;
-  --color-text-muted: #a3aaa5;
-  --color-text-faint: #a3aaa5;
-  --color-text-inverse: #fcfcf8;
-  --color-border-subtle: rgb(240 242 237 / 0.14);
-  --color-border-highlight: rgb(240 242 237 / 0.14);
-  --color-border-strong: #8a928c;
-  --color-accent: #9ec9b4;
-  --color-focus: #9ec9b4;
-  --color-success: #6fbf8f;
-  --color-success-soft: #24362d;
+  --color-canvas: #161d26;
+  --color-app: #161d26;
+  --color-surface-glass: #1d2530;
+  --color-surface-glass-strong: #222b37;
+  --color-surface-ceramic: #222b37;
+  --color-surface-solid: #1d2530;
+  --color-chip: #2c4a37;
+  --color-surface-active: #2f7247;
+  --color-primary-hover: #38804f;
+  --color-text-primary: #eef0f2;
+  --color-text-muted: #a4adb8;
+  --color-text-faint: #a4adb8;
+  --color-text-inverse: #ffffff;
+  --color-border-subtle: rgb(238 240 242 / 0.14);
+  --color-border-highlight: rgb(238 240 242 / 0.14);
+  --color-border-strong: #808a96;
+  --color-accent: #9ed1ae;
+  --color-focus: #9ed1ae;
+  --color-success: #79c590;
+  --color-success-soft: #20352a;
   --color-warning: #e0c36a;
   --color-warning-soft: #3a3420;
-  --color-danger: #e07070;
-  --color-danger-soft: rgb(224 112 112 / 0.16);
+  --color-danger: #e98a7d;
+  --color-danger-soft: rgb(233 138 125 / 0.16);
   --color-scrim: rgb(0 0 0 / 0.55);
   --color-scrim-strong: rgb(0 0 0 / 0.78);
-  --color-skeleton: rgb(240 242 237 / 0.1);
-  --color-media: #3a433e;
-  --color-on-media: #fcfcf8;
-  --color-on-media-muted: rgb(252 252 248 / 0.86);
+  --color-skeleton: rgb(238 240 242 / 0.1);
+  --color-media: #2b3440;
+  --color-on-media: #ffffff;
+  --color-on-media-muted: rgb(255 255 255 / 0.86);
   --color-on-media-glass: rgb(0 0 0 / 0.4);
-  --color-on-media-border: rgb(252 252 248 / 0.3);
+  --color-on-media-border: rgb(255 255 255 / 0.3);
+
+  --color-frame: #0d1218;
+  --color-on-frame-line: rgb(255 255 255 / 0.14);
 
   --shadow-contact: 0 1px 0 rgb(0 0 0 / 0.35);
   --shadow-control: none;
@@ -234,6 +254,13 @@
   --color-on-media-glass: rgb(0 0 0 / 0.72);
   --color-on-media-border: #ffffff;
   --color-on-media-muted: #ffffff;
+
+  --color-frame: #000000;
+  --color-on-frame: #ffffff;
+  --color-on-frame-muted: #ffffff;
+  --color-on-frame-line: #ffffff;
+  --color-lamp: #ffffff;
+  --color-brick: #000000;
 
   --shadow-contact: none;
   --shadow-control: none;

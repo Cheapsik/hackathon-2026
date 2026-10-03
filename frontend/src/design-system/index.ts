@@ -4,7 +4,7 @@
  */
 
 // Primitives
-export { AppShell, type AppShellNavItem, type AppShellProps } from './primitives/AppShell'
+export { AppShell, type AppShellNavGroup, type AppShellNavItem, type AppShellProps } from './primitives/AppShell'
 export { AssetField, type AssetFieldProps } from './primitives/AssetField'
 export { Avatar, type AvatarProps } from './primitives/Avatar'
 export { Badge, type BadgeProps } from './primitives/Badge'
@@ -56,6 +56,7 @@ export { PromptCard, type PromptCardProps, type PromptCardVoice } from './patter
 export { RuledList, type RuledListItem, type RuledListProps } from './patterns/RuledList'
 export { SearchAndFilters, type SearchAndFiltersProps } from './patterns/SearchAndFilters'
 export { SettingsGroup, type SettingsGroupProps } from './patterns/SettingsGroup'
+export { StepIndicator, type StepIndicatorProps } from './patterns/StepIndicator'
 export { TransactionPanel, type TransactionPanelProps } from './patterns/TransactionPanel'
 
 // Page templates

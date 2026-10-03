@@ -1,4 +1,4 @@
-import { useId, type ComponentProps, type ReactNode } from 'react'
+import { forwardRef, useId, type ComponentProps, type ReactNode } from 'react'
 import { CircleAlert } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { controlClassName } from './control-styles'
@@ -21,12 +21,24 @@ export type FieldProps = {
   required?: boolean
   /** Extra content on the label row, e.g. a balance or a "Max" action. */
   labelAside?: ReactNode
+  /** `lead`: the label is the content itself, e.g. a question the person answers. */
+  labelSize?: 'default' | 'lead'
   className?: string
   children: (control: FieldControlProps) => ReactNode
 }
 
 /** Label + control + hint + error with ids wired up. Every form control in the app goes through it. */
-export function Field({ label, hideLabel, hint, error, required, labelAside, className, children }: FieldProps) {
+export function Field({
+  label,
+  hideLabel,
+  hint,
+  error,
+  required,
+  labelAside,
+  labelSize = 'default',
+  className,
+  children,
+}: FieldProps) {
   const id = useId()
   const hintId = hint ? `${id}-hint` : undefined
   const errorId = error ? `${id}-error` : undefined
@@ -35,7 +47,14 @@ export function Field({ label, hideLabel, hint, error, required, labelAside, cla
   return (
     <div className={cn('grid gap-2', className)}>
       <div className={cn('flex items-baseline justify-between gap-3', hideLabel && !labelAside && 'sr-only')}>
-        <label htmlFor={id} className={cn('text-label font-medium text-text-primary', hideLabel && 'sr-only')}>
+        <label
+          htmlFor={id}
+          className={cn(
+            'font-medium text-text-primary',
+            labelSize === 'lead' ? 'text-lead text-balance' : 'text-label',
+            hideLabel && 'sr-only',
+          )}
+        >
           {label}
           {required && (
             <span className="text-text-muted">
@@ -93,21 +112,15 @@ export function TextField({
 }
 
 type TextAreaFieldProps = Omit<ComponentProps<'textarea'>, 'id' | 'children'> &
-  Pick<FieldProps, 'label' | 'hideLabel' | 'hint' | 'error' | 'labelAside'> & { fieldClassName?: string }
+  Pick<FieldProps, 'label' | 'hideLabel' | 'hint' | 'error' | 'labelAside' | 'labelSize'> & {
+    fieldClassName?: string
+  }
 
 /** Multi-line text input with its label. */
-export function TextAreaField({
-  label,
-  hideLabel,
-  hint,
-  error,
-  labelAside,
-  required,
-  fieldClassName,
-  className,
-  rows = 5,
-  ...props
-}: TextAreaFieldProps) {
+export const TextAreaField = forwardRef<HTMLTextAreaElement, TextAreaFieldProps>(function TextAreaField(
+  { label, hideLabel, hint, error, labelAside, labelSize, required, fieldClassName, className, rows = 5, ...props },
+  ref,
+) {
   return (
     <Field
       label={label}
@@ -116,11 +129,18 @@ export function TextAreaField({
       error={error}
       required={required}
       labelAside={labelAside}
+      labelSize={labelSize}
       className={fieldClassName}
     >
       {(control) => (
-        <textarea {...control} rows={rows} className={cn(controlClassName, 'resize-y py-3', className)} {...props} />
+        <textarea
+          {...control}
+          ref={ref}
+          rows={rows}
+          className={cn(controlClassName, 'resize-y py-3', className)}
+          {...props}
+        />
       )}
     </Field>
   )
-}
+})

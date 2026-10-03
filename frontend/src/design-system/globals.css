@@ -47,7 +47,7 @@
   h1 {
     font-size: var(--text-page-title);
     line-height: var(--text-page-title--line-height);
-    letter-spacing: var(--tracking-display);
+    letter-spacing: var(--tracking-hero);
   }
 
   h2 {
@@ -207,6 +207,16 @@
   box-shadow: var(--shadow-floating);
 }
 
+/*
+ * Content on the dusk frame (header, footer, the tracking-code ticket). The green focus ring is too dark
+ * against dusk, so focus turns to lamplight there (10:1).
+ */
+@utility on-frame {
+  color: var(--color-on-frame);
+  background-color: var(--color-frame);
+  --color-focus: var(--color-lamp);
+}
+
 /* Controls laid over a photo or the media fallback (hero controls, category orbit). */
 @utility surface-on-media {
   color: var(--color-on-media);
@@ -256,6 +266,26 @@
   );
   background-size: 200% 100%;
   animation: var(--animate-shimmer);
+}
+
+/*
+ * Content with a side column (the steps, optional details, the tracking-code ticket): one column until the nearest
+ * @container is wide enough, then the side column at a fixed width. Every step of a flow uses it, so the side
+ * column stays on the same line from step to step. Children place themselves with @min-[56rem]: variants.
+ */
+@utility split-aside {
+  display: grid;
+  gap: 2rem;
+
+  @container (min-width: 56rem) {
+    grid-template-columns: minmax(0, 1fr) 20rem;
+    column-gap: 3rem;
+  }
+
+  @container (min-width: 72rem) {
+    grid-template-columns: minmax(0, 1fr) 22.5rem;
+    column-gap: 4rem;
+  }
 }
 
 @utility tabular {
