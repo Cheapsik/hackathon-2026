@@ -13,7 +13,7 @@ Nie robimy wycieczki po funkcjach. Pokazujemy jedną historię, która przechodz
 
 Dzięki temu juror widzi w działaniu dopasowywanie problemów do rozwiązań (obowiązkowe, 10% oceny) i kolejne moduły (+5% za każdy), zamiast słyszeć o nich z listy.
 
-**Forma:** nagranie ekranu, krótkie napisy i głos. Nikt nie występuje przed kamerą. Film ma się sam bronić na każdym etapie. Najpierw powstaje z napisami i głosem syntetycznym, a jeśli zdążymy, podmieniamy głos na prawdziwego lektora. Napisy pomagają też w ocenie dostępności (WCAG).
+**Forma:** nagranie ekranu, krótkie napisy i głos. Nikt nie występuje przed kamerą. Głos jest syntetyczny. Prawdziwego lektora można podłożyć w każdej chwili, bez ponownego nagrywania obrazu. Napisy pomagają też w ocenie dostępności (WCAG).
 
 ## Scenariusz
 
@@ -24,8 +24,8 @@ Lektor mówi około 330 słów, co z pauzami daje 3 minuty.
 | **0:00–0:20** Hak | Pusta strona główna, kursor miga w polu „Opisz, co nie działa” | „Anna mieszka w Krakowie. Jej mama ma 82 lata i mieszka sama pod Gorlicami. Autobus jeździ dwa razy dziennie, do przychodni jest kilka kilometrów. Anna boi się, że jak coś stanie się w nocy, nikt się nie dowie. Gdzie z tym pójść? Do gminy? Do MOPS-u? Do internetu?” |
 | **0:20–0:50** Opisz problem | Anna klika mikrofon i mówi problem. Pojawiają się 2–3 pytania doprecyzowujące | „W Castorze wystarczy powiedzieć, co nie działa. Bez konta i bez formularzy, nawet głosem. Castor dopyta o dwie, trzy rzeczy i po chwili…” |
 | **0:50–1:20** Dopasowanie | Lista innowacji z Biblioteki ROPS z wyjaśnieniem, dlaczego pasują. Na końcu kod zgłoszenia | „…pokazuje sprawdzone rozwiązania z Biblioteki Innowacji ROPS: prawie 200 pomysłów, które już zadziałały w Małopolsce. Mówi też wprost, dlaczego pasują. Anna dostaje kod, którym sprawdzi, co dzieje się z jej zgłoszeniem.” |
-| **1:20–1:55** Gmina | Zalogowana urzędniczka z Bobowej otwiera innowację, potem kartę dopasowania. Gmina podświetla się na mapie, obok tabela „wymaganie a stan gminy” i lista „bez zmian / dostosować / brakuje”. Jedno pytanie do asystenta | „Urzędniczka z Bobowej nie musi wierzyć na słowo. Castor zestawia wymagania innowacji z danymi statystycznymi jej gminy. Mówi, co zostaje bez zmian, co trzeba dostosować, czego brakuje i kto mógłby to prowadzić. O resztę dopyta asystenta AI.” |
-| **1:55–2:25** ROPS | Panel admina: skrzynka zgłoszeń, potem Radar: mapa zgłoszeń, trend i białe plamy | „ROPS widzi zgłoszenia na bieżąco i ma radar potrzeb regionu: gdzie problemów przybywa i, co najważniejsze, gdzie są białe plamy. To problemy, na które w Bibliotece nie ma jeszcze rozwiązania.” |
+| **1:20–1:55** Gmina | Zalogowana urzędniczka z Bobowej otwiera innowację, potem kartę dopasowania. Gmina podświetla się na mapie, obok tabela „wymaganie a stan gminy” i lista „bez zmian / dostosować / brakuje”. Jedno pytanie do asystenta | „Urzędniczka z Bobowej nie musi wierzyć na słowo. Castor zestawia wymagania innowacji z danymi statystycznymi jej gminy. Mówi, co zostaje bez zmian, co trzeba dostosować, czego brakuje i kto mógłby to prowadzić. O resztę zapyta asystenta.” |
+| **1:55–2:25** ROPS | Panel admina: skrzynka zgłoszeń, potem Radar: mapa zgłoszeń, trend i białe plamy | „A Regionalny Ośrodek Polityki Społecznej? Widzi zgłoszenia na bieżąco i ma radar potrzeb regionu: gdzie problemów przybywa i, co najważniejsze, gdzie są białe plamy. To problemy, na które w Bibliotece nie ma jeszcze rozwiązania.” |
 | **2:25–2:45** Pętla | Szybki montaż: nowy pomysł w Szkółce („Czy to już istnieje?”), wniosek do otwartego naboru, Poletko z testerami, wątek z ekspertem | „Tu koło się zamyka. Białą plamę może wypełnić pomysł mieszkańca albo organizacji. Castor sprawdzi, czy podobny już istnieje, pomoże napisać wniosek do naboru, znajdzie testerów i eksperta.” |
 | **2:45–3:00** Zamknięcie | Logo, link do demo, loginy do kont demo | „Castor. Od problemu do rozwiązania, które już działa, w kilka minut, a nie miesięcy. Sprawdźcie sami.” |
 
@@ -52,61 +52,29 @@ Sam obraz musi mówić więcej niż przy lektorze:
 
 ### Ekrany i konta
 
-Konta pochodzą z treści demo ([data/seed/demo_content.json](../data/seed/demo_content.json)). Hasło to `Seed__DemoPassword` z `.env` na serwerze; nie wpisujemy go do repozytorium.
+Konta pochodzą z treści demo ([data/seed/demo_content.json](../data/seed/demo_content.json)). Do filmu loguje się lokalnie hasłem `castor-demo` (albo `FILM_PASSWORD`). Hasło do kont na produkcji to `Seed__DemoPassword` z `.env` na serwerze i nie trafia do repozytorium.
 
 | Scena | Adres | Konto |
 |---|---|---|
 | Opisz problem, dopasowanie | `/`, potem `/opisz-problem` | bez logowania |
 | Gmina | `/innowacje/:id`, sekcja karty dopasowania | `gmina.demo@example.com` (Bobowa) |
 | ROPS | `/admin/zgloszenia`, `/admin/radar` | `rops.demo@example.com` |
-| Pętla | `/pomysly/nowy`, `/wnioski/:id`, `/testy`, `/watki/:id` | `fundacja.demo@example.com`, `ekspert.demo@example.com` |
+| Pętla | `/pomysly`, `/testy`, `/watki/:id` | `fundacja.demo@example.com`, `mieszkanka.demo@example.com`, `ekspert.demo@example.com` |
 
-## Jak nagrać
+## Jak powstaje
 
-**Montaż (darmowy Clipchamp, wbudowany w Windows).** Robimy go w trzech krokach. Po każdym mamy film, który można wysłać.
+Film nagrywa się sam, bez ręcznego klikania. Wszystko jest w [tools/film](../tools/film/README.md):
 
-1. **Obraz i napisy.**
-   - Nagrywamy każdą scenę osobno (sposób poniżej).
-   - Układamy sceny według czasów ze scenariusza, z 1–2 sekundami zapasu na scenę na późniejszy głos.
-   - Wycinamy czekanie na LLM i dodajemy zbliżenia na liczby i na „dlaczego pasuje”.
-   - Wstawiamy napisy z tabeli wyżej i cichą muzykę.
-2. **Głos syntetyczny.**
-   - W Clipchamp funkcja zamiany tekstu na mowę ma darmowe polskie głosy. Wklejamy do niej tekst lektora, scena po scenie, każdą scenę jako osobny klip.
-   - Muzykę ściszamy pod głosem.
-   - Jeśli głos nie mieści się w scenie, skracamy jego tekst, a nie obraz.
-3. **Prawdziwy lektor, jeśli zdążymy.**
-   - Jedna osoba nagrywa scena po scenie, oglądając gotowy film, żeby trafić w czasy. Nagrywa telefonem w cichym, małym pomieszczeniu; szafa z ubraniami tłumi pogłos lepiej niż pokój.
-   - Podmieniamy tylko ścieżkę głosu. Obraz i napisy zostają.
-   - Jeśli zdanie się nie mieści, przesuwamy cięcie o sekundę albo dwie.
+1. **Obraz:** Playwright przeklikuje sceny w przeglądarce na lokalnej kopii aplikacji z treściami demo.
+2. **Głos:** syntetyczny polski głos neuronowy (Zofia) czyta tekst lektora.
+3. **Montaż:** ffmpeg przycina i przyspiesza sceny pod długość głosu, nakłada napisy, dodaje planszę końcową i robi plik `.srt`.
 
-Na koniec eksportujemy MP4 w 1080p i sprawdzamy, czy film trwa najwyżej 3:00.
+Nagrywamy lokalnie z LLM-placeholderem. Film ma pokazać, jak aplikacja wygląda i działa, a nie jakość odpowiedzi modelu, więc sztuczne teksty AI nam nie przeszkadzają. Dzięki temu nagranie nie zależy od produkcji ani od klucza OpenAI.
 
-**Obraz: automatycznie w Playwright, bez ręcznego klikania.**
+Po zmianie wyglądu, tekstu albo głosu wystarczy uruchomić narzędzia jeszcze raz. W README jest opisane, jak:
+- nagrać ponownie;
+- zmienić tekst lub głos;
+- podłożyć własnego lektora;
+- dodać scenę.
 
-- Skrypty przechodzą każdą scenę same:
-  - rozdzielczość 1920×1080, powiększenie przeglądarki 125–150%, żeby tekst był czytelny na filmie;
-  - spokojne tempo i tekst pisany znak po znaku;
-  - bez paska zakładek i rozszerzeń.
-- Po każdej zmianie wyglądu wystarczy uruchomić je jeszcze raz.
-- Dyktowania głosem nie da się zautomatyzować. W scenie 2 tekst wpisuje się jak pisany ręcznie, a przycisk mikrofonu pokazujemy jako zbliżenie.
-
-## Co musi być gotowe przed nagraniem
-
-1. **Wygląd karty dopasowania (Łukasz).** [FitAssessmentCard.tsx](../frontend/src/features/fit-assessments/FitAssessmentCard.tsx) to dziś gołe nagłówki i tabela bez stylów z design systemu. To kluczowa scena filmu, więc ma pierwszeństwo przed resztą wyglądu.
-2. **Treści demo w środowisku, które nagrywamy.**
-   - Produkcja potrzebuje seedu (Mariusz).
-   - Lokalnie wystarczy `Seed__DemoContent=true`, ale wtedy film nie pokazuje produkcji.
-3. **Sprawdzone dopasowanie.** Tekst ze sceny 2 puszczamy wcześniej przez prawdziwy LLM i sprawdzamy, czy wraca coś trafnego, np. teleopieka albo kody QR dla seniorów. Jeśli nie, zmieniamy tekst.
-4. **Genomy innowacji wygenerowane, zanim ktokolwiek otworzy zgłoszenia demo.** Zgłoszenie otwarte przed wygenerowaniem genomów zostaje bez dopasowań na stałe.
-
-## Do zrobienia
-
-- [ ] Zatwierdzić scenariusz, tekst lektora i napisy.
-- [ ] Ustalić, czy nagrywamy produkcję, czy wersję lokalną.
-- [ ] Ostylować kartę dopasowania.
-- [ ] Napisać skrypty Playwright dla scen 2–6.
-- [ ] Przygotować plik napisów `.srt` z krótkiej wersji napisów.
-- [ ] Krok 1 montażu: obraz i napisy.
-- [ ] Krok 2 montażu: głos syntetyczny.
-- [ ] Krok 3 montażu (opcjonalnie): nagrać lektora i podmienić głos.
-- [ ] Wyeksportować MP4.
+Muzykę dokładamy na końcu, w Clipchampie.

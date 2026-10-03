@@ -1,0 +1,51 @@
+{
+  "voice": "pl-PL-ZofiaNeural",
+  "segments": [
+    {
+      "id": "A",
+      "video": [{ "file": "s1_hook", "from": 0, "to": "end" }],
+      "narration": "Anna mieszka w Krakowie. Jej mama ma osiemdziesiąt dwa lata i mieszka sama pod Gorlicami. Autobus jeździ dwa razy dziennie, do przychodni jest kilka kilometrów. Anna boi się, że jak coś stanie się w nocy, nikt się nie dowie. Gdzie z tym pójść? Do gminy? Do ośrodka pomocy? Do internetu?",
+      "captions": ["Mama Anny ma 82 lata.", "Mieszka sama na wsi pod Gorlicami.", "Autobus dwa razy dziennie. Do przychodni kilka kilometrów.", "Gdzie z tym pójść?"]
+    },
+    {
+      "id": "B",
+      "video": [{ "file": "s23_describe", "from": 0, "to": "results" }],
+      "narration": "W Castorze wystarczy powiedzieć, co nie działa. Bez konta i bez formularzy, nawet głosem. Castor dopyta o dwie, trzy rzeczy i po chwili...",
+      "captions": ["Opisz problem własnymi słowami.", "Bez konta. Bez formularzy. Nawet głosem.", "Castor dopyta o 2–3 rzeczy."]
+    },
+    {
+      "id": "C",
+      "video": [{ "file": "s23_describe", "from": "results", "to": "end" }],
+      "narration": "pokazuje sprawdzone rozwiązania z Biblioteki Innowacji ROPS: prawie dwieście pomysłów, które już zadziałały w Małopolsce. Mówi też wprost, dlaczego pasują. Anna dostaje kod, którym sprawdzi, co dzieje się z jej zgłoszeniem.",
+      "captions": ["Sprawdzone rozwiązania z Biblioteki Innowacji ROPS.", "Prawie 200 innowacji, które działają w Małopolsce.", "Z wyjaśnieniem, dlaczego pasują.", "Kod zgłoszenia, żeby śledzić, co się dzieje."]
+    },
+    {
+      "id": "D",
+      "video": [{ "file": "s4_gmina", "from": 0, "to": "end" }],
+      "narration": "Urzędniczka z Bobowej nie musi wierzyć na słowo. Castor zestawia wymagania innowacji z danymi statystycznymi jej gminy. Mówi, co zostaje bez zmian, co trzeba dostosować, czego brakuje i kto mógłby to prowadzić. O resztę zapyta asystenta.",
+      "captions": ["Gmina sprawdza na swoich danych, czy to zadziała.", "Co zostaje bez zmian. Co dostosować. Czego brakuje.", "Asystent AI odpowie na resztę pytań."]
+    },
+    {
+      "id": "E",
+      "video": [{ "file": "s5_rops", "from": 0, "to": "end" }],
+      "narration": "A Regionalny Ośrodek Polityki Społecznej? Widzi zgłoszenia na bieżąco i ma radar potrzeb regionu: gdzie problemów przybywa i, co najważniejsze, gdzie są białe plamy. To problemy, na które w Bibliotece nie ma jeszcze rozwiązania.",
+      "captions": ["ROPS widzi zgłoszenia na bieżąco.", "Radar potrzeb regionu.", "Białe plamy: problemy bez gotowego rozwiązania."]
+    },
+    {
+      "id": "F",
+      "video": [
+        { "file": "s6a_ideas", "from": 0, "to": "end" },
+        { "file": "s6b_tests", "from": 0, "to": "end" },
+        { "file": "s6c_expert", "from": 0, "to": "end" }
+      ],
+      "narration": "I tu koło się zamyka. Białą plamę może wypełnić pomysł mieszkańca albo organizacji. Castor sprawdzi, czy podobny już istnieje, pomoże napisać wniosek do naboru, znajdzie testerów i eksperta.",
+      "captions": ["Pomysł mieszkańca może wypełnić białą plamę.", "Castor sprawdzi, czy podobny już istnieje.", "Pomoże napisać wniosek do naboru.", "Znajdzie testerów i eksperta."]
+    },
+    {
+      "id": "G",
+      "video": [{ "still": "end_card" }],
+      "narration": "Castor. Od problemu do rozwiązania, które już działa. W kilka minut, a nie miesięcy. Sprawdźcie sami.",
+      "captions": []
+    }
+  ]
+}

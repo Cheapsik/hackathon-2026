@@ -1,0 +1,13 @@
+{
+  "name": "castor-film",
+  "private": true,
+  "type": "module",
+  "description": "Records the Castor presentation film: browser scenes, synthetic voice, captions and montage.",
+  "scripts": {
+    "scenes": "node scenes.mjs",
+    "overlays": "node render.mjs"
+  },
+  "dependencies": {
+    "playwright": "1.63.0"
+  }
+}

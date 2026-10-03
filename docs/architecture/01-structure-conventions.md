@@ -20,7 +20,8 @@
 │   ├── openapi/               Castor.Api.json z buildu — wejście generatora klienta frontendu
 │   └── src/Castor.Api/
 ├── frontend/                  Vite + React + TS — patrz 04-frontend.md
-└── data/                      scrapers/ (Python), seed/ (JSON), geo/ (GeoJSON gmin)
+├── data/                      scrapers/ (Python), seed/ (JSON), geo/ (GeoJSON gmin)
+└── tools/film/                automatyczne nagranie filmu prezentującego (Playwright, głos, ffmpeg) — patrz jego README
 ```
 
 ## Jeden projekt — monolit
