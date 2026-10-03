@@ -159,8 +159,14 @@ public sealed class OpenAiLlmClient : ILlmClient
 
                 if (!response.IsSuccessStatusCode)
                 {
+                    string errorJson = await response.Content.ReadAsStringAsync(cancellationToken);
+                    ErrorDetails error = ParseError(errorJson);
                     throw new HttpRequestException(
-                        $"OpenAI returned HTTP {(int)response.StatusCode}. Request id: {requestId ?? "unavailable"}.",
+                        $"OpenAI returned HTTP {(int)response.StatusCode}. "
+                        + $"Error code: {error.Code ?? "unavailable"}. "
+                        + $"Parameter: {error.Parameter ?? "unavailable"}. "
+                        + $"Message: {error.Message ?? "unavailable"}. "
+                        + $"Request id: {requestId ?? "unavailable"}.",
                         null,
                         response.StatusCode);
                 }
@@ -241,6 +247,41 @@ public sealed class OpenAiLlmClient : ILlmClient
         return new CompletionResult(text.ToString(), requestId, inputTokens, outputTokens);
     }
 
+    private static ErrorDetails ParseError(string responseJson)
+    {
+        try
+        {
+            using JsonDocument document = JsonDocument.Parse(responseJson);
+            JsonElement root = document.RootElement;
+            if (!root.TryGetProperty("error", out JsonElement error) || error.ValueKind != JsonValueKind.Object)
+            {
+                return new ErrorDetails(null, null, null);
+            }
+
+            string? code = ReadString(error, "code");
+            string? parameter = ReadString(error, "param");
+            string? message = ReadString(error, "message");
+            string? safeMessage = LimitErrorMessage(message);
+            return new ErrorDetails(code, parameter, safeMessage);
+        }
+        catch (JsonException)
+        {
+            return new ErrorDetails(null, null, null);
+        }
+    }
+
+    private static string? LimitErrorMessage(string? message)
+    {
+        if (string.IsNullOrWhiteSpace(message))
+        {
+            return null;
+        }
+
+        string withoutCarriageReturns = message.Replace('\r', ' ');
+        string singleLine = withoutCarriageReturns.Replace('\n', ' ');
+        return singleLine.Length <= 500 ? singleLine : singleLine[..500];
+    }
+
     private static string? ReadString(JsonElement element, string propertyName)
     {
         if (!element.TryGetProperty(propertyName, out JsonElement property)
@@ -301,6 +342,12 @@ public sealed class OpenAiLlmClient : ILlmClient
             TypeInfoResolver = new DefaultJsonTypeInfoResolver(),
         };
         JsonNode schema = schemaOptions.GetJsonSchemaAsNode(typeof(TResult));
+        if (schema is not JsonObject root)
+        {
+            throw new InvalidOperationException($"The JSON schema for {typeof(TResult).Name} must be an object.");
+        }
+
+        root["type"] = "object";
         MakeObjectsStrict(schema);
         return schema;
     }
@@ -345,4 +392,6 @@ public sealed class OpenAiLlmClient : ILlmClient
     }
 
     private sealed record CompletionResult(string Text, string? RequestId, int? InputTokens, int? OutputTokens);
+
+    private sealed record ErrorDetails(string? Code, string? Parameter, string? Message);
 }
