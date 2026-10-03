@@ -6,7 +6,7 @@ namespace Castor.Api.Features.Municipalities;
 [ApiController]
 [AllowAnonymous]
 [Route("municipalities")]
-public sealed class MunicipalitiesController(ListMunicipalitiesHandler list) : ControllerBase
+public sealed class MunicipalitiesController(ListMunicipalitiesHandler list, GetMunicipalityProfileHandler profile) : ControllerBase
 {
     [HttpGet]
     public Task<IReadOnlyList<MunicipalityResponse>> Get(
@@ -14,5 +14,14 @@ public sealed class MunicipalitiesController(ListMunicipalitiesHandler list) : C
         CancellationToken cancellationToken)
     {
         return list.HandleAsync(request, cancellationToken);
+    }
+
+    [HttpGet("{teryt}/profile")]
+    public Task<MunicipalityProfileResponse> Profile(
+        string teryt,
+        [FromQuery] GetMunicipalityProfileRequest request,
+        CancellationToken cancellationToken)
+    {
+        return profile.HandleAsync(teryt, request, cancellationToken);
     }
 }

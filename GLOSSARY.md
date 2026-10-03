@@ -28,7 +28,11 @@ _Avoid_: mentor (jako osobna rola), doradca
 Rola koordynatora platformy z dostępem do panelu, trendów i zatwierdzania treści.
 _Avoid_: ogrodnik, moderator
 
-**Persona**:
+**Plain text** (tekst „Prościej”):
+Opis innowacji albo definicja obszaru przepisane prostymi zdaniami. Gość widzi tekst dopiero po zatwierdzeniu przez administratora.
+_Avoid_: streszczenie, uproszczenie
+
+**Persona** (persona):
 Fikcyjna postać z Mapy Wyzwań; służy jako użytkownik demonstracyjny i przypadek do sprawdzania trafności.
 _Avoid_: użytkownik testowy
 

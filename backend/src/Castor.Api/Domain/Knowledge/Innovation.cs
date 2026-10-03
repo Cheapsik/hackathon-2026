@@ -10,6 +10,8 @@ public sealed class Innovation
 
     public const int TitleMaxLength = 300;
 
+    public const int PlainTextMaxLength = 4000;
+
     private Innovation()
     {
     }
@@ -73,6 +75,11 @@ public sealed class Innovation
     public Guid? SourceIdeaId { get; private set; }
 
     public Idea? SourceIdea { get; private set; }
+
+    /// <summary>The card rewritten in plain language ("Prościej"). Visitors see it only after an administrator approves it.</summary>
+    public string? PlainText { get; private set; }
+
+    public PlainTextStatus? PlainTextStatus { get; private set; }
 
     public DateTimeOffset CreatedAt { get; private set; }
 
@@ -233,7 +240,53 @@ public sealed class Innovation
         CardPdfUrl = NullIfBlank(links.CardPdfUrl);
         TermsUrl = NullIfBlank(links.TermsUrl);
         Stage = stage;
+        DropPlainText();
         UpdatedAt = changedAt;
+    }
+
+    /// <summary>The six sections, as the plain-language rewrite reads them.</summary>
+    public string DescribeForPlainText()
+    {
+        return string.Join(
+            "\n\n",
+            new[] { ShortDescription, Solution, Problems, TargetGroup, Beneficiaries, Evidence, Organization }
+                .Where(part => !string.IsNullOrWhiteSpace(part)));
+    }
+
+    /// <summary>Stores a new plain-language draft. Approving it is a separate step, so a rewrite is never public by itself.</summary>
+    public void RecordPlainText(string? text, DateTimeOffset changedAt)
+    {
+        if (string.IsNullOrWhiteSpace(text))
+        {
+            throw new DomainException("The plain-language text is empty.");
+        }
+
+        string trimmed = text.Trim();
+        if (trimmed.Length > PlainTextMaxLength)
+        {
+            throw new DomainException($"The plain-language text has at most {PlainTextMaxLength} characters.");
+        }
+
+        PlainText = trimmed;
+        PlainTextStatus = Domain.PlainTextStatus.DRAFT;
+        UpdatedAt = changedAt;
+    }
+
+    public void ApprovePlainText(DateTimeOffset changedAt)
+    {
+        if (PlainText is null)
+        {
+            throw new DomainException("There is no plain-language text to approve.", StatusCodes.Status409Conflict);
+        }
+
+        PlainTextStatus = Domain.PlainTextStatus.APPROVED;
+        UpdatedAt = changedAt;
+    }
+
+    private void DropPlainText()
+    {
+        PlainText = null;
+        PlainTextStatus = null;
     }
 
     private static string? NullIfBlank(string? text)

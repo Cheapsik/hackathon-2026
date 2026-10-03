@@ -23,8 +23,7 @@ Kolumna `embedding vector(N)` genomu jeszcze nie istnieje — dojdzie migracją 
 
 ## Moduł VI — co zostało
 
-- **Wykres i mapa radaru** (SPEC §7 VI): dane są w tabelach; mapa czeka na GeoJSON gmin (jak mini-mapa w VII).
-- **„Prościej”** — zatwierdzanie tekstów łatwych do czytania dojdzie z trybem „Prościej” w module II.
+- **Wykres radaru** (SPEC §7 VI): liczby są w tabelach, a zgłoszenia widać też na mapie gmin. Wykresu słupkowego nie ma.
 - **Dodanie innowacji z linku do karty ROPS albo z PDF** (AI wypełnia pola) — teraz tylko ręczny formularz.
 - **Import raportów do RAG i przeliczanie embeddingów** — czeka na decyzję o embeddingach.
 - **Fiszki w skrzynce zgłoszeń**: pomysły mają osobną listę „Pomysły z Kreatora” (odświeżaną przez `IdeaSubmitted`), bez klasyfikacji AI i pilności jak zgłoszenia.
@@ -35,9 +34,14 @@ Kolumna `embedding vector(N)` genomu jeszcze nie istnieje — dojdzie migracją 
 
 ## Moduł VII — co zostało
 
-- **Mini-mapa karty dopasowania** (SPEC §7 VII): potrzebny GeoJSON gmin Małopolski w `data/geo/` (np. z PRG GUGiK) i Leaflet — dojdzie z mapą w module II. Karta ma już tabelę z tymi samymi danymi.
 - **Gminy, które już wdrożyły innowację**: brak danych źródłowych; pole karty czeka na nie.
 - **Wiele lat danych**: skrypt bierze ostatni rok każdego wskaźnika; trendy (moduł VI, II) potrzebują wcześniejszych lat z formularza Obserwatora.
+
+## Moduł II — co zostało
+
+- **Pytania do raportów** (SPEC §6.7): brak tekstów raportów w seedzie i brak embeddingów. Strona materiałów linkuje bazę raportów ROPS.
+- **Dodanie innowacji z linku do karty ROPS albo z PDF** — nadal tylko ręczny formularz.
+- **Wykres radaru** — jest mapa i tabele, nie ma wykresu.
 
 ## Moduł III — co zostało
 

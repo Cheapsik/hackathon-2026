@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { CircleHelp, Files, House, Lightbulb, MessageSquareText, MessagesSquare, Search, ShieldCheck } from 'lucide-react'
+import { BookOpen, CircleHelp, Files, House, Library, Lightbulb, Map, MessageSquareText, MessagesSquare, Search, ShieldCheck } from 'lucide-react'
 import { Link, Outlet, useLocation } from 'react-router'
 import type { SessionResponse } from '@/api/generated/castor'
 import { AccountLinks } from '@/components/layout/AccountLinks'
@@ -14,6 +14,9 @@ const navigation: AppShellNavItem[] = [
   { to: '/opisz-problem', label: 'Opisz problem', icon: MessageSquareText },
   { to: '/sledz', label: 'Śledź zgłoszenie', icon: Search },
   { to: '/moje-zgloszenia', label: 'Moje zgłoszenia', icon: Files },
+  { to: '/obszary', label: 'Atlas wyzwań', icon: Map },
+  { to: '/biblioteka', label: 'Biblioteka innowacji', icon: Library },
+  { to: '/materialy', label: 'Materiały', icon: BookOpen },
 ]
 
 /** Threads need an account; a report sent without one has its thread on "Śledź zgłoszenie". */

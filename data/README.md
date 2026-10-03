@@ -28,6 +28,8 @@ python -m venv .venv
 - Odpowiedzi są zapamiętywane w `data/raw/` (poza gitem); ponowne uruchomienie nie pobiera ich drugi raz. Żeby pobrać świeże dane, usuń `data/raw/http/`.
 - Certyfikaty TLS pochodzą z magazynu systemu (`truststore`), więc skrypty działają za firmowym proxy bez wyłączania weryfikacji.
 
+Granice gmin dla mapy Atlasu leżą w `frontend/public/geo/gminy-malopolskie.geojson`: gminy Małopolski wycięte z publicznego pliku granic PRG i uproszczone (założenie A-36).
+
 ## Dane osobowe
 
 Z sekcji „Autorzy” karty innowacji zapisujemy tylko nazwy instytucji (fundacja, stowarzyszenie, gmina, uczelnia…). Linia bez takiej nazwy jest traktowana jako imię i nazwisko i pomijana, a imię z nazwiskiem w linii instytucji jest wycinane. Persony z Mapy Wyzwań są fikcyjne.

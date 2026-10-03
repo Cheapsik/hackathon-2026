@@ -268,7 +268,7 @@ Wyszukiwanie pełnotekstowe (6.4 krok 2): konfiguracja `simple` + `unaccent` + `
 - **Ekrany:** strona główna z 8 obszarami wyzwań; strona obszaru (definicja, kluczowe wyzwania, persona, dane mojej gminy z Obserwatora vs średnia regionu, pasujące innowacje, raporty); Biblioteka (filtry: obszar, kategoria, grupa docelowa, etap; widok kart z miniaturą filmu); karta innowacji (6 sekcji, film osadzony, materiały, przełącznik „Prościej”); materiały edukacyjne (4 publikacje + Canvas); pytania do raportów (6.7).
 - **Mapa wyzwań gminy:** Leaflet, kartogram wybranego wskaźnika, obok tabela.
 - **Admin:** agregacja potrzeb ze zgłoszeń wg obszaru, gminy i czasu (trend), **tylko dla** `ADMIN`.
-- **API:** `GET /api/challenge-areas`, `GET /api/challenge-areas/{code}`, `GET /api/innovations?…`, `GET /api/innovations/{id}`, `GET /api/municipalities/{teryt}/profile`, `GET /api/indicators/{id}/values?year=`, `POST /api/research-reports/ask`.
+- **API:** `GET /api/challenge-areas`, `GET /api/challenge-areas/{code}` (definicja, persony, zatwierdzony tekst „Prościej”), `GET /api/innovations?search&challengeArea&category&stage&targetGroup`, `GET /api/innovations/{id}` (z zatwierdzonym tekstem „Prościej”), `GET /api/municipalities/{teryt}/profile?challengeArea=`, `GET /api/indicators?challengeArea=`, `GET /api/indicators/{id}/values`. Admin: `GET/POST/PUT /api/admin/innovations/{id}/plain-text`, `POST …/plain-text/approve` i to samo pod `/api/admin/challenge-areas/{code}/plain-text`. `POST /api/research-reports/ask` czeka na embeddingi.
 - **Makieta:** bez pytań do raportów, reszta na seedzie.
 
 
@@ -474,3 +474,12 @@ Moduł III — 2026-10-03:
 | D-48 | Sprawdzanie duplikatów przy wysłaniu i na żądanie, z odciskiem fiszki: wynik dla niezmienionej fiszki nie liczy się drugi raz | §6.6 |
 | D-49 | `IdeaSubmitted` trafia do `admins` i `experts:{obszar}` każdego obszaru pomysłu | §7 V |
 | D-50 | Jeden szkic wniosku na parę (pomysł, nabór); ponowne „Przygotuj wniosek” zwraca istniejący | §7 III |
+
+Moduł II — 2026-10-03:
+
+| # | Decyzja | Gdzie |
+|---|---|---|
+| D-51 | Strona główna zostaje „Opisz problem”. Atlas to osobne strony: obszary, biblioteka, mapa, materiały | §7 II |
+| D-52 | „Prościej” to jeden tekst na innowację (sekcje karty) i jeden na obszar (definicja). Szkic do zatwierdzenia przez admina; zmiana karty innowacji kasuje tekst | §6.8 |
+| D-53 | Mapa: uproszczone granice gmin Małopolski z PRG, bez podkładu kafelkowego; kartogram wskaźnika, mini-mapa na karcie dopasowania, mapa zgłoszeń w radarze. Obok zawsze tabela | §7 II, VI, VII |
+| D-54 | Pytania do raportów (RAG) zostają odłożone do decyzji o embeddingach. Materiały edukacyjne to odnośniki do stron ROPS, bez kopiowania PDF | §6.7, §7 II, [TODO](TODO.md) |

@@ -1,10 +1,11 @@
-import { useState, type FormEvent } from 'react'
+import { useMemo, useState, type FormEvent } from 'react'
 import { useNavigate } from 'react-router'
 import { useGetApiAdminRadar, usePostApiAdminGrantCallsDraft, useGetApiChallengeAreas } from '@/api/generated/castor'
+import { GminaMap } from '@/features/atlas/GminaMap'
 import { usePageTitle } from '@/hooks/use-page-title'
 import { errorMessage } from '@/lib/error-message'
 
-/** "Radar": trends of needs by area, gmina and month, and blank spots with "Szkic naboru". Tables, no charts yet. */
+/** "Radar": trends of needs by area, gmina and month, a map of reports, and blank spots with "Szkic naboru". */
 export function RadarPage() {
   usePageTitle('Radar potrzeb')
   const [period, setPeriod] = useState<{ from?: string; to?: string }>({})
@@ -15,6 +16,13 @@ export function RadarPage() {
   const draft = usePostApiAdminGrantCallsDraft()
   const navigate = useNavigate()
   const data = radar.data?.data
+  const reportsByTeryt = useMemo(() => {
+    const map = new Map<string, number>()
+    for (const need of data?.byMunicipality ?? []) {
+      map.set(need.teryt, Number(need.reports))
+    }
+    return map
+  }, [data])
   const areaName = (code: string) => areas.data?.data.find((area) => area.code === code)?.name ?? code
 
   function submit(event: FormEvent<HTMLFormElement>) {
@@ -114,6 +122,10 @@ export function RadarPage() {
               </tbody>
             </table>
           )}
+
+          <h2>Mapa zgłoszeń</h2>
+          <p>Ciemniejszy kolor oznacza więcej zgłoszeń. Te same liczby są w tabeli.</p>
+          <GminaMap values={reportsByTeryt} label="Liczba zgłoszeń w gminach Małopolski. Liczby są w tabeli poniżej." />
 
           <table>
             <caption>Gminy z największą liczbą zgłoszeń</caption>

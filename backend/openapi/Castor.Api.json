@@ -980,6 +980,52 @@
         }
       }
     },
+    "/api/municipalities/{teryt}/profile": {
+      "get": {
+        "tags": [
+          "Municipalities"
+        ],
+        "parameters": [
+          {
+            "name": "teryt",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ChallengeArea",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/MunicipalityProfileResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MunicipalityProfileResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MunicipalityProfileResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/admin/innovations": {
       "post": {
         "tags": [
@@ -1089,6 +1135,182 @@
         }
       }
     },
+    "/api/admin/innovations/{innovationId}/plain-text": {
+      "get": {
+        "tags": [
+          "AdminInnovations"
+        ],
+        "parameters": [
+          {
+            "name": "innovationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlainTextResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlainTextResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlainTextResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "AdminInnovations"
+        ],
+        "parameters": [
+          {
+            "name": "innovationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlainTextResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlainTextResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlainTextResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "AdminInnovations"
+        ],
+        "parameters": [
+          {
+            "name": "innovationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RevisePlainTextRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RevisePlainTextRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RevisePlainTextRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlainTextResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlainTextResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlainTextResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/innovations/{innovationId}/plain-text/approve": {
+      "post": {
+        "tags": [
+          "AdminInnovations"
+        ],
+        "parameters": [
+          {
+            "name": "innovationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlainTextResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlainTextResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlainTextResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/innovations": {
       "get": {
         "tags": [
@@ -1097,6 +1319,34 @@
         "parameters": [
           {
             "name": "Search",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ChallengeArea",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Category",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Stage",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "TargetGroup",
             "in": "query",
             "schema": {
               "type": "string"
@@ -1380,6 +1630,93 @@
         "responses": {
           "202": {
             "description": "Accepted"
+          }
+        }
+      }
+    },
+    "/api/indicators": {
+      "get": {
+        "tags": [
+          "Indicators"
+        ],
+        "parameters": [
+          {
+            "name": "ChallengeArea",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IndicatorSummaryResponse"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IndicatorSummaryResponse"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IndicatorSummaryResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/indicators/{indicatorId}/values": {
+      "get": {
+        "tags": [
+          "Indicators"
+        ],
+        "parameters": [
+          {
+            "name": "indicatorId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/IndicatorValuesResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IndicatorValuesResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IndicatorValuesResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -3328,6 +3665,178 @@
         }
       }
     },
+    "/api/admin/challenge-areas/{code}/plain-text": {
+      "get": {
+        "tags": [
+          "AdminChallengeAreas"
+        ],
+        "parameters": [
+          {
+            "name": "code",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlainTextResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlainTextResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlainTextResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "AdminChallengeAreas"
+        ],
+        "parameters": [
+          {
+            "name": "code",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlainTextResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlainTextResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlainTextResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "AdminChallengeAreas"
+        ],
+        "parameters": [
+          {
+            "name": "code",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RevisePlainTextRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RevisePlainTextRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RevisePlainTextRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlainTextResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlainTextResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlainTextResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/challenge-areas/{code}/plain-text/approve": {
+      "post": {
+        "tags": [
+          "AdminChallengeAreas"
+        ],
+        "parameters": [
+          {
+            "name": "code",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlainTextResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlainTextResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlainTextResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/challenge-areas": {
       "get": {
         "tags": [
@@ -3359,6 +3868,45 @@
                   "items": {
                     "$ref": "#/components/schemas/ChallengeAreaResponse"
                   }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/challenge-areas/{code}": {
+      "get": {
+        "tags": [
+          "ChallengeAreas"
+        ],
+        "parameters": [
+          {
+            "name": "code",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChallengeAreaDetailsResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChallengeAreaDetailsResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChallengeAreaDetailsResponse"
                 }
               }
             }
@@ -3694,6 +4242,59 @@
           },
           "hint": {
             "type": "string"
+          }
+        }
+      },
+      "ChallengeAreaDetailsResponse": {
+        "required": [
+          "code",
+          "number",
+          "name",
+          "definition",
+          "keyChallenges",
+          "source",
+          "plainText",
+          "personas"
+        ],
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "number": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "definition": {
+            "type": "string"
+          },
+          "keyChallenges": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "source": {
+            "type": "string"
+          },
+          "plainText": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "personas": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PersonaResponse"
+            }
           }
         }
       },
@@ -5535,6 +6136,120 @@
           }
         }
       },
+      "IndicatorSummaryResponse": {
+        "required": [
+          "id",
+          "name",
+          "group",
+          "unit",
+          "general",
+          "challengeAreaCodes"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "group": {
+            "type": "string"
+          },
+          "unit": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "general": {
+            "type": "boolean"
+          },
+          "challengeAreaCodes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "IndicatorTerritoryValueResponse": {
+        "required": [
+          "teryt",
+          "name",
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "teryt": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "value": {
+            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?$",
+            "type": [
+              "number",
+              "string"
+            ],
+            "format": "double"
+          }
+        }
+      },
+      "IndicatorValuesResponse": {
+        "required": [
+          "indicatorId",
+          "name",
+          "unit",
+          "year",
+          "level",
+          "regionAverage",
+          "values"
+        ],
+        "type": "object",
+        "properties": {
+          "indicatorId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "unit": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "year": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "level": {
+            "type": "string"
+          },
+          "regionAverage": {
+            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?$",
+            "type": [
+              "number",
+              "string"
+            ],
+            "format": "double"
+          },
+          "values": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IndicatorTerritoryValueResponse"
+            }
+          }
+        }
+      },
       "InnovationGenomeResponse": {
         "required": [
           "id",
@@ -5662,7 +6377,8 @@
           "stage",
           "challengeAreaCodes",
           "source",
-          "seeksTesters"
+          "seeksTesters",
+          "plainText"
         ],
         "type": "object",
         "properties": {
@@ -5771,6 +6487,12 @@
           },
           "seeksTesters": {
             "type": "boolean"
+          },
+          "plainText": {
+            "type": [
+              "null",
+              "string"
+            ]
           }
         }
       },
@@ -5781,7 +6503,10 @@
           "categories",
           "stage",
           "hasGenome",
-          "genomeStatus"
+          "genomeStatus",
+          "shortDescription",
+          "videoUrl",
+          "challengeAreaCodes"
         ],
         "type": "object",
         "properties": {
@@ -5809,6 +6534,24 @@
               "null",
               "string"
             ]
+          },
+          "shortDescription": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "videoUrl": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "challengeAreaCodes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         }
       },
@@ -5985,6 +6728,36 @@
           }
         }
       },
+      "MunicipalityProfileResponse": {
+        "required": [
+          "teryt",
+          "name",
+          "qualifiedName",
+          "powiat",
+          "indicators"
+        ],
+        "type": "object",
+        "properties": {
+          "teryt": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "qualifiedName": {
+            "type": "string"
+          },
+          "powiat": {
+            "type": "string"
+          },
+          "indicators": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProfileIndicatorResponse"
+            }
+          }
+        }
+      },
       "MunicipalityResponse": {
         "required": [
           "teryt",
@@ -6008,6 +6781,70 @@
             "type": "string"
           },
           "powiat": {
+            "type": "string"
+          }
+        }
+      },
+      "PersonaResponse": {
+        "required": [
+          "name",
+          "age",
+          "description",
+          "goals",
+          "challenges",
+          "motivations"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "age": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "null",
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "description": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "goals": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "challenges": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "motivations": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "PlainTextResponse": {
+        "required": [
+          "text",
+          "status"
+        ],
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string"
+          },
+          "status": {
             "type": "string"
           }
         }
@@ -6194,6 +7031,64 @@
           "createdAt": {
             "type": "string",
             "format": "date-time"
+          }
+        }
+      },
+      "ProfileIndicatorResponse": {
+        "required": [
+          "indicatorId",
+          "name",
+          "unit",
+          "level",
+          "value",
+          "regionAverage",
+          "year",
+          "general"
+        ],
+        "type": "object",
+        "properties": {
+          "indicatorId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "unit": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "level": {
+            "type": "string"
+          },
+          "value": {
+            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?$",
+            "type": [
+              "number",
+              "string"
+            ],
+            "format": "double"
+          },
+          "regionAverage": {
+            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?$",
+            "type": [
+              "number",
+              "string"
+            ],
+            "format": "double"
+          },
+          "year": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "general": {
+            "type": "boolean"
           }
         }
       },
@@ -6740,6 +7635,20 @@
           }
         }
       },
+      "RevisePlainTextRequest": {
+        "required": [
+          "text"
+        ],
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
       "SaveProblemReportReplyDraftRequest": {
         "required": [
           "text"
@@ -6973,6 +7882,9 @@
       "name": "InnovationGenomes"
     },
     {
+      "name": "Indicators"
+    },
+    {
       "name": "AdminIdeas"
     },
     {
@@ -6992,6 +7904,9 @@
     },
     {
       "name": "Conversations"
+    },
+    {
+      "name": "AdminChallengeAreas"
     },
     {
       "name": "ChallengeAreas"

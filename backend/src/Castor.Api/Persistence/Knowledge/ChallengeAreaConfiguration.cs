@@ -12,5 +12,10 @@ public sealed class ChallengeAreaConfiguration : IEntityTypeConfiguration<Challe
 
         // Other records point at an area by its code, so the code is an alternate key — unique by itself.
         builder.HasAlternateKey(area => area.Code).HasName("AK_ChallengeAreas_Code");
+
+        builder.Property(area => area.PlainText).HasMaxLength(ChallengeArea.PlainTextMaxLength);
+        builder.ToTable(table => table.HasCheckConstraint(
+            "CK_ChallengeAreas_PlainTextHasStatus",
+            "(\"PlainText\" IS NULL) = (\"PlainTextStatus\" IS NULL)"));
     }
 }

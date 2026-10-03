@@ -8,6 +8,7 @@ using Castor.Api.Features.FitAssessments;
 using Castor.Api.Features.GrantApplications;
 using Castor.Api.Features.GrantCalls;
 using Castor.Api.Features.Ideas;
+using Castor.Api.Features.Indicators;
 using Castor.Api.Features.InnovationGenomes;
 using Castor.Api.Features.Innovations;
 using Castor.Api.Features.Municipalities;
@@ -133,6 +134,7 @@ builder.Services.AddScoped<SimilarIdeasQuery>();
 builder.Services.AddScoped<DuplicateChecker>();
 builder.Services.AddScoped<IdeaAssistant>();
 builder.Services.AddScoped<GrantApplicationWriter>();
+builder.Services.AddScoped<PlainTextWriter>();
 
 // Start-up: schema, interrupted jobs, seed — registered before the job runner, so the runner starts on a ready database.
 // The build-time OpenAPI generator (GetDocument.Insider) and dotnet-ef (ef) run this file too; they get no database.
@@ -160,9 +162,15 @@ builder.Services.AddScoped<GetSessionHandler>();
 
 // Challenge areas
 builder.Services.AddScoped<ListChallengeAreasHandler>();
+builder.Services.AddScoped<GetChallengeAreaHandler>();
+builder.Services.AddScoped<GetChallengeAreaPlainTextHandler>();
+builder.Services.AddScoped<GenerateChallengeAreaPlainTextHandler>();
+builder.Services.AddScoped<ReviseChallengeAreaPlainTextHandler>();
+builder.Services.AddScoped<ApproveChallengeAreaPlainTextHandler>();
 
 // Municipalities
 builder.Services.AddScoped<ListMunicipalitiesHandler>();
+builder.Services.AddScoped<GetMunicipalityProfileHandler>();
 
 // Problem reports
 builder.Services.AddScoped<ProblemReportViewQuery>();
@@ -194,6 +202,14 @@ builder.Services.AddScoped<GetInnovationHandler>();
 builder.Services.AddScoped<ListInnovationsHandler>();
 builder.Services.AddScoped<CreateInnovationHandler>();
 builder.Services.AddScoped<ReviseInnovationHandler>();
+builder.Services.AddScoped<GetInnovationPlainTextHandler>();
+builder.Services.AddScoped<GenerateInnovationPlainTextHandler>();
+builder.Services.AddScoped<ReviseInnovationPlainTextHandler>();
+builder.Services.AddScoped<ApproveInnovationPlainTextHandler>();
+
+// Obserwator indicators (the Atlas map)
+builder.Services.AddScoped<ListIndicatorsHandler>();
+builder.Services.AddScoped<GetIndicatorValuesHandler>();
 
 // Innovation genomes
 builder.Services.AddScoped<ListInnovationGenomesHandler>();

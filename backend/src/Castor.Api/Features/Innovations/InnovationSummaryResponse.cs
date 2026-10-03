@@ -6,4 +6,7 @@ public sealed record InnovationSummaryResponse(
     IReadOnlyList<string> Categories,
     string Stage,
     bool HasGenome,
-    string? GenomeStatus);
+    string? GenomeStatus,
+    string? ShortDescription,
+    string? VideoUrl,
+    IReadOnlyList<string> ChallengeAreaCodes);

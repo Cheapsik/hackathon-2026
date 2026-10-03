@@ -23,4 +23,5 @@ public sealed record InnovationResponse(
     string Stage,
     IReadOnlyList<string> ChallengeAreaCodes,
     string Source,
-    bool SeeksTesters);
+    bool SeeksTesters,
+    string? PlainText);

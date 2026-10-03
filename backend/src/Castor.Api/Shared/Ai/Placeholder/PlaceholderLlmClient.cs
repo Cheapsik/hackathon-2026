@@ -34,6 +34,8 @@ public sealed class PlaceholderLlmClient(ILogger<PlaceholderLlmClient> logger) :
                 => DraftReply(LlmJson.Deserialize<ReplyDraftInput>(prompt.Input)),
             string instructions when instructions == PromptTemplates.Get(PromptTemplates.IdeaAssistant)
                 => AdviseOnIdea(LlmJson.Deserialize<IdeaAssistantInput>(prompt.Input)),
+            string instructions when instructions == PromptTemplates.Get(PromptTemplates.RewritePlain)
+                => RewritePlain(LlmJson.Deserialize<PlainTextInput>(prompt.Input)),
             _ => "Odpowiedź przykładowa: dostawca modelu językowego nie jest jeszcze skonfigurowany.",
         };
 
@@ -364,6 +366,27 @@ public sealed class PlaceholderLlmClient(ILogger<PlaceholderLlmClient> logger) :
     private static int Overlap(HashSet<string> left, HashSet<string> right)
     {
         return left.Count(right.Contains);
+    }
+
+    /// <summary>Keeps the first words of each sentence, so the placeholder still shortens a long description.</summary>
+    private static string RewritePlain(PlainTextInput input)
+    {
+        const int maxSentences = 8;
+        const int maxWords = 12;
+
+        List<string> sentences = [.. input.Text
+            .Split(['.', '!', '?'], StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .Where(sentence => sentence.Length > 0)
+            .Take(maxSentences)
+            .Select(sentence =>
+            {
+                string[] words = sentence.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                string shortened = string.Join(' ', words.Take(maxWords));
+                return shortened.Length > 0 ? $"{shortened}." : string.Empty;
+            })
+            .Where(sentence => sentence.Length > 0)];
+
+        return sentences.Count > 0 ? string.Join(' ', sentences) : input.Title;
     }
 
     private sealed record AreaScore(string Code, double Score);

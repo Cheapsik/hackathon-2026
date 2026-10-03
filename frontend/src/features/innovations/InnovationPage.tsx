@@ -1,5 +1,7 @@
-import { useParams } from 'react-router'
+import { useState } from 'react'
+import { Link, useParams } from 'react-router'
 import { useGetApiInnovationsInnovationId, type InnovationResponse } from '@/api/generated/castor'
+import { youtubeId } from '@/features/atlas/youtube'
 import { PartnershipSection } from '@/features/conversations/PartnershipSection'
 import { FitAssessmentSection } from '@/features/fit-assessments/FitAssessmentSection'
 import { usePageTitle } from '@/hooks/use-page-title'
@@ -13,10 +15,7 @@ const sections: { key: keyof InnovationResponse; title: string }[] = [
   { key: 'evidence', title: 'Czy to działa?' },
 ]
 
-/**
- * An innovation card with "Sprawdź dla mojej gminy" (module VII) and "Napisz do zespołu innowacji" (module V). The
- * full library view comes with module II.
- */
+/** An innovation card: the six sections, "Prościej", the film, the fit card and the partnership thread. */
 export function InnovationPage() {
   const { innovationId = '' } = useParams()
   const innovation = useGetApiInnovationsInnovationId(innovationId)
@@ -40,8 +39,18 @@ export function InnovationPage() {
     )
   }
 
+  return <InnovationCard card={card} />
+}
+
+function InnovationCard({ card }: { card: InnovationResponse }) {
+  const [plain, setPlain] = useState(false)
+  const video = card.videoUrl ? youtubeId(card.videoUrl) : null
+
   return (
     <>
+      <p>
+        <Link to="/biblioteka">Biblioteka innowacji</Link>
+      </p>
       <h1>{card.title}</h1>
       {card.shortDescription && <p>{card.shortDescription}</p>}
       {card.categories.length > 0 && <p>Kategoria Biblioteki ROPS: {card.categories.join(', ')}</p>}
@@ -49,9 +58,22 @@ export function InnovationPage() {
       {card.seeksTesters && <p>Zespół szuka miejsc do przetestowania innowacji — napisz do niego poniżej.</p>}
       {card.featured && <p>Innowacja wybrana do upowszechniania.</p>}
       {card.inServiceModel && <p>Innowacja jest częścią Małopolskich Modeli Usług Społecznych.</p>}
+      {card.plainText && (
+        <p className="no-print">
+          <button type="button" onClick={() => setPlain((current) => !current)}>
+            {plain ? 'Pokaż pełny opis' : 'Prościej'}
+          </button>
+        </p>
+      )}
 
       <div className="no-print">
-        {sections.map((section) => {
+        {plain && card.plainText ? (
+          <section>
+            <h2>Prościej</h2>
+            <p>{card.plainText}</p>
+          </section>
+        ) : (
+          sections.map((section) => {
           const text = card[section.key]
           return typeof text === 'string' && text ? (
             <section key={section.key}>
@@ -59,8 +81,9 @@ export function InnovationPage() {
               <p>{text}</p>
             </section>
           ) : null
-        })}
-        {card.organization && (
+        })
+        )}
+        {!plain && card.organization && (
           <section>
             <h2>Autorzy</h2>
             <p>{card.organization}</p>
@@ -70,6 +93,18 @@ export function InnovationPage() {
         <section>
           <h2>Materiały</h2>
           <ul>
+            {video && (
+              <li>
+                <iframe
+                  width="560"
+                  height="315"
+                  src={`https://www.youtube-nocookie.com/embed/${video}`}
+                  title={`Film o innowacji „${card.title}”`}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </li>
+            )}
             {card.cardUrl && (
               <li>
                 <a href={card.cardUrl} target="_blank" rel="noreferrer">

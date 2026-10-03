@@ -11,6 +11,7 @@ import {
   type InnovationResponse,
 } from '@/api/generated/castor'
 import { stageLabels } from '@/features/admin/labels'
+import { InnovationPlainLanguage } from '@/features/admin/PlainLanguageSection'
 import { usePageTitle } from '@/hooks/use-page-title'
 import { errorMessage } from '@/lib/error-message'
 import { linesOf } from '@/lib/format'
@@ -128,6 +129,7 @@ function InnovationForm({ innovation }: { innovation?: InnovationResponse }) {
       <div aria-live="polite">
         {mutation.isError && <p role="alert">{errorMessage(mutation.error, { 400: 'Innowacja potrzebuje tytułu i sekcji 1.' })}</p>}
       </div>
+      {innovation && <InnovationPlainLanguage innovationId={innovation.id} />}
     </>
   )
 }

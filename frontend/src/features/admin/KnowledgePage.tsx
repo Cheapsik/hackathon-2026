@@ -9,6 +9,7 @@ import {
   usePostApiAdminJobsGenomes,
 } from '@/api/generated/castor'
 import { genomeStatusLabels, stageLabels } from '@/features/admin/labels'
+import { AreaPlainLanguage } from '@/features/admin/PlainLanguageSection'
 import { usePageTitle } from '@/hooks/use-page-title'
 import { errorMessage } from '@/lib/error-message'
 import { formatDateTime } from '@/lib/format'
@@ -102,6 +103,8 @@ export function KnowledgePage() {
           ))}
         </ul>
       </section>
+
+      <AreaPlainLanguage />
 
       <section aria-labelledby="innovations-title">
         <h2 id="innovations-title">Innowacje</h2>

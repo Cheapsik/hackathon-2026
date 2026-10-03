@@ -31,6 +31,8 @@ public static class PromptTemplates
 
     public const string DraftGrantApplication = "draft-grant-application";
 
+    public const string RewritePlain = "rewrite-plain";
+
     private static readonly ConcurrentDictionary<string, string> Loaded = new(StringComparer.Ordinal);
 
     public static string Get(string name)

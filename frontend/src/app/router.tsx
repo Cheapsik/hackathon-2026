@@ -17,6 +17,11 @@ import { SignInPage } from '@/features/account/SignInPage'
 import { AskExpertPage } from '@/features/conversations/AskExpertPage'
 import { ConversationPage } from '@/features/conversations/ConversationPage'
 import { ConversationsPage } from '@/features/conversations/ConversationsPage'
+import { AreaPage } from '@/features/atlas/AreaPage'
+import { AreasPage } from '@/features/atlas/AreasPage'
+import { ChallengeMapPage } from '@/features/atlas/ChallengeMapPage'
+import { LibraryPage } from '@/features/atlas/LibraryPage'
+import { MaterialsPage } from '@/features/atlas/MaterialsPage'
 import { HomePage } from '@/features/home/HomePage'
 import { GrantApplicationPage } from '@/features/ideas/GrantApplicationPage'
 import { IdeaPage } from '@/features/ideas/IdeaPage'
@@ -63,6 +68,11 @@ export const router = createBrowserRouter([
       { path: 'watki/:conversationId', element: <ConversationPage /> },
       { path: 'zapytaj-eksperta', element: <AskExpertPage /> },
       { path: 'innowacje/:innovationId', element: <InnovationPage /> },
+      { path: 'obszary', element: <AreasPage /> },
+      { path: 'obszary/:code', element: <AreaPage /> },
+      { path: 'biblioteka', element: <LibraryPage /> },
+      { path: 'mapa', element: <ChallengeMapPage /> },
+      { path: 'materialy', element: <MaterialsPage /> },
       { path: 'pomysly', element: <IdeasPage /> },
       { path: 'pomysly/nowy', element: <NewIdeaPage /> },
       { path: 'pomysly/:ideaId', element: <IdeaPage /> },

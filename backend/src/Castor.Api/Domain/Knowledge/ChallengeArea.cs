@@ -8,6 +8,8 @@ public sealed class ChallengeArea
 {
     public const int CodeMaxLength = 50;
 
+    public const int PlainTextMaxLength = 4000;
+
     private ChallengeArea()
     {
     }
@@ -28,6 +30,11 @@ public sealed class ChallengeArea
 
     /// <summary>Where the description comes from; the UI shows it next to the data ("dane krajowe").</summary>
     public string Source { get; private set; } = null!;
+
+    /// <summary>The definition rewritten in plain language. Visitors see it only after an administrator approves it.</summary>
+    public string? PlainText { get; private set; }
+
+    public PlainTextStatus? PlainTextStatus { get; private set; }
 
     public DateTimeOffset CreatedAt { get; private set; }
 
@@ -57,5 +64,32 @@ public sealed class ChallengeArea
             Source = source,
             CreatedAt = importedAt,
         };
+    }
+
+    public void RecordPlainText(string? text)
+    {
+        if (string.IsNullOrWhiteSpace(text))
+        {
+            throw new DomainException("The plain-language text is empty.");
+        }
+
+        string trimmed = text.Trim();
+        if (trimmed.Length > PlainTextMaxLength)
+        {
+            throw new DomainException($"The plain-language text has at most {PlainTextMaxLength} characters.");
+        }
+
+        PlainText = trimmed;
+        PlainTextStatus = Domain.PlainTextStatus.DRAFT;
+    }
+
+    public void ApprovePlainText()
+    {
+        if (PlainText is null)
+        {
+            throw new DomainException("There is no plain-language text to approve.", StatusCodes.Status409Conflict);
+        }
+
+        PlainTextStatus = Domain.PlainTextStatus.APPROVED;
     }
 }

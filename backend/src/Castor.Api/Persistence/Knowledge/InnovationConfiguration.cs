@@ -38,6 +38,11 @@ public sealed class InnovationConfiguration : IEntityTypeConfiguration<Innovatio
             .IsUnique()
             .HasDatabaseName("IX_Innovations_OnePerSourceIdea");
 
+        builder.Property(innovation => innovation.PlainText).HasMaxLength(Innovation.PlainTextMaxLength);
+        builder.ToTable(table => table.HasCheckConstraint(
+            "CK_Innovations_PlainTextHasStatus",
+            "(\"PlainText\" IS NULL) = (\"PlainTextStatus\" IS NULL)"));
+
         builder.Property<NpgsqlTsVector>(SearchVectorColumn)
             .HasComputedColumnSql(
                 """

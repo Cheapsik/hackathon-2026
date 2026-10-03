@@ -1,4 +1,5 @@
 import type { FitAssessmentResponse } from '@/api/generated/castor'
+import { GminaMap } from '@/features/atlas/GminaMap'
 
 const fitLabels: Record<string, string> = {
   HIGH: 'wysokie',
@@ -27,6 +28,7 @@ export function FitAssessmentCard({ card }: { card: FitAssessmentResponse }) {
       <p>
         Dane: Internetowy Obserwator Statystyk Społecznych, rok {card.dataYear}. Powiat {card.municipality.powiat}.
       </p>
+      <GminaMap highlightTeryt={card.municipality.teryt} label={`Gmina ${card.municipality.name} na mapie Małopolski.`} />
 
       {card.comparison.length > 0 && (
         <table>

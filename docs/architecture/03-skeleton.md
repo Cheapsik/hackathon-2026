@@ -119,6 +119,18 @@ Moduł III dołożył (SPEC §7 III):
 
 Frontend modułu III: `features/ideas/` (Kreator: lista, nowa fiszka, strona pomysłu z Canvasem, duplikatami, asystentem, ocenami, decyzją admina i generatorem wniosku; strona wniosku z wydrukiem), „Rozwiń w Kreatorze” przy krzyżówce, w panelu admina „Pomysły z Kreatora” i wnioski naboru.
 
+Moduł II dołożył (SPEC §7 II):
+
+| Miejsce | Zawartość |
+|---|---|
+| `Domain/Knowledge/` | `PlainText` i `PlainTextStatus` na `Innovation` i `ChallengeArea`; zmiana karty kasuje tekst „Prościej” |
+| `Shared/Ai/` | `PlainTextWriter`, prompt `rewrite-plain.md` |
+| `Features/` | `ChallengeAreas` (strona obszaru, tekst „Prościej” dla admina), `Indicators` (lista i wartości na kartogram), `Municipalities` (`/{teryt}/profile`), filtry `GET /api/innovations` |
+| `Migrations/` | `Atlas` |
+| `frontend/public/geo/` | uproszczone granice 183 gmin Małopolski |
+
+Frontend modułu II: `features/atlas/` (obszary, strona obszaru, biblioteka, mapa, materiały), „Prościej” i film na karcie innowacji, mini-mapa na karcie dopasowania, mapa zgłoszeń w radarze, zatwierdzanie tekstów w panelu. Leaflet.
+
 Workspace'ów i globalnego filtra izolacji **nie ma** — dane platformy są wspólne ([`00-stack.md`](00-stack.md) · Dostęp do danych).
 
 ## Co jest w `frontend/`

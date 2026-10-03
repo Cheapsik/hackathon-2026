@@ -97,6 +97,13 @@ namespace Castor.Api.Migrations
                     b.Property<int>("Number")
                         .HasColumnType("integer");
 
+                    b.Property<string>("PlainText")
+                        .HasMaxLength(4000)
+                        .HasColumnType("character varying(4000)");
+
+                    b.Property<string>("PlainTextStatus")
+                        .HasColumnType("text");
+
                     b.Property<string>("Source")
                         .IsRequired()
                         .HasColumnType("text");
@@ -106,7 +113,10 @@ namespace Castor.Api.Migrations
                     b.HasAlternateKey("Code")
                         .HasName("AK_ChallengeAreas_Code");
 
-                    b.ToTable("ChallengeAreas");
+                    b.ToTable("ChallengeAreas", t =>
+                        {
+                            t.HasCheckConstraint("CK_ChallengeAreas_PlainTextHasStatus", "(\"PlainText\" IS NULL) = (\"PlainTextStatus\" IS NULL)");
+                        });
                 });
 
             modelBuilder.Entity("Castor.Api.Domain.Conversation", b =>
@@ -673,6 +683,13 @@ namespace Castor.Api.Migrations
                     b.Property<string>("Organization")
                         .HasColumnType("text");
 
+                    b.Property<string>("PlainText")
+                        .HasMaxLength(4000)
+                        .HasColumnType("character varying(4000)");
+
+                    b.Property<string>("PlainTextStatus")
+                        .HasColumnType("text");
+
                     b.Property<string>("Problems")
                         .HasColumnType("text");
 
@@ -737,7 +754,10 @@ namespace Castor.Api.Migrations
                         .IsUnique()
                         .HasDatabaseName("IX_Innovations_UniqueSourceKey");
 
-                    b.ToTable("Innovations");
+                    b.ToTable("Innovations", t =>
+                        {
+                            t.HasCheckConstraint("CK_Innovations_PlainTextHasStatus", "(\"PlainText\" IS NULL) = (\"PlainTextStatus\" IS NULL)");
+                        });
                 });
 
             modelBuilder.Entity("Castor.Api.Domain.InnovationGenome", b =>

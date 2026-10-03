@@ -29,6 +29,7 @@ internal static class InnovationConverter
             stage,
             areas,
             source,
-            innovation.SeeksTesters);
+            innovation.SeeksTesters,
+            innovation.PlainTextStatus == PlainTextStatus.APPROVED ? innovation.PlainText : null);
     }
 }
