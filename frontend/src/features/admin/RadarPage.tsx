@@ -53,6 +53,14 @@ export function RadarPage() {
       .map(([label, value]) => ({ label, value }))
   }, [data?.byMonth])
 
+  const areaTrend = useMemo(
+    () =>
+      (data?.byArea ?? [])
+        .map((area) => ({ label: area.name, value: Number(area.reports) }))
+        .filter((point) => point.value > 0),
+    [data?.byArea],
+  )
+
   const areaName = (code: string) => areas.data?.data.find((area) => area.code === code)?.name ?? code
 
   function submit(event: FormEvent<HTMLFormElement>) {
@@ -113,6 +121,26 @@ export function RadarPage() {
           <p className="text-body-sm text-text-muted">
             Okres {data.from} - {data.to}: {data.reports} zgłoszeń po klasyfikacji.
           </p>
+
+          {areaTrend.length > 0 && (
+            <ChartPanel
+              title="Potrzeby według obszaru"
+              description="Liczba zgłoszeń w obszarach wyzwań w wybranym okresie. Te same liczby są w tabeli poniżej."
+              seriesLabel="Liczba zgłoszeń"
+              categoryLabel="Obszar"
+              data={areaTrend}
+            />
+          )}
+
+          {monthlyTrend.length > 0 && (
+            <ChartPanel
+              title="Trend zgłoszeń"
+              description="Suma zgłoszeń we wszystkich obszarach w kolejnych miesiącach."
+              seriesLabel="Liczba zgłoszeń"
+              categoryLabel="Miesiąc"
+              data={monthlyTrend}
+            />
+          )}
 
           <Section title="Potrzeby według obszaru" description="Zgłoszenia, niedopasowania i innowacje w Bibliotece.">
             <CeramicCard asChild padding="none" className="p-1">
@@ -185,16 +213,6 @@ export function RadarPage() {
               </ul>
             </CeramicCard>
           </Section>
-
-          {monthlyTrend.length > 0 && (
-            <ChartPanel
-              title="Trend zgłoszeń"
-              description="Suma zgłoszeń we wszystkich obszarach w kolejnych miesiącach."
-              seriesLabel="Liczba zgłoszeń"
-              categoryLabel="Miesiąc"
-              data={monthlyTrend}
-            />
-          )}
 
           <Section title="Trend według obszaru" description="Rozbicie miesięczne na obszary wyzwań.">
             <CeramicCard asChild padding="none" className="p-1">

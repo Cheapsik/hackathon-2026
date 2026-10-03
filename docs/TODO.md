@@ -23,7 +23,7 @@ Kolumna `embedding vector(N)` genomu jeszcze nie istnieje — dojdzie migracją 
 
 ## Moduł VI — co zostało
 
-- **Wykres radaru** (SPEC §7 VI): liczby są w tabelach, a zgłoszenia widać też na mapie gmin. Wykresu słupkowego nie ma.
+- ~~**Wykres radaru** (SPEC §7 VI)~~ — `ChartPanel` na `/admin/radar`: trendy wg obszaru i miesiąca (dane z `byArea` / `byMonth`).
 - **Dodanie innowacji z linku do karty ROPS albo z PDF** (AI wypełnia pola) — teraz tylko ręczny formularz.
 - **Import raportów do RAG i przeliczanie embeddingów** — czeka na decyzję o embeddingach.
 - **Fiszki w skrzynce zgłoszeń**: pomysły mają osobną listę „Pomysły z Kreatora” (odświeżaną przez `IdeaSubmitted`), bez klasyfikacji AI i pilności jak zgłoszenia.
@@ -41,7 +41,7 @@ Kolumna `embedding vector(N)` genomu jeszcze nie istnieje — dojdzie migracją 
 
 - **Pytania do raportów** (SPEC §6.7): brak tekstów raportów w seedzie i brak embeddingów. Strona materiałów linkuje bazę raportów ROPS.
 - **Dodanie innowacji z linku do karty ROPS albo z PDF** — nadal tylko ręczny formularz.
-- **Wykres radaru** — jest mapa i tabele, nie ma wykresu.
+- ~~**Wykres radaru**~~ — przeniesione do modułu VI; wykres jest na `/admin/radar`.
 
 ## Moduł III — co zostało
 
