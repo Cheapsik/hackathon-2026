@@ -64,6 +64,21 @@ sudo -u castor editor /opt/castor/.env
 
 CloudFormation creates the directories and empty `.env`, but it does not issue or install a certificate. Replace `castor` with the deployment user when preparing another host. Populate `.env` from [`.env.example`](../.env.example), using a strong, unique `POSTGRES_PASSWORD`. Keep `.env` and the private key only on the server. The deployment requires these files and does not overwrite them. Certificate renewal must replace both certificate files and reload or restart the `proxy` service.
 
+## Configure OpenAI
+
+The application uses the deterministic `placeholder` provider until OpenAI is explicitly enabled. Set these values only in `/opt/castor/.env`:
+
+```dotenv
+Llm__Provider=openai
+Llm__Model=YOUR_OPENAI_MODEL
+Llm__ApiKey=YOUR_OPENAI_PROJECT_API_KEY
+Llm__BaseUrl=https://api.openai.com/v1/
+Llm__MaxOutputTokens=4096
+Llm__TimeoutSeconds=120
+```
+
+Do not add the key to GitHub Actions variables or repository files; the deployment preserves the server-side `.env`. The backend validates all required OpenAI settings during start-up. It sends requests through the Responses API, does not persist responses through the API (`store: false`), retries HTTP 429 and 5xx responses, and logs duration, token counts, and request IDs without prompt or response content.
+
 ## GitHub production environment
 
 Create a GitHub environment named `production`. Protect it with required reviewers if deployments need approval, then configure:
