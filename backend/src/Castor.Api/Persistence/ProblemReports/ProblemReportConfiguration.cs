@@ -9,7 +9,7 @@ public sealed class ProblemReportConfiguration : IEntityTypeConfiguration<Proble
     {
         builder.HasKey(report => report.Id);
         builder.Property(report => report.TrackingCode).HasMaxLength(TrackingCode.Length).IsFixedLength();
-        builder.Property(report => report.Description).HasMaxLength(ProblemReport.DescriptionMaxLength);
+        builder.Property(report => report.Description).HasMaxLength(ProblemReport.StoredDescriptionMaxLength);
         builder.Property(report => report.OriginalDescription).HasMaxLength(ProblemReport.DescriptionMaxLength);
 
         // The code works like a password, so it must never point at two reports.

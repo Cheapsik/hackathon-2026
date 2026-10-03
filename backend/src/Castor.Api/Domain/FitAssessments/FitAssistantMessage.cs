@@ -6,7 +6,14 @@ namespace Castor.Api.Domain;
 /// </summary>
 public sealed class FitAssistantMessage
 {
-    public const int TextMaxLength = 2000;
+    /// <summary>The limit of what a user types.</summary>
+    public const int MessageMaxLength = 2000;
+
+    /// <summary>
+    /// The stored text: placeholders like [TELEFON] are longer than what they replace, and the model's answer is cut
+    /// here rather than failing the save.
+    /// </summary>
+    public const int TextMaxLength = 4000;
 
     private FitAssistantMessage()
     {
@@ -35,13 +42,13 @@ public sealed class FitAssistantMessage
             throw new DomainException("Write a message to the assistant.");
         }
 
-        string anonymized = Anonymizer.Anonymize(trimmed);
-        if (anonymized.Length > TextMaxLength)
+        if (trimmed.Length > MessageMaxLength)
         {
-            throw new DomainException($"A message has at most {TextMaxLength} characters.");
+            throw new DomainException($"A message has at most {MessageMaxLength} characters.");
         }
 
-        return Create(assessment, userId, AssistantRole.USER, anonymized, createdAt);
+        string anonymized = Anonymizer.Anonymize(trimmed);
+        return Create(assessment, userId, AssistantRole.USER, Cut(anonymized), createdAt);
     }
 
     public static FitAssistantMessage FromAssistant(FitAssessment assessment, Guid userId, string text, DateTimeOffset createdAt)
@@ -53,7 +60,13 @@ public sealed class FitAssistantMessage
             throw new InvalidOperationException("The assistant returned an empty answer.");
         }
 
-        return Create(assessment, userId, AssistantRole.ASSISTANT, text.Trim(), createdAt);
+        string trimmed = text.Trim();
+        return Create(assessment, userId, AssistantRole.ASSISTANT, Cut(trimmed), createdAt);
+    }
+
+    private static string Cut(string text)
+    {
+        return text.Length <= TextMaxLength ? text : text[..(TextMaxLength - 1)] + "…";
     }
 
     private static FitAssistantMessage Create(

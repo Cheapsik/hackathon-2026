@@ -273,8 +273,7 @@
     "unit": "%",
     "challengeAreas": [
       "FAMILY_AND_FOSTER_CARE",
-      "POVERTY",
-      "SENIORS"
+      "POVERTY"
     ],
     "general": false
   },
@@ -1745,8 +1744,7 @@
     "source": "Rejestr Małopolskiego Urzędu Wojewódzkiego w Krakowie",
     "unit": null,
     "challengeAreas": [
-      "DISABILITY",
-      "SENIORS"
+      "DISABILITY"
     ],
     "general": false
   },
@@ -1807,8 +1805,7 @@
     "source": "Sprawozdanie MPiPS-03 (do 2014 r.), Sprawozdanie OZPS (2015 - 2017 r.), Sprawozdanie rzeczowo-finansowe z wykonywania przez powiat zadań innych niż realizacja dodatku wychowawczego (od 2018 r.)",
     "unit": null,
     "challengeAreas": [
-      "FAMILY_AND_FOSTER_CARE",
-      "SENIORS"
+      "FAMILY_AND_FOSTER_CARE"
     ],
     "general": false
   },

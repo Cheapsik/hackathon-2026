@@ -5,5 +5,6 @@ public sealed record ProblemClassificationResult(
     IReadOnlyList<string>? ChallengeAreaCodes,
     IReadOnlyList<string>? RootCauses,
     string? TargetGroup,
+    string? Urgency,
     IReadOnlyList<string>? Keywords,
     IReadOnlyList<string>? ClarifyingQuestions);

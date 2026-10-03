@@ -55,7 +55,7 @@ GROUP_AREAS = {
 
 # Words in an indicator's name that tie it to an area regardless of its group.
 NAME_AREAS = [
-    (r"starzeni|60\+|poprodukcyjn|pielęgnacyjn|najstarszych|emeryt|dps|domy pomocy|dzienne domy|całodobow|opiekuńcz", "SENIORS"),
+    (r"starzeni|60\+|poprodukcyjn|pielęgnacyjn|najstarszych|emeryt|dps|domy pomocy|dzienne domy|całodobow\w* opiek\w* (?:\w+ )*(?:w podeszłym wieku|starsz)|usług\w* opiekuńcz", "SENIORS"),
     (r"bezdomn|noclegown|schronisk", "HOMELESSNESS"),
     (r"niepełnospraw|wspomagane|treningowe|środowiskowe domy", "DISABILITY"),
     (r"psychiczn|alkohol|narkoman|uzależni|środowiskowe domy", "MENTAL_HEALTH"),
@@ -139,8 +139,9 @@ class TerytResolver:
             self.by_name[municipality["name"]].append(municipality)
         self.powiat_order = sorted({municipality["powiat"] for municipality in municipalities})
 
-    def resolve_all(self, names: list[str]) -> dict[str, str]:
-        resolved: dict[str, str] = {}
+    def resolve_all(self, names: list[str]) -> list[str]:
+        """One TERYT per name, in the order of the names: a dict would let the second Bolesław overwrite the first."""
+        resolved: list[str] = []
         current_powiat = 0
         for name in names:
             candidates = self.candidates(name)
@@ -151,7 +152,7 @@ class TerytResolver:
                 raise RuntimeError(f"Gmina '{name}' does not map to one TERYT code: {candidates}")
             municipality = candidates[0]
             current_powiat = self.powiat_order.index(municipality["powiat"])
-            resolved[name] = municipality["teryt"]
+            resolved.append(municipality["teryt"])
 
         return resolved
 
@@ -202,7 +203,7 @@ def main() -> None:
         gmina_rows = table_rows(page, "myChart02sorttable")
         powiat_rows = table_rows(page, "myChart0sorttable")
         teryts = resolver.resolve_all([name for name, _ in gmina_rows])
-        rows = [("GMINA", teryts[name], value) for name, value in gmina_rows]
+        rows = [("GMINA", teryt, value) for teryt, (_, value) in zip(teryts, gmina_rows)]
         rows += [("GMINA", CITY_POWIATS[name], value) for name, value in powiat_rows if name in CITY_POWIATS]
         # Many indicators exist only per powiat; a fit assessment falls back to the gmina's powiat.
         rows += [("POWIAT", powiat_codes[name], value) for name, value in powiat_rows if name in powiat_codes]
@@ -226,6 +227,10 @@ def main() -> None:
             }
         )
         print(f"{indicator['id']:>4} {info['year']} {written:>3} values  {indicator['name']}")
+
+    keys = [(item["indicatorId"], item["level"], item["teryt"], item["year"]) for item in values]
+    if len(keys) != len(set(keys)):
+        raise RuntimeError("Two values share one indicator, territory and year")
 
     indicators.sort(key=lambda item: item["id"])
     values.sort(key=lambda item: (item["indicatorId"], item["level"], item["teryt"], item["year"]))

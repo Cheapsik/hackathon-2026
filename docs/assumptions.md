@@ -18,4 +18,7 @@ Status: ⬜ do weryfikacji · ✅ przyjęte (przeniesione do `SPEC.md`) · ✏�
 | A-10 | Wiek persony „Ania i Staś” to wiek pierwszej osoby (7) | Persona to rodzeństwo; pole ma jedną liczbę | `data/scrapers/challenges.py` | ⬜ |
 | A-11 | Dwie gminy o tej samej nazwie w Obserwatorze (Bolesław, Spytkowice) rozróżniamy po kolejności powiatów w tabeli | Obserwator podaje gminy bez kodu, w kolejności alfabetycznej powiatów | `data/scrapers/observer.py` (`TerytResolver`) | ⬜ |
 | A-12 | Karta dla tej samej trójki (innowacja, gmina, rok danych) generowana jednocześnie przez dwie osoby: druga dostaje 409 z prośbą o ponowne otwarcie | Indeks unikalny jest sprawdzeniem; LLM drugi raz nie jest potrzebny | `CreateFitAssessmentHandler` | ⬜ |
-| A-13 | Przeliczenie karty (`recalculate`) nadpisuje treść w miejscu, bez historii wersji | SPEC: „admin może ją przeliczyć”; historia nie była wymagana | `FitAssessment.Recalculate` | ⬜ |
+| A-13 | Przeliczenie karty (`POST …/fit/{id}/recalculate`, tylko admin) nadpisuje treść w miejscu, bez historii wersji | SPEC: „admin może ją przeliczyć”; historia nie była wymagana | `RecalculateFitAssessmentHandler` | ⬜ |
+| A-14 | Zgłoszenia sprzed modułu VI nie mają pilności (`null`) — nie przeliczamy ich klasyfikacji | Klasyfikacja liczy się raz na zgłoszenie (A-4) | `ProblemReport.Urgency` | ⬜ |
+| A-15 | Lista w panelu (zgłoszenia, użytkownicy, innowacje) ma limit 200 wierszy, bez stronicowania | Skala demo; `backend/AGENTS.md` odradza paginację na zapas | handlery `List…` | ⬜ |
+| A-16 | Treść zgłoszenia i wiadomości asystenta sprawdzamy w długości wpisanej przez użytkownika; kolumna ma zapas na znaczniki anonimizacji (2× limit) | `[TELEFON]`, `[OSOBA]` są dłuższe od tego, co zastępują | `ProblemReport`, `FitAssistantMessage` | ⬜ |

@@ -21,10 +21,17 @@ Blokuje:
 
 Kolumna `embedding vector(N)` genomu jeszcze nie istnieje — dojdzie migracją razem z wymiarem z `Embeddings:Dimensions`.
 
+## Moduł VI — co zostało
+
+- **Wykres i mapa radaru** (SPEC §7 VI): dane są w tabelach; mapa czeka na GeoJSON gmin (jak mini-mapa w VII).
+- **„Prościej”** — zatwierdzanie tekstów łatwych do czytania dojdzie z trybem „Prościej” w module II.
+- **Dodanie innowacji z linku do karty ROPS albo z PDF** (AI wypełnia pola) — teraz tylko ręczny formularz.
+- **Import raportów do RAG i przeliczanie embeddingów** — czeka na decyzję o embeddingach.
+- **Skrzynka: fiszki (pomysły)** dojdą z modułem III; **wysyłka szkicu odpowiedzi** — z wątkami w module V.
+
 ## Moduł VII — co zostało
 
 - **Mini-mapa karty dopasowania** (SPEC §7 VII): potrzebny GeoJSON gmin Małopolski w `data/geo/` (np. z PRG GUGiK) i Leaflet — dojdzie z mapą w module II. Karta ma już tabelę z tymi samymi danymi.
-- **Podpowiedź gminy dla pracownika JST** (SPEC §6.5): `User` nie ma jeszcze gminy — przypisuje ją admin w module VI.
 - **Gminy, które już wdrożyły innowację**: brak danych źródłowych; pole karty czeka na nie.
 - **Wiele lat danych**: skrypt bierze ostatni rok każdego wskaźnika; trendy (moduł VI, II) potrzebują wcześniejszych lat z formularza Obserwatora.
 

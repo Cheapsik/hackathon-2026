@@ -46,6 +46,7 @@ public sealed class CreateProblemReportHandler(
             classification.ChallengeAreas,
             classification.RootCauses,
             classification.TargetGroup,
+            classification.Urgency,
             classification.Keywords,
             classification.ClarifyingQuestions,
             clock.UtcNow);

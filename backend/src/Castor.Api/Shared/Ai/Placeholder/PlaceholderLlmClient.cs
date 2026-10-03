@@ -26,9 +26,14 @@ public sealed class PlaceholderLlmClient(ILogger<PlaceholderLlmClient> logger) :
 
         logger.LogInformation("Placeholder language model answered a text prompt of {InputLength} characters.", prompt.Input.Length);
 
-        string answer = prompt.Instructions == PromptTemplates.Get(PromptTemplates.FitAssistant)
-            ? AdviseOnFit(LlmJson.Deserialize<FitAssistantInput>(prompt.Input))
-            : "Odpowiedź przykładowa: dostawca modelu językowego nie jest jeszcze skonfigurowany.";
+        string answer = prompt.Instructions switch
+        {
+            string instructions when instructions == PromptTemplates.Get(PromptTemplates.FitAssistant)
+                => AdviseOnFit(LlmJson.Deserialize<FitAssistantInput>(prompt.Input)),
+            string instructions when instructions == PromptTemplates.Get(PromptTemplates.DraftReply)
+                => DraftReply(LlmJson.Deserialize<ReplyDraftInput>(prompt.Input)),
+            _ => "Odpowiedź przykładowa: dostawca modelu językowego nie jest jeszcze skonfigurowany.",
+        };
 
         return Task.FromResult(answer);
     }
@@ -44,6 +49,7 @@ public sealed class PlaceholderLlmClient(ILogger<PlaceholderLlmClient> logger) :
             Type type when type == typeof(HybridProposalResult) => ProposeHybrid(LlmJson.Deserialize<HybridProposalInput>(prompt.Input)),
             Type type when type == typeof(GenomeResult) => DescribeGenome(LlmJson.Deserialize<GenomeInput>(prompt.Input)),
             Type type when type == typeof(FitAssessmentResult) => AssessFit(LlmJson.Deserialize<FitAssessmentInput>(prompt.Input)),
+            Type type when type == typeof(GrantCallDraftResult) => DraftGrantCall(LlmJson.Deserialize<GrantCallDraftInput>(prompt.Input)),
             _ => throw new NotSupportedException($"The placeholder language model cannot answer with {typeof(TResult).Name}."),
         };
 
@@ -70,7 +76,16 @@ public sealed class PlaceholderLlmClient(ILogger<PlaceholderLlmClient> logger) :
 
         List<string> questions = words.Count < SpecificDescriptionWords ? [.. GeneralQuestions] : [];
 
-        return new ProblemClassificationResult(areaCodes, [], null, keywords, questions);
+        return new ProblemClassificationResult(areaCodes, [], null, UrgencyOf(input.Description), keywords, questions);
+    }
+
+    /// <summary>Alarm words make a report urgent; a placeholder cannot judge more than that.</summary>
+    private static string UrgencyOf(string description)
+    {
+        HashSet<string> stems = PlaceholderText.Stems(description);
+        string[] alarms = ["przem", "bije", "głod", "glod", "zimn", "marzn", "bezdo", "samob", "zagro", "pilne", "natyc", "chory", "choro"];
+
+        return alarms.Any(alarm => stems.Contains(PlaceholderText.Stem(alarm))) ? "HIGH" : "MEDIUM";
     }
 
     private static InnovationRankingResult Rank(InnovationRankingInput input)
@@ -202,6 +217,35 @@ public sealed class PlaceholderLlmClient(ILogger<PlaceholderLlmClient> logger) :
             "Zadanie publiczne zlecone organizacji pozarządowej albo usługa OPS",
             scale,
             comparison);
+    }
+
+    private static string DraftReply(ReplyDraftInput input)
+    {
+        string proposals = input.Matches.Count == 0
+            ? "Na razie nie znaleźliśmy w Bibliotece innowacji, która odpowiada na ten problem wprost."
+            : $"Wśród sprawdzonych rozwiązań najbliżej jest: {string.Join(", ", input.Matches.Take(2).Select(match => $"„{match.Title}”"))}.";
+        string place = input.Municipality is null ? string.Empty : $" w gminie {input.Municipality}";
+
+        return $"Dzień dobry, dziękujemy za zgłoszenie problemu{place}. {proposals} "
+            + "Zespół Małopolskiego Hubu Innowacji Społecznych przeanalizuje zgłoszenie i w razie potrzeby poprosi o opinię eksperta. "
+            + "O kolejnych krokach poinformujemy w tym wątku. (Szkic przykładowy — do edycji.)";
+    }
+
+    private static GrantCallDraftResult DraftGrantCall(GrantCallDraftInput input)
+    {
+        string where = input.Municipality is null ? "w Małopolsce" : $"w gminie {input.Municipality}";
+
+        return new GrantCallDraftResult(
+            $"Innowacje społeczne: {input.ChallengeArea}",
+            $"Mieszkańcy {where} zgłosili {input.Reports} problemów w obszarze „{input.ChallengeArea}”, na które Biblioteka "
+                + "innowacji nie ma dobrej odpowiedzi. Nabór szuka nowych rozwiązań, które da się przetestować w gminie i rozwinąć w usługę.",
+            [
+                "Odpowiedź na potrzebę zgłoszoną przez mieszkańców (z odwołaniem do zgłoszeń).",
+                "Możliwość wdrożenia w gminie z jej obecnymi zasobami.",
+                "Udział odbiorców w projektowaniu i testowaniu rozwiązania.",
+                "Plan testu i sposób sprawdzenia, czy rozwiązanie działa.",
+                "Możliwość przekształcenia w usługę społeczną po zakończeniu projektu.",
+            ]);
     }
 
     private static string AdviseOnFit(FitAssistantInput input)

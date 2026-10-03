@@ -1,11 +1,12 @@
 import { useEffect, useRef } from 'react'
-import { Files, House, MessageSquareText, Search } from 'lucide-react'
+import { Files, House, MessageSquareText, Search, ShieldCheck } from 'lucide-react'
 import { Link, Outlet, useLocation } from 'react-router'
 import { AccountLinks } from '@/components/layout/AccountLinks'
 import { BrandMark } from '@/components/layout/BrandMark'
 import { DisplayControls } from '@/components/layout/DisplayControls'
 import { AppShell, PageContainer, type AppShellNavItem } from '@/design-system'
 import { useDisplayPreferences } from '@/hooks/use-display-preferences'
+import { useSession } from '@/hooks/use-session'
 
 const navigation: AppShellNavItem[] = [
   { to: '/', label: 'Strona główna', icon: House, end: true },
@@ -13,6 +14,9 @@ const navigation: AppShellNavItem[] = [
   { to: '/sledz', label: 'Śledź zgłoszenie', icon: Search },
   { to: '/moje-zgloszenia', label: 'Moje zgłoszenia', icon: Files },
 ]
+
+/** Shown only to administrators; the API refuses everyone else anyway. */
+const adminNavigation: AppShellNavItem = { to: '/admin', label: 'Panel administratora', icon: ShieldCheck }
 
 /**
  * Castor's chrome around every page (AppShell from the design system). After a navigation the focus moves to
@@ -26,6 +30,8 @@ export function AppLayout() {
   const previousPathname = useRef(location.pathname)
   const [preferences, setPreferences] = useDisplayPreferences()
   const fullBleed = location.pathname === '/'
+  const session = useSession()
+  const links = session?.role === 'ADMIN' ? [...navigation, adminNavigation] : navigation
 
   useEffect(() => {
     if (previousPathname.current === location.pathname) {
@@ -43,7 +49,7 @@ export function AppLayout() {
           <BrandMark />
         </Link>
       }
-      navigation={navigation}
+      navigation={links}
       account={<AccountLinks />}
       utilities={<DisplayControls preferences={preferences} onChange={setPreferences} />}
       footer="Regionalny Ośrodek Polityki Społecznej w Krakowie"

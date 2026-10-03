@@ -1,13 +1,19 @@
 using System.Reflection;
 using System.Text.Json.Serialization;
 using System.Threading.RateLimiting;
+using Castor.Api.Features.BackgroundJobs;
+using Castor.Api.Features.ChallengeAreas;
 using Castor.Api.Features.FitAssessments;
+using Castor.Api.Features.GrantCalls;
+using Castor.Api.Features.InnovationGenomes;
 using Castor.Api.Features.Innovations;
 using Castor.Api.Features.Municipalities;
 using Castor.Api.Features.ProblemReports;
+using Castor.Api.Features.Radar;
 using Castor.Api.Features.Register;
 using Castor.Api.Features.Session;
 using Castor.Api.Features.SignIn;
+using Castor.Api.Features.Users;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -118,6 +124,8 @@ builder.Services.AddScoped<Matchmaker>();
 builder.Services.AddScoped<GenomeGenerator>();
 builder.Services.AddScoped<FitAssessor>();
 builder.Services.AddScoped<FitAssistant>();
+builder.Services.AddScoped<ReplyDrafter>();
+builder.Services.AddScoped<GrantCallDrafter>();
 
 // Start-up: schema, interrupted jobs, seed — registered before the job runner, so the runner starts on a ready database.
 // The build-time OpenAPI generator (GetDocument.Insider) and dotnet-ef (ef) run this file too; they get no database.
@@ -134,13 +142,17 @@ builder.Services.AddScoped<BackgroundJobScheduler>();
 builder.Services.AddScoped<GenerateGenomesJob>();
 builder.Services.AddHostedService<BackgroundJobRunner>();
 
-// Seed
+// Seed and the bootstrap administrator
 builder.Services.AddScoped<SeedImporter>();
+builder.Services.AddScoped<AdminBootstrap>();
 
 // Account and session
 builder.Services.AddScoped<RegisterHandler>();
 builder.Services.AddScoped<SignInHandler>();
 builder.Services.AddScoped<GetSessionHandler>();
+
+// Challenge areas
+builder.Services.AddScoped<ListChallengeAreasHandler>();
 
 // Municipalities
 builder.Services.AddScoped<ListMunicipalitiesHandler>();
@@ -153,14 +165,51 @@ builder.Services.AddScoped<GetProblemReportHandler>();
 builder.Services.AddScoped<TrackProblemReportHandler>();
 builder.Services.AddScoped<ClaimProblemReportHandler>();
 builder.Services.AddScoped<ListMyProblemReportsHandler>();
+builder.Services.AddScoped<SuggestedExpertsQuery>();
+builder.Services.AddScoped<ListInboxProblemReportsHandler>();
+builder.Services.AddScoped<GetInboxProblemReportHandler>();
+builder.Services.AddScoped<DraftProblemReportReplyHandler>();
+builder.Services.AddScoped<SaveProblemReportReplyDraftHandler>();
+builder.Services.AddScoped<MoveProblemReportHandler>();
 
 // Innovations
 builder.Services.AddScoped<GetInnovationHandler>();
+builder.Services.AddScoped<ListInnovationsHandler>();
+builder.Services.AddScoped<CreateInnovationHandler>();
+builder.Services.AddScoped<ReviseInnovationHandler>();
+
+// Innovation genomes
+builder.Services.AddScoped<ListInnovationGenomesHandler>();
+builder.Services.AddScoped<GetInnovationGenomeHandler>();
+builder.Services.AddScoped<ReviseInnovationGenomeHandler>();
+builder.Services.AddScoped<ApproveInnovationGenomeHandler>();
+builder.Services.AddScoped<RecalculateInnovationGenomeHandler>();
+
+// Background jobs in the panel
+builder.Services.AddScoped<ListBackgroundJobsHandler>();
+builder.Services.AddScoped<QueueGenomeGenerationHandler>();
+
+// Users and roles
+builder.Services.AddScoped<ListUsersHandler>();
+builder.Services.AddScoped<AssignUserRoleHandler>();
+
+// Radar
+builder.Services.AddScoped<GetRadarHandler>();
+
+// Grant calls
+builder.Services.AddScoped<ListGrantCallsHandler>();
+builder.Services.AddScoped<ListAllGrantCallsHandler>();
+builder.Services.AddScoped<CreateGrantCallHandler>();
+builder.Services.AddScoped<ReviseGrantCallHandler>();
+builder.Services.AddScoped<OpenGrantCallHandler>();
+builder.Services.AddScoped<CloseGrantCallHandler>();
+builder.Services.AddScoped<DraftGrantCallHandler>();
 
 // Fit assessments
 builder.Services.AddScoped<MunicipalityPortraitQuery>();
 builder.Services.AddScoped<CreateFitAssessmentHandler>();
 builder.Services.AddScoped<FindFitAssessmentHandler>();
+builder.Services.AddScoped<RecalculateFitAssessmentHandler>();
 builder.Services.AddScoped<GetFitAssessmentHandler>();
 builder.Services.AddScoped<AskFitAssistantHandler>();
 builder.Services.AddScoped<ListFitAssistantMessagesHandler>();

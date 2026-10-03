@@ -191,8 +191,8 @@ namespace Castor.Api.Migrations
 
                     b.Property<string>("Text")
                         .IsRequired()
-                        .HasMaxLength(2000)
-                        .HasColumnType("character varying(2000)");
+                        .HasMaxLength(4000)
+                        .HasColumnType("character varying(4000)");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
@@ -204,6 +204,54 @@ namespace Castor.Api.Migrations
                     b.HasIndex("FitAssessmentId", "UserId", "CreatedAt");
 
                     b.ToTable("FitAssistantMessages");
+                });
+
+            modelBuilder.Entity("Castor.Api.Domain.GrantCall", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.PrimitiveCollection<List<string>>("ChallengeAreaCodes")
+                        .IsRequired()
+                        .HasColumnType("text[]");
+
+                    b.Property<DateOnly?>("ClosesOn")
+                        .HasColumnType("date");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamptz");
+
+                    b.PrimitiveCollection<List<string>>("Criteria")
+                        .IsRequired()
+                        .HasColumnType("text[]");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(4000)
+                        .HasColumnType("character varying(4000)");
+
+                    b.Property<DateOnly?>("OpensOn")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("timestamptz");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Status");
+
+                    b.ToTable("GrantCalls", t =>
+                        {
+                            t.HasCheckConstraint("CK_GrantCalls_ClosesAfterOpening", "\"OpensOn\" IS NULL OR \"ClosesOn\" IS NULL OR \"ClosesOn\" >= \"OpensOn\"");
+                        });
                 });
 
             modelBuilder.Entity("Castor.Api.Domain.Indicator", b =>
@@ -275,8 +323,8 @@ namespace Castor.Api.Migrations
                         .HasColumnType("timestamptz");
 
                     b.Property<decimal>("Value")
-                        .HasPrecision(19, 6)
-                        .HasColumnType("numeric(19,6)");
+                        .HasPrecision(19, 8)
+                        .HasColumnType("numeric(19,8)");
 
                     b.Property<int>("Year")
                         .HasColumnType("integer");
@@ -621,8 +669,8 @@ namespace Castor.Api.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(3000)
-                        .HasColumnType("character varying(3000)");
+                        .HasMaxLength(6000)
+                        .HasColumnType("character varying(6000)");
 
                     b.PrimitiveCollection<List<string>>("Keywords")
                         .IsRequired()
@@ -639,6 +687,12 @@ namespace Castor.Api.Migrations
                         .HasColumnType("character varying(3000)");
 
                     b.Property<DateTimeOffset?>("QuestionsSettledAt")
+                        .HasColumnType("timestamptz");
+
+                    b.Property<string>("ReplyDraft")
+                        .HasColumnType("text");
+
+                    b.Property<DateTimeOffset?>("ReplyDraftUpdatedAt")
                         .HasColumnType("timestamptz");
 
                     b.PrimitiveCollection<List<string>>("RootCauses")
@@ -664,6 +718,9 @@ namespace Castor.Api.Migrations
                     b.Property<DateTimeOffset>("UpdatedAt")
                         .HasColumnType("timestamptz");
 
+                    b.Property<string>("Urgency")
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
@@ -682,6 +739,10 @@ namespace Castor.Api.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
 
+                    b.PrimitiveCollection<List<string>>("ChallengeAreaCodes")
+                        .IsRequired()
+                        .HasColumnType("text[]");
+
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("timestamptz");
 
@@ -689,6 +750,9 @@ namespace Castor.Api.Migrations
                         .IsRequired()
                         .HasMaxLength(254)
                         .HasColumnType("character varying(254)");
+
+                    b.Property<Guid?>("MunicipalityId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
@@ -705,6 +769,8 @@ namespace Castor.Api.Migrations
 
                     b.HasIndex("Email")
                         .IsUnique();
+
+                    b.HasIndex("MunicipalityId");
 
                     b.ToTable("Users");
                 });
@@ -907,6 +973,14 @@ namespace Castor.Api.Migrations
                     b.Navigation("ClarifyingQuestions");
 
                     b.Navigation("Municipality");
+                });
+
+            modelBuilder.Entity("Castor.Api.Domain.User", b =>
+                {
+                    b.HasOne("Castor.Api.Domain.Municipality", null)
+                        .WithMany()
+                        .HasForeignKey("MunicipalityId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Castor.Api.Domain.Innovation", b =>
