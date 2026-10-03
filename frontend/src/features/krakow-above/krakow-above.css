@@ -266,6 +266,8 @@
   font-weight: 500;
   line-height: 1.05;
   letter-spacing: -0.04em;
+  /* Own colour: the base h1 rule paints text-primary (dark ink) and would win over .ka's inherited white. */
+  color: var(--ka-white);
 }
 
 /* Each sentence is its own line, so the break never lands inside a sentence. */
