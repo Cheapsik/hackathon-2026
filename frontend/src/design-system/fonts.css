@@ -1,0 +1,11 @@
+/*
+ * Satoshi (Indian Type Foundry, via Fontshare), self-hosted: no request leaves for a third-party CDN.
+ * One variable file covers every weight the system uses (400–700).
+ */
+@font-face {
+  font-family: 'Satoshi';
+  src: url('../assets/fonts/Satoshi-Variable.woff2') format('woff2');
+  font-weight: 300 900;
+  font-style: normal;
+  font-display: swap;
+}

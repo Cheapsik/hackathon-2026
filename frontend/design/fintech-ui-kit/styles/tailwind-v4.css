@@ -1,0 +1,45 @@
+/* W Tailwind CSS v4 zaimportuj ten plik po fintech-theme.css. */
+@theme inline {
+  --font-sans: var(--ft-font-ui);
+  --font-display: var(--ft-font-display);
+
+  --color-ft-canvas: var(--ft-canvas);
+  --color-ft-app: var(--ft-bg-app);
+  --color-ft-surface-1: var(--ft-surface-1);
+  --color-ft-surface-2: var(--ft-surface-2);
+  --color-ft-active: var(--ft-surface-active);
+  --color-ft-text: var(--ft-text);
+  --color-ft-muted: var(--ft-text-muted);
+  --color-ft-faint: var(--ft-text-faint);
+  --color-ft-success: var(--ft-success);
+  --color-ft-warning: var(--ft-warning);
+  --color-ft-danger: var(--ft-danger);
+
+  --radius-ft-control: var(--ft-radius-control);
+  --radius-ft-field: var(--ft-radius-field);
+  --radius-ft-card: var(--ft-radius-card);
+  --radius-ft-panel: var(--ft-radius-panel);
+  --radius-ft-shell: var(--ft-radius-shell);
+}
+
+@utility glass-panel {
+  background: var(--ft-surface-1);
+  border: 1px solid var(--ft-border-highlight);
+  border-radius: var(--ft-radius-panel);
+  box-shadow: var(--ft-shadow-card);
+  -webkit-backdrop-filter: blur(22px) saturate(.82);
+  backdrop-filter: blur(22px) saturate(.82);
+}
+
+@utility ceramic-card {
+  background: var(--ft-surface-2);
+  border: 1px solid rgba(255,255,255,.56);
+  border-radius: var(--ft-radius-card);
+  box-shadow: var(--ft-shadow-card);
+  -webkit-backdrop-filter: blur(18px) saturate(.84);
+  backdrop-filter: blur(18px) saturate(.84);
+}
+
+@utility tabular-finance {
+  font-variant-numeric: tabular-nums lining-nums;
+}

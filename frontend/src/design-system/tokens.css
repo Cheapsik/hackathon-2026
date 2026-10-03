@@ -1,0 +1,228 @@
+/*
+ * Castor design tokens — the only source of colours, type, radii, shadows, motion and layout sizes.
+ * Rules and rationale: frontend/design/DESIGN.md. Components use the semantic utilities these produce
+ * (bg-surface-glass, text-muted, rounded-card, shadow-floating…), never raw values.
+ *
+ * Tailwind's default palette, radii, shadows, type scale and containers are reset, so `gray-300`,
+ * `rounded-3xl` or `text-sm` simply do not exist here. `static` keeps every token in the output CSS, because
+ * high contrast and some components read them through var() rather than through a utility.
+ */
+@theme static {
+  --color-*: initial;
+  --radius-*: initial;
+  --shadow-*: initial;
+  --inset-shadow-*: initial;
+  --drop-shadow-*: initial;
+  --text-shadow-*: initial;
+  --text-*: initial;
+  --font-*: initial;
+  --blur-*: initial;
+  --ease-*: initial;
+  --container-*: initial;
+
+  /*
+   * Colour: warm, slightly green neutrals; dark green only for the main action, active states and the brand.
+   * The names `surface-glass*` are historical — every surface is opaque now; they keep the components that use
+   * them working. Contrast: muted text 4.6:1 on bg, 5.4:1 on surface-strong; primary vs surface-strong 11:1;
+   * border-strong 3.2:1 on bg, 3.7:1 on surface-strong (WCAG 1.4.11 for field edges).
+   */
+  --color-canvas: #e9ebe5;
+  --color-app: #e9ebe5;
+  --color-surface-glass: #f4f4ef;
+  --color-surface-glass-strong: #fcfcf8;
+  --color-surface-ceramic: #fcfcf8;
+  --color-surface-solid: #f4f4ef;
+  --color-chip: #c8d8cf;
+  --color-surface-active: #173f38;
+  --color-primary-hover: #0f302b;
+  --color-text-primary: #111613;
+  --color-text-muted: #626a65;
+  --color-text-faint: #626a65;
+  --color-text-inverse: #fcfcf8;
+  --color-border-subtle: rgb(17 22 19 / 0.12);
+  --color-border-highlight: rgb(17 22 19 / 0.12);
+  --color-border-strong: #7c847f;
+  --color-accent: #173f38;
+  --color-focus: #173f38;
+  --color-success: #1b5e3a;
+  --color-success-soft: #c8d8cf;
+  --color-warning: #6b4e00;
+  --color-warning-soft: #efe3be;
+  --color-danger: #9b2c2c;
+  --color-danger-soft: rgb(155 44 44 / 0.1);
+  --color-scrim: rgb(17 22 19 / 0.4);
+  --color-scrim-strong: rgb(17 22 19 / 0.66);
+  --color-skeleton: rgb(17 22 19 / 0.08);
+  --color-media: #59635d;
+  --color-on-media: #fcfcf8;
+  --color-on-media-muted: rgb(252 252 248 / 0.86);
+  --color-on-media-glass: rgb(17 22 19 / 0.28);
+  --color-on-media-border: rgb(252 252 248 / 0.3);
+
+  /* Typography — one family. Hierarchy comes from size, weight and spacing. */
+  --font-sans: 'Satoshi', system-ui, sans-serif;
+  --font-display: 'Satoshi', system-ui, sans-serif;
+  --font-mono: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+
+  --text-label: clamp(0.875rem, 0.86rem + 0.08vw, 1rem);
+  --text-label--line-height: 1.35;
+  --text-body-sm: clamp(0.9375rem, 0.92rem + 0.1vw, 1rem);
+  --text-body-sm--line-height: 1.45;
+  --text-body: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+  --text-body--line-height: 1.55;
+  --text-lead: clamp(1.125rem, 1.04rem + 0.35vw, 1.25rem);
+  --text-lead--line-height: 1.5;
+  --text-section-title: clamp(1.375rem, 1.2rem + 0.8vw, 1.75rem);
+  --text-section-title--line-height: 1.2;
+  --text-page-title: clamp(1.75rem, 1.4rem + 1.4vw, 2.25rem);
+  --text-page-title--line-height: 1.1;
+  --text-value: clamp(2rem, 1.8rem + 0.8vw, 2.5rem);
+  --text-value--line-height: 1;
+  --text-hero: clamp(2.75rem, 5vw, 4.5rem);
+  --text-hero--line-height: 1.05;
+  --text-eyebrow: 0.875rem;
+  --text-eyebrow--line-height: 1.3;
+  --text-logo: 1.5rem;
+  --text-logo--line-height: 1;
+
+  --tracking-ui: 0;
+  --tracking-display: -0.02em;
+  --tracking-hero: -0.02em;
+
+  /*
+   * Radius hierarchy: control < button/input < card < panel (the main product surface). Circles are only for
+   * statuses, the switch and avatars; there is no pill radius.
+   */
+  --radius-control: 0.625rem;
+  --radius-button: 0.875rem;
+  --radius-input: 0.875rem;
+  --radius-card: 1rem;
+  --radius-panel: 1.375rem;
+  --radius-shell: 1.375rem;
+
+  /* Depth: one layer at most, never black, never a glow. */
+  --shadow-contact: 0 1px 0 rgb(17 22 19 / 0.04);
+  --shadow-control: none;
+  --shadow-control-raised: 0 2px 8px -2px rgb(17 22 19 / 0.18);
+  --shadow-primary: inset 0 1px 0 rgb(255 255 255 / 0.14);
+  --shadow-card: 0 12px 32px -16px rgb(17 22 19 / 0.22);
+  --shadow-floating: 0 16px 40px -16px rgb(17 22 19 / 0.3);
+  --shadow-on-media: none;
+  /* Follows a masked shape (the curved sheet of the immersive detail screen), which box-shadow cannot. */
+  --drop-shadow-sheet: 0 -10px 24px rgb(17 22 19 / 0.1);
+
+  /* No blurred surfaces: values stay for components that still name a blur, at zero. */
+  --blur-card: 0px;
+  --blur-glass: 0px;
+  --blur-dock: 0px;
+
+  --ease-standard: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-spring: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  /* Layout. Spacing uses Tailwind's 0.25rem step; allowed steps: 1 2 3 4 5 6 8 10 12 16 24. */
+  --spacing-gutter: 1.25rem;
+  --spacing-gutter-section: 2rem;
+  --spacing-touch: 2.75rem;
+  --spacing-icon-sm: 1rem;
+  --spacing-icon: 1.125rem;
+  --spacing-icon-lg: 1.25rem;
+  --container-aside: 22.5rem;
+  --container-narrow: 30rem;
+  --container-panel: 32.5rem;
+  --container-default: 45rem;
+  /* 1240 px of content plus the 32 px page margin on each side. */
+  --container-wide: 81.5rem;
+  --container-shell: 81.5rem;
+}
+
+:root {
+  color-scheme: light;
+
+  --duration-fast: 160ms;
+  --duration-base: 200ms;
+  --duration-slow: 280ms;
+
+  /* Material recipes read these. No surface is blurred. */
+  --backdrop-glass: none;
+  --backdrop-card: none;
+  --backdrop-dock: none;
+  --focus-ring-width: 2px;
+  --ambient-light: none;
+}
+
+/* High contrast (DisplayControls): black on white, every boundary at full strength. */
+:root[data-contrast='high'] {
+  --color-canvas: #ffffff;
+  --color-app: #ffffff;
+  --color-surface-glass: #ffffff;
+  --color-surface-glass-strong: #ffffff;
+  --color-surface-ceramic: #ffffff;
+  --color-surface-solid: #ffffff;
+  --color-chip: #ffffff;
+  --color-surface-active: #000000;
+  --color-primary-hover: #000000;
+  --color-text-primary: #000000;
+  --color-text-muted: #000000;
+  --color-text-faint: #000000;
+  --color-text-inverse: #ffffff;
+  --color-border-subtle: #000000;
+  --color-border-highlight: #000000;
+  --color-border-strong: #000000;
+  --color-accent: #000000;
+  --color-focus: #000000;
+  --color-success: #0b3d24;
+  --color-success-soft: #ffffff;
+  --color-warning: #4d3900;
+  --color-warning-soft: #ffffff;
+  --color-danger: #6e1f1f;
+  --color-danger-soft: #ffffff;
+  --color-skeleton: #d9d9d9;
+  --color-scrim: rgb(0 0 0 / 0.6);
+  --color-scrim-strong: rgb(0 0 0 / 0.86);
+  --color-on-media-glass: rgb(0 0 0 / 0.72);
+  --color-on-media-border: #ffffff;
+  --color-on-media-muted: #ffffff;
+
+  --shadow-contact: none;
+  --shadow-control: none;
+  --shadow-control-raised: none;
+  --shadow-primary: none;
+  --shadow-card: none;
+  --shadow-floating: none;
+  --shadow-on-media: none;
+  --drop-shadow-sheet: 0 0 0 transparent;
+
+  --focus-ring-width: 3px;
+}
+
+/* Text size switch (A / A+ / A++). Every size is in rem, so the whole layout scales with it. */
+:root[data-text-size='large'] {
+  font-size: 112.5%;
+}
+
+:root[data-text-size='larger'] {
+  font-size: 125%;
+}
+
+/*
+ * Aliases for components generated by the shadcn CLI, so they inherit this system instead of shadcn's palette.
+ * Hand-written code uses the semantic names above.
+ */
+@theme inline {
+  --color-background: var(--color-app);
+  --color-foreground: var(--color-text-primary);
+  --color-card: var(--color-surface-ceramic);
+  --color-card-foreground: var(--color-text-primary);
+  --color-popover: var(--color-surface-ceramic);
+  --color-popover-foreground: var(--color-text-primary);
+  --color-primary: var(--color-surface-active);
+  --color-primary-foreground: var(--color-text-inverse);
+  --color-secondary: var(--color-surface-glass-strong);
+  --color-secondary-foreground: var(--color-text-primary);
+  --color-muted: var(--color-surface-solid);
+  --color-muted-foreground: var(--color-text-muted);
+  --color-destructive: var(--color-danger);
+  --color-border: var(--color-border-subtle);
+  --color-input: var(--color-border-strong);
+  --color-ring: var(--color-focus);
+}

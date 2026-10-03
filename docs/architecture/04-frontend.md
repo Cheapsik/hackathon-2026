@@ -21,14 +21,15 @@ Wymagania produktu dla UI (dostępność WCAG 2.1 AA, język, etykiety, mobile f
 frontend/
 ├── src/
 │   ├── main.tsx                punkt wejścia: QueryClientProvider + RouterProvider
-│   ├── index.css               Tailwind, tokeny kolorów shadcn (dostrojone pod AA), wysoki kontrast, rozmiar tekstu
+│   ├── index.css               Tailwind + import design-system (tokeny, wysoki kontrast, rozmiar tekstu, druk karty)
 │   ├── app/                    router.tsx (wszystkie trasy), query-client.ts
 │   ├── api/
 │   │   ├── castor-fetch.ts     fetch, przez który idzie każde wywołanie klienta; błąd → ApiError
 │   │   └── generated/          klient orval — generowany, poza gitem
+│   ├── design-system/          tokeny, primitives, patterns i szablony stron (zasady: ../design/DESIGN.md; podgląd: /design-system w dev)
 │   ├── components/
 │   │   ├── ui/                 komponenty shadcn (dodawane CLI)
-│   │   └── layout/             AppLayout, DisplayControls — wspólne dla wszystkich stron
+│   │   └── layout/             AppLayout, BrandMark, DisplayControls, AccountLinks — wspólne dla wszystkich stron
 │   ├── features/<moduł>/       strony i komponenty jednego modułu (np. problem-reports/, innovations/)
 │   ├── hooks/                  hooki wspólne (usePageTitle)
 │   └── lib/                    utils.ts (cn), display-preferences.ts
@@ -49,7 +50,7 @@ frontend/
 ## Dostępność — co daje szkielet
 
 - `AppLayout`: landmarki `header` / `nav` / `main` / `footer`, link „Przejdź do treści” (pierwszy element w kolejności Tab), po zmianie trasy focus przechodzi na `main`.
-- `DisplayControls`: **A / A+ / A++** (atrybut `data-text-size` na `<html>`, cały layout w `rem`) i **Wysoki kontrast** (`data-contrast="high"`) — z `aria-pressed`, zapamiętane w `localStorage` (przy blokadzie storage działają do końca wizyty), nakładane przed pierwszym renderem.
+- `DisplayControls` w panelu „Dostępność” w nagłówku (`UtilityMenu`): **A / A+ / A++** (atrybut `data-text-size` na `<html>`, cały layout w `rem`), **Wysoki kontrast** (przełącznik, `data-contrast="high"`) i **Ogranicz animacje** (`data-motion="reduce"`, obok ustawienia systemu) — zapamiętane w `localStorage` (przy blokadzie storage działają do końca wizyty), nakładane przed pierwszym renderem.
 - Tokeny kolorów: tekst pomocniczy, obramowania pól i obwódka focusu spełniają 4.5:1 / 3:1; globalny `:focus-visible` dla każdego elementu.
 - `usePageTitle` — każda strona ustawia tytuł karty („… · Castor”); każda strona ma dokładnie jedno `h1`.
 - `useSession` / `useRefreshSession` (`src/hooks/use-session.ts`) — kto jest zalogowany (`GET /api/auth/session`) i odświeżenie po logowaniu i wylogowaniu; `AccountLinks` w nagłówku.

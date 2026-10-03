@@ -1,4 +1,5 @@
 import { useEffect, useId, useRef, useState, type FormEvent } from 'react'
+import { useLocation } from 'react-router'
 import {
   usePostApiProblemReports,
   usePostApiProblemReportsProblemReportIdAnswers,
@@ -12,6 +13,8 @@ import { ProblemReportResults } from '@/features/problem-reports/ProblemReportRe
 import { usePageTitle } from '@/hooks/use-page-title'
 import { errorMessage } from '@/lib/error-message'
 
+type DescribeProblemLocationState = { description?: string } | null
+
 const descriptionMinLength = 20
 const descriptionMaxLength = 3000
 
@@ -22,6 +25,7 @@ const descriptionMaxLength = 3000
 export function DescribeProblemPage() {
   usePageTitle('Opisz problem')
 
+  const handedOverDescription = (useLocation().state as DescribeProblemLocationState)?.description?.trim() ?? ''
   const [report, setReport] = useState<ProblemReportResponse | null>(null)
   const createReport = usePostApiProblemReports()
   const answerQuestions = usePostApiProblemReportsProblemReportIdAnswers()
@@ -56,6 +60,7 @@ export function DescribeProblemPage() {
       {!report && (
         <DescribeProblemForm
           pending={createReport.isPending}
+          initialDescription={handedOverDescription}
           onSubmit={(request) => createReport.mutate({ data: request }, { onSuccess: (response) => setReport(response.data) })}
         />
       )}
@@ -93,11 +98,12 @@ interface DescribeProblemFormRequest {
 
 interface DescribeProblemFormProps {
   pending: boolean
+  initialDescription: string
   onSubmit: (request: DescribeProblemFormRequest) => void
 }
 
-function DescribeProblemForm({ pending, onSubmit }: DescribeProblemFormProps) {
-  const [description, setDescription] = useState('')
+function DescribeProblemForm({ pending, initialDescription, onSubmit }: DescribeProblemFormProps) {
+  const [description, setDescription] = useState(initialDescription)
   const [municipality, setMunicipality] = useState<MunicipalityResponse | null>(null)
   const [submittedOnBehalf, setSubmittedOnBehalf] = useState(false)
   const [keepOriginalDescription, setKeepOriginalDescription] = useState(false)

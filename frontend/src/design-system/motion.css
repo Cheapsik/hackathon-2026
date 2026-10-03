@@ -1,0 +1,90 @@
+/*
+ * Motion: functional only. Hover and focus 160 ms, popovers and panels 200 ms (opacity + a few pixels of
+ * travel), sheets 280 ms. Nothing moves on its own, and everything collapses to an instant change when the
+ * system asks for reduced motion or the user switches "Ogranicz animacje" on (data-motion="reduce").
+ */
+@theme static {
+  --animate-enter: ds-enter var(--duration-base) var(--ease-standard) both;
+  --animate-fade-in: ds-fade-in var(--duration-base) var(--ease-standard) both;
+  --animate-fade-out: ds-fade-out var(--duration-fast) var(--ease-standard) both;
+  --animate-pop-in: ds-pop-in var(--duration-base) var(--ease-standard) both;
+  --animate-pop-out: ds-pop-out var(--duration-fast) var(--ease-standard) both;
+  --animate-sheet-in: ds-sheet-in var(--duration-slow) var(--ease-standard) both;
+  --animate-sheet-out: ds-sheet-out var(--duration-base) var(--ease-standard) both;
+  --animate-shimmer: ds-shimmer 1.6s linear infinite;
+
+  @keyframes ds-enter {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+  }
+
+  @keyframes ds-fade-in {
+    from {
+      opacity: 0;
+    }
+  }
+
+  @keyframes ds-fade-out {
+    to {
+      opacity: 0;
+    }
+  }
+
+  @keyframes ds-pop-in {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+  }
+
+  @keyframes ds-pop-out {
+    to {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+  }
+
+  @keyframes ds-sheet-in {
+    from {
+      transform: translateY(100%);
+    }
+  }
+
+  @keyframes ds-sheet-out {
+    to {
+      transform: translateY(100%);
+    }
+  }
+
+  @keyframes ds-shimmer {
+    from {
+      background-position: 150% 0;
+    }
+
+    to {
+      background-position: -50% 0;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+:root[data-motion='reduce'] *,
+:root[data-motion='reduce'] ::before,
+:root[data-motion='reduce'] ::after {
+  scroll-behavior: auto !important;
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
