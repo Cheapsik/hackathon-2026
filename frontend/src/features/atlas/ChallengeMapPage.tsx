@@ -1,6 +1,15 @@
 import { useMemo, useState } from 'react'
+import { ArrowLeft, Map as MapIcon } from 'lucide-react'
 import { Link } from 'react-router'
 import { useGetApiChallengeAreas, useGetApiIndicators, useGetApiIndicatorsIndicatorIdValues } from '@/api/generated/castor'
+import {
+  CeramicCard,
+  EmptyState,
+  ErrorState,
+  LoadingState,
+  SelectField,
+  SoftButton,
+} from '@/design-system'
 import { GminaMap } from '@/features/atlas/GminaMap'
 import { usePageTitle } from '@/hooks/use-page-title'
 import { errorMessage } from '@/lib/error-message'
@@ -25,84 +34,117 @@ export function ChallengeMapPage() {
     return map
   }, [rows])
 
+  const areaOptions = (areas.data?.data ?? []).map((challengeArea) => ({
+    value: challengeArea.code,
+    label: challengeArea.name,
+  }))
+  const indicatorOptions = (indicators.data?.data ?? []).map((indicator) => ({
+    value: indicator.id,
+    label: indicator.name,
+  }))
+
   return (
-    <>
-      <p>
+    <div className="grid gap-6">
+      <SoftButton asChild variant="ghost" icon={<ArrowLeft aria-hidden />}>
         <Link to="/obszary">Atlas wyzwań</Link>
-      </p>
-      <h1>Mapa gminy</h1>
-      <p>
-        Kartogram jednego wskaźnika Obserwatora. Ciemniejszy kolor oznacza wyższą wartość. Te same liczby są w tabeli pod
-        mapą. Granice gmin pochodzą z Państwowego Rejestru Granic i są uproszczone.
-      </p>
-      <form onSubmit={(event) => event.preventDefault()}>
-        <label>
-          Obszar{' '}
-          <select
-            value={area}
-            onChange={(event) => {
-              setArea(event.target.value)
-              setIndicatorId('')
-            }}
-          >
-            <option value="">wszystkie wskaźniki</option>
-            {(areas.data?.data ?? []).map((challengeArea) => (
-              <option key={challengeArea.code} value={challengeArea.code}>
-                {challengeArea.name}
-              </option>
-            ))}
-          </select>
-        </label>{' '}
-        <label>
-          Wskaźnik{' '}
-          <select value={selectedId} onChange={(event) => setIndicatorId(event.target.value)}>
-            {(indicators.data?.data ?? []).map((indicator) => (
-              <option key={indicator.id} value={indicator.id}>
-                {indicator.name}
-              </option>
-            ))}
-          </select>
-        </label>
+      </SoftButton>
+
+      <header className="grid max-w-default gap-2">
+        <h1 className="font-display text-page-title tracking-display">Mapa gminy</h1>
+        <p className="text-body text-text-muted">
+          Kartogram jednego wskaźnika Obserwatora. Ciemniejszy kolor oznacza wyższą wartość. Te same liczby są w tabeli
+          pod mapą. Granice gmin pochodzą z Państwowego Rejestru Granic i są uproszczone.
+        </p>
+      </header>
+
+      <form
+        onSubmit={(event) => event.preventDefault()}
+        className="grid gap-4 sm:grid-cols-2"
+      >
+        <SelectField
+          label="Obszar"
+          value={area}
+          placeholder="wszystkie wskaźniki"
+          options={areaOptions}
+          loading={areas.isPending}
+          onChange={(event) => {
+            setArea(event.target.value)
+            setIndicatorId('')
+          }}
+        />
+        <SelectField
+          label="Wskaźnik"
+          value={selectedId}
+          options={indicatorOptions}
+          loading={indicators.isPending}
+          disabled={indicatorOptions.length === 0}
+          onChange={(event) => setIndicatorId(event.target.value)}
+        />
       </form>
-      <div aria-live="polite">
-        {values.isPending && (
-          <p>
-            <output>Wczytuję wartości…</output>
-          </p>
+
+      <div aria-live="polite" className="grid gap-4">
+        {values.isPending && selectedId && <LoadingState label="Wczytuję wartości…" />}
+        {values.isError && (
+          <ErrorState
+            description={errorMessage(values.error, { 404: 'Ten wskaźnik nie ma wartości.' })}
+            onRetry={() => {
+              void values.refetch()
+            }}
+          />
         )}
-        {values.isError && <p role="alert">{errorMessage(values.error, { 404: 'Ten wskaźnik nie ma wartości.' })}</p>}
+        {!selectedId && !indicators.isPending && (
+          <EmptyState
+            title="Brak wskaźników"
+            description="Wybierz inny obszar albo spróbuj ponownie później."
+            icon={MapIcon}
+          />
+        )}
       </div>
+
       {rows && (
-        <>
-          <p>
+        <div className="grid gap-4">
+          <p className="text-body-sm text-text-muted">
             {rows.name}, rok {rows.year}. Średnia regionu: {numberFormat.format(Number(rows.regionAverage))}
-            {rows.unit ? ` ${rows.unit}` : ''}.{rows.level === 'POWIAT' && ' To dane dla powiatu, pokazane przy każdej jego gminie.'}
+            {rows.unit ? ` ${rows.unit}` : ''}.
+            {rows.level === 'POWIAT' && ' To dane dla powiatu, pokazane przy każdej jego gminie.'}
           </p>
-          <GminaMap values={byTeryt} label={`Mapa: ${rows.name}, rok ${rows.year}. Liczby są w tabeli poniżej.`} />
-          <table>
-            <caption>
-              {rows.name} ({rows.year})
-            </caption>
-            <thead>
-              <tr>
-                <th scope="col">Gmina</th>
-                <th scope="col">Wartość</th>
-              </tr>
-            </thead>
-            <tbody>
-              {rows.values.map((row) => (
-                <tr key={row.teryt}>
-                  <th scope="row">{row.name}</th>
-                  <td>
-                    {numberFormat.format(Number(row.value))}
-                    {rows.unit ? ` ${rows.unit}` : ''}
-                  </td>
+
+          <CeramicCard padding="md" className="overflow-hidden">
+            <GminaMap values={byTeryt} label={`Mapa: ${rows.name}, rok ${rows.year}. Liczby są w tabeli poniżej.`} />
+          </CeramicCard>
+
+          <CeramicCard padding="none" className="overflow-x-auto p-1">
+            <table className="w-full min-w-[28rem] text-left text-body-sm">
+              <caption className="px-3 pt-3 pb-1 text-left text-body font-medium">
+                {rows.name} ({rows.year})
+              </caption>
+              <thead className="text-label text-text-muted">
+                <tr>
+                  <th scope="col" className="px-3 py-2 font-medium">
+                    Gmina
+                  </th>
+                  <th scope="col" className="px-3 py-2 text-right font-medium">
+                    Wartość
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </>
+              </thead>
+              <tbody className="divide-y divide-border-subtle">
+                {rows.values.map((row) => (
+                  <tr key={row.teryt}>
+                    <th scope="row" className="px-3 py-3 font-medium">
+                      {row.name}
+                    </th>
+                    <td className="px-3 py-3 text-right tabular">
+                      {numberFormat.format(Number(row.value))}
+                      {rows.unit ? ` ${rows.unit}` : ''}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </CeramicCard>
+        </div>
       )}
-    </>
+    </div>
   )
 }
