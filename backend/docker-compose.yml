@@ -1,0 +1,23 @@
+name: castor
+
+services:
+  postgres:
+    image: postgres:17
+    container_name: castor-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: castor
+      POSTGRES_USER: castor
+      POSTGRES_PASSWORD: castor
+    ports:
+      - "5432:5432"
+    volumes:
+      - castor-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U castor -d castor"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  castor-postgres-data:

@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Castor.Api/Castor.Api.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Castor.Tests/Castor.Tests.csproj" />
+  </Folder>
+</Solution>
