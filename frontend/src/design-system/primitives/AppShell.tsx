@@ -22,6 +22,8 @@ export type AppShellProps = {
   navigation: AppShellNavItem[]
   /** Names the main navigation landmark. */
   navigationLabel?: string
+  /** Sign-in / account, shown in the header on large screens and in the mobile menu. */
+  account?: ReactNode
   /**
    * App-wide settings (display preferences). Shown in a compact panel behind a small labelled button in the
    * header, so they are reachable everywhere without taking space from the page.
@@ -44,6 +46,7 @@ export function AppShell({
   brand,
   navigation,
   navigationLabel = 'Główna',
+  account,
   utilities,
   utilitiesLabel = 'Dostępność',
   footer,
@@ -92,6 +95,7 @@ export function AppShell({
                 </ul>
               </nav>
             )}
+            {account && <div className="hidden text-label text-text-muted lg:block">{account}</div>}
             {utilities && (
               <UtilityMenu label={utilitiesLabel} title={utilitiesLabel}>
                 {utilities}
@@ -143,6 +147,7 @@ export function AppShell({
               ))}
             </ul>
           </nav>
+          {account && <div className="mt-4 border-t border-border-subtle pt-4 text-label text-text-muted">{account}</div>}
         </BottomSheet>
       )}
     </div>

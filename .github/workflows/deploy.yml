@@ -1,0 +1,90 @@
+name: Deploy production
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: production-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Build and deploy over SSH
+    runs-on: ubuntu-24.04
+    environment: production
+    env:
+      DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+      DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+      DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+      DEPLOY_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+      DEPLOY_PORT: ${{ vars.DEPLOY_PORT || '22' }}
+      DEPLOY_PATH: ${{ vars.DEPLOY_PATH || '/opt/castor' }}
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Validate deployment configuration
+        env:
+          CASTOR_ENV_FILE: ${{ github.workspace }}/.env.example
+          CASTOR_IMAGE_TAG: validation
+          POSTGRES_PASSWORD: validation
+        run: docker compose -f deploy/docker-compose.prod.yml config --quiet
+
+      - name: Build application images
+        run: |
+          docker build --pull --tag "castor-backend:${GITHUB_SHA}" backend
+          docker build --pull --tag "castor-frontend:${GITHUB_SHA}" --file frontend/Dockerfile .
+
+      - name: Create image bundle
+        run: |
+          mkdir -p dist
+          docker save --output dist/castor-images.tar \
+            "castor-backend:${GITHUB_SHA}" \
+            "castor-frontend:${GITHUB_SHA}"
+          gzip --fast dist/castor-images.tar
+
+      - name: Configure SSH
+        run: |
+          : "${DEPLOY_HOST:?Missing DEPLOY_HOST secret}"
+          : "${DEPLOY_USER:?Missing DEPLOY_USER secret}"
+          : "${DEPLOY_SSH_KEY:?Missing DEPLOY_SSH_KEY secret}"
+          : "${DEPLOY_KNOWN_HOSTS:?Missing DEPLOY_KNOWN_HOSTS secret}"
+          case "${DEPLOY_PATH}" in
+            /*) ;;
+            *) echo "DEPLOY_PATH must be absolute" >&2; exit 1 ;;
+          esac
+          case "${DEPLOY_PATH}" in
+            *[!A-Za-z0-9_./-]*) echo "DEPLOY_PATH contains unsupported characters" >&2; exit 1 ;;
+          esac
+          install -m 700 -d "${HOME}/.ssh"
+          printf '%s\n' "${DEPLOY_SSH_KEY}" > "${HOME}/.ssh/id_ed25519"
+          chmod 600 "${HOME}/.ssh/id_ed25519"
+          printf '%s\n' "${DEPLOY_KNOWN_HOSTS}" > "${HOME}/.ssh/known_hosts"
+          chmod 600 "${HOME}/.ssh/known_hosts"
+
+      - name: Upload deployment bundle
+        run: |
+          staging_dir="${DEPLOY_PATH}/incoming/${GITHUB_SHA}"
+          ssh -p "${DEPLOY_PORT}" "${DEPLOY_USER}@${DEPLOY_HOST}" "mkdir -p -- '${staging_dir}'"
+          scp -P "${DEPLOY_PORT}" \
+            dist/castor-images.tar.gz \
+            deploy/docker-compose.prod.yml \
+            deploy/remote-deploy.sh \
+            "${DEPLOY_USER}@${DEPLOY_HOST}:${staging_dir}/"
+
+      - name: Activate release
+        run: |
+          staging_dir="${DEPLOY_PATH}/incoming/${GITHUB_SHA}"
+          ssh -p "${DEPLOY_PORT}" "${DEPLOY_USER}@${DEPLOY_HOST}" \
+            "bash '${staging_dir}/remote-deploy.sh' '${DEPLOY_PATH}' '${GITHUB_SHA}' '${staging_dir}/castor-images.tar.gz' '${staging_dir}/docker-compose.prod.yml'"
+
+      - name: Remove temporary SSH key
+        if: always()
+        run: rm -f "${HOME}/.ssh/id_ed25519"

@@ -1,0 +1,2181 @@
+[
+  {
+    "id": 1,
+    "name": "Wskaźnik maskulinizacji",
+    "group": "LUDNOŚĆ",
+    "description": "Wskaźnik maskulinizacji - wielkość demograficzna określająca ilu mężczyzn przypada na 100 kobiet na danym terenie.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych). Dane dot. ludności za lata 2010 - 2021 bazują na wynikach Narodowego Spisu Powszechnego Ludności i Mieszkań 2011.",
+    "unit": null,
+    "challengeAreas": [],
+    "general": false
+  },
+  {
+    "id": 2,
+    "name": "Dostępność aptek",
+    "group": "ZDROWIE",
+    "description": "Wskaźnik dostępności do aptek - liczba osób przypadająca na jedną aptekę ogólnodostępną. Apteka, zgodnie z Ustawą \"Prawo farmaceutyczne\" z dnia 6 września 2001 r. to placówka ochrony zdrowia publicznego, w której osoby uprawnione świadczą w szczególności usługi farmaceutyczne obejmujące zadania określone w ustawie.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [
+      "HEALTH"
+    ],
+    "general": false
+  },
+  {
+    "id": 3,
+    "name": "Wskaźnik feminizacji",
+    "group": "LUDNOŚĆ",
+    "description": "Wskaźnik feminizacji - wielkość demograficzna określająca ile kobiet przypada na 100 mężczyzn na danym terenie.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych). Dane dot. ludności za lata 2010 - 2021 bazują na wynikach Narodowego Spisu Powszechnego Ludności i Mieszkań 2011.",
+    "unit": null,
+    "challengeAreas": [],
+    "general": false
+  },
+  {
+    "id": 4,
+    "name": "Wskaźnik urbanizacji",
+    "group": "LUDNOŚĆ",
+    "description": "Wskaźnik urbanizacji - udział mieszkańców miast w liczbie mieszkańców ogółem. Do wyliczenia wskaźnika posłużono się danymi na temat ludności faktycznie zamieszkałej na dzień 31 XII każdego roku. Ludnośc faktycznie zamieszkała obejmuje: a) stałych mieszkańców, z wyjatkiem osób przebywających poza miejscem zamieszkania przez okres powyżej 3 miesięcy w kraju oraz obejmuje wszystkie osoby przebywajace za granicą (bez względu na okres ich nieobecności) b) osoby przebywające czasowo przez okres powyżej 3 miesięcy, przybyłe z innego miejsca w kraju. Dane za lata 2010 - 2021 bazują na wynikach Narodowego Spisu Powszechnego Ludności i Mieszkań 2011.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych). Dane dot. ludności za lata 2010 - 2021 bazują na wynikach Narodowego Spisu Powszechnego Ludności i Mieszkań 2011.",
+    "unit": "%",
+    "challengeAreas": [],
+    "general": true
+  },
+  {
+    "id": 7,
+    "name": "Wskaźnik gęstości zaludnienia",
+    "group": "LUDNOŚĆ",
+    "description": "Wskaźnik gęstości zaludnienia - liczba mieszkańców przypadająca na 1 km².",
+    "source": "Główny Urząd Statystyczny",
+    "unit": null,
+    "challengeAreas": [],
+    "general": true
+  },
+  {
+    "id": 17,
+    "name": "Beneficjenci pomocy społecznej",
+    "group": "POMOC SPOŁECZNA - BENEFICJENCI",
+    "description": "Udział osób korzystających z pomocy społecznej w liczbie ludności ogółem - na podstawie danych o rzeczywistej liczbie osób w rodzinach objętych pomocą społeczną (świadczenia przyznane w ramach zadań zleconych i własnych bez względu na rodzaj, formę, liczbę oraz źródło finansowania).",
+    "source": "Dane dla Polski – Sprawozdanie MRiPS-03 (wcześniej MRPiPS-03), dane dla Małopolski – Sprawozdanie: MRPiPS-03 (do 2014 r.), OZPS (od 2015 r.); GUS (BDL). Dane dot. ludności za lata 2010 - 2021 bazują na wynikach Narodowego Spisu Powszechnego Ludności i Mieszkań 2011.",
+    "unit": "%",
+    "challengeAreas": [
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 18,
+    "name": "Dostępność szpitali",
+    "group": "ZDROWIE",
+    "description": "Wskaźnik dostępności szpitali - liczba łóżek w szpitalach ogólnych w przeliczeniu na 10 tys. mieszkańców (dane dla 2008 r. obejmują liczbę ludności na łóżko w szpitalach ogólnych łącznie z łóżkami i inkubatorami dla noworodków).",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych). Dane dot. ludności za lata 2010 - 2021 bazują na wynikach Narodowego Spisu Powszechnego Ludności i Mieszkań 2011.",
+    "unit": null,
+    "challengeAreas": [
+      "HEALTH"
+    ],
+    "general": false
+  },
+  {
+    "id": 20,
+    "name": "Wskaźnik dostępności bibliotek",
+    "group": "KULTURA",
+    "description": "Wskaźnik dostępności bibliotek - liczba ludności przydająca na jedną placówkę biblioteczną. W celu wyliczenia wskaźnika zliczono biblioteki, filie i punkty biblioteczne na danym ternie. Dane bazują na sprawozdaniach bibliotek ogólnych. Zgodnie z definicją przyjętą przez GUS przez placówkę biblioteczną rozumie się jednostkę organizacyjną lub jej część posiadającą uporządkowany (zinwentaryzowany) zbiór książek, czasopism i innych materiałów piśmienniczych liczący co najmniej 300 jednostek inwentarzowych, której głównymi celami są tworzenie i obsługa zbiorów oraz udostępnianie ich użytkownikom w sposób kontrolowany.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [],
+    "general": false
+  },
+  {
+    "id": 21,
+    "name": "Wskaźnik dostępności muzeów",
+    "group": "KULTURA",
+    "description": "Wskaźnik dostępności do muzeów - liczba ludności przypadająca na jedną placówkę muzealną. Dane wskaźnikowe bazują na sprawozdaniach z działalności muzeów i instytucji paramuzealnych. Przez placówkę muzealną (za ustawą z dnia 21 listopada 1996 r. o muzeach) rozumiemy jednostkę organizacyjną, nienastawioną na osiąganie zysku, której celem jest sprawowanie opieki nad zabytkami, informowanie o wartościach i treściach gromadzonych zbiorów, upowszechnianie podstawowych wartości historii, nauki i kultury polskiej oraz światowej, kształtowanie wrażliwości poznawczej i estetycznej oraz umożliwianie kontaktu ze zbiorami.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych). Dane dot. ludności za lata 2010 - 2021 bazują na wynikach Narodowego Spisu Powszechnego Ludności i Mieszkań 2011.",
+    "unit": null,
+    "challengeAreas": [],
+    "general": false
+  },
+  {
+    "id": 22,
+    "name": "Wskaźnik dostępności kin",
+    "group": "KULTURA",
+    "description": "Wskaźnik dostępności kin - liczba osób przypadających na jedno miejsce na widowni kina. Przez \"miejsce na widowni\" rozumie się każde numerowane miejsce (zarejestrowane) wykorzystywane przez instytucję kultury do stałych prezentacji scenicznych (w stałej sali eksploatowanej przez instytucję artystyczną lub w kinie stałym do prezentacji filmów).",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [],
+    "general": false
+  },
+  {
+    "id": 23,
+    "name": "Dostępność przedszkoli",
+    "group": "EDUKACJA",
+    "description": "Wskaźnik dostępności przedszkoli - liczba dzieci w wieku przedszkolnym (3-5 lat) przypadająca na jedno miejsce w przedszkolu. Dane do wskaźnika wyliczono na podstawie sprawozdań przedszkoli i oddziałów przedszkolnych przy szkołach podstawowych. W danych do wskaźnika nie uwzględniono przedszkoli specjalnych, punktów przedszkolnych i zespołów wychowania przedszkolnego. Przez przedszkole (za Rozporządzeniem Ministra Edukacji Narodowej z dnia 21 maja 2001 r. w sprawie ramowych statutów publicznego przedszkola oraz publicznych szkół) rozumiemy placówkę przeznaczoną dla dzieci w wieku od 3 do 6 lat, wspomagającą indywidualny rozwój, zapewniającą opiekę odpowiednią do potrzeb dziecka oraz przygotowującą do nauki w szkole. (Od 2020 roku ze względu na brak kontynuacji monitorowania danych przez GUS, wskaźnik nie jest już aktualizowany)",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [
+      "FAMILY_AND_FOSTER_CARE"
+    ],
+    "general": false
+  },
+  {
+    "id": 24,
+    "name": "Edukacja przedszkolna",
+    "group": "EDUKACJA",
+    "description": "Wskaźnik edukacji na poziomie przedszkolnym - odsetek dzieci w wieku od 3 do 5 lat uczęszczających do placówek wychowania przedszkolnego. Wskaźnik zbudowano na podstawie sprawozdań przedszkoli i innych form edukacji przedszkolnej. Uwzględniono ośrodki wychowania przedszkolnego prowadzone przez ograny samorządu terytorialnego, jednostki samorządu powiatowego oraz gminnego.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [
+      "FAMILY_AND_FOSTER_CARE"
+    ],
+    "general": false
+  },
+  {
+    "id": 25,
+    "name": "Stopa bezrobocia",
+    "group": "RYNEK PRACY",
+    "description": "Stopa bezrobocia - procentowy udział liczby bezrobotnych w liczbie ludności aktywnej zawodowo (tzn. pracującej i bezrobotnej). Przez bezrobotnych ( za Ustawą z dnia 20 kwietnia 2004 r. o promocji zatrudnienia i instytucjach rynku pracy) rozumiemy osoby niezatrudnione i nie wykonujące innej pracy zarobkowej, zdolne i gotowe do podjęcia zatrudnienia w pełnym wymiarze czasu pracy (bądź jeśli są to osoby niepełnosprawne - zdolne i gotowe do podjęcia zatrudnienia co najmniej w połowie tego wymiaru czasu pracy), nieuczące się w szkole z wyjątkiem szkół dla dorosłych lub szkół wyższych w systemie wieczorowym albo zaocznym, zarejestrowane we właściwym dla miejsca zameldowania (stałego lub czasowego) powiatowym urzędzie pracy oraz poszukujące zatrudnienia lub innej pracy zarobkowej, jeżeli spełniają określone w Ustawie warunki.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 27,
+    "name": "Liczba mieszkańców na 1 pracownika socjalnego",
+    "group": "POMOC SPOŁECZNA - KADRA",
+    "description": "Liczba mieszkańców przypadająca na jednego pracownika socjalnego zatrudnionego w ośrodku pomocy społecznej.",
+    "source": "Dane dla Polski – Sprawozdanie: MRPiPS-03 (do 2020 r.), MPiPS-06 (od 2021 r.). Dane dla Małopolski – Sprawozdanie: OZPS (2015 - 2017 r.); MRPiPS-03 (do 2014 i 2018 - 2020 r.); MPiPS-06 (od 2021 r.). GUS (BDL). Dane dot. ludności za lata 2010 - 2021 bazują na wynikach NSP 2011.",
+    "unit": null,
+    "challengeAreas": [],
+    "general": true
+  },
+  {
+    "id": 29,
+    "name": "Liczba rodzin zastępczych",
+    "group": "PIECZA ZASTĘPCZA",
+    "description": "Liczba rodzin zastępczych funkcjonujących na danym obszarze. Rodzina zastępcza jest jedną z form rodzinnej pieczy zastępczej, sprawowanej w przypadku niemożności zapewnienia dziecku opieki i wychowania przez rodziców.",
+    "source": "Sprawozdanie MPiPS-03 (do 2014 r.), Sprawozdanie OZPS (2015 - 2017 r.), Sprawozdania rzeczowo-finansowe z wykonywania przez powiat zadań … (WRiSPZ-P) - od 2018 r.",
+    "unit": null,
+    "challengeAreas": [
+      "FAMILY_AND_FOSTER_CARE"
+    ],
+    "general": false
+  },
+  {
+    "id": 30,
+    "name": "Liczba dzieci w rodzinach zastępczych",
+    "group": "PIECZA ZASTĘPCZA",
+    "description": "Liczba dzieci wychowujących się w rodzinach zastępczych na danym obszarze. Rodzina zastępcza jest jedną z form rodzinnej pieczy zastępczej, sprawowanej w przypadku niemożności zapewnienia dziecku opieki i wychowania przez rodziców. Do roku 2011 dane pochodzą ze sprawozdania MPiPS-03; od roku 2012 dane pochodzą ze sprawozdania Ocena Zasobów Pomocy Społecznej.",
+    "source": "Sprawozdanie MPiPS-03 (do 2014 r.), Sprawozdanie OZPS (2015 - 2017 r.), Sprawozdania rzeczowo-finansowe z wykonywania przez powiat zadań … (WRiSPZ-P) - od 2018 r.",
+    "unit": null,
+    "challengeAreas": [
+      "FAMILY_AND_FOSTER_CARE"
+    ],
+    "general": false
+  },
+  {
+    "id": 31,
+    "name": "Ubóstwo",
+    "group": "POMOC SPOŁECZNA - POWODY KORZYSTANIA",
+    "description": "Odsetek klientów pomocy społecznej korzystających ze wsparcia z powodu ubóstwa (na podstawie danych o rzeczywistej liczbie osób w rodzinach objętych pomocą społeczną).",
+    "source": "Dane dla Polski – Sprawozdanie MRiPS-03 (wcześniej MRPiPS-03). Dane dla Małopolski - Sprawozdanie: MRPiPS-03 (do 2014 r. i od 2018 r.), OZPS (2015 - 2017 r.).",
+    "unit": "%",
+    "challengeAreas": [
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 32,
+    "name": "Bezrobocie",
+    "group": "POMOC SPOŁECZNA - POWODY KORZYSTANIA",
+    "description": "Odsetek klientów pomocy społecznej korzystających ze wsparcia z powodu bezrobocia (na podstawie danych o rzeczywistej liczbie osób w rodzinach objętych pomocą społeczną).",
+    "source": "Dane dla Polski – Sprawozdanie MRiPS-03 (wcześniej MRPiPS-03). Dane dla Małopolski - Sprawozdanie: MRPiPS-03 (do 2014 r. i od 2018 r.), OZPS (2015 - 2017 r.).",
+    "unit": "%",
+    "challengeAreas": [
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 33,
+    "name": "Wielodzietność",
+    "group": "POMOC SPOŁECZNA - POWODY KORZYSTANIA",
+    "description": "Odsetek klientów pomocy społecznej korzystających ze wsparcia z powodu wielodzietności (na podstawie danych o rzeczywistej liczbie osób w rodzinach objętych pomocą społeczną).",
+    "source": "Sprawozdanie MRiPS-03 (wcześniej MRPiPS-03).",
+    "unit": "%",
+    "challengeAreas": [
+      "FAMILY_AND_FOSTER_CARE",
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 34,
+    "name": "Bezdomność",
+    "group": "POMOC SPOŁECZNA - POWODY KORZYSTANIA",
+    "description": "Odsetek klientów pomocy społecznej korzystających ze wsparcia z powodu bezdomności (na podstawie danych o rzeczywistej liczbie osób w rodzinach objętych pomocą społeczną).",
+    "source": "Dane dla Polski – Sprawozdanie MRiPS-03 (wcześniej MRPiPS-03). Dane dla Małopolski - Sprawozdanie: MRPiPS-03 (do 2014 r. i od 2018 r.), OZPS (2015 - 2017 r.).",
+    "unit": "%",
+    "challengeAreas": [
+      "HOMELESSNESS",
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 35,
+    "name": "Sieroctwo",
+    "group": "POMOC SPOŁECZNA - POWODY KORZYSTANIA",
+    "description": "Odsetek klientów pomocy społecznej korzystających ze wsparcia z powodu sieroctwa (na podstawie danych o rzeczywistej liczbie osób w rodzinach objętych pomocą społeczną).",
+    "source": "Dane dla Polski – Sprawozdanie MRiPS-03 (wcześniej MRPiPS-03). Dane dla Małopolski - Sprawozdanie: MRPiPS-03 (do 2014 r. i od 2018 r.), OZPS (2015 - 2017 r.).",
+    "unit": "%",
+    "challengeAreas": [
+      "FAMILY_AND_FOSTER_CARE",
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 36,
+    "name": "Przemoc domowa",
+    "group": "POMOC SPOŁECZNA - POWODY KORZYSTANIA",
+    "description": "Odsetek klientów pomocy społecznej korzystających ze wsparcia z powodu przemocy domowej (na podstawie danych o rzeczywistej liczbie osób w rodzinach objętych pomocą społeczną).",
+    "source": "Dane dla Polski - MRPiPS-03 I-XII, dane dla Małopolski - Sprawozdanie MRPiPS-03 I-XII (do 2014 r. i od 2018 r.), Sprawozdanie OZPS (2015 - 2017 r.).",
+    "unit": "%",
+    "challengeAreas": [
+      "FAMILY_AND_FOSTER_CARE",
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 37,
+    "name": "Niepełnosprawność",
+    "group": "POMOC SPOŁECZNA - POWODY KORZYSTANIA",
+    "description": "Odsetek klientów pomocy społecznej korzystających ze wsparcia z powodu niepełnosprawności (na podstawie danych o rzeczywistej liczbie osób w rodzinach objętych pomocą społeczną).",
+    "source": "Dane dla Polski – Sprawozdanie MRiPS-03 (wcześniej MRPiPS-03). Dane dla Małopolski - Sprawozdanie: MRPiPS-03 (do 2014 r. i od 2018 r.), OZPS (2015 - 2017 r.).",
+    "unit": "%",
+    "challengeAreas": [
+      "DISABILITY",
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 38,
+    "name": "Bezradność w sprawach opiekuńczo-wychowawczych i prowadzenia gosp. dom.",
+    "group": "POMOC SPOŁECZNA - POWODY KORZYSTANIA",
+    "description": "Odsetek klientów pomocy społecznej korzystających ze wsparcia z powodu bezradności w sprawach opiekuńczo-wychowawczych i prowadzenia gospodarstwa domowego (na podstawie danych o rzeczywistej liczbie osób w rodzinach objętych pomocą społeczną).",
+    "source": "Dane dla Polski – Sprawozdanie MRiPS-03 (wcześniej MRPiPS-03). Dane dla Małopolski - Sprawozdanie: MRPiPS-03 (do 2014 r. i od 2018 r.), OZPS (2015 - 2017 r.).",
+    "unit": "%",
+    "challengeAreas": [
+      "FAMILY_AND_FOSTER_CARE",
+      "POVERTY",
+      "SENIORS"
+    ],
+    "general": false
+  },
+  {
+    "id": 39,
+    "name": "Długotrwała lub ciężka choroba",
+    "group": "POMOC SPOŁECZNA - POWODY KORZYSTANIA",
+    "description": "Odsetek klientów pomocy społecznej korzystających ze wsparcia z powodu długotrwałej bądź ciężkiej choroby (na podstawie danych o rzeczywistej liczbie osób w rodzinach objętych pomocą społeczną).",
+    "source": "Dane dla Polski – Sprawozdanie MRiPS-03 (wcześniej MRPiPS-03). Dane dla Małopolski - Sprawozdanie: MRPiPS-03 (do 2014 r. i od 2018 r.), OZPS (2015 - 2017 r.).",
+    "unit": "%",
+    "challengeAreas": [
+      "POVERTY",
+      "HEALTH"
+    ],
+    "general": false
+  },
+  {
+    "id": 40,
+    "name": "Alkoholizm",
+    "group": "POMOC SPOŁECZNA - POWODY KORZYSTANIA",
+    "description": "Odsetek klientów pomocy społecznej korzystających ze wsparcia z powodu alkoholizmu (na podstawie danych o rzeczywistej liczbie osób w rodzinach objętych pomocą społeczną).",
+    "source": "Dane dla Polski – Sprawozdanie MRiPS-03 (wcześniej MRPiPS-03). Dane dla Małopolski - Sprawozdanie: MRPiPS-03 (do 2014 r. i od 2018 r.), OZPS (2015 - 2017 r.).",
+    "unit": "%",
+    "challengeAreas": [
+      "POVERTY",
+      "MENTAL_HEALTH"
+    ],
+    "general": false
+  },
+  {
+    "id": 41,
+    "name": "Narkomania",
+    "group": "POMOC SPOŁECZNA - POWODY KORZYSTANIA",
+    "description": "Odsetek klientów pomocy społecznej korzystających ze wsparcia z powodu narkomanii (na podstawie danych o rzeczywistej liczbie osób w rodzinach objętych pomocą społeczną).",
+    "source": "Dane dla Polski – Sprawozdanie MRiPS-03 (wcześniej MRPiPS-03). Dane dla Małopolski - Sprawozdanie: MRPiPS-03 (do 2014 r. i od 2018 r.), OZPS (2015 - 2017 r.).",
+    "unit": "%",
+    "challengeAreas": [
+      "POVERTY",
+      "MENTAL_HEALTH"
+    ],
+    "general": false
+  },
+  {
+    "id": 42,
+    "name": "Sytuacja kryzysowa",
+    "group": "POMOC SPOŁECZNA - POWODY KORZYSTANIA",
+    "description": "Odsetek klientów pomocy społecznej korzystających ze wsparcia z powodu sytuacji kryzysowej (na podstawie danych o rzeczywistej liczbie osób w rodzinach objętych pomocą społeczną).",
+    "source": "Dane dla Polski – Sprawozdanie MRiPS-03 (wcześniej MRPiPS-03). Dane dla Małopolski - Sprawozdanie: MRPiPS-03 (do 2014 r. i od 2018 r.), OZPS (2015 - 2017 r.).",
+    "unit": "%",
+    "challengeAreas": [
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 43,
+    "name": "Zdarzenie losowe",
+    "group": "POMOC SPOŁECZNA - POWODY KORZYSTANIA",
+    "description": "Odsetek klientów pomocy społecznej korzystających ze wsparcia z powodu zdarzenia losowego (na podstawie danych o rzeczywistej liczbie osób w rodzinach objętych pomocą społeczną).",
+    "source": "Dane dla Polski – Sprawozdanie MRiPS-03 (wcześniej MRPiPS-03). Dane dla Małopolski - Sprawozdanie: MRPiPS-03 (do 2014 r. i od 2018 r.), OZPS (2015 - 2017 r.).",
+    "unit": "%",
+    "challengeAreas": [
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 48,
+    "name": "Wskaźnik obciążenia demograficznego",
+    "group": "LUDNOŚĆ",
+    "description": "Wskaźnik obciążenia demograficznego - ludność w wieku nieprodukcyjnym przypadająca na 100 osób w wieku produkcyjnym. Przez ludność w wieku produkcyjnym rozumie się osoby w wieku zdolności do pracy tj. mężczyźni w wieku 18 - 64 lat oraz kobiety w wieku 18 - 59.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych). Dane dot. ludności za lata 2010 - 2021 bazują na wynikach Narodowego Spisu Powszechnego Ludności i Mieszkań 2011.",
+    "unit": null,
+    "challengeAreas": [],
+    "general": false
+  },
+  {
+    "id": 53,
+    "name": "Ludność w wieku poprodukcyjnym",
+    "group": "LUDNOŚĆ",
+    "description": "Udział ludności w wieku emerytalnym w liczbie ludności ogółem. Przez ludność w wieku poprodukcyjnym rozumie się ludność w wieku od 64 lat - dla mężczyzn i od 59 lat - dla kobiet.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych). Dane dot. ludności za lata 2010 - 2021 bazują na wynikach Narodowego Spisu Powszechnego Ludności i Mieszkań 2011.",
+    "unit": "%",
+    "challengeAreas": [
+      "SENIORS"
+    ],
+    "general": false
+  },
+  {
+    "id": 55,
+    "name": "Ludność w wieku przedprodukcyjnym",
+    "group": "LUDNOŚĆ",
+    "description": "Udział ludności w wieku przedprodukcyjnym w liczbie ludności ogółem. Przez ludność w wieku przedprodukcyjnym rozumie się ludność w wieku do 17 roku życia.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych). Dane dot. ludności za lata 2010 - 2021 bazują na wynikach Narodowego Spisu Powszechnego Ludności i Mieszkań 2011.",
+    "unit": "%",
+    "challengeAreas": [],
+    "general": false
+  },
+  {
+    "id": 56,
+    "name": "Ludność w wieku produkcyjnym",
+    "group": "LUDNOŚĆ",
+    "description": "Udział ludności w wieku produkcyjnym w liczbie ludności ogółem. Przez ludność w wieku produkcyjnym rozumie się ludność w wieku zdolności do pracy. Dla mężczyzn przyjęto wiek 18-64 lata, dla kobiet 18-59 lat.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych). Dane dot. ludności za lata 2010 - 2021 bazują na wynikach Narodowego Spisu Powszechnego Ludności i Mieszkań 2011.",
+    "unit": "%",
+    "challengeAreas": [],
+    "general": false
+  },
+  {
+    "id": 59,
+    "name": "Rodziny niepełne objęte pomocą społeczną",
+    "group": "POMOC SPOŁECZNA - BENEFICJENCI",
+    "description": "Wskaźnik pomocy społecznej udzielonej rodzinom niepełnym - udział rodzin niepełnych objętych pomocą (w której skład wchodzi jedno z rodziców z dzieckiem/ dziećmi) w liczbie wszystkich rodzin z dziećmi, którym udzielono pomocy.",
+    "source": "Sprawozdanie MRPiPS-03 I-XII.",
+    "unit": "%",
+    "challengeAreas": [
+      "FAMILY_AND_FOSTER_CARE",
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 60,
+    "name": "Rodziny wielodzietne objęte pomocą społeczną",
+    "group": "POMOC SPOŁECZNA - BENEFICJENCI",
+    "description": "Wskaźnik pomocy społecznej udzielonej rodzinom wielodzietnym - udział rodzin wielodzietnych (3 dzieci i więcej) objętych pomocą w liczbie wszystkich rodzin z dziećmi, którym udzielono pomocy.",
+    "source": "Sprawozdanie MRPiPS-03 I-XII.",
+    "unit": "%",
+    "challengeAreas": [
+      "FAMILY_AND_FOSTER_CARE",
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 65,
+    "name": "Przeciętne wynagrodzenie w relacji do śr. krajowej",
+    "group": "WYNAGRODZENIA, EMERYTURY I RENTY",
+    "description": "Wskaźnik wysokości wynagrodzeń - przeciętne miesięczne wynagrodzenia brutto w gospodarce narodowej w relacji do średniej krajowej (Polska=100%). Wskaźnik pokazuje jaki procent średniej krajowej jest osiągany na danym terenie.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 67,
+    "name": "Wskaźnik dostępności domów i ośrodków kultury",
+    "group": "KULTURA",
+    "description": "Wskaźnik dostępności domów i ośrodków kultury oraz klubów, świetlic i kół - liczba osób przypadająca na jedną placówkę kultury.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych). Dane dot. ludności za lata 2011 - 2021 bazują na wynikach Narodowego Spisu Powszechnego Ludności i Mieszkań 2011.",
+    "unit": null,
+    "challengeAreas": [],
+    "general": false
+  },
+  {
+    "id": 68,
+    "name": "Wskaźnik czytelnictwa",
+    "group": "KULTURA",
+    "description": "Wskaźnik czytelnictwa - ilość wypożyczeń z księgozbioru przez jednego czytelnika w ciągu roku. Przez księgozbiór rozumie się zbiór obejmujący wydawnictwa nieperiodyczne (książki i broszury) i wydawnictwa periodyczne (gazety i czasopisma).",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych).",
+    "unit": null,
+    "challengeAreas": [],
+    "general": false
+  },
+  {
+    "id": 80,
+    "name": "Zdawalność egzaminu maturalnego w liceach ogólnokształcących",
+    "group": "EDUKACJA",
+    "description": "Wskaźnik zdawalności matur w liceach -procent uczniów klas III liceów ogólnokształcących, którzy zdali egzamin maturalny.",
+    "source": "Wydział Badań i Analiz Okręgowej Komisji Egzaminacyjnej w Krakowie",
+    "unit": null,
+    "challengeAreas": [
+      "FAMILY_AND_FOSTER_CARE"
+    ],
+    "general": false
+  },
+  {
+    "id": 81,
+    "name": "Zdawalność egzaminu maturalnego w technikach",
+    "group": "EDUKACJA",
+    "description": "Wskaźnik zdawalności matur w technikach - procent uczniów klas IV techników, którzy zdali egzamin maturalny.",
+    "source": "Wydział Badan i Analiz Okręgowej Komisji Egzaminacyjnej w Krakowie",
+    "unit": null,
+    "challengeAreas": [
+      "FAMILY_AND_FOSTER_CARE"
+    ],
+    "general": false
+  },
+  {
+    "id": 82,
+    "name": "Schorzenia z powodu otyłości u dzieci",
+    "group": "ZDROWIE",
+    "description": "Wskaźnik otyłości wśród dzieci i młodzieży - odsetek dzieci i młodzieży w wieku 0 - 18 lat będących pod opieką lekarza podstawowej opieki zdrowotnej w zakładach publicznych, niepublicznych oraz praktykach lekarskich z powodu schorzeń wywołanych otyłością, w przeliczeniu na 1000 osób w wieku 0 - 18 lat.",
+    "source": "Małopolski Urząd Wojewódzki w Krakowie; GUS (BDL). Dane dot. ludności za lata 2012 - 2021 bazują na wynikach NSP 2011.",
+    "unit": null,
+    "challengeAreas": [
+      "FAMILY_AND_FOSTER_CARE",
+      "HEALTH"
+    ],
+    "general": false
+  },
+  {
+    "id": 83,
+    "name": "Schorzenia z powodu niedożywienia u dzieci",
+    "group": "ZDROWIE",
+    "description": "Wskaźnik niedożywienia wśród dzieci i młodzieży - odsetek dzieci i młodzieży w wieku 0 - 18 lat będących pod opieką lekarza podstawowej opieki zdrowotnej w zakładach publicznych, niepublicznych oraz praktykach lekarskich z powodu schorzeń wywołanych niedożywieniem, w przeliczeniu na 1000 osób w wieku 0 - 18 lat.",
+    "source": "Małopolski Urząd Wojewódzki w Krakowie; GUS (BDL). Dane dot. ludności za lata 2012 - 2021 bazują na wynikach NSP 2011.",
+    "unit": null,
+    "challengeAreas": [
+      "FAMILY_AND_FOSTER_CARE",
+      "HEALTH"
+    ],
+    "general": false
+  },
+  {
+    "id": 84,
+    "name": "Wykorzystanie łóżek szpitalnych",
+    "group": "ZDROWIE",
+    "description": "Wskaźnik wykorzystania miejsc w szpitalach - średnie wykorzystanie łóżek w szpitalach publicznych i niepublicznych (w %).",
+    "source": "Małopolskie Centrum Zdrowia Publicznego oraz publikacji: \"Zabezpieczenie opieki zdrowotnej na terenie województwa małopolskiego\"/ „Biuletyn statystyczny ochrony zdrowia województwa małopolskiego”, Małopolski Urząd Wojewódzki w Krakowie",
+    "unit": "%",
+    "challengeAreas": [
+      "HEALTH"
+    ],
+    "general": false
+  },
+  {
+    "id": 85,
+    "name": "Średni czas pobytu w szpitalu",
+    "group": "ZDROWIE",
+    "description": "Wskaźnik średniego czasu hospitalizacji - średni czas pobytu chorych w szpitalach publicznych i niepublicznych (w dniach).",
+    "source": "Dane dla Polski (od 2022 r.) – Główny Urząd Statystyczny (Bank Danych Lokalnych). Dane dla Małopolski – Małopolski Urząd Wojewódzki w Krakowie.",
+    "unit": null,
+    "challengeAreas": [
+      "HEALTH"
+    ],
+    "general": false
+  },
+  {
+    "id": 88,
+    "name": "Zachorowania na nowotwory",
+    "group": "ZDROWIE",
+    "description": "Wskaźnik zachorowań na nowotwory - liczba osób powyżej 19 roku życia, u których stwierdzono chorobę nowotworową, będących pod opieką lekarza podstawowej opieki zdrowotnej w publicznych i niepublicznych zakładach opieki zdrowotnej oraz praktykach lekarskich, w przeliczeniu na 1000 osób w wieku 19 lat i więcej.",
+    "source": "Małopolski Urząd Wojewódzki w Krakowie; GUS (BDL). Dane dot. ludności za lata 2010 - 2021 bazują na wynikach NSP 2011.",
+    "unit": null,
+    "challengeAreas": [
+      "HEALTH"
+    ],
+    "general": false
+  },
+  {
+    "id": 89,
+    "name": "Zachorowania na cukrzycę",
+    "group": "ZDROWIE",
+    "description": "Wskaźnik zachorowań na cukrzycę - liczba osób powyżej 19 roku życia, u których stwierdzono cukrzycę, będących pod opieką lekarza podstawowej opieki zdrowotnej w publicznych i niepublicznych zakładach opieki zdrowotnej oraz praktykach lekarskich, w przeliczeniu na 1000 osób w wieku 19 lat i więcej.",
+    "source": "Małopolski Urząd Wojewódzki w Krakowie; GUS (BDL). Dane dot. ludności za lata 2010 - 2021 bazują na wynikach NSP 2011.",
+    "unit": null,
+    "challengeAreas": [
+      "HEALTH"
+    ],
+    "general": false
+  },
+  {
+    "id": 90,
+    "name": "Zachorowania na choroby układu krążenia",
+    "group": "ZDROWIE",
+    "description": "Wskaźnik zachorowań na choroby układu krążenia - liczba osób powyżej 19 roku życia, u których stwierdzono chorobę układu krążenia, będących pod opieką lekarza podstawowej opieki zdrowotnej w publicznych i niepublicznych zakładach opieki zdrowotnej oraz praktykach lekarskich, w przeliczeniu na 1000 osób w wieku 19 lat i więcej.",
+    "source": "Małopolski Urząd Wojewódzki w Krakowie; GUS (BDL). Dane dot. ludności za lata 2010 - 2021 bazują na wynikach NSP 2011.",
+    "unit": null,
+    "challengeAreas": [
+      "HEALTH"
+    ],
+    "general": false
+  },
+  {
+    "id": 91,
+    "name": "Przyrost naturalny na 1 000 ludności",
+    "group": "LUDNOŚĆ",
+    "description": "Różnica między liczbą urodzeń żywych a liczbą zgonów w danym roku (bez rozróżnienia na płeć).",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [],
+    "general": false
+  },
+  {
+    "id": 94,
+    "name": "Wydatki budżetów gmin ogółem",
+    "group": "BUDŻETY GMIN",
+    "description": "Wskaźnik wydatków gmin - wydatki budżetów gmin i miast na prawach powiatów w przeliczeniu na jednego mieszkańca. Dane stanowią sumę wydatków na rolnictwo, transport, gospodarkę komunalną, gosp. mieszkaniową, oświatę i wychowanie, kulturę i sztukę, ochronę zdrowia, kulturę fizyczną i sport, a także wydatki na administrację samorządową. Wydatki te są sklasyfikowane w rozporządzeniu Ministra Finansów z dnia 14 czerwca 2006 r. w sprawie szczegółowej klasyfikacji dochodów, wydatków, przychodów i rozchodów oraz środków pochodzących ze źródeł zagranicznych (Dz. U. 2006 r. Nr 107, poz.726, z późn. zm.). Wartości podawane są w złotówkach.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [],
+    "general": true
+  },
+  {
+    "id": 95,
+    "name": "Wydatki budżetów gmin - oświata i wychowanie",
+    "group": "BUDŻETY GMIN",
+    "description": "Wskaźnik wydatków gmin na oświatę i wychowanie - wydatki budżetów gmin i miast na prawach powiatów na oświatę i wychowanie w przeliczeniu na jednego mieszkańca. Dane stanowią sumę wydatków sklasyfikowanych w dziale 801 rozporządzenia Ministra Finansów z dnia 14 czerwca 2006 r. w sprawie szczegółowej klasyfikacji dochodów, wydatków, przychodów i rozchodów oraz środków pochodzących ze źródeł zagranicznych (Dz. U. 2006 r. Nr 107, poz.726, z późn. zm.). Wartości podawane są w złotówkach.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [],
+    "general": false
+  },
+  {
+    "id": 96,
+    "name": "Wydatki budżetów gmin - kultura",
+    "group": "BUDŻETY GMIN",
+    "description": "Wskaźnik wydatków gmin na kulturę i ochronę dziedzictwa narodowego - wydatki budżetów gmin i miast na prawach powiatów na kulturę i ochronę dziedzictwa narodowego w przeliczeniu na jednego mieszkańca. Dane stanowią sumę wydatków sklasyfikowanych w dziale 921 rozporządzenia Ministra Finansów z dnia 14 czerwca 2006 r. w sprawie szczegółowej klasyfikacji dochodów, wydatków, przychodów i rozchodów oraz środków pochodzących ze źródeł zagranicznych (Dz. U. 2006 r. Nr 107, poz.726, z późn. zm.). Wartości podawane są w złotówkach.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [],
+    "general": false
+  },
+  {
+    "id": 97,
+    "name": "Wydatki budżetów gmin - pomoc społeczna",
+    "group": "BUDŻETY GMIN",
+    "description": "Wskaźnik wydatków gmin na pomoc społeczną - wydatki budżetów gmin i miast na prawach powiatów na pomoc społeczną i pozostałe zadania w zakresie polityki społecznej w przeliczeniu na jednego mieszkańca. Dane stanowią sumę wydatków sklasyfikowanych w działach 852 i 853 rozporządzenia Ministra Finansów z dnia 14 czerwca 2006 r. w sprawie szczegółowej klasyfikacji dochodów, wydatków, przychodów i rozchodów oraz środków pochodzących ze źródeł zagranicznych (Dz. U. 2006 r. Nr 107, poz.726, z późn. zm.). Dane podawane są w złotówkach.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych).",
+    "unit": null,
+    "challengeAreas": [],
+    "general": true
+  },
+  {
+    "id": 98,
+    "name": "Saldo migracji stałych",
+    "group": "MOBILNOŚĆ",
+    "description": "Wskaźnik migracji stałych - różnica między napływem a odpływem ludności z danego obszaru w danym czasie. Saldo migracji stałych uwzględnia zarazem dane ze stałych migracji zewnętrznych jak i wewnętrznych. Migracje stałe to takie, które wiążą się ze zmianą miejsca zamieszkania na pobyt stały. W świetle prawa polskiego, tego typu migracje związane są z dokonaniem w biurze ewidencji ludności zameldowania lub wymeldowania. W 2015 roku GUS zrezygnował z opublikowania danych dotyczących migracji zagranicznych z powodu braku ich kompletności. Dlatego niemożliwe było określenie poziomu migracji stałych za rok 2015.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [
+      "MIGRANT_INTEGRATION"
+    ],
+    "general": false
+  },
+  {
+    "id": 99,
+    "name": "Saldo migracji zagranicznych",
+    "group": "MOBILNOŚĆ",
+    "description": "Wskaźnik migracji zagranicznych - różnica między odpływem zagranicę a napływem do kraju ludności w danym czasie.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [
+      "MIGRANT_INTEGRATION"
+    ],
+    "general": false
+  },
+  {
+    "id": 120,
+    "name": "Zgony z powodu chorób nowotworowych",
+    "group": "ZDROWIE",
+    "description": "Wskaźnik umieralności z powodu choroby nowotworowej - udział zgonów z powodu choroby nowotworowej w liczbie zgonów ogółem. Dane do wskaźnika pochodzą z kart statystycznych do kart zgonów.",
+    "source": "Główny Urząd Statystyczny ( Bank Danych Lokalnych)",
+    "unit": "%",
+    "challengeAreas": [
+      "HEALTH"
+    ],
+    "general": false
+  },
+  {
+    "id": 121,
+    "name": "Zgony z powodu chorób układu krążenia",
+    "group": "ZDROWIE",
+    "description": "Wskaźnik umieralności z powodu chorób układu krążenia - udział zgonów z powodu chorób układu krążenia w liczbie zgonów ogółem. Dane do wskaźnika pochodzą z kart statystycznych do kart zgonów.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": "%",
+    "challengeAreas": [
+      "HEALTH"
+    ],
+    "general": false
+  },
+  {
+    "id": 123,
+    "name": "Zgony z przyczyn zewnętrznych",
+    "group": "ZDROWIE",
+    "description": "Wskaźnik umieralności z przyczyn zewnętrznych - udział zgonów z przyczyn zewnętrznych w liczbie zgonów ogółem. Dane do wskaźnika zliczono na podstawie kart statystycznych do kart zgonów.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": "%",
+    "challengeAreas": [
+      "HEALTH"
+    ],
+    "general": false
+  },
+  {
+    "id": 126,
+    "name": "Rodziny emerytów i rencistów objęte pomocą społeczną",
+    "group": "POMOC SPOŁECZNA - BENEFICJENCI",
+    "description": "Wskaźnik pomocy społecznej udzielonej rodzinom emerytów i rencistów - udział rodzin emerytów i rencistów objętych pomocą w liczbie wszystkich rodzin, którym udzielono pomocy.",
+    "source": "Sprawozdanie MRPiPS-03 I-XII.",
+    "unit": "%",
+    "challengeAreas": [
+      "FAMILY_AND_FOSTER_CARE",
+      "POVERTY",
+      "SENIORS"
+    ],
+    "general": false
+  },
+  {
+    "id": 127,
+    "name": "Małżeństwa na 1000 mieszkańców",
+    "group": "LUDNOŚĆ",
+    "description": "Liczba zawartych małżeństw w przeliczeniu na 1000 mieszkańców.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [],
+    "general": false
+  },
+  {
+    "id": 128,
+    "name": "Urodzenia na 1000 mieszkańców",
+    "group": "LUDNOŚĆ",
+    "description": "Liczba urodzeń żywych w przeliczeniu na 1000 mieszkańców.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [],
+    "general": false
+  },
+  {
+    "id": 129,
+    "name": "Zgony na 1000 mieszkańców",
+    "group": "LUDNOŚĆ",
+    "description": "Liczba zgonów w przeliczeniu na 1000 mieszkańców.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [
+      "HEALTH"
+    ],
+    "general": false
+  },
+  {
+    "id": 130,
+    "name": "Wskaźnik zagrożenia ubóstwem relatywnym",
+    "group": "GOSPODARSTWA DOMOWE",
+    "description": "Wskaźnik zagrożenia ubóstwem relatywnym - procent osób w gospodarstwach domowych, których wydatki nie przekraczają 50% średnich wydatków (ekwiwalentnych) ogółu gospodarstw domowych",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 131,
+    "name": "Wskaźnik zagrożenia ubóstwem ustawowym",
+    "group": "GOSPODARSTWA DOMOWE",
+    "description": "Wskaźnik zagrożenia tzw. ubóstwem ustawowym - procent osób żyjących poniżej ustawowej granicy ubóstwa. Ustawowa granica ubóstwa to kwota, która zgodnie z obowiązującą ustawą uprawnia do ubiegania się o przyznanie świadczenia z pomocy społecznej. Ustawowa granica ubóstwa ustalana jest przez jest Instytut Pracy i Spraw Socjalnych.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 132,
+    "name": "Wskaźnik zagrożenia ubóstwem skrajnym",
+    "group": "GOSPODARSTWA DOMOWE",
+    "description": "Wskaźnik zagrożenia ubóstwem skrajnym - procent osób żyjących poniżej progu określanego mianem \"minimum egzystencji\". Minimum egzystencji wyznacza poziom zaspokojenia potrzeb, poniżej którego występuje biologiczne zagrożenie życia oraz rozwoju psychofizycznego człowieka. Granica ubóstwa skrajnego określana jest przez Instytut Pracy i Spraw Socjalnych.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 133,
+    "name": "Wskaźnik zatrudnienia osób niepełnosprawnych",
+    "group": "NIEPEŁNOSPRAWNOŚĆ",
+    "description": "Wskaźnik zatrudnienia osób niepełnosprawnych - odsetek pracujących osób niepełnosprawnych w wieku 16 - 64 l. Zbiorowość osób niepełnosprawnych została wyodrębniona z ogółu ludności w wieku 16 - 64 lata, na podstawie kryterium prawnego. Do osób niepełnosprawnych zaliczono osoby, które mają przyznane orzeczenie o stopniu niepełnosprawności lub niezdolności do pracy. Od 2020 r. wskaźnik nie jest aktualizowany w związku z wprowadzonymi przez GUS zmianami w sposobie wyliczania tego wskaźnika wynikającymi ze zmian w definiowaniu ludności pracującej (wdrożenie rozporządzenia ramowego dla statystyki społecznej, tj. Rozporządzenia Parlamentu Europejskiego i Rady (UE) 2019/1700 z dnia 10 października 2019 r.). Zastąpił go nowy „Wskaźnik zatrudnienia osób niepełnosprawnych w wieku 16-64 lata”.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [
+      "DISABILITY"
+    ],
+    "general": false
+  },
+  {
+    "id": 134,
+    "name": "Wydatki na osobę w gospodarstwie domowym",
+    "group": "GOSPODARSTWA DOMOWE",
+    "description": "Przeciętne miesięczne wydatki na osobę w gospodarstwie domowym. Przez gospodarstwo domowe rozumie się zespół osób spokrewnionych lub niespokrewnionych, mieszkających razem i wspólnie utrzymujących się.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 135,
+    "name": "Współczynnik dzietności",
+    "group": "LUDNOŚĆ",
+    "description": "Liczba dzieci, które urodziłaby przeciętnie kobieta w ciągu całego okresu rozrodczego (15 - 49 lat) przy założeniu, że w poszczególnych fazach tego okresu rodziłaby z intensywnością obserwowaną w badanym roku, tzn. przy przyjęciu cząstkowych współczynników płodności z tego okresu za niezmienne.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych). Dane za lata 2010 - 2021 bazują na wynikach Narodowego Spisu Powszechnego Ludności i Mieszkań 2011.",
+    "unit": null,
+    "challengeAreas": [],
+    "general": false
+  },
+  {
+    "id": 136,
+    "name": "Osoby z zaburzeniami psychicznymi i uzależnione",
+    "group": "ZDROWIE",
+    "description": "Liczba osób leczonych w poradniach dla osób z zaburzeniami psychicznymi, uzależnionych od alkoholu i innych substancji w przeliczeniu na 1000 mieszkańców.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych). Dane dot. ludności za lata 2010 - 2021 bazują na wynikach Narodowego Spisu Powszechnego Ludności i Mieszkań 2011.",
+    "unit": null,
+    "challengeAreas": [
+      "HEALTH",
+      "MENTAL_HEALTH"
+    ],
+    "general": false
+  },
+  {
+    "id": 137,
+    "name": "Studenci uczelni wyższych",
+    "group": "EDUKACJA",
+    "description": "Liczba studentów uczelni wyższych publicznych i niepublicznych w przeliczeniu na 10 tys. mieszkańców. Dane do roku 2011 nie obejmują szkół resortu obrony narodowej oraz resortu spraw wewnętrznych, począwszy od roku 2012 łącznie ze szkołami resortu obrony narodowej oraz resortu spraw wewnętrznych; dane prezentowane są wg faktycznej lokalizacji uczelni/jednostek zamiejscowych od roku 2012 bez jednostek zamiejscowych polskich uczelni za granicą, które wcześniej były wykazywane w miejscu siedziby uczelni macierzystej.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [
+      "FAMILY_AND_FOSTER_CARE"
+    ],
+    "general": false
+  },
+  {
+    "id": 138,
+    "name": "Saldo migracji europejskich",
+    "group": "MOBILNOŚĆ",
+    "description": "Wskaźnik europejskich migracji zagranicznych na pobyt stały - różnica między napływem ludności do krajów europejskich a odpływem ludności z Europy do Polski.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [
+      "MIGRANT_INTEGRATION"
+    ],
+    "general": false
+  },
+  {
+    "id": 139,
+    "name": "Saldo migracji amerykańskich",
+    "group": "MOBILNOŚĆ",
+    "description": "Wskaźnik migracji zagranicznych na pobyt stały (Ameryka Północna i Środkowa) - różnica między napływem ludności z kraju do Ameryki Północnej i Środkowej a odpływem ludności z Ameryki Północnej i Środkowej w danym czasie do kraju.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [
+      "MIGRANT_INTEGRATION"
+    ],
+    "general": false
+  },
+  {
+    "id": 140,
+    "name": "Osoby na utrzymaniu w gospodarstwie domowym",
+    "group": "GOSPODARSTWA DOMOWE",
+    "description": "Przeciętna liczba osób pozostająca na utrzymaniu w gospodarstwie domowym. Przez gospodarstwo domowe rozumie się zespół osób spokrewnionych lub niespokrewnionych, mieszkających razem i wspólnie utrzymujących się.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 141,
+    "name": "Świadczeniobiorcy w gospodarstwach domowych",
+    "group": "GOSPODARSTWA DOMOWE",
+    "description": "Przeciętna liczba osób w gospodarstwie domowym pobierająca świadczenia z ubezpieczeń społecznych i pomocy społecznej. Przez gospodarstwo domowe rozumie się zespół osób spokrewnionych lub niespokrewnionych, mieszkających razem i wspólnie utrzymujących się.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 142,
+    "name": "Osoby pracujące w gospodarstwach domowych",
+    "group": "GOSPODARSTWA DOMOWE",
+    "description": "Przeciętna liczba osób pracujących w gospodarstwie domowym. Przez gospodarstwo domowe rozumie się zespół osób spokrewnionych lub niespokrewnionych, mieszkających razem i wspólnie utrzymujących się.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 143,
+    "name": "Liczba osób w gospodarstwie domowym",
+    "group": "GOSPODARSTWA DOMOWE",
+    "description": "Przeciętna liczba osób w gospodarstwie domowym. Przez gospodarstwo domowe rozumie się zespół osób spokrewnionych lub niespokrewnionych, mieszkających razem i wspólnie utrzymujących się.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 145,
+    "name": "Dochód na osobę w gospodarstwie domowym",
+    "group": "GOSPODARSTWA DOMOWE",
+    "description": "Dochód rozporządzalny w gospodarstwie domowym przypadający na jedną osobę. Suma bieżących dochodów gospodarstwa domowego z poszczególnych źródeł pomniejszona o zaliczki na podatek dochodowy od osób fizycznych płacone przez płatnika w imieniu podatnika (od dochodów z pracy najemnej oraz od niektórych świadczeń społecznych), o podatki płacone przez osoby pracujące na własny rachunek, w tym przedstawicieli wolnych zawodów i rolników indywidualnych oraz o składki na ubezpieczenie społeczne i zdrowotne. W skład dochodu rozporządzalnego wchodzą dochody pieniężne i niepieniężne, w tym spożycie naturalne (towary lub usługi konsumpcyjne pobrane na potrzeby gospodarstwa domowego z działalności gospodarczej na własny rachunek - rolniczej i pozarolniczej) oraz towary i usługi otrzymane bezpłatnie. Dochód rozporządzalny jest przeznaczony na wydatki oraz przyrost oszczędności.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 146,
+    "name": "Przeciętna emerytura i renta",
+    "group": "WYNAGRODZENIA, EMERYTURY I RENTY",
+    "description": "Przeciętna miesięczna emerytura i renta brutto spoza KRUS - wielkość na Polskę łącznie z emeryturami i rentami wypłacanymi przez: Ministerstwo Obrony Narodowej, Ministerstwo Spraw Wewnętrznych i Administracji oraz Ministerstwo Sprawiedliwości - nie uwzględnionymi w podziale na województwa, bez emerytów i rencistów otrzymujących świadczenia na mocy umów międzynarodowych oraz bez emerytur i rent realizowanych na mocy umów międzynarodowych.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych) Uwaga: danych krajowych nie należy porównywać z danymi wojewódzkimi - patrz opis.",
+    "unit": null,
+    "challengeAreas": [
+      "POVERTY",
+      "SENIORS"
+    ],
+    "general": false
+  },
+  {
+    "id": 148,
+    "name": "Przeciętna renta z tytułu niezdolności do pracy",
+    "group": "WYNAGRODZENIA, EMERYTURY I RENTY",
+    "description": "Przeciętna miesięczna renta brutto z tytułu niezdolności do pracy spoza KRUS - wielkość na Polskę łącznie z rentami wypłacanymi przez: Ministerstwo Obrony Narodowej, Ministerstwo Spraw Wewnętrznych i Administracji oraz Ministerstwo Sprawiedliwości - nie uwzględnionymi w podziale na województwa, bez rencistów otrzymujących świadczenia na mocy umów międzynarodowych oraz bez rent realizowanych na mocy umów międzynarodowych.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych) Uwaga: danych krajowych nie należy porównywać z danymi wojewódzkimi - patrz opis.",
+    "unit": null,
+    "challengeAreas": [
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 149,
+    "name": "Przeciętna renta rodzinna",
+    "group": "WYNAGRODZENIA, EMERYTURY I RENTY",
+    "description": "Przeciętna miesięczna renta rodzinna brutto spoza KRUS - wielkość na Polskę łącznie z rentami wypłacanymi przez: Ministerstwo Obrony Narodowej, Ministerstwo Spraw Wewnętrznych i Administracji oraz Ministerstwo Sprawiedliwości - nie uwzględnionymi w podziale na województwa, bez rencistów otrzymujących świadczenia na mocy umów międzynarodowych oraz bez rent realizowanych na mocy umów międzynarodowych.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych) Uwaga: danych krajowych nie należy porównywać z danymi wojewódzkimi - patrz opis.",
+    "unit": null,
+    "challengeAreas": [
+      "FAMILY_AND_FOSTER_CARE",
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 150,
+    "name": "Przeciętna renta i emerytura rolnicza",
+    "group": "WYNAGRODZENIA, EMERYTURY I RENTY",
+    "description": "Przeciętna renta i emerytura brutto rolników indywidualnych.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [
+      "POVERTY",
+      "SENIORS"
+    ],
+    "general": false
+  },
+  {
+    "id": 151,
+    "name": "Emeryci i renciści w liczbie ludności ogółem",
+    "group": "WYNAGRODZENIA, EMERYTURY I RENTY",
+    "description": "Udział emerytów i rencistów w liczbie ludności ogółem. Emeryci i renciści liczeni są łącznie z emerytami i rencistami objętymi przez: Ministerstwo Obrony Narodowej, Ministerstwo Spraw Wewnętrznych i Administracji oraz Ministerstwo Sprawiedliwości. Nie uwzględniono emerytów i rencistów otrzymujących świadczenia na mocy umów międzynarodowych.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych). Dane dot. ludności za lata 2010 - 2021 bazują na wynikach Narodowego Spisu Powszechnego Ludności i Mieszkań 2011.",
+    "unit": null,
+    "challengeAreas": [
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 152,
+    "name": "Rozwody na 1000 mieszkańców",
+    "group": "LUDNOŚĆ",
+    "description": "Liczba udzielonych rozwodów w przeliczeniu na 1000 mieszkańców danego terenu. Źródłem informacji o rozwodach jest sprawozdawczość sądów powszechnych w postaci formularzy statystycznych \"Karta statystyczna dotycząca prawomocnego orzeczenia rozwodu\". W podziale terytorialnym nie uwzględnia się rozwodów, w których w momencie wniesienia powództwa obie strony zamieszkiwały za granicą.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [],
+    "general": false
+  },
+  {
+    "id": 162,
+    "name": "Liczba pensjonariuszy DPS na 1000 mieszkańców",
+    "group": "POMOC SPOŁECZNA - BENEFICJENCI",
+    "description": "Liczba pensjonariuszy domów pomocy społecznej w przeliczeniu na 1000 mieszkańców danego obszaru. Dane na temat liczby mieszkańców Domów Pomocy Społecznej zebrano wg. stanu na dzień 31 grudnia. W statystykach uwzględniono mieszkańców Domów Pomocy Społecznej i podmiotów niepublicznych w roku sprawozdawczym.",
+    "source": "Sprawozdanie MRPIPS-05; Główny Urząd Statystyczny (Bank Danych Lokalnych). Do 2021 roku włącznie dane dot. ludności bazują na wynikach Narodowego Spisu Powszechnego Ludności i Mieszkań 2011.",
+    "unit": null,
+    "challengeAreas": [
+      "POVERTY",
+      "SENIORS"
+    ],
+    "general": false
+  },
+  {
+    "id": 163,
+    "name": "Pensjonariusze DPS nieopuszczający łóżek",
+    "group": "POMOC SPOŁECZNA - BENEFICJENCI",
+    "description": "Odsetek pensjonariuszy Domów Pomocy Społecznej nieopuszczających łóżek. Dane na temat liczby mieszkańców Domów Pomocy Społecznej zebrano wg. stanu na dzień 31 grudnia. W statystykach uwzględniono mieszkańców Domów Pomocy Społecznej i podmiotów niepublicznych w roku sprawozdawczym.",
+    "source": "Sprawozdanie MRPIPS-05",
+    "unit": "%",
+    "challengeAreas": [
+      "POVERTY",
+      "SENIORS"
+    ],
+    "general": false
+  },
+  {
+    "id": 164,
+    "name": "Pensjonariusze DPS do 18 roku życia",
+    "group": "POMOC SPOŁECZNA - BENEFICJENCI",
+    "description": "Odsetek pensjonariuszy Domów Pomocy Społecznej w wieku do18 roku życia. Dane na temat liczby mieszkańców Domów Pomocy Społecznej zebrano wg. stanu na dzień 31 grudnia. W statystykach uwzględniono mieszkańców Domów Pomocy Społecznej i podmiotów niepublicznych w roku sprawozdawczym.",
+    "source": "Sprawozdanie MRPIPS-05",
+    "unit": "%",
+    "challengeAreas": [
+      "POVERTY",
+      "SENIORS"
+    ],
+    "general": false
+  },
+  {
+    "id": 165,
+    "name": "Pensjonariusze DPS w wieku 19-40 lat",
+    "group": "POMOC SPOŁECZNA - BENEFICJENCI",
+    "description": "Odsetek pensjonariuszy Domów Pomocy Społecznej wieku 19-40 lat. Dane na temat liczby mieszkańców Domów Pomocy Społecznej zebrano wg. stanu na dzień 31 grudnia. W statystykach uwzględniono mieszkańców Domów Pomocy Społecznej i podmiotów niepublicznych w roku sprawozdawczym.",
+    "source": "Sprawozdanie MRPIPS-05",
+    "unit": "%",
+    "challengeAreas": [
+      "POVERTY",
+      "SENIORS"
+    ],
+    "general": false
+  },
+  {
+    "id": 166,
+    "name": "Pensjonariusze DPS w wieku 41-60 lat",
+    "group": "POMOC SPOŁECZNA - BENEFICJENCI",
+    "description": "Odsetek pensjonariuszy Domów Pomocy Społecznej wieku 41-60 lat. Dane na temat liczby mieszkańców Domów Pomocy Społecznej zebrano wg. stanu na dzień 31 grudnia. W statystykach uwzględniono mieszkańców Domów Pomocy Społecznej i podmiotów niepublicznych w roku sprawozdawczym.",
+    "source": "Sprawozdanie MRPIPS-05",
+    "unit": "%",
+    "challengeAreas": [
+      "POVERTY",
+      "SENIORS"
+    ],
+    "general": false
+  },
+  {
+    "id": 167,
+    "name": "Pensjonariusze DPS w wieku 61-74 lat",
+    "group": "POMOC SPOŁECZNA - BENEFICJENCI",
+    "description": "Odsetek pensjonariuszy Domów Pomocy Społecznej wieku 60-74 lat. Dane na temat liczby mieszkańców Domów Pomocy Społecznej zebrano wg. stanu na dzień 31 grudnia. W statystykach uwzględniono mieszkańców Domów Pomocy Społecznej i podmiotów niepublicznych w roku sprawozdawczym.",
+    "source": "Sprawozdanie MRPIPS-05",
+    "unit": "%",
+    "challengeAreas": [
+      "POVERTY",
+      "SENIORS"
+    ],
+    "general": false
+  },
+  {
+    "id": 168,
+    "name": "Pensjonariusze DPS w wieku powyżej 74 lat",
+    "group": "POMOC SPOŁECZNA - BENEFICJENCI",
+    "description": "Odsetek pensjonariuszy Domów Pomocy Społecznej wieku powyżej 74 lat. Dane na temat liczby mieszkańców Domów Pomocy Społecznej zebrano wg. stanu na dzień 31 grudnia. W statystykach uwzględniono mieszkańców Domów Pomocy Społecznej i podmiotów niepublicznych w roku sprawozdawczym.",
+    "source": "Sprawozdanie MRPIPS-05",
+    "unit": "%",
+    "challengeAreas": [
+      "POVERTY",
+      "SENIORS"
+    ],
+    "general": false
+  },
+  {
+    "id": 172,
+    "name": "Osoby w podeszłym wieku oczekujące na miejsce w DPS",
+    "group": "POMOC SPOŁECZNA - BENEFICJENCI",
+    "description": "Udział osób w podeszłym wieku oczekujących na miejsce w DPS- ach w liczbie wszystkich osób oczekujących na miejsce w tego typu placówkach w roku sprawozdawczym. Dane według stanu na dzień 31 XII.",
+    "source": "MRPiPS-05",
+    "unit": null,
+    "challengeAreas": [
+      "POVERTY",
+      "SENIORS"
+    ],
+    "general": false
+  },
+  {
+    "id": 173,
+    "name": "Osoby przewlekle somatycznie chore oczekujące na miejsce w DPS",
+    "group": "POMOC SPOŁECZNA - BENEFICJENCI",
+    "description": "Udział osób przewlekle somatycznie chorych oczekujących na miejsce w DPS- ach w liczbie wszystkich osób oczekujących na miejsce w tego typu placówkach w roku sprawozdawczym. Dane według stanu na dzień 31 XII.",
+    "source": "MRPiPS-05",
+    "unit": null,
+    "challengeAreas": [
+      "POVERTY",
+      "SENIORS"
+    ],
+    "general": false
+  },
+  {
+    "id": 174,
+    "name": "Osoby przewlekle psychicznie chore oczekujące na miejsce w DPS",
+    "group": "POMOC SPOŁECZNA - BENEFICJENCI",
+    "description": "Udział osób przewlekle psychicznie chorych oczekujących na miejsce w DPS- ach w liczbie wszystkich osób oczekujących na miejsce w tego typu placówkach w roku sprawozdawczym. Dane według stanu na dzień 31 XII.",
+    "source": "MRPiPS-05",
+    "unit": null,
+    "challengeAreas": [
+      "POVERTY",
+      "MENTAL_HEALTH",
+      "SENIORS"
+    ],
+    "general": false
+  },
+  {
+    "id": 175,
+    "name": "Osoby objęte dożywianiem na 1000 mieszkańców",
+    "group": "POMOC SPOŁECZNA - ŚWIADCZENIA",
+    "description": "Wskaźnik pomocy w zakresie dożywiania - liczba osób objętych pomocą państwa w zakresie dożywiania w przeliczeniu na 1000 mieszkańców.",
+    "source": "Sprawozdanie z realizacji programu \"Pomoc Państwa w zakresie dożywiania\"; GUS (BDL). Dane dot. ludności za lata 2010 - 2021 bazują na wynikach Narodowego Spisu Powszechnego Ludności i Mieszkań 2011.",
+    "unit": null,
+    "challengeAreas": [
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 176,
+    "name": "Udział dzieci w ogóle osób objętych dożywianiem",
+    "group": "POMOC SPOŁECZNA - ŚWIADCZENIA",
+    "description": "Udział dzieci w liczbie wszystkich osób objętych pomocą państwa w zakresie dożywiania. Sprawozdanie z realizacji programu \"Pomoc Państwa w zakresie dożywiania\" do 2013 roku obejmowało dzieci do lat 7. Od 2014 roku w sprawozdaniu liczba dzieci jest określona na podstawie momentu rozpoczęcia nauki w szkole podstawowej.",
+    "source": "Sprawozdanie z realizacji programu \"Pomoc Państwa w zakresie dożywiania\"",
+    "unit": "%",
+    "challengeAreas": [
+      "FAMILY_AND_FOSTER_CARE",
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 177,
+    "name": "Udział uczniów w ogóle osób objętych dożywianiem",
+    "group": "POMOC SPOŁECZNA - ŚWIADCZENIA",
+    "description": "Udział dzieci w wieku szkolnym (uczniowie do czasu ukończenia szkoły ponadgimnazjalnej) w liczbie wszystkich osób objętych pomocą państwa w zakresie dożywiania.",
+    "source": "Sprawozdanie z realizacji programu \"Pomoc Państwa w zakresie dożywiania\"",
+    "unit": "%",
+    "challengeAreas": [
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 186,
+    "name": "Ludność ogółem",
+    "group": "LUDNOŚĆ",
+    "description": "Liczba ludności zamieszkałej na danym terenie (dane zgodnie z faktycznym miejscem zamieszkania wg podziału administracyjnego na dzień 31 XII).",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych). Dane za lata 2010 - 2021 bazują na wynikach Narodowego Spisu Powszechnego Ludności i Mieszkań 2011.",
+    "unit": null,
+    "challengeAreas": [],
+    "general": true
+  },
+  {
+    "id": 188,
+    "name": "Bezrobocie kobiet",
+    "group": "RYNEK PRACY",
+    "description": "Bezrobocie kobiet - Wyrażony w % udział bezrobotnych kobiet w liczbie bezrobotnych ogółem. Do kategorii osób bezrobotnych wlicza się wyłącznie osoby zarejestrowane w powiatowych urzędach pracy. Przez bezrobotnych ( za Ustawą z dnia 20 kwietnia 2004 r. o promocji zatrudnienia i instytucjach rynku pracy) rozumiemy osoby niezatrudnione i nie wykonujące innej pracy zarobkowej, zdolne i gotowe do podjęcia zatrudnienia w pełnym wymiarze czasu pracy (bądź jeśli są to osoby niepełnosprawne - zdolne i gotowe do podjęcia zatrudnienia co najmniej w połowie tego wymiaru czasu pracy), nieuczące się w szkole z wyjątkiem szkół dla dorosłych lub szkół wyższych w systemie wieczorowym albo zaocznym, zarejestrowane we właściwym dla miejsca zameldowania (stałego lub czasowego) powiatowym urzędzie pracy oraz poszukujące zatrudnienia lub innej pracy zarobkowej, jeżeli spełniają określone w Ustawie warunki.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 189,
+    "name": "Bezrobotni dłużej niż 1 rok",
+    "group": "RYNEK PRACY",
+    "description": "Wyrażony w % udział bezrobotnych dłużej niż 1 rok w liczbie bezrobotnych ogółem. Do kategorii osób bezrobotnych wlicza się wyłącznie osoby zarejestrowane w powiatowych urzędach pracy. Przez bezrobotnych ( za Ustawą z dnia 20 kwietnia 2004 r. o promocji zatrudnienia i instytucjach rynku pracy) rozumiemy osoby niezatrudnione i nie wykonujące innej pracy zarobkowej, zdolne i gotowe do podjęcia zatrudnienia w pełnym wymiarze czasu pracy (bądź jeśli są to osoby niepełnosprawne - zdolne i gotowe do podjęcia zatrudnienia co najmniej w połowie tego wymiaru czasu pracy), nieuczące się w szkole z wyjątkiem szkół dla dorosłych lub szkół wyższych w systemie wieczorowym albo zaocznym, zarejestrowane we właściwym dla miejsca zameldowania (stałego lub czasowego) powiatowym urzędzie pracy oraz poszukujące zatrudnienia lub innej pracy zarobkowej, jeżeli spełniają określone w Ustawie warunki.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 190,
+    "name": "Bezrobotni z wykształceniem gimnazjalnym i niższym",
+    "group": "RYNEK PRACY",
+    "description": "Wyrażony w % udział bezrobotnych z wykształceniem gimnazjalnym i niższym w liczbie bezrobotnych ogółem. Do kategorii osób bezrobotnych wlicza się wyłącznie osoby zarejestrowane w powiatowych urzędach pracy. Przez bezrobotnych ( za Ustawą z dnia 20 kwietnia 2004 r. o promocji zatrudnienia i instytucjach rynku pracy) rozumiemy osoby niezatrudnione i nie wykonujące innej pracy zarobkowej, zdolne i gotowe do podjęcia zatrudnienia w pełnym wymiarze czasu pracy (bądź jeśli są to osoby niepełnosprawne - zdolne i gotowe do podjęcia zatrudnienia co najmniej w połowie tego wymiaru czasu pracy), nieuczące się w szkole z wyjątkiem szkół dla dorosłych lub szkół wyższych w systemie wieczorowym albo zaocznym, zarejestrowane we właściwym dla miejsca zameldowania (stałego lub czasowego) powiatowym urzędzie pracy oraz poszukujące zatrudnienia lub innej pracy zarobkowej, jeżeli spełniają określone w Ustawie warunki.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 191,
+    "name": "Bezrobotni w wieku poniżej 25 lat",
+    "group": "RYNEK PRACY",
+    "description": "Wyrażony w % udział bezrobotnych poniżej 25. roku życia w liczbie bezrobotnych ogółem. Do kategorii osób bezrobotnych wlicza się wyłącznie osoby zarejestrowane w powiatowych urzędach pracy. Przez bezrobotnych ( za Ustawą z dnia 20 kwietnia 2004 r. o promocji zatrudnienia i instytucjach rynku pracy) rozumiemy osoby niezatrudnione i nie wykonujące innej pracy zarobkowej, zdolne i gotowe do podjęcia zatrudnienia w pełnym wymiarze czasu pracy (bądź jeśli są to osoby niepełnosprawne - zdolne i gotowe do podjęcia zatrudnienia co najmniej w połowie tego wymiaru czasu pracy), nieuczące się w szkole z wyjątkiem szkół dla dorosłych lub szkół wyższych w systemie wieczorowym albo zaocznym, zarejestrowane we właściwym dla miejsca zameldowania (stałego lub czasowego) powiatowym urzędzie pracy oraz poszukujące zatrudnienia lub innej pracy zarobkowej, jeżeli spełniają określone w Ustawie warunki.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 192,
+    "name": "Bezrobotni w wieku 25-34 lata",
+    "group": "RYNEK PRACY",
+    "description": "Wyrażony w % udział bezrobotnych w wieku 25-34 lata w liczbie bezrobotnych ogółem. Do kategorii osób bezrobotnych wlicza się wyłącznie osoby zarejestrowane w powiatowych urzędach pracy. Przez bezrobotnych ( za Ustawą z dnia 20 kwietnia 2004 r. o promocji zatrudnienia i instytucjach rynku pracy) rozumiemy osoby niezatrudnione i nie wykonujące innej pracy zarobkowej, zdolne i gotowe do podjęcia zatrudnienia w pełnym wymiarze czasu pracy (bądź jeśli są to osoby niepełnosprawne - zdolne i gotowe do podjęcia zatrudnienia co najmniej w połowie tego wymiaru czasu pracy), nieuczące się w szkole z wyjątkiem szkół dla dorosłych lub szkół wyższych w systemie wieczorowym albo zaocznym, zarejestrowane we właściwym dla miejsca zameldowania (stałego lub czasowego) powiatowym urzędzie pracy oraz poszukujące zatrudnienia lub innej pracy zarobkowej, jeżeli spełniają określone w Ustawie warunki.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 193,
+    "name": "Bezrobotni w wieku 55 lat i więcej",
+    "group": "RYNEK PRACY",
+    "description": "Wyrażony w % udział bezrobotnych powyżej 55. roku życia w liczbie bezrobotnych ogółem. Do kategorii osób bezrobotnych wlicza się wyłącznie osoby zarejestrowane w powiatowych urzędach pracy. Przez bezrobotnych ( za Ustawą z dnia 20 kwietnia 2004 r. o promocji zatrudnienia i instytucjach rynku pracy) rozumiemy osoby niezatrudnione i nie wykonujące innej pracy zarobkowej, zdolne i gotowe do podjęcia zatrudnienia w pełnym wymiarze czasu pracy (bądź jeśli są to osoby niepełnosprawne - zdolne i gotowe do podjęcia zatrudnienia co najmniej w połowie tego wymiaru czasu pracy), nieuczące się w szkole z wyjątkiem szkół dla dorosłych lub szkół wyższych w systemie wieczorowym albo zaocznym, zarejestrowane we właściwym dla miejsca zameldowania (stałego lub czasowego) powiatowym urzędzie pracy oraz poszukujące zatrudnienia lub innej pracy zarobkowej, jeżeli spełniają określone w Ustawie warunki.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 195,
+    "name": "Prowadzący działalność gospodarczą",
+    "group": "RYNEK PRACY",
+    "description": "Osoby fizyczne prowadzące działalność gospodarczą na 100 osób w wieku produkcyjnym. Dane bez osób prowadzących gospodarstwa indywidualne w rolnictwie.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 196,
+    "name": "Wskaźnik zatrudnienia",
+    "group": "RYNEK PRACY",
+    "description": "Wskaźnik zatrudnienia - wyrażony w % udział osób pracujących w ogólnej liczbie ludności w wieku 15 lat i więcej. Dane o aktywności ekonomicznej ludności opracowano na podstawie reprezentacyjnego Badania Aktywności Ekonomicznej Ludności (BAEL), prowadzonego w cyklu kwartalnym zgodnie z metodologią Eurostat. W związku z wprowadzonymi zmianami metodologicznymi w Badaniu Aktywności Ekonomicznej Ludności dane od 2021 roku nie mogą być porównywane z danymi w latach poprzednich.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 197,
+    "name": "Wskaźnik zatrudnienia kobiet",
+    "group": "RYNEK PRACY",
+    "description": "Wskaźnik zatrudnienia kobiet - wyrażony w % udział pracujących kobiet w ogólnej liczbie kobiet w wieku 15 lat i więcej. Dane o aktywności ekonomicznej ludności opracowano na podstawie reprezentacyjnego Badania Aktywności Ekonomicznej Ludności (BAEL), prowadzonego w cyklu kwartalnym zgodnie z metodologią Eurostat. W związku z wprowadzonymi zmianami metodologicznymi w Badaniu Aktywności Ekonomicznej Ludności, dane od 2021 roku nie mogą być porównywane z danymi w latach poprzednich.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 198,
+    "name": "Wskaźnik zatrudnienia mężczyzn",
+    "group": "RYNEK PRACY",
+    "description": "Wskaźnik zatrudnienia mężczyzn - wyrażony w % udział pracujących mężczyzn w ogólnej liczbie mężczyzn w wieku 15 lat i więcej. Dane o aktywności ekonomicznej ludności opracowano na podstawie reprezentacyjnego Badania Aktywności Ekonomicznej Ludności (BAEL), prowadzonego w cyklu kwartalnym zgodnie z metodologią Eurostat. W związku z wprowadzonymi zmianami metodologicznymi w Badaniu Aktywności Ekonomicznej Ludności, dane od 2021 roku nie mogą być porównywane z danymi w latach poprzednich.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 199,
+    "name": "Wskaźnik zatrudnienia osób w wieku 15-29 lat",
+    "group": "RYNEK PRACY",
+    "description": "Wyrażony w % udział osób pracujących w wieku 15-29 lat w ogólnej liczbie ludności w wieku 15-29 lat. Dane o aktywności ekonomicznej ludności opracowano na podstawie reprezentacyjnego Badania Aktywności Ekonomicznej Ludności (BAEL), prowadzonego w cyklu kwartalnym zgodnie z metodologią Eurostat. W związku z wprowadzonymi zmianami metodologicznymi w Badaniu Aktywności Ekonomicznej Ludności, dane od 2021 roku nie mogą być porównywane z danymi w latach poprzednich.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 200,
+    "name": "Wskaźnik zatrudnienia osób w wieku 50 lat i więcej",
+    "group": "RYNEK PRACY",
+    "description": "Wyrażony w % udział osób pracujących w wieku 50 lat i więcej w ogólnej liczbie ludności w wieku 50 lat i więcej. Dane o aktywności ekonomicznej ludności opracowano na podstawie reprezentacyjnego Badania Aktywności Ekonomicznej Ludności (BAEL), prowadzonego w cyklu kwartalnym zgodnie z metodologią Eurostat. W związku z wprowadzonymi zmianami metodologicznymi w Badaniu Aktywności Ekonomicznej Ludności, dane od 2021 roku nie mogą być porównywane z danymi w latach poprzednich.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 201,
+    "name": "Zatrudnienie w branży finansowej i nieruchomościach",
+    "group": "RYNEK PRACY",
+    "description": "Wyrażony w % udział pracujących w branży finansowej i nieruchomościach w stosunku do ogółu pracujących. Dane do 2021 roku bez podmiotów gospodarczych o liczbie pracujących do 9 osób. Podział branż jest zgodny z PKD 2007. Dotyczy sekcji: \"Działalność finansowa i ubezpieczeniowa; obsługa rynku nieruchomości\". W związku z wprowadzonymi zmianami metodologicznymi w pozyskiwaniu danych dotyczących: pracujących, zatrudnionych oraz przeciętnego zatrudnienia według PKD, dane od 2022 roku nie mogą być porównywane z danymi dla lat poprzednich.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 202,
+    "name": "Zatrudnienie w rolnictwie",
+    "group": "RYNEK PRACY",
+    "description": "Wyrażony w % udział pracujących w rolnictwie w stosunku do ogółu pracujących. Dane łącznie z rolnictwem indywidualnym. Dane dotyczące pracujących w gospodarstwach indywidualnych w rolnictwie według stanu w dniu 31 XII w latach 2002-2009 wyszacowano na podstawie wyników Narodowego Spisu Powszechnego Ludności i Mieszkań oraz Powszechnego Spisu Rolnego 2002 oraz w 2010 r. na podstawie Powszechnego Spisu Rolnego 2010. Podział branż jest zgodny z PKD 2007. Dotyczy sekcji: \"Rolnictwo, leśnictwo, łowiectwo i rybactwo\". W związku z wprowadzonymi zmianami metodologicznymi w pozyskiwaniu danych dotyczących: pracujących, zatrudnionych oraz przeciętnego zatrudnienia według PKD, dane od 2022 roku nie mogą być porównywane z danymi dla lat poprzednich.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 203,
+    "name": "Zatrudnienie w przemyśle i budownictwie",
+    "group": "RYNEK PRACY",
+    "description": "Wyrażony w % udział pracujących w przemyśle i budownictwie w stosunku do ogółu pracujących. Dane do 2021 roku bez podmiotów gospodarczych o liczbie pracujących do 9 osób. Podział branż jest zgodny z PKD 2007. Pod pojęciem \"Przemysł i budownictwo\" rozumie się sekcje: \"Górnictwo i wydobywanie\"; \"Przetwórstwo przemysłowe\"; \"Wytwarzanie i zaopatrywanie w energię elektryczną, gaz, parę wodną i gorącą wodę\"; \"Dostawa wody; gospodarowanie ściekami i odpadami; rekultywacja\" oraz \"Budownictwo\". W związku z wprowadzonymi zmianami metodologicznymi w pozyskiwaniu danych dotyczących: pracujących, zatrudnionych oraz przeciętnego zatrudnienia według PKD, dane od 2022 roku nie mogą być porównywane z danymi dla lat poprzednich.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 204,
+    "name": "Zatrudnienie w handlu, transporcie, turystyce, informacji i komunikacji",
+    "group": "RYNEK PRACY",
+    "description": "Wyrażony w % udział pracujących w handlu, transporcie, turystyce, informacji i komunikacji w stosunku do ogółu pracujących. Dane do 2021 roku bez podmiotów gospodarczych o liczbie pracujących do 9 osób. Podział branż jest zgodny z PKD 2007. Dotyczy sekcji: \"Handel\"; \"Naprawa pojazdów samochodowych\"; \"Transport i gospodarka magazynowa\"; \"Zakwaterowanie i gastronomia\" oraz \"Informacja i komunikacja\". W związku z wprowadzonymi zmianami metodologicznymi w pozyskiwaniu danych dotyczących: pracujących, zatrudnionych oraz przeciętnego zatrudnienia według PKD, dane od 2022 roku nie mogą być porównywane z danymi dla lat poprzednich.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 205,
+    "name": "Zatrudnienie w pozostałych usługach",
+    "group": "RYNEK PRACY",
+    "description": "Wyrażony w % udział pracujących w pozostałych usługach w stosunku do ogółu pracujących. Dane do 2021 roku bez podmiotów gospodarczych o liczbie pracujących do 9 osób. Podział branż jest zgodny z PKD 2007. Pod pojęciem \"Pozostałe usługi\" rozumie się sekcje: \"Działalność profesjonalna, naukowa i techniczna\"; \"Administrowanie i działalność wspierająca\"; \"Administracja publiczna i obrona narodowa, obowiązkowe zabezpieczenia społeczne\"; \"Edukacja\"; \"Opieka zdrowotna i pomoc społeczna\"; \"Działalność związana z kulturą rozrywką i rekreacją\" oraz \"Pozostała działalność usługowa\". W związku z wprowadzonymi zmianami metodologicznymi w pozyskiwaniu danych dotyczących: pracujących, zatrudnionych oraz przeciętnego zatrudnienia według PKD, dane od 2022 roku nie mogą być porównywane z danymi dla lat poprzednich.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 207,
+    "name": "Wyniki egzaminu gimnazjalnego - język polski",
+    "group": "EDUKACJA",
+    "description": "Wyrażony w % średni wynik uczniów uzyskiwany na egzaminie gimnazjalnym w części z języka polskiego (Od 2020 roku, po ostatecznym wygaszeniu szkół gimnazjalnych, wskaźnik nie jest już aktualizowany)",
+    "source": "Okręgowa Komisja Egzaminacyjna w Krakowie, Centralna Komisja Egzaminacyjna",
+    "unit": null,
+    "challengeAreas": [
+      "FAMILY_AND_FOSTER_CARE"
+    ],
+    "general": false
+  },
+  {
+    "id": 208,
+    "name": "Wyniki egzaminu gimnazjalnego - język angielski podstawowy",
+    "group": "EDUKACJA",
+    "description": "Wyrażony w % średni wynik uczniów uzyskiwany na egzaminie gimnazjalnym w części podstawowej z języka angielskiego (dane aktualizowane są od 2010 roku kiedy język angielski włączono do obowiązkowych przedmiotów zdawanych na egzaminie gimnazjalnym, od 2020 roku, po ostatecznym wygaszeniu szkół gimnazjalnych, wskaźnik nie jest już aktualizowany)",
+    "source": "Okręgowa Komisja Egzaminacyjna w Krakowie, Centralna Komisja Egzaminacyjna",
+    "unit": null,
+    "challengeAreas": [
+      "FAMILY_AND_FOSTER_CARE"
+    ],
+    "general": false
+  },
+  {
+    "id": 209,
+    "name": "Wyniki egzaminu gimnazjalnego - matematyka",
+    "group": "EDUKACJA",
+    "description": "Wyrażony w % średni wynik uczniów uzyskiwany na egzaminie gimnazjalnym w części z matematyki (Od 2020 roku, po ostatecznym wygaszeniu szkół gimnazjalnych, wskaźnik nie jest już aktualizowany)",
+    "source": "Okręgowa Komisja Egzaminacyjna w Krakowie, Centralna Komisja Egzaminacyjna",
+    "unit": null,
+    "challengeAreas": [
+      "FAMILY_AND_FOSTER_CARE"
+    ],
+    "general": false
+  },
+  {
+    "id": 210,
+    "name": "Wybory edukacyjne gimnazjalistów - technikum",
+    "group": "EDUKACJA",
+    "description": "Wyrażony w % udział absolwentów gimnazjów, którzy wybrali technikum jako miejsce dalszego kształcenia. Wskaźnik obliczony na podstawie liczby uczniów w klasie pierwszej technikum, którzy świadectwo ukończenia szkoły niższego szczebla otrzymali w poprzednim roku szkolnym. W roku 2019 z powodu połączenia się roczników absolwentów, analizy dokonano łącznie dla uczniów kończących szkołę podstawową i gimnazjalną. (Od 2020 roku, po ostatecznym wygaszeniu szkół gimnazjalnych, wskaźnik nie jest już aktualizowany)",
+    "source": "Ministerstwo Edukacji Narodowej / System Informacji Oświatowej",
+    "unit": null,
+    "challengeAreas": [
+      "FAMILY_AND_FOSTER_CARE"
+    ],
+    "general": false
+  },
+  {
+    "id": 211,
+    "name": "Wybory edukacyjne gimnazjalistów - liceum ogólnokształcące",
+    "group": "EDUKACJA",
+    "description": "Wyrażony w % udział absolwentów gimnazjów, którzy wybrali liceum ogólnokształcące jako miejsce dalszego kształcenia. Wskaźnik obliczony na podstawie liczby uczniów w klasie pierwszej LO, którzy świadectwo ukończenia szkoły niższego szczebla otrzymali w poprzednim roku szkolnym. W roku 2019 z powodu połączenia się roczników absolwentów, analizy dokonano łącznie dla uczniów kończących szkołę podstawową i gimnazjalną. (Od 2020 roku, po ostatecznym wygaszeniu szkół gimnazjalnych, wskaźnik nie jest już aktualizowany)",
+    "source": "Ministerstwo Edukacji Narodowej / System Informacji Oświatowej",
+    "unit": null,
+    "challengeAreas": [
+      "FAMILY_AND_FOSTER_CARE"
+    ],
+    "general": false
+  },
+  {
+    "id": 212,
+    "name": "Wybory edukacyjne gimnazjalistów - zasadnicza szkoła zawodowa",
+    "group": "EDUKACJA",
+    "description": "Wyrażony w % udział absolwentów gimnazjów, którzy wybrali zasadniczą szkołę zawodową jako miejsce dalszego kształcenia. Wskaźnik obliczony na podstawie liczby uczniów w klasie pierwszej ZSZ, którzy świadectwo ukończenia szkoły niższego szczebla otrzymali w poprzednim roku szkolnym. W roku 2019 z powodu połączenia się roczników absolwentów, analizy dokonano łącznie dla uczniów kończących szkołę podstawową i gimnazjalną. (Od 2020 roku, po ostatecznym wygaszeniu szkół gimnazjalnych, wskaźnik nie jest już aktualizowany)",
+    "source": "Ministerstwo Edukacji Narodowej / System Informacji Oświatowej",
+    "unit": null,
+    "challengeAreas": [
+      "FAMILY_AND_FOSTER_CARE"
+    ],
+    "general": false
+  },
+  {
+    "id": 213,
+    "name": "Odsetek osób niepełnosprawnych biologicznie",
+    "group": "NIEPEŁNOSPRAWNOŚĆ",
+    "description": "Udział osób niepełnosprawnych biologicznie w ogóle ludności. W Narodowym Spisie Powszechnym Ludności i Mieszkań zbiorowość osób niepełnosprawnych została podzielona na dwie podstawowe grupy: osoby niepełnosprawne prawnie (posiadające odpowiednie, aktualne orzeczenie wydane przez organ do tego uprawniony niezależnie od tego czy wydane do celów rentowych, czy pozarentowych. Taka osoba może, ale nie musi, poza odpowiednim orzeczeniem posiadać ograniczenia sprawności w wykonywaniu codziennych czynności) oraz osoby niepełnosprawne tylko biologicznie (posiadające wyłącznie ograniczenia sprawności w wykonywaniu codziennych czynności, a nie posiadające orzeczenia o niepełnosprawności).",
+    "source": "Główny Urząd Statystyczny (Narodowy Spis Powszechny Ludności i Mieszkań 2011 i 2021)",
+    "unit": "%",
+    "challengeAreas": [
+      "DISABILITY"
+    ],
+    "general": false
+  },
+  {
+    "id": 214,
+    "name": "Odsetek osób niepełnosprawnych prawnie",
+    "group": "NIEPEŁNOSPRAWNOŚĆ",
+    "description": "Udział osób niepełnosprawnych prawnie w ogóle ludności. W Narodowym Spisie Powszechnym Ludności i Mieszkań zbiorowość osób niepełnosprawnych została podzielona na dwie podstawowe grupy: osoby niepełnosprawne prawnie (posiadające odpowiednie, aktualne orzeczenie wydane przez organ do tego uprawniony niezależnie od tego czy wydane do celów rentowych, czy pozarentowych. Taka osoba może, ale nie musi, poza odpowiednim orzeczeniem posiadać ograniczenia sprawności w wykonywaniu codziennych czynności) oraz osoby niepełnosprawne tylko biologicznie (posiadające wyłącznie ograniczenia sprawności w wykonywaniu codziennych czynności, a nie posiadające orzeczenia o niepełnosprawności).",
+    "source": "Główny Urząd Statystyczny (Narodowy Spis Powszechny Ludności i Mieszkań 2011 i 2021)",
+    "unit": "%",
+    "challengeAreas": [
+      "DISABILITY"
+    ],
+    "general": false
+  },
+  {
+    "id": 215,
+    "name": "Odsetek osób niepełnosprawnych ogółem",
+    "group": "NIEPEŁNOSPRAWNOŚĆ",
+    "description": "Udział osób niepełnosprawnych (prawnie lub biologicznie) w ogóle ludności. W Narodowym Spisie Powszechnym Ludności i Mieszkań zbiorowość osób niepełnosprawnych została podzielona na dwie podstawowe grupy: osoby niepełnosprawne prawnie (posiadające odpowiednie, aktualne orzeczenie wydane przez organ do tego uprawniony niezależnie od tego czy wydane do celów rentowych, czy pozarentowych. Taka osoba może, ale nie musi, poza odpowiednim orzeczeniem posiadać ograniczenia sprawności w wykonywaniu codziennych czynności) oraz osoby niepełnosprawne tylko biologicznie (posiadające wyłącznie ograniczenia sprawności w wykonywaniu codziennych czynności, a nie posiadające orzeczenia o niepełnosprawności).",
+    "source": "Główny Urząd Statystyczny (Narodowy Spis Powszechny Ludności i Mieszkań 2011 i 2021)",
+    "unit": "%",
+    "challengeAreas": [
+      "DISABILITY"
+    ],
+    "general": false
+  },
+  {
+    "id": 216,
+    "name": "Odsetek osób niepełnosprawnych prawnie w wieku 0-15 lat",
+    "group": "NIEPEŁNOSPRAWNOŚĆ",
+    "description": "Udział osób niepełnosprawnych prawnie w wieku 0-15 lat w ogóle ludności w wieku 0-15 lat. W Narodowym Spisie Powszechnym Ludności i Mieszkań 2011 kryterium zakwalifikowania danej osoby do zbiorowości osób poniżej 16 roku życia było posiadanie aktualnego orzeczenia o niepełnosprawności wydanego przez organ orzekający. W Narodowym Spisie Powszechnym Ludności i Mieszkań 2021 kryterium zakwalifikowania danej osoby do zbiorowości osób dla pozycji \"osoby niepełnosprawne prawnie w wieku 0-15 lat z orzeczeniem o niepełnosprawności\" są liczone łącznie z osobami w wieku od 16 lat do 17 lat i 6 m-cy, których orzeczenia o niepełnosprawności zostały wydłużone z mocy prawa ze względu na stan epidemii lub zagrożenia epidemicznego.",
+    "source": "Główny Urząd Statystyczny (Narodowy Spis Powszechny Ludności i Mieszkań 2011 i 2021)",
+    "unit": "%",
+    "challengeAreas": [
+      "DISABILITY"
+    ],
+    "general": false
+  },
+  {
+    "id": 217,
+    "name": "Osoby niepełnosprawnie prawnie o stopniu niepełnosprawności lekkim",
+    "group": "NIEPEŁNOSPRAWNOŚĆ",
+    "description": "Udział osób posiadających orzeczenie o niepełnosprawności w stopniu lekkim w ogóle osób niepełnosprawnych prawnie od 16 roku życia.",
+    "source": "Główny Urząd Statystyczny (Narodowy Spis Powszechny Ludności i Mieszkań 2011 i 2021)",
+    "unit": "%",
+    "challengeAreas": [
+      "DISABILITY"
+    ],
+    "general": false
+  },
+  {
+    "id": 218,
+    "name": "Osoby niepełnosprawnie prawnie o stopniu niepełnosprawności umiarkowanym",
+    "group": "NIEPEŁNOSPRAWNOŚĆ",
+    "description": "Udział osób posiadających orzeczenie o niepełnosprawności w stopniu umiarkowanym w ogóle osób niepełnosprawnych prawnie od 16 roku życia.",
+    "source": "Główny Urząd Statystyczny (Narodowy Spis Powszechny Ludności i Mieszkań 2011 i 2021)",
+    "unit": "%",
+    "challengeAreas": [
+      "DISABILITY"
+    ],
+    "general": false
+  },
+  {
+    "id": 219,
+    "name": "Osoby niepełnosprawnie prawnie o stopniu niepełnosprawności znacznym",
+    "group": "NIEPEŁNOSPRAWNOŚĆ",
+    "description": "Udział osób posiadających orzeczenie o niepełnosprawności w stopniu znacznym w ogóle osób niepełnosprawnych prawnie od 16 roku życia.",
+    "source": "Główny Urząd Statystyczny (Narodowy Spis Powszechny Ludności i Mieszkań 2011 i 2021)",
+    "unit": "%",
+    "challengeAreas": [
+      "DISABILITY"
+    ],
+    "general": false
+  },
+  {
+    "id": 220,
+    "name": "Pracownicy socjalni OPS posiadający wyższe wykształcenie",
+    "group": "POMOC SPOŁECZNA - KADRA",
+    "description": "Udział pracowników socjalnych posiadających wyższe wykształcenie w ogólnej licznie pracowników socjalnych.",
+    "source": "Sprawozdanie OZPS (do 2017 r. i od 2019 r.), Jednorazowe sprawozdanie (nr: DPS-III-140-AW/2018, stan na 30.06.2018 r.)",
+    "unit": "%",
+    "challengeAreas": [],
+    "general": false
+  },
+  {
+    "id": 221,
+    "name": "Pracownicy socjalni OPS posiadający I stopień specjalizacji w zawodzie pracownik socjalny",
+    "group": "POMOC SPOŁECZNA - KADRA",
+    "description": "Udział pracowników socjalnych OPS posiadających I stopień specjalizacji w zawodzie pracownik socjalny w ogólnej liczbie pracowników socjalnych.",
+    "source": "Sprawozdanie OZPS (do 2017 r. i od 2019 r.), Jednorazowe sprawozdanie (nr: DPS-III-140-AW/2018, stan na 30.06.2018 r.)",
+    "unit": "%",
+    "challengeAreas": [],
+    "general": false
+  },
+  {
+    "id": 222,
+    "name": "Pracownicy socjalni OPS posiadający II stopień specjalizacji w zawodzie pracownik socjalny",
+    "group": "POMOC SPOŁECZNA - KADRA",
+    "description": "Udział pracowników socjalnych posiadających II stopień specjalizacji w zawodzie pracownik socjalny w ogólnej liczbie pracowników socjalnych.",
+    "source": "Sprawozdanie OZPS (do 2017 r. i od 2019 r.), Jednorazowe sprawozdanie (nr: DPS-III-140-AW/2018, stan na 30.06.2018 r.)",
+    "unit": "%",
+    "challengeAreas": [],
+    "general": false
+  },
+  {
+    "id": 224,
+    "name": "Dzieci i młodzież otrzymujący stypendia socjalne lub zasiłki szkolne",
+    "group": "POMOC SPOŁECZNA - BENEFICJENCI",
+    "description": "Udział dzieci i młodzieży w wieku 7-24 lata otrzymujących stypendia socjalne bądź zasiłki szkolne w ogólnej liczbie osób w wieku 7-24 lata.",
+    "source": "Sprawozdanie OZPS",
+    "unit": "%",
+    "challengeAreas": [
+      "FAMILY_AND_FOSTER_CARE",
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 225,
+    "name": "Świadczenia pieniężne z pomocy społecznej",
+    "group": "POMOC SPOŁECZNA - ŚWIADCZENIA",
+    "description": "Odsetek korzystających ze świadczeń pieniężnych w ogólnej liczbie świadczeniobiorców pomocy społecznej (liczba osób w rodzinach)",
+    "source": "Dane dla Polski - Sprawozdanie MRPiPS-03, dane dla Małopolski - Sprawozdanie: MRPiPS-03 (do 2014 r. i od 2018 r.), OZPS (w latach 2015 - 2017 r.).",
+    "unit": "%",
+    "challengeAreas": [
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 226,
+    "name": "Świadczenia niepieniężne z pomocy społecznej",
+    "group": "POMOC SPOŁECZNA - ŚWIADCZENIA",
+    "description": "Odsetek korzystających ze świadczeń niepieniężnych w ogólnej liczbie świadczeniobiorców pomocy społecznej (liczba osób w rodzinach)",
+    "source": "Źródło: Dane dla Polski - Sprawozdanie MRPiPS-03, dane dla Małopolski - Sprawozdanie: MRPiPS-03 (do 2014 r. i od 2018 r.), OZPS (w latach 2015 - 2017 r.).",
+    "unit": "%",
+    "challengeAreas": [
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 227,
+    "name": "Osoby korzystające z usług opiekuńczych i specjalistycznych usług opiekuńczych",
+    "group": "POMOC SPOŁECZNA - ŚWIADCZENIA",
+    "description": "Liczba osób korzystających z usług opiekuńczych (w tym specjalistycznych usług opiekuńczych).",
+    "source": "Dane dla Polski - MRiPS-03 (wcześniej MRPiPS-03). Dane dla Małopolski - Sprawozdanie: OZPS (do 2017 r.), MRPiPS-03 (od 2018 r.).",
+    "unit": null,
+    "challengeAreas": [
+      "POVERTY",
+      "SENIORS"
+    ],
+    "general": false
+  },
+  {
+    "id": 228,
+    "name": "Osoby korzystające ze specjalistycznych usług opiekuńczych dla osób z zaburzeniami psychicznymi",
+    "group": "POMOC SPOŁECZNA - ŚWIADCZENIA",
+    "description": "Liczba osób korzystających ze specjalistycznych usług opiekuńczych w miejscu zamieszkania dla osób z zaburzeniami psychicznymi.",
+    "source": "Dane dla Polski - MRiPS-03 (wcześniej MRPiPS-03). Dane dla Małopolski - Sprawozdanie: OZPS (do 2017 r.), MRPiPS-03 (od 2018 r.).",
+    "unit": null,
+    "challengeAreas": [
+      "POVERTY",
+      "MENTAL_HEALTH",
+      "SENIORS"
+    ],
+    "general": false
+  },
+  {
+    "id": 229,
+    "name": "Osoby objęte kontraktami socjalnymi",
+    "group": "POMOC SPOŁECZNA - ŚWIADCZENIA",
+    "description": "Udział osób objętych kontraktami socjalnymi w ogólnej liczbie osób w rodzinach świadczeniobiorców pomocy społecznej.",
+    "source": "Dane dla Polski - Sprawozdanie MRPiPS-03, dane dla Małopolski - Sprawozdanie OZPS (2014 - 2017 r.), Sprawozdanie MRPiPS-03 (od 2018 r.),",
+    "unit": "%",
+    "challengeAreas": [
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 230,
+    "name": "Bezrobocie rodzinne",
+    "group": "RYNEK PRACY",
+    "description": "Odsetek osób bezrobotnych zamieszkujących gospodarstwo domowe, w którym dwie lub więcej osób pozostaje na bezrobociu. Dane dla powiatu tarnowskiego i Tarnowa przedstawione zostały łącznie. Dane obrazują stan na 31 XII danego roku.",
+    "source": "opracowanie Regionalnego Ośrodka Polityki Społecznej w Krakowie na podstawie danych zebranych przez Wojewódzki Urząd Pracy w Krakowie od powiatowych urzędów pracy z terenu województwa małopolskiego",
+    "unit": "%",
+    "challengeAreas": [
+      "FAMILY_AND_FOSTER_CARE",
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 231,
+    "name": "Potrzeba ochrony macierzyństwa",
+    "group": "POMOC SPOŁECZNA - POWODY KORZYSTANIA",
+    "description": "Odsetek klientów pomocy społecznej korzystających ze wsparcia z powodu potrzeby ochrony macierzyństwa (na podstawie danych o rzeczywistej liczbie osób w rodzinach objętych pomocą społeczną).",
+    "source": "Sprawozdanie MRiPS-03 (wcześniej MRPiPS-03).",
+    "unit": "%",
+    "challengeAreas": [
+      "FAMILY_AND_FOSTER_CARE",
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 233,
+    "name": "Liczba rodzin ogółem",
+    "group": "RODZINA",
+    "description": "Rodzina (biologiczna) w NSP definiowana jest jako dwie lub większa liczba osób, które są związane jako mąż i żona, wspólnie żyjący partnerzy (kohabitanci) – osoby płci przeciwnej lub jako rodzic i dziecko. Tak więc, rodzina obejmuje parę bez dzieci lub parę z jednym lub większą liczbą dzieci, albo też samotnego rodzica z jednym bądź większą liczbą dzieci.",
+    "source": "Główny Urząd Statystyczny (Narodowy Spis Powszechny Ludności i Mieszkań)",
+    "unit": null,
+    "challengeAreas": [
+      "FAMILY_AND_FOSTER_CARE"
+    ],
+    "general": false
+  },
+  {
+    "id": 234,
+    "name": "Rodziny z dziećmi do lat 24 na utrzymaniu",
+    "group": "RODZINA",
+    "description": "Udział rodzin z dziećmi do lat 24 na utrzymaniu w ogólnej liczbie rodzin. Rodzina (biologiczna) w spisie definiowana jest jako dwie lub większa liczba osób, które są związane jako mąż i żona, wspólnie żyjący partnerzy (kohabitanci) – osoby płci przeciwnej lub jako rodzic i dziecko. Tak więc, rodzina obejmuje parę bez dzieci lub parę z jednym lub większą liczbą dzieci, albo też samotnego rodzica z jednym bądź większą liczbą dzieci. Dziecko do lat 24 pozostające na utrzymaniu jest to dziecko w wieku 0-24 lata, które nie posiada własnego źródła utrzymania i pozostaje na utrzymaniu innej osoby wchodzącej w skład gospodarstwa domowego.",
+    "source": "Główny Urząd Statystyczny (Narodowy Spis Powszechny Ludności i Mieszkań 2011)",
+    "unit": "%",
+    "challengeAreas": [
+      "FAMILY_AND_FOSTER_CARE"
+    ],
+    "general": false
+  },
+  {
+    "id": 235,
+    "name": "Rodziny z 1 dzieckiem",
+    "group": "RODZINA",
+    "description": "Udział rodzin z 1 dzieckiem do lat 24 na utrzymaniu we wszystkich rodzinach z dziećmi do lat 24 na utrzymaniu. Rodzina (biologiczna) w spisie definiowana jest jako dwie lub większa liczba osób, które są związane jako mąż i żona, wspólnie żyjący partnerzy (kohabitanci) – osoby płci przeciwnej lub jako rodzic i dziecko. Tak więc, rodzina obejmuje parę bez dzieci lub parę z jednym lub większą liczbą dzieci, albo też samotnego rodzica z jednym bądź większą liczbą dzieci. Dziecko do lat 24 pozostające na utrzymaniu jest to dziecko w wieku 0-24 lata, które nie posiada własnego źródła utrzymania i pozostaje na utrzymaniu innej osoby wchodzącej w skład gospodarstwa domowego.",
+    "source": "Główny Urząd Statystyczny (Narodowy Spis Powszechny Ludności i Mieszkań 2011)",
+    "unit": "%",
+    "challengeAreas": [
+      "FAMILY_AND_FOSTER_CARE"
+    ],
+    "general": false
+  },
+  {
+    "id": 236,
+    "name": "Rodziny z 2 dzieci",
+    "group": "RODZINA",
+    "description": "Udział rodzin z 2 dzieci do lat 24 na utrzymaniu we wszystkich rodzinach z dziećmi do lat 24 na utrzymaniu. Rodzina (biologiczna) w spisie definiowana jest jako dwie lub większa liczba osób, które są związane jako mąż i żona, wspólnie żyjący partnerzy (kohabitanci) – osoby płci przeciwnej lub jako rodzic i dziecko. Tak więc, rodzina obejmuje parę bez dzieci lub parę z jednym lub większą liczbą dzieci, albo też samotnego rodzica z jednym bądź większą liczbą dzieci. Dziecko do lat 24 pozostające na utrzymaniu jest to dziecko w wieku 0-24 lata, które nie posiada własnego źródła utrzymania i pozostaje na utrzymaniu innej osoby wchodzącej w skład gospodarstwa domowego.",
+    "source": "Główny Urząd Statystyczny (Narodowy Spis Powszechny Ludności i Mieszkań 2011)",
+    "unit": "%",
+    "challengeAreas": [
+      "FAMILY_AND_FOSTER_CARE"
+    ],
+    "general": false
+  },
+  {
+    "id": 237,
+    "name": "Rodziny wielodzietne (z 3 lub więcej dzieci)",
+    "group": "RODZINA",
+    "description": "Udział rodzin wielodzietnych, tj. z 3 lub więcej dzieci do lat 24 na utrzymaniu we wszystkich rodzinach z dziećmi do lat 24 na utrzymaniu. Rodzina (biologiczna) w spisie definiowana jest jako dwie lub większa liczba osób, które są związane jako mąż i żona, wspólnie żyjący partnerzy (kohabitanci) – osoby płci przeciwnej lub jako rodzic i dziecko. Tak więc, rodzina obejmuje parę bez dzieci lub parę z jednym lub większą liczbą dzieci, albo też samotnego rodzica z jednym bądź większą liczbą dzieci. Dziecko do lat 24 pozostające na utrzymaniu jest to dziecko w wieku 0-24 lata, które nie posiada własnego źródła utrzymania i pozostaje na utrzymaniu innej osoby wchodzącej w skład gospodarstwa domowego.",
+    "source": "Główny Urząd Statystyczny (Narodowy Spis Powszechny Ludności i Mieszkań 2011)",
+    "unit": "%",
+    "challengeAreas": [
+      "FAMILY_AND_FOSTER_CARE"
+    ],
+    "general": false
+  },
+  {
+    "id": 238,
+    "name": "Liczba dzieci do lat 24 na utrzymaniu ogółem",
+    "group": "RODZINA",
+    "description": "Dziecko do lat 24 pozostające na utrzymaniu w NSP 2011 jest to dziecko w wieku 0-24 lata, które nie posiada własnego źródła utrzymania i pozostaje na utrzymaniu innej osoby wchodzącej w skład gospodarstwa domowego.",
+    "source": "Główny Urząd Statystyczny (Narodowy Spis Powszechny Ludności i Mieszkań 2011)",
+    "unit": null,
+    "challengeAreas": [
+      "FAMILY_AND_FOSTER_CARE"
+    ],
+    "general": false
+  },
+  {
+    "id": 239,
+    "name": "Przeciętna liczba dzieci do lat 24 na utrzymaniu",
+    "group": "RODZINA",
+    "description": "Dziecko do lat 24 pozostające na utrzymaniu w NSP 2011 jest to dziecko w wieku 0-24 lata, które nie posiada własnego źródła utrzymania i pozostaje na utrzymaniu innej osoby wchodzącej w skład gospodarstwa domowego.",
+    "source": "Główny Urząd Statystyczny (Narodowy Spis Powszechny Ludności i Mieszkań 2011)",
+    "unit": null,
+    "challengeAreas": [
+      "FAMILY_AND_FOSTER_CARE"
+    ],
+    "general": false
+  },
+  {
+    "id": 240,
+    "name": "Dzieci do lat 24 na utrzymaniu w rodzinach wielodzietnych",
+    "group": "RODZINA",
+    "description": "Udział dzieci do lat 24 na utrzymaniu w rodzinach posiadających 3 lub więcej dzieci w ogólnej liczbie dzieci do lat 24 na utrzymaniu. Rodzina (biologiczna) w spisie definiowana jest jako dwie lub większa liczba osób, które są związane jako mąż i żona, wspólnie żyjący partnerzy (kohabitanci) – osoby płci przeciwnej lub jako rodzic i dziecko. Tak więc, rodzina obejmuje parę bez dzieci lub parę z jednym lub większą liczbą dzieci, albo też samotnego rodzica z jednym bądź większą liczbą dzieci. Dziecko do lat 24 pozostające na utrzymaniu jest to dziecko w wieku 0-24 lata, które nie posiada własnego źródła utrzymania i pozostaje na utrzymaniu innej osoby wchodzącej w skład gospodarstwa domowego.",
+    "source": "Główny Urząd Statystyczny (Narodowy Spis Powszechny Ludności i Mieszkań 2011)",
+    "unit": "%",
+    "challengeAreas": [
+      "FAMILY_AND_FOSTER_CARE"
+    ],
+    "general": false
+  },
+  {
+    "id": 241,
+    "name": "Domy pomocy społecznej",
+    "group": "POMOC SPOŁECZNA I OTOCZENIE - INFRASTRUKTURA",
+    "description": "Liczba domów pomocy społecznej działających na danym terenie (bez podziału na typy).",
+    "source": "Dane dla Polski – Sprawozdanie MRPiPS-03 (do 2020 r.), Sprawozdanie MPiPS-06 (od 2021 r.). Dane dla Małopolski – Sprawozdanie OZPS (do 2017 r.), Sprawozdanie MRPiPS-03 (za lata: 2018 - 2020), Sprawozdanie MPiPS-06 (2021 r.), Rejestr DPS Małopolskiego Urzędu Wojewódzkiego w Krakowie (od 2022 r.).",
+    "unit": null,
+    "challengeAreas": [
+      "SENIORS"
+    ],
+    "general": false
+  },
+  {
+    "id": 242,
+    "name": "Placówki zapewniające całodobową opiekę osobom niepełnosprawnym, przewlekle chorym lub osobom w podeszłym wieku",
+    "group": "POMOC SPOŁECZNA I OTOCZENIE - INFRASTRUKTURA",
+    "description": "Liczba placówek zapewniających całodobową opiekę osobom niepełnosprawnym, przewlekle chorym lub osobom w podeszłym wieku działających na danym terenie (w oparciu zarówno o działalność gospodarczą, jak i o działalność statutową). Stan na 31 XII.",
+    "source": "Rejestr Małopolskiego Urzędu Wojewódzkiego w Krakowie",
+    "unit": null,
+    "challengeAreas": [
+      "DISABILITY",
+      "SENIORS"
+    ],
+    "general": false
+  },
+  {
+    "id": 243,
+    "name": "Ośrodki interwencji kryzysowej",
+    "group": "POMOC SPOŁECZNA I OTOCZENIE - INFRASTRUKTURA",
+    "description": "Liczba ośrodków interwencji kryzysowej działających na danym terenie. Stan na 31 XII.",
+    "source": "Sprawozdanie OZPS (do 2017 r.), Sprawozdanie MRPiPS-03 (za lata: 2018 - 2020), Sprawozdanie MPiPS-06 (od 2021 r.).",
+    "unit": null,
+    "challengeAreas": [
+      "FAMILY_AND_FOSTER_CARE"
+    ],
+    "general": false
+  },
+  {
+    "id": 244,
+    "name": "Środowiskowe domy samopomocy",
+    "group": "POMOC SPOŁECZNA I OTOCZENIE - INFRASTRUKTURA",
+    "description": "Liczba środowiskowych domów samopomocy działających na danym terenie. Stan na 31 XII.",
+    "source": "Sprawozdanie OZPS (do 2017 r.), Sprawozdanie MRPiPS-03 (za lata: 2018 - 2020), Sprawozdanie MPiPS-06 (od 2021 r.).",
+    "unit": null,
+    "challengeAreas": [
+      "DISABILITY",
+      "MENTAL_HEALTH"
+    ],
+    "general": false
+  },
+  {
+    "id": 245,
+    "name": "Dzienne domy pomocy",
+    "group": "POMOC SPOŁECZNA I OTOCZENIE - INFRASTRUKTURA",
+    "description": "Liczba dziennych domów pomocy działających na danym terenie. Stan na 31 XII.",
+    "source": "Sprawozdanie OZPS",
+    "unit": null,
+    "challengeAreas": [
+      "SENIORS"
+    ],
+    "general": false
+  },
+  {
+    "id": 247,
+    "name": "Noclegownie, schroniska i domy dla osób bezdomnych",
+    "group": "POMOC SPOŁECZNA I OTOCZENIE - INFRASTRUKTURA",
+    "description": "Liczba noclegowni, schronisk i domów dla osób bezdomnych działających na danym terenie.",
+    "source": "Sprawozdanie OZPS (do 2017 r.), MRPiPS-03 (2018 r.), Wykaz placówek udzielających tymczasowego schronienia, MUW w Krakowie (od 2019 r.)",
+    "unit": null,
+    "challengeAreas": [
+      "HOMELESSNESS"
+    ],
+    "general": false
+  },
+  {
+    "id": 248,
+    "name": "Placówki opiekuńczo-wychowawcze",
+    "group": "POMOC SPOŁECZNA I OTOCZENIE - INFRASTRUKTURA",
+    "description": "Liczba placówek opiekuńczo-wychowawczych działających na danym terenie (bez podziału na typy). Stan na 31 XII.",
+    "source": "Sprawozdanie MPiPS-03 (do 2014 r.), Sprawozdanie OZPS (2015 - 2017 r.), Sprawozdanie rzeczowo-finansowe z wykonywania przez powiat zadań innych niż realizacja dodatku wychowawczego (od 2018 r.)",
+    "unit": null,
+    "challengeAreas": [
+      "FAMILY_AND_FOSTER_CARE",
+      "SENIORS"
+    ],
+    "general": false
+  },
+  {
+    "id": 249,
+    "name": "Placówki wsparcia dziennego",
+    "group": "POMOC SPOŁECZNA I OTOCZENIE - INFRASTRUKTURA",
+    "description": "Liczba placówek wsparcia dziennego działających na danym terenie. Stan na 31 XII.",
+    "source": "Sprawozdanie OZPS i dane pozyskane przez ROPS w Krakowie",
+    "unit": null,
+    "challengeAreas": [
+      "FAMILY_AND_FOSTER_CARE"
+    ],
+    "general": false
+  },
+  {
+    "id": 250,
+    "name": "Mieszkania treningowe oraz wspomagane",
+    "group": "POMOC SPOŁECZNA I OTOCZENIE - INFRASTRUKTURA",
+    "description": "Liczba mieszkań treningowe oraz wspomaganych działających na danym terenie. Stan na 31 XII. Do 2022 r. w systemie funkcjonowały mieszkania chronione, natomiast od 2023 r. funkcjonują mieszkania treningowe oraz wspomagane.",
+    "source": "Sprawozdanie OZPS (do 2017 r.), Sprawozdanie MRPiPS-03 (za lata: 2018 - 2020), Sprawozdanie MPiPS-06 (od 2021 r.).",
+    "unit": null,
+    "challengeAreas": [
+      "DISABILITY"
+    ],
+    "general": false
+  },
+  {
+    "id": 252,
+    "name": "Zakłady aktywności zawodowej",
+    "group": "POMOC SPOŁECZNA I OTOCZENIE - INFRASTRUKTURA",
+    "description": "Liczba zakładów aktywności zawodowej działających na danym terenie.",
+    "source": "Rejestr Małopolskiego Urzędu Wojewódzkiego w Krakowie",
+    "unit": null,
+    "challengeAreas": [],
+    "general": false
+  },
+  {
+    "id": 253,
+    "name": "Uniwersytety trzeciego wieku",
+    "group": "POMOC SPOŁECZNA I OTOCZENIE - INFRASTRUKTURA",
+    "description": "Liczba uniwersytetów trzeciego wieku działających na danym terenie.",
+    "source": "Dane Ogólnopolskiej Federacji Uniwersytetów Trzeciego Wieku",
+    "unit": null,
+    "challengeAreas": [],
+    "general": false
+  },
+  {
+    "id": 254,
+    "name": "Centra integracji społecznej",
+    "group": "POMOC SPOŁECZNA I OTOCZENIE - INFRASTRUKTURA",
+    "description": "Liczba centrów integracji społecznej działających na danym terenie. Stan na 31 XII.",
+    "source": "Sprawozdanie OZPS (do 2017 r.), Sprawozdanie Centrum Integracji Społecznej (od 2018 r.).",
+    "unit": null,
+    "challengeAreas": [
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 255,
+    "name": "Kluby integracji społecznej",
+    "group": "POMOC SPOŁECZNA I OTOCZENIE - INFRASTRUKTURA",
+    "description": "Liczba klubów integracji społecznej działających na danym terenie.",
+    "source": "Sprawozdanie OZPS (do 2017 r.), Sprawozdanie Klubu Integracji Społecznej za I - XIII (od 2018 r.)",
+    "unit": null,
+    "challengeAreas": [
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 256,
+    "name": "Spółdzielnie socjalne",
+    "group": "POMOC SPOŁECZNA I OTOCZENIE - INFRASTRUKTURA",
+    "description": "Liczba spółdzielni socjalnych działających na danym terenie. Stan na 31 XII.",
+    "source": "Ogólnopolski Związek Rewizyjny Spółdzielni Socjalnych (do 2014 r.), Ogólnopolski Krajowy Rejestr Sądowy (od 2015 r.)",
+    "unit": null,
+    "challengeAreas": [],
+    "general": false
+  },
+  {
+    "id": 257,
+    "name": "Ludność w wieku 60+",
+    "group": "LUDNOŚĆ",
+    "description": "Udział ludności w wieku 60 i więcej lat w liczbie ludności ogółem.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych). Do 2021 roku włącznie dane dot. ludności bazują na wynikach Narodowego Spisu Powszechnego Ludności i Mieszkań 2011.",
+    "unit": "%",
+    "challengeAreas": [
+      "SENIORS"
+    ],
+    "general": false
+  },
+  {
+    "id": 258,
+    "name": "Stopień deinstytucjonalizacji pieczy zastępczej",
+    "group": "PIECZA ZASTĘPCZA",
+    "description": "Stosunek liczby dzieci w rodzinnej pieczy zastępczej (dzieci przebywające w rodzinach zastępczych, rodzinnych domach dziecka i w placówkach opiekuńczo-wychowawczych typu rodzinnego) do liczby wszystkich dzieci w pieczy zastępczej. Do wskaźnika nie wliczono dzieci umieszczonych w rodzinach zastępczych spokrewnionych (definicja zaczerpnięta z raportu \"Postępy deinstytucjonalizacji pieczy zastępczej\"; Warszawa 2018 r.). Dane zbierane przez MRiPS regularnie (co pół roku) w sprawozdaniach resortowych.",
+    "source": "Sprawozdania rzeczowo-finansowe z wykonywania przez powiat zadań … (WRiSPZ-P). Stan na 31 grudnia.",
+    "unit": "%",
+    "challengeAreas": [
+      "FAMILY_AND_FOSTER_CARE"
+    ],
+    "general": false
+  },
+  {
+    "id": 259,
+    "name": "Intensywność pieczy zastępczej",
+    "group": "PIECZA ZASTĘPCZA",
+    "description": "Liczba dzieci poniżej 18. roku życia przebywających w pieczy zastępczej w stosunku do liczby wszystkich dzieci w wieku poniżej 18 roku życia na danym terenie w przeliczeniu na 1000 dzieci (definicja zaczerpnięta z raportu \"Postępy deinstytucjonalizacji pieczy zastępczej\"; Warszawa 2018 r.). Dane zbierane przez MRiPS regularnie (co pół roku) w sprawozdaniach resortowych.",
+    "source": "Sprawozdania rzeczowo-finansowe z wykonywania przez powiat zadań … (WRiSPZ-P); Główny Urząd Statystyczny (BDL). Stan na 31 grudnia. Do 2021 roku włącznie dane dot. ludności bazują na wynikach Narodowego Spisu Powszechnego Ludności i Mieszkań 2011.",
+    "unit": null,
+    "challengeAreas": [
+      "FAMILY_AND_FOSTER_CARE"
+    ],
+    "general": false
+  },
+  {
+    "id": 261,
+    "name": "Niepełne usamodzielnienia",
+    "group": "PIECZA ZASTĘPCZA",
+    "description": "Średnia ruchoma 3-letnia stosunku usamodzielnionych do rodziny biologicznej w stosunku do całkowitej liczby usamodzielnionych wychowanków pieczy zastępczej. (Definicja zaczerpnięta z raportu \"Postępy deinstytucjonalizacji pieczy zastępczej\"; Warszawa 2018 r.)",
+    "source": "Sprawozdania rzeczowo-finansowe z wykonywania przez powiat zadań … (WRiSPZ-P) – suma I i II półrocza; Informacja Rady Ministrów o realizacji w roku 2019 ustawy z dnia 9 czerwca 2011 r. o wspieraniu rodziny i systemie pieczy zastępczej (dz. U. Z 2020 r. Poz. 821).",
+    "unit": null,
+    "challengeAreas": [
+      "FAMILY_AND_FOSTER_CARE"
+    ],
+    "general": false
+  },
+  {
+    "id": 262,
+    "name": "Wyniki egzaminu ósmoklasisty – język polski",
+    "group": "EDUKACJA",
+    "description": "Wyrażony w % średni wynik uczniów uzyskiwany na egzaminie ósmoklasisty w części z języka polskiego (wskaźnik aktualizowany od 2019 roku, w którym uczniowie szkół podstawowych po raz pierwszy przystąpili do egzaminu ósmoklasisty)",
+    "source": "Okręgowa Komisja Egzaminacyjna w Krakowie",
+    "unit": null,
+    "challengeAreas": [
+      "FAMILY_AND_FOSTER_CARE"
+    ],
+    "general": false
+  },
+  {
+    "id": 263,
+    "name": "Wyniki egzaminu ósmoklasisty – język angielski podstawowy",
+    "group": "EDUKACJA",
+    "description": "Wyrażony w % średni wynik uczniów uzyskiwany na egzaminie ósmoklasisty w części podstawowej z języka angielskiego (wskaźnik aktualizowany od 2019 roku, w którym uczniowie szkół podstawowych po raz pierwszy przystąpili do egzaminu ósmoklasisty)",
+    "source": "Okręgowa Komisja Egzaminacyjna w Krakowie",
+    "unit": null,
+    "challengeAreas": [
+      "FAMILY_AND_FOSTER_CARE"
+    ],
+    "general": false
+  },
+  {
+    "id": 264,
+    "name": "Wyniki egzaminu ósmoklasisty – matematyka",
+    "group": "EDUKACJA",
+    "description": "Wyrażony w % średni wynik uczniów uzyskiwany na egzaminie ósmoklasisty w części z matematyki (wskaźnik aktualizowany od 2019 roku, w którym uczniowie szkół podstawowych po raz pierwszy przystąpili do egzaminu ósmoklasisty)",
+    "source": "Okręgowa Komisja Egzaminacyjna w Krakowie",
+    "unit": null,
+    "challengeAreas": [
+      "FAMILY_AND_FOSTER_CARE"
+    ],
+    "general": false
+  },
+  {
+    "id": 265,
+    "name": "Wybory edukacyjne ósmoklasistów – technikum",
+    "group": "EDUKACJA",
+    "description": "Wyrażony w % udział absolwentów szkół podstawowych, którzy wybrali technikum jako miejsce dalszego kształcenia. Wskaźnik obliczony na podstawie liczby uczniów w klasie pierwszej technikum. (wskaźnik aktualizowany od 2020 roku po ostatecznym wygaszeniu szkół gimnazjalnych)",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [
+      "FAMILY_AND_FOSTER_CARE"
+    ],
+    "general": false
+  },
+  {
+    "id": 266,
+    "name": "Wybory edukacyjne ósmoklasistów – liceum ogólnokształcące",
+    "group": "EDUKACJA",
+    "description": "Wyrażony w % udział absolwentów szkół podstawowych, którzy wybrali liceum ogólnokształcące jako miejsce dalszego kształcenia. Wskaźnik obliczony na podstawie liczby uczniów w klasie pierwszej liceów ogólnokształcących. (wskaźnik aktualizowany od 2020 roku po ostatecznym wygaszeniu szkół gimnazjalnych)",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [
+      "FAMILY_AND_FOSTER_CARE"
+    ],
+    "general": false
+  },
+  {
+    "id": 267,
+    "name": "Wybory edukacyjne ósmoklasistów – szkoła branżowa I stopnia",
+    "group": "EDUKACJA",
+    "description": "Wyrażony w % udział absolwentów szkół podstawowych, którzy wybrali szkołę branżową I stopnia jako miejsce dalszego kształcenia. Wskaźnik obliczony na podstawie liczby uczniów w klasie pierwszej szkół branżowych I stopnia. (wskaźnik aktualizowany od 2020 roku po ostatecznym wygaszeniu szkół gimnazjalnych)",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [
+      "FAMILY_AND_FOSTER_CARE"
+    ],
+    "general": false
+  },
+  {
+    "id": 268,
+    "name": "Potencjał pielęgnacyjny",
+    "group": "LUDNOŚĆ",
+    "description": "Liczba kobiet w wieku 45-64 lata (potencjalnych opiekunów rodzinnych) przypadających na 100 osób w wieku 80 i więcej lat",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych). Do 2021 roku włącznie dane dot. ludności bazują na wynikach Narodowego Spisu Powszechnego Ludności i Mieszkań 2011.",
+    "unit": null,
+    "challengeAreas": [
+      "SENIORS"
+    ],
+    "general": false
+  },
+  {
+    "id": 271,
+    "name": "Wskaźnik zagrożenia ubóstwem po uwzględnieniu w dochodach transferów społecznych",
+    "group": "GOSPODARSTWA DOMOWE",
+    "description": "Odsetek osób z ekwiwalentnym dochodem do dyspozycji poniżej progu zagrożenia ubóstwem, który wynosi 60% krajowej mediany ekwiwalentnych dochodów do dyspozycji po transferach społecznych. Wskaźnik jest obliczany na podstawie badania EU-SILC (Europejskie badanie dochodów i warunków życia).",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [
+      "POVERTY"
+    ],
+    "general": false
+  },
+  {
+    "id": 272,
+    "name": "Wskaźnik zatrudnienia osób niepełnosprawnych w wieku 16-64 lata",
+    "group": "NIEPEŁNOSPRAWNOŚĆ",
+    "description": "Odsetek pracujących osób niepełnosprawnych w wieku 16 - 64 lata w ogólnej liczbie ludności pracującej w wieku 16 - 64 lata. Do osób niepełnosprawnych zaliczono osoby niepełnosprawne prawnie, czyli posiadające odpowiednie orzeczenie wydane przez organ do tego uprawniony. Niniejszy wskaźnik zastąpił zasilany do 2020 r. „Wskaźnik zatrudnienia osób niepełnosprawnych”, gdyż GUS zmienił sposób wyliczania tego wskaźnika w związku ze zmianami w definiowaniu ludności pracującej (wdrożenie rozporządzenia ramowego dla statystyki społecznej, tj. Rozporządzenia Parlamentu Europejskiego i Rady (UE) 2019/1700 z dnia 10 października 2019 r.).",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych)",
+    "unit": null,
+    "challengeAreas": [
+      "DISABILITY"
+    ],
+    "general": false
+  },
+  {
+    "id": 273,
+    "name": "Wskaźnik podwójnego starzenia",
+    "group": "LUDNOŚĆ",
+    "description": "Udział osób w wieku 80 i więcej lat w grupie osób wieku 60 i więcej lat.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych). Do 2021 r. włącznie dane dot. ludności bazują na wynikach Narodowego Spisu Powszechnego Ludności i Mieszkań 2011.",
+    "unit": "%",
+    "challengeAreas": [
+      "SENIORS"
+    ],
+    "general": false
+  },
+  {
+    "id": 274,
+    "name": "Wskaźnik wsparcia osób najstarszych",
+    "group": "LUDNOŚĆ",
+    "description": "Liczba osób w wieku 85 lat i więcej przypadająca na 100 osób w wieku 50–64 lata",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych). Do 2021 roku włącznie dane dot. ludności bazują na wynikach Narodowego Spisu Powszechnego Ludności i Mieszkań 2011.",
+    "unit": null,
+    "challengeAreas": [
+      "SENIORS"
+    ],
+    "general": false
+  },
+  {
+    "id": 275,
+    "name": "Stopień deinstytucjonalizacji pieczy zastępczej - dzieci z danego terytorium",
+    "group": "PIECZA ZASTĘPCZA",
+    "description": "Stosunek liczby dzieci z danego terytorium przebywających w rodzinnej pieczy zastępczej (rodzinach zastępczych, rodzinnych domach dziecka i w placówkach opiekuńczo-wychowawczych typu rodzinnego) do liczby wszystkich dzieci z danego terytorium przebywających w pieczy zastępczej. Do wskaźnika nie wliczono dzieci umieszczonych w rodzinach zastępczych spokrewnionych (definicja zaczerpnięta z raportu \"Postępy deinstytucjonalizacji pieczy zastępczej\"; Warszawa 2018 r.). Dane zbierane przez MRiPS od 2016 r. nieregularnie w formie sprawozdań jednorazowych.",
+    "source": "Sprawozdania jednorazowe: „Liczba dzieci w pieczy zastępczej - własne i obce” (DSR-LDPZ). Stan na 31 grudnia.",
+    "unit": "%",
+    "challengeAreas": [
+      "FAMILY_AND_FOSTER_CARE"
+    ],
+    "general": false
+  },
+  {
+    "id": 276,
+    "name": "Intensywność pieczy zastępczej - dzieci z danego terytorium",
+    "group": "PIECZA ZASTĘPCZA",
+    "description": "Liczba dzieci poniżej 18. roku życia z danego terytorium przebywających w pieczy zastępczej w stosunku do liczby wszystkich dzieci w wieku poniżej 18 roku życia na danym terenie w przeliczeniu na 1000 dzieci (definicja zaczerpnięta z raportu \"Postępy deinstytucjonalizacji pieczy zastępczej\"; Warszawa 2018 r.). Dane zbierane przez MRiPS od 2016 r. nieregularnie w formie sprawozdań jednorazowych.",
+    "source": "Sprawozdania jednorazowe: „Liczba dzieci w pieczy zastępczej - własne i obce” (DSR-LDPZ); Główny Urząd Statystyczny (BDL). Stan na 31 grudnia. Do 2021 r. włącznie dane dot. ludności bazują na wynikach Narodowego Spisu Powszechnego Ludności i Mieszkań 2011.",
+    "unit": null,
+    "challengeAreas": [
+      "FAMILY_AND_FOSTER_CARE"
+    ],
+    "general": false
+  },
+  {
+    "id": 279,
+    "name": "Placówki specjalistycznego poradnictwa - jednostki powiatowe",
+    "group": "POMOC SPOŁECZNA I OTOCZENIE - INFRASTRUKTURA",
+    "description": "Liczba jednostek specjalistycznego poradnictwa działających w powiatach. Stan na 31 XII. Wskaźnik zasilany od 2021 r. w związku ze zmianami monitorowania danych w sprawozdaniach resortowych. Zastąpił on wskaźnik \"Placówki specjalistycznego poradnictwa\"",
+    "source": "Sprawozdanie MPiPS-06.",
+    "unit": null,
+    "challengeAreas": [],
+    "general": false
+  },
+  {
+    "id": 280,
+    "name": "Przeciętne dalsze trwanie życia kobiet",
+    "group": "LUDNOŚĆ",
+    "description": "Średnia liczba lat, jaką ma jeszcze do przeżycia kobieta w wieku 0 lat przy założeniu umieralności z okresu, dla którego opracowano tablice trwania życia.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych).",
+    "unit": null,
+    "challengeAreas": [],
+    "general": false
+  },
+  {
+    "id": 281,
+    "name": "Przeciętne dalsze trwanie życia mężczyzn",
+    "group": "LUDNOŚĆ",
+    "description": "Średnia liczba lat, jaką ma jeszcze do przeżycia mężczyzna w wieku 0 lat przy założeniu umieralności z okresu, dla którego opracowano tablice trwania życia.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych).",
+    "unit": null,
+    "challengeAreas": [],
+    "general": false
+  },
+  {
+    "id": 282,
+    "name": "Zgony kobiet w wieku 45-64 lata",
+    "group": "LUDNOŚĆ",
+    "description": "Liczba zgonów kobiet w wieku 45-64 lata.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych).",
+    "unit": null,
+    "challengeAreas": [
+      "HEALTH"
+    ],
+    "general": false
+  },
+  {
+    "id": 283,
+    "name": "Zgony ludności w wieku 80+",
+    "group": "LUDNOŚĆ",
+    "description": "Liczba zgonów osób w wieku 80 i więcej lat.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych).",
+    "unit": null,
+    "challengeAreas": [
+      "HEALTH"
+    ],
+    "general": false
+  },
+  {
+    "id": 284,
+    "name": "Wskaźnik/ indeks starości",
+    "group": "LUDNOŚĆ",
+    "description": "Relacja pokoleniowa dziadków i wnuczków, tj. liczba osób w wieku 65 i więcej lat przypadająca na 100 osób w wieku 0-14 lat",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych).",
+    "unit": null,
+    "challengeAreas": [],
+    "general": false
+  },
+  {
+    "id": 285,
+    "name": "Ludność w wieku 65+/ Współczynnik starości demograficznej",
+    "group": "LUDNOŚĆ",
+    "description": "Relacja liczby osób w starszym wieku (65 lat i więcej) do ogólnej liczby ludności.",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych).",
+    "unit": "%",
+    "challengeAreas": [],
+    "general": false
+  },
+  {
+    "id": 286,
+    "name": "Wskaźnik potencjalnego wsparcia",
+    "group": "LUDNOŚĆ",
+    "description": "Liczba osób w wieku 15-64 lata przypadająca na 100 osób w wieku 65 lat i więcej. Przedstawia tzw. obciążenie - ile osób hipotetycznie pozostających na rynku pracy przypada na 1 osobę (100 osób) będącą już poza rykiem pracy (odwrotność cząstkowego współczynnika obciążenia demograficznego osobami starszymi).",
+    "source": "Główny Urząd Statystyczny (Bank Danych Lokalnych).",
+    "unit": null,
+    "challengeAreas": [],
+    "general": false
+  }
+]

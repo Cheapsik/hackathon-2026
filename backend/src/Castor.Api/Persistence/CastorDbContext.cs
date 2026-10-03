@@ -12,6 +12,30 @@ public sealed class CastorDbContext : DbContext
 
     public DbSet<User> Users => Set<User>();
 
+    public DbSet<ChallengeArea> ChallengeAreas => Set<ChallengeArea>();
+
+    public DbSet<Persona> Personas => Set<Persona>();
+
+    public DbSet<Municipality> Municipalities => Set<Municipality>();
+
+    public DbSet<Innovation> Innovations => Set<Innovation>();
+
+    public DbSet<InnovationGenome> InnovationGenomes => Set<InnovationGenome>();
+
+    public DbSet<ProblemReport> ProblemReports => Set<ProblemReport>();
+
+    public DbSet<MatchResult> MatchResults => Set<MatchResult>();
+
+    public DbSet<BackgroundJob> BackgroundJobs => Set<BackgroundJob>();
+
+    public DbSet<Indicator> Indicators => Set<Indicator>();
+
+    public DbSet<IndicatorValue> IndicatorValues => Set<IndicatorValue>();
+
+    public DbSet<FitAssessment> FitAssessments => Set<FitAssessment>();
+
+    public DbSet<FitAssistantMessage> FitAssistantMessages => Set<FitAssistantMessage>();
+
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {
         ModelConventions.ApplyTo(configurationBuilder);

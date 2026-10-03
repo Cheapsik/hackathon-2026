@@ -1,0 +1,239 @@
+[
+  {
+    "name": "Ania i Staś",
+    "age": 7,
+    "description": [
+      "Rodzeństwo pochodzące z dysfunkcyjnej rodziny",
+      "Ania ma Zespół Downa, Staś jest osobą niedosłyszącą",
+      "Ania ma 7 lat, z kolei Staś 12",
+      "Są z reguły nieufni i wycofani",
+      "Trafiali do wielu rodzin zastępczych i placówek opiekuńczo – wychowawczych"
+    ],
+    "goals": [
+      "Umieszczenie dzieci w pieczy rodzinnej, bez konieczności ich rozdzielania",
+      "Zapewnienie specjalistycznego wsparcia, w odpowiedzi na ich potrzeby związane z niepełnosprawnością",
+      "Wzmocnienie kompetencji społecznych oraz umiejętności budowania relacji międzyludzkich"
+    ],
+    "challenges": [
+      "Niepełnosprawność obydwojga dzieci",
+      "Bagaż doświadczeń jaki dzieci wyniosły ze swojego środowiska rodzinnego",
+      "Brak stabilności w zakresie miejsca przebywania rodzeństwa"
+    ],
+    "motivations": [
+      "Mieć „prawdziwą” rodzinę, rodziców, którzy będą się o nas troszczyć.",
+      "Nie być rozdzielonymi – wychowywać się razem, w tym samym miejscu.",
+      "Poznać nowych kolegów i koleżanki, być akceptowanymi wśród rówieśników"
+    ],
+    "challengeArea": "FAMILY_AND_FOSTER_CARE"
+  },
+  {
+    "name": "Kuba",
+    "age": 22,
+    "description": [
+      "Przebywa w Warszawie",
+      "Ma 22 lata (były wychowanek placówki opiekuńczo – wychowawczej)",
+      "Przejawia symptomy uzależnienia od środków psychoaktywnych",
+      "Miał możliwość mieszkania w mieszkaniu wspieranym, ale nie utrzymał go"
+    ],
+    "goals": [
+      "Zabezpieczenie schronienia i pożywienia na najbliższe dni",
+      "Dostęp do prądu (dysponuje telefonem, dzięki któremu utrzymuje kontakt ze znajomymi, u których zdarza mu się rotacyjnie nocować)",
+      "Utrzymanie schludnego wyglądu, by nikt nic „nie zauważył”"
+    ],
+    "challenges": [
+      "Znalezienie miejsca na nocleg w perspektywie najbliższych dni",
+      "Brak kontaktu z osobami, które mogą go wesprzeć na drodze „ku dorosłości”"
+    ],
+    "motivations": [
+      "„ Żeby nikt nie zobaczył, że nie mam domu. Bo przecież nie jestem bezdomny!”",
+      "„ Chcę zrobić coś ze swoim życiem, żeby nie skończyć jak moi starzy”"
+    ],
+    "challengeArea": "HOMELESSNESS"
+  },
+  {
+    "name": "Krystian",
+    "age": 38,
+    "description": [
+      "Mieszka sam w małej miejscowości (rodzice mieszkają nieopodal)",
+      "Ma 38 lat",
+      "Pracuje zdalnie jako operator danych, obsługuje komputer wzrokowo, obsługuje inteligentny dom",
+      "Ma porażenie czterokończynowe, nie mówi"
+    ],
+    "goals": [
+      "Realizować codzienne czynności bez „obciążania” innych osób",
+      "Zdobyć znajomych, rozwinąć życie towarzyskie",
+      "Dokształcać się, rozwijać zawodowo,",
+      "Zdobyć uznanie"
+    ],
+    "challenges": [
+      "Samotność, brak przyjaciół",
+      "Samoobsługa – ubieranie się, wyjście z domu",
+      "Podtrzymanie ciała w miarę dobrym zdrowiu"
+    ],
+    "motivations": [
+      "„Mieć w życiu coś więcej niż tylko pracę”",
+      "Wyjść z domu kiedy chce, pojechać gdzieś, coś przeżyć",
+      "Decydować o sobie, „mówić w swoim imieniu”"
+    ],
+    "challengeArea": "DISABILITY"
+  },
+  {
+    "name": "Tomek",
+    "age": 60,
+    "description": [
+      "Mieszka na Śląsku",
+      "Ma 60 lat",
+      "Jeszcze do niedawna mieszkał z matką",
+      "Ma wykształcenie techniczne, pracował w gospodarstwie rolnym",
+      "Obecnie na rencie rolniczej, nie pracuje"
+    ],
+    "goals": [
+      "Zapewnić bezpieczeństwo finansowe i zdrowotne",
+      "Znaleźć pracę dorywczą",
+      "Zabezpieczyć opał do domu"
+    ],
+    "challenges": [
+      "Samotność, brak sieci wsparcia",
+      "Poczucie rezygnacji, beznadziei",
+      "Zagrożenie alkoholizmem"
+    ],
+    "motivations": [
+      "Poznanie nowych osób, „żeby się spotkać, napić razem herbaty”",
+      "Mieć pewność, „że będę mieć co jeść i ogrzeję dom na zimę”"
+    ],
+    "challengeArea": "POVERTY"
+  },
+  {
+    "name": "Swietłana",
+    "age": 37,
+    "description": [
+      "Pochodzi z Ukrainy",
+      "Ma 37 lat",
+      "Ma 2 małych dzieci: 4 i 9 lat",
+      "Mąż został w Ukrainie",
+      "Jest nauczycielką historii, w Ukrainie pracowała w liceum",
+      "W Polsce szuka pracy poza swoim zawodem"
+    ],
+    "goals": [
+      "Zapewnić bezpieczeństwo sobie i rodzinie",
+      "Znaleźć pracę i mieszkanie",
+      "Zabezpieczyć przedszkole/ szkołę dla dzieci"
+    ],
+    "challenges": [
+      "Wynajęcie mieszkania (niechęć wynajmujących do matki z dziećmi z Ukrainy)",
+      "Kulturowa adaptacja dzieci (nie mówią po polsku)"
+    ],
+    "motivations": [
+      "Odnalezienie się w Polce i kulturowa oraz społeczna aktywizacja i integracja",
+      "Duża motywacja wewnętrzna, chęć zmiany"
+    ],
+    "challengeArea": "MIGRANT_INTEGRATION"
+  },
+  {
+    "name": "Stanisław",
+    "age": 56,
+    "description": [
+      "Ma 56 lat",
+      "Pracuje na etat i opiekuje się chorą matką",
+      "Z powodu intensywnego trybu życia zaniedbuje własne zdrowie",
+      "Boryka się z otyłością i chorobą serca",
+      "Wycofany społecznie"
+    ],
+    "goals": [
+      "Równowaga między życiem prywatnym a opieką nad matką",
+      "Zwiększenie energii, witalności i poprawa stanu zdrowia",
+      "Wzmocnienie relacji społecznych"
+    ],
+    "challenges": [
+      "Fizyczne i emocjonalne wyzwania związane z codzienną opieką nad osobą zależną",
+      "Niepokój związany ze złym samopoczuciem i narastającymi problemami zdrowotnymi"
+    ],
+    "motivations": [
+      "Zapewnienie bezpieczeństwa i codziennej opieki matce",
+      "Znalezienie chwili by zrobić coś dla siebie, spotkać się z kimś",
+      "Chęć wyjścia poza schemat obowiązków"
+    ],
+    "challengeArea": "HEALTH"
+  },
+  {
+    "name": "Mateusz",
+    "age": 17,
+    "description": [
+      "Ma 17 lat",
+      "Chodzi do liceum w dużym mieście",
+      "Większość wolnego czasu spędza przed komputerem w sieci",
+      "Niedawno doświadczył rozstania z pierwszą dziewczyną, co mocno przeżył",
+      "Odczuwa pustkę, miewa stany depresyjne"
+    ],
+    "goals": [
+      "Realizowanie celów poza wirtualną rzeczywistością",
+      "Znalezienie wsparcia w trudnym przeżywaniu emocji",
+      "Przełamanie izolacji, poczucie przynależności do grupy"
+    ],
+    "challenges": [
+      "Skąpe kontakty z rówieśnikami, poczucie wyobcowania",
+      "Nadmierny czas spędzany przed komputerem",
+      "Trudność w rozumieniu emocji i radzeniu sobie z nimi, obniżona motywacja do działania"
+    ],
+    "motivations": [
+      "Poczucie zadowolenia i bycia ważnym",
+      "Chęć bycia akceptowanym, znalezienie „bratniej duszy”",
+      "Poczucie bezpieczeństwa, kiedy niebo wali się na głowę"
+    ],
+    "challengeArea": "MENTAL_HEALTH"
+  },
+  {
+    "name": "Karina",
+    "age": 41,
+    "description": [
+      "Mieszka w dużym mieście",
+      "Ma 41 lat",
+      "Od lat boryka się z problemami zdrowia psychicznego, niedawno zdiagnozowano u niej chorobę afektywną dwubiegunową",
+      "Odbywa długoterminowe leczenie pozostaje pod obserwacją psychiatry",
+      "Obecnie powraca na rynek pracy"
+    ],
+    "goals": [
+      "Znalezienie stabilnego zatrudnienia",
+      "Zapewnienie wsparcia w aktywizacji zawodowej i przygotowanie do wejścia na rynek pracy",
+      "Zindywidualizowanie konkretnych działań pod osobiste możliwości"
+    ],
+    "challenges": [
+      "Odnalezienie się w rzeczywistości po powrocie ze szpitala",
+      "Poczucie wyobcowania i wstydu w związku z otrzymaną diagnozą",
+      "Spadek energii i motywacji, lęk przed odrzuceniem społecznym",
+      "Zagrożenie bezrobociem i ponownym pojawieniem się kryzysu psychicznego"
+    ],
+    "motivations": [
+      "Powrót do „normalności” i życia społecznego",
+      "Poradzenie sobie z nowym wyzwaniem jakim jest znalezienie i podjęcie pracy",
+      "Odbudowanie wiary we własne możliwości"
+    ],
+    "challengeArea": "MENTAL_HEALTH"
+  },
+  {
+    "name": "Janina",
+    "age": 73,
+    "description": [
+      "Mieszka sama w małym mieście",
+      "Ma 73 lata",
+      "Niedawno straciła męża, doświadcza samotności, rzadko wychodzi z domu",
+      "Zmaga się z wieloma schorzeniami, przyjmuje sporo leków i suplementów"
+    ],
+    "goals": [
+      "Zminimalizowanie samotności i pobudzenie aktywności społecznej",
+      "Zbudowanie poczucia wartości i użyteczności",
+      "Świadome podejście do zdrowia fizycznego i psychicznego, utrzymanie opieki zdrowotnej i monitorowanie przyjmowanych leków."
+    ],
+    "challenges": [
+      "Samotność i brak integracji społecznej",
+      "Nadużywanie leków i suplementów",
+      "Zmiana życia po utracie małżonka"
+    ],
+    "motivations": [
+      "Odnalezienie sensu życia i przyjemności w prostych rzeczach",
+      "Organizacja dnia codziennego",
+      "Polepszenie samopoczucia i wyjście do ludzi"
+    ],
+    "challengeArea": "SENIORS"
+  }
+]

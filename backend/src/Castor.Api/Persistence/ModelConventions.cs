@@ -22,8 +22,10 @@ public static class ModelConventions
         configurationBuilder.Properties<decimal>()
             .HavePrecision(Precision, AmountScale);
 
-        // A value with another scale gets its own type and its own line here, e.g.:
-        // configurationBuilder.Properties<Rate>().HaveConversion<RateConverter>().HavePrecision(Precision, Rate.Scale);
+        // A value with another scale gets its own type and its own line here.
+        configurationBuilder.Properties<Measure>()
+            .HaveConversion<MeasureConverter>()
+            .HavePrecision(Precision, Measure.Scale);
 
         configurationBuilder.Properties<DateOnly>()
             .HaveColumnType("date");

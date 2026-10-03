@@ -9,3 +9,13 @@
 @import './design-system/tokens.css';
 @import './design-system/globals.css';
 @import './design-system/motion.css';
+
+/* Printing a fit assessment (module VII): the card only, without navigation and controls. */
+@media print {
+  header,
+  nav,
+  footer,
+  .no-print {
+    display: none !important;
+  }
+}

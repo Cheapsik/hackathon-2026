@@ -34,8 +34,12 @@ services:
       ConnectionStrings__Castor: Host=db;Port=5432;Database=castor;Username=castor;Password=${POSTGRES_PASSWORD:-castor}
       Database__MigrateOnStartup: "true"
       DataProtection__KeysPath: /var/castor/keys
+      Seed__Path: /var/castor/seed
+      Seed__OnStartup: "true"
     volumes:
       - backend-keys:/var/castor/keys
+      # The committed seed, read-only: the import only adds content and upserts statistics (ADR 0003).
+      - ./data/seed:/var/castor/seed:ro
 
   frontend:
     build:

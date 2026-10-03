@@ -1,0 +1,4 @@
+# Downloaded pages, PDFs and API answers: the scripts cache them here; materials are linked, never copied (SPEC 10).
+raw/
+scrapers/.venv/
+__pycache__/

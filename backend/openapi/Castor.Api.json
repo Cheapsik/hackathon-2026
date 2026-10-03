@@ -66,6 +66,35 @@
         }
       }
     },
+    "/api/auth/session": {
+      "get": {
+        "tags": [
+          "Session"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/auth/register": {
       "post": {
         "tags": [
@@ -114,10 +143,1447 @@
           }
         }
       }
+    },
+    "/api/problem-reports": {
+      "post": {
+        "tags": [
+          "ProblemReports"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProblemReportRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProblemReportRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProblemReportRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemReportResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemReportResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemReportResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/problem-reports/{problemReportId}": {
+      "get": {
+        "tags": [
+          "ProblemReports"
+        ],
+        "parameters": [
+          {
+            "name": "problemReportId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-Tracking-Code",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemReportResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemReportResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemReportResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/problem-reports/{problemReportId}/answers": {
+      "post": {
+        "tags": [
+          "ProblemReports"
+        ],
+        "parameters": [
+          {
+            "name": "problemReportId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-Tracking-Code",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnswerProblemReportQuestionsRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnswerProblemReportQuestionsRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnswerProblemReportQuestionsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemReportResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemReportResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemReportResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/problem-reports/track/{trackingCode}": {
+      "get": {
+        "tags": [
+          "ProblemReports"
+        ],
+        "parameters": [
+          {
+            "name": "trackingCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemReportResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemReportResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemReportResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/problem-reports/claim": {
+      "post": {
+        "tags": [
+          "ProblemReports"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClaimProblemReportRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClaimProblemReportRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClaimProblemReportRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemReportResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemReportResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemReportResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/problem-reports/mine": {
+      "get": {
+        "tags": [
+          "ProblemReports"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProblemReportSummaryResponse"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProblemReportSummaryResponse"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProblemReportSummaryResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/municipalities": {
+      "get": {
+        "tags": [
+          "Municipalities"
+        ],
+        "parameters": [
+          {
+            "name": "Search",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MunicipalityResponse"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MunicipalityResponse"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MunicipalityResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/innovations/{innovationId}": {
+      "get": {
+        "tags": [
+          "Innovations"
+        ],
+        "parameters": [
+          {
+            "name": "innovationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/InnovationResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InnovationResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InnovationResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/innovations/{innovationId}/fit": {
+      "post": {
+        "tags": [
+          "FitAssessments"
+        ],
+        "parameters": [
+          {
+            "name": "innovationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateFitAssessmentRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateFitAssessmentRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateFitAssessmentRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FitAssessmentResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FitAssessmentResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FitAssessmentResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FitAssessmentResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FitAssessmentResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FitAssessmentResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "FitAssessments"
+        ],
+        "parameters": [
+          {
+            "name": "innovationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "teryt",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FitAssessmentResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FitAssessmentResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FitAssessmentResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/innovations/{innovationId}/fit/{fitAssessmentId}": {
+      "get": {
+        "tags": [
+          "FitAssessments"
+        ],
+        "parameters": [
+          {
+            "name": "innovationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "fitAssessmentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FitAssessmentResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FitAssessmentResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FitAssessmentResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/innovations/{innovationId}/fit/{fitAssessmentId}/assistant": {
+      "get": {
+        "tags": [
+          "FitAssessments"
+        ],
+        "parameters": [
+          {
+            "name": "innovationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "fitAssessmentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FitAssistantMessageResponse"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FitAssistantMessageResponse"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FitAssistantMessageResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "FitAssessments"
+        ],
+        "parameters": [
+          {
+            "name": "innovationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "fitAssessmentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AskFitAssistantRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AskFitAssistantRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AskFitAssistantRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FitAssistantMessageResponse"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FitAssistantMessageResponse"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FitAssistantMessageResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
+      "AnswerProblemReportQuestionsRequest": {
+        "required": [
+          "answers"
+        ],
+        "type": "object",
+        "properties": {
+          "answers": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "AskFitAssistantRequest": {
+        "required": [
+          "message"
+        ],
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "ClaimProblemReportRequest": {
+        "required": [
+          "trackingCode"
+        ],
+        "type": "object",
+        "properties": {
+          "trackingCode": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "ClarifyingQuestionResponse": {
+        "required": [
+          "question",
+          "answer"
+        ],
+        "type": "object",
+        "properties": {
+          "question": {
+            "type": "string"
+          },
+          "answer": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "CreateFitAssessmentRequest": {
+        "required": [
+          "teryt",
+          "recalculate"
+        ],
+        "type": "object",
+        "properties": {
+          "teryt": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "recalculate": {
+            "type": "boolean"
+          }
+        }
+      },
+      "CreateProblemReportRequest": {
+        "required": [
+          "description",
+          "municipalityTeryt",
+          "submittedOnBehalf",
+          "dictated",
+          "keepOriginalDescription"
+        ],
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "municipalityTeryt": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "submittedOnBehalf": {
+            "type": "boolean"
+          },
+          "dictated": {
+            "type": "boolean"
+          },
+          "keepOriginalDescription": {
+            "type": "boolean"
+          }
+        }
+      },
+      "FitAssessmentMunicipalityResponse": {
+        "required": [
+          "teryt",
+          "name",
+          "powiat"
+        ],
+        "type": "object",
+        "properties": {
+          "teryt": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "powiat": {
+            "type": "string"
+          }
+        }
+      },
+      "FitAssessmentResponse": {
+        "required": [
+          "id",
+          "innovationId",
+          "innovationTitle",
+          "municipality",
+          "dataYear",
+          "fit",
+          "summary",
+          "unchanged",
+          "toAdapt",
+          "missing",
+          "serviceProvider",
+          "serviceForm",
+          "scaleEstimate",
+          "comparison",
+          "createdAt",
+          "updatedAt"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "innovationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "innovationTitle": {
+            "type": "string"
+          },
+          "municipality": {
+            "$ref": "#/components/schemas/FitAssessmentMunicipalityResponse"
+          },
+          "dataYear": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "fit": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "unchanged": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "toAdapt": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "missing": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "serviceProvider": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "serviceForm": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "scaleEstimate": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "comparison": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FitComparisonRowResponse"
+            }
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "FitAssistantMessageResponse": {
+        "required": [
+          "id",
+          "role",
+          "text",
+          "createdAt"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "role": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "FitComparisonRowResponse": {
+        "required": [
+          "requirement",
+          "indicatorName",
+          "unit",
+          "level",
+          "value",
+          "regionAverage",
+          "year"
+        ],
+        "type": "object",
+        "properties": {
+          "requirement": {
+            "type": "string"
+          },
+          "indicatorName": {
+            "type": "string"
+          },
+          "unit": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "level": {
+            "type": "string"
+          },
+          "value": {
+            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?$",
+            "type": [
+              "number",
+              "string"
+            ],
+            "format": "double"
+          },
+          "regionAverage": {
+            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?$",
+            "type": [
+              "number",
+              "string"
+            ],
+            "format": "double"
+          },
+          "year": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          }
+        }
+      },
+      "HybridResponse": {
+        "required": [
+          "name",
+          "description",
+          "whyTogether",
+          "sources"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "whyTogether": {
+            "type": "string"
+          },
+          "sources": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HybridSourceResponse"
+            }
+          }
+        }
+      },
+      "HybridSourceResponse": {
+        "required": [
+          "innovationId",
+          "title",
+          "cardUrl"
+        ],
+        "type": "object",
+        "properties": {
+          "innovationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string"
+          },
+          "cardUrl": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "InnovationResponse": {
+        "required": [
+          "id",
+          "title",
+          "shortDescription",
+          "categories",
+          "solution",
+          "problems",
+          "targetGroup",
+          "beneficiaries",
+          "evidence",
+          "organization",
+          "cardUrl",
+          "videoUrl",
+          "materialsZipUrl",
+          "cardPdfUrl",
+          "termsUrl",
+          "featured",
+          "inServiceModel",
+          "stage",
+          "challengeAreaCodes"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string"
+          },
+          "shortDescription": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "categories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "solution": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "problems": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "targetGroup": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "beneficiaries": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "evidence": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "organization": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "cardUrl": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "videoUrl": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "materialsZipUrl": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "cardPdfUrl": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "termsUrl": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "featured": {
+            "type": "boolean"
+          },
+          "inServiceModel": {
+            "type": "boolean"
+          },
+          "stage": {
+            "type": "string"
+          },
+          "challengeAreaCodes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "MatchResponse": {
+        "required": [
+          "position",
+          "score",
+          "innovationId",
+          "title",
+          "shortDescription",
+          "justification",
+          "citedFields",
+          "adaptation",
+          "videoUrl",
+          "cardUrl"
+        ],
+        "type": "object",
+        "properties": {
+          "position": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "score": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "innovationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string"
+          },
+          "shortDescription": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "justification": {
+            "type": "string"
+          },
+          "citedFields": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "adaptation": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "videoUrl": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "cardUrl": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "MunicipalityResponse": {
+        "required": [
+          "teryt",
+          "name",
+          "qualifiedName",
+          "type",
+          "powiat"
+        ],
+        "type": "object",
+        "properties": {
+          "teryt": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "qualifiedName": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "powiat": {
+            "type": "string"
+          }
+        }
+      },
+      "ProblemReportChallengeAreaResponse": {
+        "required": [
+          "code",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "ProblemReportMunicipalityResponse": {
+        "required": [
+          "teryt",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "teryt": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "ProblemReportResponse": {
+        "required": [
+          "id",
+          "trackingCode",
+          "status",
+          "channel",
+          "submittedOnBehalf",
+          "description",
+          "originalDescription",
+          "municipality",
+          "challengeAreas",
+          "clarifyingQuestions",
+          "awaitsAnswers",
+          "isMatched",
+          "hasAuthor",
+          "matches",
+          "hybrid",
+          "similarReports",
+          "createdAt"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "trackingCode": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "channel": {
+            "type": "string"
+          },
+          "submittedOnBehalf": {
+            "type": "boolean"
+          },
+          "description": {
+            "type": "string"
+          },
+          "originalDescription": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "municipality": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/ProblemReportMunicipalityResponse"
+              }
+            ]
+          },
+          "challengeAreas": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProblemReportChallengeAreaResponse"
+            }
+          },
+          "clarifyingQuestions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ClarifyingQuestionResponse"
+            }
+          },
+          "awaitsAnswers": {
+            "type": "boolean"
+          },
+          "isMatched": {
+            "type": "boolean"
+          },
+          "hasAuthor": {
+            "type": "boolean"
+          },
+          "matches": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MatchResponse"
+            }
+          },
+          "hybrid": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/HybridResponse"
+              }
+            ]
+          },
+          "similarReports": {
+            "$ref": "#/components/schemas/SimilarProblemReportsResponse"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ProblemReportSummaryResponse": {
+        "required": [
+          "id",
+          "trackingCode",
+          "status",
+          "description",
+          "isMatched",
+          "createdAt"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "trackingCode": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "isMatched": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
       "RegisterRequest": {
         "required": [
           "email",
@@ -148,6 +1614,39 @@
           "userId": {
             "type": "string",
             "format": "uuid"
+          }
+        }
+      },
+      "SessionResponse": {
+        "required": [
+          "signedIn",
+          "userId",
+          "email",
+          "role"
+        ],
+        "type": "object",
+        "properties": {
+          "signedIn": {
+            "type": "boolean"
+          },
+          "userId": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "uuid"
+          },
+          "email": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "role": {
+            "type": [
+              "null",
+              "string"
+            ]
           }
         }
       },
@@ -183,6 +1682,31 @@
             "format": "uuid"
           }
         }
+      },
+      "SimilarProblemReportsResponse": {
+        "required": [
+          "reports",
+          "municipalities"
+        ],
+        "type": "object",
+        "properties": {
+          "reports": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "municipalities": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          }
+        }
       }
     }
   },
@@ -194,7 +1718,22 @@
       "name": "SignIn"
     },
     {
+      "name": "Session"
+    },
+    {
       "name": "Register"
+    },
+    {
+      "name": "ProblemReports"
+    },
+    {
+      "name": "Municipalities"
+    },
+    {
+      "name": "Innovations"
+    },
+    {
+      "name": "FitAssessments"
     }
   ]
 }

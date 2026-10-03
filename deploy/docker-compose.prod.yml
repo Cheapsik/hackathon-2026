@@ -1,0 +1,53 @@
+name: castor
+
+services:
+  db:
+    image: pgvector/pgvector:pg17
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: castor
+      POSTGRES_USER: castor
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in the server .env file}
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U castor -d castor"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+  backend:
+    image: castor-backend:${CASTOR_IMAGE_TAG:?CASTOR_IMAGE_TAG is required}
+    pull_policy: never
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - path: ${CASTOR_ENV_FILE:?CASTOR_ENV_FILE is required}
+        required: true
+    environment:
+      ConnectionStrings__Castor: Host=db;Port=5432;Database=castor;Username=castor;Password=${POSTGRES_PASSWORD}
+      Database__MigrateOnStartup: "true"
+      DataProtection__KeysPath: /var/castor/keys
+    volumes:
+      - backend-keys:/var/castor/keys
+
+  frontend:
+    image: castor-frontend:${CASTOR_IMAGE_TAG:?CASTOR_IMAGE_TAG is required}
+    pull_policy: never
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "${HTTP_BIND_ADDRESS:-0.0.0.0}:${HTTP_PORT:-8080}:80"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1/"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 5s
+
+volumes:
+  db-data:
+  backend-keys:

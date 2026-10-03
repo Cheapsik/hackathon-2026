@@ -83,7 +83,7 @@ Wszystko przez zmienne środowiskowe (konwencja .NET `Sekcja__Klucz`). Wartości
 | `POSTGRES_PASSWORD`                                                                      | Hasło bazy w compose; na serwerze zawsze własne                |
 | `Database__MigrateOnStartup`                                                             | `true` w kontenerze: backend sam wykonuje migracje             |
 | `DataProtection__KeysPath`                                                               | katalog kluczy podpisujących cookie (wolumen w kontenerze)     |
-| `Llm__Provider`                                                                          | np. `anthropic`, `openai`, `azure-openai`, `openai-compatible` |
+| `Llm__Provider`                                                                          | `placeholder` (bez usługi zewnętrznej, domyślny — D-19); docelowo np. `anthropic`, `openai`, `azure-openai`, `openai-compatible` |
 | `Llm__Model`                                                                             | identyfikator modelu u dostawcy                                |
 | `Llm__ApiKey`, `Llm__BaseUrl`                                                            | klucz i (opcjonalnie) adres API                                |
 | `Llm__MaxOutputTokens`, `Llm__TimeoutSeconds`                                            | limity                                                         |
@@ -250,7 +250,7 @@ Wyszukiwanie pełnotekstowe (6.4 krok 2): konfiguracja `simple` + `unaccent` + `
 - **Ekran:** jedno duże pole „Opisz, co nie działa” + przycisk mikrofonu (Web Speech API) + opcjonalnie gmina (wyszukiwarka) + przełącznik „Zgłaszam w czyimś imieniu”. Bez długiego formularza.
 - **Przepływ:** wyślij → (opcjonalnie) do 3 pytań doprecyzowujących jako kolejne krótkie pytania → wyniki.
 - **Wyniki:** 3–5 kart innowacji: tytuł, 1 zdanie „dlaczego pasuje”, co dostosować, film, link do karty ROPS; licznik podobnych zgłoszeń; krzyżówka, gdy brak dobrego dopasowania; kod śledzenia zgłoszenia.
-- **API (orientacyjnie):** `POST /api/problem-reports` (tworzy zgłoszenie, zwraca pytania lub wyniki), `POST /api/problem-reports/{id}/answers`, `GET /api/problem-reports/{id}/matches`, `GET /api/problem-reports/track/{code}`.
+- **API:** `POST /api/problem-reports` (tworzy zgłoszenie, zwraca pytania albo od razu wyniki), `POST /api/problem-reports/{id}/answers` (pusta lista = „pomiń pytania”), `GET /api/problem-reports/{id}` (wyniki są częścią zgłoszenia), `GET /api/problem-reports/track/{code}`, `POST /api/problem-reports/claim` (przypięcie kodem), `GET /api/problem-reports/mine`, `GET /api/municipalities?search=`, `GET /api/auth/session`. Bez konta dostęp do `/{id}` daje nagłówek `X-Tracking-Code`.
 - **SignalR:** nowe zgłoszenie → zdarzenie do grupy `admins`.
 - **Reguły zgłoszenia:**
   - Zgłoszenie powstaje przy wysłaniu, ze statusem `RECEIVED`, i od razu trafia do skrzynki admina (`ProblemReportCreated`). Odpowiedzi na pytania doprecyzowujące je uzupełniają; dopasowania liczą się po odpowiedziach albo po „pomiń pytania”.
@@ -337,7 +337,7 @@ Wyszukiwanie pełnotekstowe (6.4 krok 2): konfiguracja `simple` + `unaccent` + `
 - **Ekran:** z karty innowacji: „Sprawdź dla mojej gminy” → wybór gminy → karta (6.5): ocena dopasowania, tabela „wymaganie innowacji vs stan gminy (wartość, średnia regionu, rok)”, co dostosować, model usługi, szacunek skali, mini-mapa.
 - **Asystent:** czat dopasowujący innowację do formy usługi pod potrzeby instytucji (np. „mamy 2 opiekunki i budżet X”).
 - **Eksport:** wydruk / PDF karty (CSS print wystarczy).
-- **API:** `POST /api/innovations/{id}/fit` `{ teryt }`, `POST /api/innovations/{id}/fit/{fitId}/assistant`.
+- **API:** `POST /api/innovations/{id}/fit` `{ teryt, recalculate }` (201 nowa karta, 200 zapisana; `recalculate` tylko admin), `GET /api/innovations/{id}/fit?teryt=` (zapisana karta, także dla anonima), `GET /api/innovations/{id}/fit/{fitId}`, `GET` i `POST /api/innovations/{id}/fit/{fitId}/assistant` (czat zalogowanego), `GET /api/innovations/{id}` (karta innowacji).
 
 ---
 
@@ -417,4 +417,30 @@ Rozstrzygnięcia z sesji projektowej 2026-10-03. Treść reguł jest już w sekc
 | D-16 | Wątki: trzy rodzaje i ich uczestnicy | §7 V |
 | D-17 | Poletko: kto szuka testerów, profil testera, kto wystawia opinie | §7 IV |
 | D-18 | Zadania w tle w procesie; rate limiting wbudowany; anonimizacja w `Domain/` | §9 |
+
+Moduł I — sesja projektowa 2026-10-03 (po szkielecie):
+
+| # | Decyzja | Gdzie |
+|---|---|---|
+| D-19 | Do wyboru dostawcy LLM działa dostawca `placeholder`: bez usługi zewnętrznej, deterministyczne odpowiedzi z pokrycia słów, te same typy wejścia i wyjścia co prawdziwy model. Aplikacja startuje bez klucza; nieznany dostawca nadal zatrzymuje start | §3, [TODO](TODO.md) |
+| D-20 | Dane modułu I: skrypty `innovations.py`, `models.py`, `challenges.py` (obszary + persony) i `municipalities.py` (gminy z API BDL GUS); seed commitowany, import przy starcie | §4.1, `data/README.md` |
+| D-21 | Dopasowanie korzysta z genomu `DRAFT`, dopóki administrator go nie zatwierdzi; zatwierdzony genom go zastępuje. Genomy liczy zadanie w tle po imporcie seedu | §6.3, GLOSSARY |
+| D-22 | Klasyfikacja i dopasowanie liczą się w żądaniu HTTP (bez zadania w tle); nginx czeka do 120 s | §6.4 |
+| D-23 | Jedna runda pytań doprecyzowujących: wszystkie naraz, w UI po jednym, odpowiedzi jednym żądaniem; bez drugiej rundy | §7 I |
+| D-24 | Każde zgłoszenie (także od zalogowanego) ma kod śledzenia; bez konta dostęp do `/{id}` daje nagłówek `X-Tracking-Code`, inaczej 404 | §7 I |
+| D-25 | „Podobny problem zgłosiło N osób z M gmin” = zgłoszenia z tym samym głównym obszarem wyzwań; podobieństwo wektorowe dojdzie z embeddingami | §6.4 |
+| D-26 | UI modułu I to surowy, funkcjonalny HTML bez stylów (semantyka i dostępność zostają); formularze bez React Hook Form i Zod | §8 |
+| D-27 | Krzyżówka pokazywana w całości, przycisk „Rozwiń w Kreatorze” dochodzi z modułem III | §6.4, §7 III |
+| D-28 | Limity PoC: opis 20–3000 znaków, odpowiedź do 500, 10 żądań AI na minutę na IP | §9 |
+
+Moduł VII — 2026-10-03:
+
+| # | Decyzja | Gdzie |
+|---|---|---|
+| D-29 | Obserwator: dla każdego ze 184 wskaźników ostatni rok z jego strony; wartości gmin, a gdy wskaźnik jest tylko powiatowy — wartości powiatów (karta pokazuje je jako „dane dla powiatu”). Wskaźniki tylko wojewódzkie pomijamy | §4.1, `data/scrapers/observer.py` |
+| D-30 | Wskaźnik → obszary wyzwań: reguły w skrypcie (grupa Obserwatora + słowa w nazwie); sześć wskaźników ogólnych (ludność, gęstość, urbanizacja, mieszkańcy na pracownika socjalnego, wydatki gminy ogółem i na pomoc społeczną) trafia do każdej karty | §6.5 |
+| D-31 | Średnia regionu = średnia wartości wszystkich gmin (albo powiatów) w tym samym roku, liczona w SQL | §6.5 |
+| D-32 | Liczby w tabeli „wymaganie vs gmina” bierzemy z bazy, nie od modelu: model wskazuje tylko, który wskaźnik ilustruje które wymaganie | §6.2 pkt 6 |
+| D-33 | Czat asystenta: jeden wątek na kartę i użytkownika, wiadomości anonimizowane jak zgłoszenia | §6.5, §7 VII |
+| D-34 | Mini-mapa karty dochodzi z GeoJSON-em gmin w module II; do tego czasu karta ma tabelę. Podpowiadanie gminy pracownikowi JST — gdy admin (moduł VI) przypisze mu gminę | §7 VII, [TODO](TODO.md) |
 
