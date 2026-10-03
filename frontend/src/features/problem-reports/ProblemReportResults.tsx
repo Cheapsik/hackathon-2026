@@ -1,3 +1,4 @@
+import { Link } from 'react-router'
 import type { ProblemReportResponse } from '@/api/generated/castor'
 import { statusLabel } from '@/features/problem-reports/status-labels'
 
@@ -50,6 +51,11 @@ export function ProblemReportResults({ report, headingLevel }: ProblemReportResu
                 <p>Dlaczego pasuje: {match.justification}</p>
                 {match.adaptation && <p>Co dostosować: {match.adaptation}</p>}
                 <ul>
+                  <li>
+                    <Link to={`/innowacje/${match.innovationId}`}>
+                      Szczegóły innowacji „{match.title}” i sprawdzenie dla Twojej gminy
+                    </Link>
+                  </li>
                   {match.cardUrl && (
                     <li>
                       <a href={match.cardUrl} target="_blank" rel="noreferrer">

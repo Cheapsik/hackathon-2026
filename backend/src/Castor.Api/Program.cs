@@ -1,6 +1,8 @@
 using System.Reflection;
 using System.Text.Json.Serialization;
 using System.Threading.RateLimiting;
+using Castor.Api.Features.FitAssessments;
+using Castor.Api.Features.Innovations;
 using Castor.Api.Features.Municipalities;
 using Castor.Api.Features.ProblemReports;
 using Castor.Api.Features.Register;
@@ -114,6 +116,8 @@ builder.Services.AddScoped<InnovationCandidatesQuery>();
 builder.Services.AddScoped<ProblemClassifier>();
 builder.Services.AddScoped<Matchmaker>();
 builder.Services.AddScoped<GenomeGenerator>();
+builder.Services.AddScoped<FitAssessor>();
+builder.Services.AddScoped<FitAssistant>();
 
 // Start-up: schema, interrupted jobs, seed — registered before the job runner, so the runner starts on a ready database.
 // The build-time OpenAPI generator (GetDocument.Insider) and dotnet-ef (ef) run this file too; they get no database.
@@ -149,6 +153,17 @@ builder.Services.AddScoped<GetProblemReportHandler>();
 builder.Services.AddScoped<TrackProblemReportHandler>();
 builder.Services.AddScoped<ClaimProblemReportHandler>();
 builder.Services.AddScoped<ListMyProblemReportsHandler>();
+
+// Innovations
+builder.Services.AddScoped<GetInnovationHandler>();
+
+// Fit assessments
+builder.Services.AddScoped<MunicipalityPortraitQuery>();
+builder.Services.AddScoped<CreateFitAssessmentHandler>();
+builder.Services.AddScoped<FindFitAssessmentHandler>();
+builder.Services.AddScoped<GetFitAssessmentHandler>();
+builder.Services.AddScoped<AskFitAssistantHandler>();
+builder.Services.AddScoped<ListFitAssistantMessagesHandler>();
 
 // Each resource adds its queries and handlers here, one line each.
 

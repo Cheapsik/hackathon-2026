@@ -37,12 +37,20 @@ public sealed class SeedImporter(
         List<InnovationSeed> innovations = await ReadAsync<InnovationSeed>(seedPath, "innovations.json", cancellationToken);
         int addedInnovations = await ImportInnovationsAsync(innovations, now, cancellationToken);
 
+        List<IndicatorSeed> indicators = await ReadAsync<IndicatorSeed>(seedPath, "indicators.json", cancellationToken);
+        Dictionary<int, Indicator> indicatorsByObserverId = await UpsertIndicatorsAsync(indicators, now, cancellationToken);
+
+        List<IndicatorValueSeed> values = await ReadAsync<IndicatorValueSeed>(seedPath, "indicator_values.json", cancellationToken);
+        int upsertedValues = await UpsertIndicatorValuesAsync(values, indicatorsByObserverId, now, cancellationToken);
+
         logger.LogInformation(
-            "Seed imported: {Areas} challenge areas, {Personas} personas, {Innovations} innovations added; {Municipalities} municipalities upserted.",
+            "Seed imported: {Areas} challenge areas, {Personas} personas, {Innovations} innovations added; {Municipalities} municipalities, {Indicators} indicators and {Values} indicator values upserted.",
             addedAreas,
             addedPersonas,
             addedInnovations,
-            upsertedMunicipalities);
+            upsertedMunicipalities,
+            indicatorsByObserverId.Count,
+            upsertedValues);
 
         bool missingGenomes = await db.Innovations.AnyAsync(innovation => innovation.Genome == null, cancellationToken);
         if (missingGenomes)
@@ -155,5 +163,73 @@ public sealed class SeedImporter(
 
         await db.SaveChangesAsync(cancellationToken);
         return added.Count;
+    }
+
+    private async Task<Dictionary<int, Indicator>> UpsertIndicatorsAsync(
+        List<IndicatorSeed> seeds,
+        DateTimeOffset now,
+        CancellationToken cancellationToken)
+    {
+        Dictionary<int, Indicator> existing = await db.Indicators.ToDictionaryAsync(indicator => indicator.ObserverId, cancellationToken);
+
+        foreach (IndicatorSeed seed in seeds)
+        {
+            if (!existing.TryGetValue(seed.Id, out Indicator? indicator))
+            {
+                indicator = Indicator.Register(seed.Id, now);
+                db.Indicators.Add(indicator);
+                existing.Add(seed.Id, indicator);
+            }
+
+            indicator.UpdateFromRegister(seed.Name, seed.Group, seed.Description, seed.Source, seed.Unit, seed.ChallengeAreas, seed.General, now);
+        }
+
+        await db.SaveChangesAsync(cancellationToken);
+        return existing;
+    }
+
+    private async Task<int> UpsertIndicatorValuesAsync(
+        List<IndicatorValueSeed> seeds,
+        Dictionary<int, Indicator> indicatorsByObserverId,
+        DateTimeOffset now,
+        CancellationToken cancellationToken)
+    {
+        List<IndicatorValue> stored = await db.IndicatorValues.ToListAsync(cancellationToken);
+        Dictionary<string, IndicatorValue> existing = stored.ToDictionary(value => ValueKey(value.IndicatorId, value.Level, value.TerritoryCode, value.Year));
+
+        foreach (IndicatorValueSeed seed in seeds)
+        {
+            Indicator indicator = indicatorsByObserverId.GetValueOrDefault(seed.IndicatorId)
+                ?? throw new InvalidOperationException($"Indicator value points at unknown indicator {seed.IndicatorId}.");
+
+            if (!NamedEnum.TryParse(seed.Level, out StatisticsLevel level))
+            {
+                throw new InvalidOperationException($"Indicator value has unknown level {seed.Level}.");
+            }
+
+            var measure = new Measure(seed.Value);
+            string key = ValueKey(indicator.Id, level, seed.Teryt, seed.Year);
+            if (existing.TryGetValue(key, out IndicatorValue? value))
+            {
+                if (value.Value != measure)
+                {
+                    value.Correct(measure, now);
+                }
+            }
+            else
+            {
+                var recorded = IndicatorValue.Record(indicator, level, seed.Teryt, seed.Year, measure, now);
+                db.IndicatorValues.Add(recorded);
+                existing.Add(key, recorded);
+            }
+        }
+
+        await db.SaveChangesAsync(cancellationToken);
+        return seeds.Count;
+    }
+
+    private static string ValueKey(Guid indicatorId, StatisticsLevel level, string territoryCode, int year)
+    {
+        return $"{indicatorId}|{level}|{territoryCode}|{year}";
     }
 }

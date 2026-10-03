@@ -109,6 +109,189 @@ namespace Castor.Api.Migrations
                     b.ToTable("ChallengeAreas");
                 });
 
+            modelBuilder.Entity("Castor.Api.Domain.FitAssessment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamptz");
+
+                    b.Property<Guid>("CreatedByUserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("DataYear")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Fit")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("InnovationId")
+                        .HasColumnType("uuid");
+
+                    b.PrimitiveCollection<List<string>>("Missing")
+                        .IsRequired()
+                        .HasColumnType("text[]");
+
+                    b.Property<Guid>("MunicipalityId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ScaleEstimate")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ServiceForm")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ServiceProvider")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Summary")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.PrimitiveCollection<List<string>>("ToAdapt")
+                        .IsRequired()
+                        .HasColumnType("text[]");
+
+                    b.PrimitiveCollection<List<string>>("Unchanged")
+                        .IsRequired()
+                        .HasColumnType("text[]");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("timestamptz");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedByUserId");
+
+                    b.HasIndex("MunicipalityId");
+
+                    b.HasIndex("InnovationId", "MunicipalityId", "DataYear")
+                        .IsUnique()
+                        .HasDatabaseName("IX_FitAssessments_OnePerInnovationMunicipalityAndYear");
+
+                    b.ToTable("FitAssessments");
+                });
+
+            modelBuilder.Entity("Castor.Api.Domain.FitAssistantMessage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamptz");
+
+                    b.Property<Guid>("FitAssessmentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("FitAssessmentId", "UserId", "CreatedAt");
+
+                    b.ToTable("FitAssistantMessages");
+                });
+
+            modelBuilder.Entity("Castor.Api.Domain.Indicator", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.PrimitiveCollection<List<string>>("ChallengeAreaCodes")
+                        .IsRequired()
+                        .HasColumnType("text[]");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamptz");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("General")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Group")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)");
+
+                    b.Property<int>("ObserverId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Source")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Unit")
+                        .HasColumnType("text");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("timestamptz");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ObserverId")
+                        .IsUnique()
+                        .HasDatabaseName("IX_Indicators_UniqueObserverId");
+
+                    b.ToTable("Indicators");
+                });
+
+            modelBuilder.Entity("Castor.Api.Domain.IndicatorValue", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("IndicatorId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Level")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("TerritoryCode")
+                        .IsRequired()
+                        .HasMaxLength(7)
+                        .HasColumnType("character varying(7)");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("timestamptz");
+
+                    b.Property<decimal>("Value")
+                        .HasPrecision(19, 6)
+                        .HasColumnType("numeric(19,6)");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Level", "TerritoryCode");
+
+                    b.HasIndex("IndicatorId", "Level", "TerritoryCode", "Year")
+                        .IsUnique()
+                        .HasDatabaseName("IX_IndicatorValues_OnePerTerritoryAndYear");
+
+                    b.ToTable("IndicatorValues");
+                });
+
             modelBuilder.Entity("Castor.Api.Domain.Innovation", b =>
                 {
                     b.Property<Guid>("Id")
@@ -524,6 +707,95 @@ namespace Castor.Api.Migrations
                         .IsUnique();
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Castor.Api.Domain.FitAssessment", b =>
+                {
+                    b.HasOne("Castor.Api.Domain.User", null)
+                        .WithMany()
+                        .HasForeignKey("CreatedByUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Castor.Api.Domain.Innovation", "Innovation")
+                        .WithMany()
+                        .HasForeignKey("InnovationId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Castor.Api.Domain.Municipality", "Municipality")
+                        .WithMany()
+                        .HasForeignKey("MunicipalityId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.OwnsMany("Castor.Api.Domain.FitComparisonRow", "Comparison", b1 =>
+                        {
+                            b1.Property<Guid>("FitAssessmentId");
+
+                            b1.Property<int>("__synthesizedOrdinal")
+                                .ValueGeneratedOnAdd();
+
+                            b1.Property<string>("IndicatorName")
+                                .IsRequired();
+
+                            b1.Property<string>("Level")
+                                .IsRequired();
+
+                            b1.Property<decimal>("RegionAverage")
+                                .HasPrecision(19, 4);
+
+                            b1.Property<string>("Requirement")
+                                .IsRequired();
+
+                            b1.Property<string>("Unit");
+
+                            b1.Property<decimal>("Value")
+                                .HasPrecision(19, 4);
+
+                            b1.Property<int>("Year");
+
+                            b1.HasKey("FitAssessmentId", "__synthesizedOrdinal");
+
+                            b1.ToTable("FitAssessments");
+
+                            b1
+                                .ToJson("Comparison")
+                                .HasColumnType("jsonb");
+
+                            b1.WithOwner()
+                                .HasForeignKey("FitAssessmentId");
+                        });
+
+                    b.Navigation("Comparison");
+
+                    b.Navigation("Innovation");
+
+                    b.Navigation("Municipality");
+                });
+
+            modelBuilder.Entity("Castor.Api.Domain.FitAssistantMessage", b =>
+                {
+                    b.HasOne("Castor.Api.Domain.FitAssessment", null)
+                        .WithMany()
+                        .HasForeignKey("FitAssessmentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Castor.Api.Domain.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Castor.Api.Domain.IndicatorValue", b =>
+                {
+                    b.HasOne("Castor.Api.Domain.Indicator", null)
+                        .WithMany()
+                        .HasForeignKey("IndicatorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Castor.Api.Domain.InnovationGenome", b =>

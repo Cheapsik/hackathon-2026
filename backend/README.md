@@ -21,6 +21,7 @@ Every route is under `/api`. Endpoints so far:
 - account: `POST /api/auth/register`, `POST /api/auth/sign-in`, `POST /api/auth/sign-out`, `GET /api/auth/session` (cookie session `Castor.Auth`);
 - problem reports (module I): `POST /api/problem-reports`, `GET /api/problem-reports/{id}`, `POST /api/problem-reports/{id}/answers`, `GET /api/problem-reports/track/{code}`, `POST /api/problem-reports/claim`, `GET /api/problem-reports/mine` — without an account, `/{id}` needs the `X-Tracking-Code` header;
 - `GET /api/municipalities?search=`;
+- innovations and fit assessments (module VII): `GET /api/innovations/{id}`, `POST /api/innovations/{id}/fit` (signed in; 201 new, 200 stored), `GET /api/innovations/{id}/fit?teryt=`, `GET /api/innovations/{id}/fit/{fitId}`, `GET`/`POST /api/innovations/{id}/fit/{fitId}/assistant` (signed in);
 - the SignalR hub `/hubs/live` (`ProblemReportCreated` to the `admins` group).
 
 In `Development` the API imports `../../data/seed` at start-up and generates innovation genomes in the background with the `placeholder` language model — no API key needed.

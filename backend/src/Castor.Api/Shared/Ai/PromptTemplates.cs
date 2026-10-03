@@ -17,6 +17,10 @@ public static class PromptTemplates
 
     public const string GenerateGenome = "generate-genome";
 
+    public const string AssessFit = "assess-fit";
+
+    public const string FitAssistant = "fit-assistant";
+
     private static readonly ConcurrentDictionary<string, string> Loaded = new(StringComparer.Ordinal);
 
     public static string Get(string name)

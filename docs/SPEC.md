@@ -337,7 +337,7 @@ Wyszukiwanie pełnotekstowe (6.4 krok 2): konfiguracja `simple` + `unaccent` + `
 - **Ekran:** z karty innowacji: „Sprawdź dla mojej gminy” → wybór gminy → karta (6.5): ocena dopasowania, tabela „wymaganie innowacji vs stan gminy (wartość, średnia regionu, rok)”, co dostosować, model usługi, szacunek skali, mini-mapa.
 - **Asystent:** czat dopasowujący innowację do formy usługi pod potrzeby instytucji (np. „mamy 2 opiekunki i budżet X”).
 - **Eksport:** wydruk / PDF karty (CSS print wystarczy).
-- **API:** `POST /api/innovations/{id}/fit` `{ teryt }`, `POST /api/innovations/{id}/fit/{fitId}/assistant`.
+- **API:** `POST /api/innovations/{id}/fit` `{ teryt, recalculate }` (201 nowa karta, 200 zapisana; `recalculate` tylko admin), `GET /api/innovations/{id}/fit?teryt=` (zapisana karta, także dla anonima), `GET /api/innovations/{id}/fit/{fitId}`, `GET` i `POST /api/innovations/{id}/fit/{fitId}/assistant` (czat zalogowanego), `GET /api/innovations/{id}` (karta innowacji).
 
 ---
 
@@ -432,4 +432,15 @@ Moduł I — sesja projektowa 2026-10-03 (po szkielecie):
 | D-26 | UI modułu I to surowy, funkcjonalny HTML bez stylów (semantyka i dostępność zostają); formularze bez React Hook Form i Zod | §8 |
 | D-27 | Krzyżówka pokazywana w całości, przycisk „Rozwiń w Kreatorze” dochodzi z modułem III | §6.4, §7 III |
 | D-28 | Limity PoC: opis 20–3000 znaków, odpowiedź do 500, 10 żądań AI na minutę na IP | §9 |
+
+Moduł VII — 2026-10-03:
+
+| # | Decyzja | Gdzie |
+|---|---|---|
+| D-29 | Obserwator: dla każdego ze 184 wskaźników ostatni rok z jego strony; wartości gmin, a gdy wskaźnik jest tylko powiatowy — wartości powiatów (karta pokazuje je jako „dane dla powiatu”). Wskaźniki tylko wojewódzkie pomijamy | §4.1, `data/scrapers/observer.py` |
+| D-30 | Wskaźnik → obszary wyzwań: reguły w skrypcie (grupa Obserwatora + słowa w nazwie); sześć wskaźników ogólnych (ludność, gęstość, urbanizacja, mieszkańcy na pracownika socjalnego, wydatki gminy ogółem i na pomoc społeczną) trafia do każdej karty | §6.5 |
+| D-31 | Średnia regionu = średnia wartości wszystkich gmin (albo powiatów) w tym samym roku, liczona w SQL | §6.5 |
+| D-32 | Liczby w tabeli „wymaganie vs gmina” bierzemy z bazy, nie od modelu: model wskazuje tylko, który wskaźnik ilustruje które wymaganie | §6.2 pkt 6 |
+| D-33 | Czat asystenta: jeden wątek na kartę i użytkownika, wiadomości anonimizowane jak zgłoszenia | §6.5, §7 VII |
+| D-34 | Mini-mapa karty dochodzi z GeoJSON-em gmin w module II; do tego czasu karta ma tabelę. Podpowiadanie gminy pracownikowi JST — gdy admin (moduł VI) przypisze mu gminę | §7 VII, [TODO](TODO.md) |
 

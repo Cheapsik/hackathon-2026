@@ -25,7 +25,12 @@ public sealed class PlaceholderLlmClient(ILogger<PlaceholderLlmClient> logger) :
         ArgumentNullException.ThrowIfNull(prompt);
 
         logger.LogInformation("Placeholder language model answered a text prompt of {InputLength} characters.", prompt.Input.Length);
-        return Task.FromResult("Odpowiedź przykładowa: dostawca modelu językowego nie jest jeszcze skonfigurowany.");
+
+        string answer = prompt.Instructions == PromptTemplates.Get(PromptTemplates.FitAssistant)
+            ? AdviseOnFit(LlmJson.Deserialize<FitAssistantInput>(prompt.Input))
+            : "Odpowiedź przykładowa: dostawca modelu językowego nie jest jeszcze skonfigurowany.";
+
+        return Task.FromResult(answer);
     }
 
     public Task<TResult> CompleteJsonAsync<TResult>(LlmPrompt prompt, CancellationToken cancellationToken)
@@ -38,6 +43,7 @@ public sealed class PlaceholderLlmClient(ILogger<PlaceholderLlmClient> logger) :
             Type type when type == typeof(InnovationRankingResult) => Rank(LlmJson.Deserialize<InnovationRankingInput>(prompt.Input)),
             Type type when type == typeof(HybridProposalResult) => ProposeHybrid(LlmJson.Deserialize<HybridProposalInput>(prompt.Input)),
             Type type when type == typeof(GenomeResult) => DescribeGenome(LlmJson.Deserialize<GenomeInput>(prompt.Input)),
+            Type type when type == typeof(FitAssessmentResult) => AssessFit(LlmJson.Deserialize<FitAssessmentInput>(prompt.Input)),
             _ => throw new NotSupportedException($"The placeholder language model cannot answer with {typeof(TResult).Name}."),
         };
 
@@ -146,6 +152,66 @@ public sealed class PlaceholderLlmClient(ILogger<PlaceholderLlmClient> logger) :
             null,
             areaCodes,
             summary);
+    }
+
+    /// <summary>
+    /// A rule of thumb instead of reasoning: the share of the innovation's area indicators in which the gmina is above
+    /// the region's mean decides the fit, and the rows of the table are those indicators.
+    /// </summary>
+    private static FitAssessmentResult AssessFit(FitAssessmentInput input)
+    {
+        List<FitIndicatorBrief> areaIndicators = [.. input.Indicators.Where(indicator => !indicator.General)];
+        List<FitIndicatorBrief> aboveAverage = [.. areaIndicators.Where(indicator => indicator.Value > indicator.RegionAverage)];
+        double share = areaIndicators.Count == 0 ? 0 : (double)aboveAverage.Count / areaIndicators.Count;
+        string fit = share >= 0.6 || input.Innovation.InServiceModel ? "HIGH" : share >= 0.3 ? "MEDIUM" : "LOW";
+
+        string summary = areaIndicators.Count == 0
+            ? $"Obserwator nie ma danych gminy {input.Municipality.Name} dla obszarów tej innowacji, więc ocena opiera się tylko na danych ogólnych."
+            : $"W {aboveAverage.Count} z {areaIndicators.Count} wskaźników obszarów innowacji gmina {input.Municipality.Name} jest powyżej średniej regionu, co wskazuje na potrzebę takiego rozwiązania.";
+        if (input.Innovation.InServiceModel)
+        {
+            summary += " Innowacja jest już częścią Małopolskich Modeli Usług Społecznych.";
+        }
+
+        List<string> missing = [.. areaIndicators
+            .Where(indicator => indicator.RegionAverage > 0 && indicator.Value < indicator.RegionAverage / 2)
+            .Take(4)
+            .Select(indicator => $"{indicator.Name}: {indicator.Value:0.##} wobec średniej regionu {indicator.RegionAverage:0.##} ({indicator.Year})")];
+
+        FitIndicatorBrief? population = input.Indicators.FirstOrDefault(indicator => indicator.Name == "Ludność ogółem");
+        string? scale = population is null
+            ? null
+            : $"Gmina ma ok. {population.Value:0} mieszkańców ({population.Year}); grupa docelowa to ich część.";
+
+        List<string> requirements = [.. input.Innovation.RequiredInstitutions, .. input.Innovation.TargetGroups];
+        List<FitComparisonChoice> comparison = [.. areaIndicators
+            .Concat(input.Indicators.Where(indicator => indicator.General))
+            .Take(8)
+            .Select((indicator, index) => new FitComparisonChoice(
+                indicator.General ? "Kontekst gminy" : requirements.Count > 0 ? requirements[index % requirements.Count] : "Skala potrzeby",
+                indicator.IndicatorId))];
+
+        bool urban = input.Municipality.Type == "URBAN";
+        return new FitAssessmentResult(
+            fit,
+            summary,
+            [.. input.Innovation.Mechanisms.Take(2)],
+            [$"Dopasuj skalę działania do gminy {input.Municipality.Name} i jej zasobów kadrowych."],
+            missing,
+            urban ? "Centrum Usług Społecznych albo OPS" : "Ośrodek Pomocy Społecznej",
+            "Zadanie publiczne zlecone organizacji pozarządowej albo usługa OPS",
+            scale,
+            comparison);
+    }
+
+    private static string AdviseOnFit(FitAssistantInput input)
+    {
+        string firstStep = input.ToAdapt.Count > 0 ? input.ToAdapt[0] : "Zacznij od rozmowy z ośrodkiem pomocy społecznej.";
+
+        return $"(Asystent w trybie przykładowym, bez modelu językowego.) Dla innowacji „{input.InnovationTitle}” w gminie "
+            + $"{input.MunicipalityName}: {firstStep} Realizatorem może być {input.ServiceProvider ?? "OPS"}, "
+            + $"w formie: {input.ServiceForm ?? "zadanie publiczne"}. Napisałeś: „{input.Message}” — "
+            + "z prawdziwym modelem dostaniesz tu plan dopasowany do Twoich zasobów.";
     }
 
     /// <summary>

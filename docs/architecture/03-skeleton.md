@@ -67,6 +67,18 @@ Moduł I dołożył (SPEC §7 I):
 | `Features/` | `ProblemReports` (tworzenie, odpowiedzi, odczyt, śledzenie kodem, przypięcie, moje), `Municipalities` (wyszukiwarka gmin), `Session` (`GET /api/auth/session`) |
 | `Migrations/` | `MatchmakingKnowledgeAndProblemReports` — tabele modułu I i funkcja `castor_unaccent` |
 
+Moduł VII dołożył (SPEC §7 VII):
+
+| Miejsce | Zawartość |
+|---|---|
+| `Domain/Statistics/` | `Indicator`, `IndicatorValue` (poziom `GMINA`/`POWIAT`), `Measure` (wartość statystyczna, `NUMERIC(19,6)` z konwencji) |
+| `Domain/FitAssessments/` | `FitAssessment` (+ `FitAssessmentContent`, `FitComparisonRow` jako JSON), `FitLevel`, `FitAssistantMessage` |
+| `Persistence/` | mapowanie, `MeasureConverter`; import seedu upsertuje wskaźniki i ich wartości |
+| `Queries/Statistics/` | `MunicipalityPortraitQuery` — wskaźniki obszarów innowacji i ogólne, wartość gminy albo powiatu, średnia regionu z SQL |
+| `Shared/Ai/` | `FitAssessor`, `FitAssistant`, prompty `assess-fit.md` i `fit-assistant.md`, odpowiedzi placeholdera |
+| `Features/` | `Innovations` (`GET /api/innovations/{id}`), `FitAssessments` (karta, odczyt, czat asystenta) |
+| `Migrations/` | `StatisticsAndFitAssessments` |
+
 Workspace'ów i globalnego filtra izolacji **nie ma** — dane platformy są wspólne ([`00-stack.md`](00-stack.md) · Dostęp do danych).
 
 ## Co jest w `frontend/`

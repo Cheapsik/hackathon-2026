@@ -21,6 +21,13 @@ Blokuje:
 
 Kolumna `embedding vector(N)` genomu jeszcze nie istnieje — dojdzie migracją razem z wymiarem z `Embeddings:Dimensions`.
 
+## Moduł VII — co zostało
+
+- **Mini-mapa karty dopasowania** (SPEC §7 VII): potrzebny GeoJSON gmin Małopolski w `data/geo/` (np. z PRG GUGiK) i Leaflet — dojdzie z mapą w module II. Karta ma już tabelę z tymi samymi danymi.
+- **Podpowiedź gminy dla pracownika JST** (SPEC §6.5): `User` nie ma jeszcze gminy — przypisuje ją admin w module VI.
+- **Gminy, które już wdrożyły innowację**: brak danych źródłowych; pole karty czeka na nie.
+- **Wiele lat danych**: skrypt bierze ostatni rok każdego wskaźnika; trendy (moduł VI, II) potrzebują wcześniejszych lat z formularza Obserwatora.
+
 ## LLM — dostawca i pierwsze adaptery
 
 SPEC §1 i §3 wymagają abstrakcji `ILlmClient` z adapterami wybieranymi przez `Llm__Provider`. Nie ustalono, którego dostawcę obsługujemy pierwszego ani do którego jest klucz na demo.

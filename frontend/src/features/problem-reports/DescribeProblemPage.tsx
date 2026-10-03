@@ -7,7 +7,7 @@ import {
 } from '@/api/generated/castor'
 import { ClarifyingQuestionsStep } from '@/features/problem-reports/ClarifyingQuestionsStep'
 import { DictationButton } from '@/features/problem-reports/DictationButton'
-import { MunicipalityPicker } from '@/features/problem-reports/MunicipalityPicker'
+import { MunicipalityPicker } from '@/components/MunicipalityPicker'
 import { ProblemReportResults } from '@/features/problem-reports/ProblemReportResults'
 import { usePageTitle } from '@/hooks/use-page-title'
 import { errorMessage } from '@/lib/error-message'

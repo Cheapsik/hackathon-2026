@@ -108,6 +108,13 @@ _Avoid_: luka, brak
 Ocena, czy innowacja przyjmie się w konkretnej gminie, oparta na danych Obserwatora.
 _Avoid_: karta szczepienia, fit
 
+**Municipality portrait** (portret gminy):
+Wskaźniki Obserwatora dla jednej gminy — albo jej powiatu, gdy wskaźnik nie ma danych gminnych — ze średnią regionu i rokiem danych.
+_Avoid_: profil gminy (profil to strona Atlasu)
+
+**Fit level** (ocena dopasowania):
+Wysoka, średnia albo niska szansa, że innowacja przyjmie się w gminie.
+
 **Service model** (model usługi):
 Opis, kto realizuje innowację w gminie (OPS, CUS, NGO) i w jakiej formie (zadanie publiczne, usługa).
 

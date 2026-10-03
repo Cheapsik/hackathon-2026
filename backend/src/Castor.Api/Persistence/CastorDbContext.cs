@@ -28,6 +28,14 @@ public sealed class CastorDbContext : DbContext
 
     public DbSet<BackgroundJob> BackgroundJobs => Set<BackgroundJob>();
 
+    public DbSet<Indicator> Indicators => Set<Indicator>();
+
+    public DbSet<IndicatorValue> IndicatorValues => Set<IndicatorValue>();
+
+    public DbSet<FitAssessment> FitAssessments => Set<FitAssessment>();
+
+    public DbSet<FitAssistantMessage> FitAssistantMessages => Set<FitAssistantMessage>();
+
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {
         ModelConventions.ApplyTo(configurationBuilder);

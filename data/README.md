@@ -8,6 +8,7 @@ Skrypty w `scrapers/` pobierają dane źródłowe raz i zapisują wynik w `seed/
 | `models.py` | strona „Innowacje w małopolskich modelach” | flaga `inServiceModel` w `seed/innovations.json` |
 | `challenges.py` | PDF Mapy Wyzwań Społecznych (dane krajowe) | `seed/challenge_areas.json`, `seed/personas.json` |
 | `municipalities.py` | API Banku Danych Lokalnych GUS (jednostki terytorialne) | `seed/municipalities.json` — gminy Małopolski z TERYT, typem i powiatem |
+| `observer.py` | Internetowy Obserwator Statystyk Społecznych — 184 wskaźniki, ostatni rok każdego (po `municipalities.py`) | `seed/indicators.json` (z obszarami wyzwań i flagą „ogólny”), `seed/indicator_values.json` (gminy i powiaty) |
 
 ## Uruchomienie
 
@@ -20,6 +21,7 @@ python -m venv .venv
 .venv/Scripts/python models.py          # po innovations.py — dopisuje flagę do jego wyniku
 .venv/Scripts/python challenges.py
 .venv/Scripts/python municipalities.py
+.venv/Scripts/python observer.py      # po municipalities.py — mapuje nazwy gmin na TERYT
 ```
 
 - Strony ROPS odpowiadają 403 bez nagłówka przeglądarki, więc każde żądanie ma `User-Agent` przeglądarki i odstęp 1 s.

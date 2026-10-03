@@ -479,6 +479,354 @@
           }
         }
       }
+    },
+    "/api/innovations/{innovationId}": {
+      "get": {
+        "tags": [
+          "Innovations"
+        ],
+        "parameters": [
+          {
+            "name": "innovationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/InnovationResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InnovationResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InnovationResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/innovations/{innovationId}/fit": {
+      "post": {
+        "tags": [
+          "FitAssessments"
+        ],
+        "parameters": [
+          {
+            "name": "innovationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateFitAssessmentRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateFitAssessmentRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateFitAssessmentRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FitAssessmentResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FitAssessmentResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FitAssessmentResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FitAssessmentResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FitAssessmentResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FitAssessmentResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "FitAssessments"
+        ],
+        "parameters": [
+          {
+            "name": "innovationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "teryt",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FitAssessmentResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FitAssessmentResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FitAssessmentResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/innovations/{innovationId}/fit/{fitAssessmentId}": {
+      "get": {
+        "tags": [
+          "FitAssessments"
+        ],
+        "parameters": [
+          {
+            "name": "innovationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "fitAssessmentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FitAssessmentResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FitAssessmentResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FitAssessmentResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/innovations/{innovationId}/fit/{fitAssessmentId}/assistant": {
+      "get": {
+        "tags": [
+          "FitAssessments"
+        ],
+        "parameters": [
+          {
+            "name": "innovationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "fitAssessmentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FitAssistantMessageResponse"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FitAssistantMessageResponse"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FitAssistantMessageResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "FitAssessments"
+        ],
+        "parameters": [
+          {
+            "name": "innovationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "fitAssessmentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AskFitAssistantRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AskFitAssistantRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AskFitAssistantRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FitAssistantMessageResponse"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FitAssistantMessageResponse"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FitAssistantMessageResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -497,6 +845,20 @@
             "items": {
               "type": "string"
             }
+          }
+        }
+      },
+      "AskFitAssistantRequest": {
+        "required": [
+          "message"
+        ],
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": [
+              "null",
+              "string"
+            ]
           }
         }
       },
@@ -532,6 +894,24 @@
           }
         }
       },
+      "CreateFitAssessmentRequest": {
+        "required": [
+          "teryt",
+          "recalculate"
+        ],
+        "type": "object",
+        "properties": {
+          "teryt": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "recalculate": {
+            "type": "boolean"
+          }
+        }
+      },
       "CreateProblemReportRequest": {
         "required": [
           "description",
@@ -562,6 +942,204 @@
           },
           "keepOriginalDescription": {
             "type": "boolean"
+          }
+        }
+      },
+      "FitAssessmentMunicipalityResponse": {
+        "required": [
+          "teryt",
+          "name",
+          "powiat"
+        ],
+        "type": "object",
+        "properties": {
+          "teryt": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "powiat": {
+            "type": "string"
+          }
+        }
+      },
+      "FitAssessmentResponse": {
+        "required": [
+          "id",
+          "innovationId",
+          "innovationTitle",
+          "municipality",
+          "dataYear",
+          "fit",
+          "summary",
+          "unchanged",
+          "toAdapt",
+          "missing",
+          "serviceProvider",
+          "serviceForm",
+          "scaleEstimate",
+          "comparison",
+          "createdAt",
+          "updatedAt"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "innovationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "innovationTitle": {
+            "type": "string"
+          },
+          "municipality": {
+            "$ref": "#/components/schemas/FitAssessmentMunicipalityResponse"
+          },
+          "dataYear": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "fit": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "unchanged": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "toAdapt": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "missing": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "serviceProvider": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "serviceForm": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "scaleEstimate": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "comparison": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FitComparisonRowResponse"
+            }
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "FitAssistantMessageResponse": {
+        "required": [
+          "id",
+          "role",
+          "text",
+          "createdAt"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "role": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "FitComparisonRowResponse": {
+        "required": [
+          "requirement",
+          "indicatorName",
+          "unit",
+          "level",
+          "value",
+          "regionAverage",
+          "year"
+        ],
+        "type": "object",
+        "properties": {
+          "requirement": {
+            "type": "string"
+          },
+          "indicatorName": {
+            "type": "string"
+          },
+          "unit": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "level": {
+            "type": "string"
+          },
+          "value": {
+            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?$",
+            "type": [
+              "number",
+              "string"
+            ],
+            "format": "double"
+          },
+          "regionAverage": {
+            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?$",
+            "type": [
+              "number",
+              "string"
+            ],
+            "format": "double"
+          },
+          "year": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
           }
         }
       },
@@ -611,6 +1189,132 @@
               "null",
               "string"
             ]
+          }
+        }
+      },
+      "InnovationResponse": {
+        "required": [
+          "id",
+          "title",
+          "shortDescription",
+          "categories",
+          "solution",
+          "problems",
+          "targetGroup",
+          "beneficiaries",
+          "evidence",
+          "organization",
+          "cardUrl",
+          "videoUrl",
+          "materialsZipUrl",
+          "cardPdfUrl",
+          "termsUrl",
+          "featured",
+          "inServiceModel",
+          "stage",
+          "challengeAreaCodes"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string"
+          },
+          "shortDescription": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "categories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "solution": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "problems": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "targetGroup": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "beneficiaries": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "evidence": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "organization": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "cardUrl": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "videoUrl": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "materialsZipUrl": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "cardPdfUrl": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "termsUrl": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "featured": {
+            "type": "boolean"
+          },
+          "inServiceModel": {
+            "type": "boolean"
+          },
+          "stage": {
+            "type": "string"
+          },
+          "challengeAreaCodes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         }
       },
@@ -1024,6 +1728,12 @@
     },
     {
       "name": "Municipalities"
+    },
+    {
+      "name": "Innovations"
+    },
+    {
+      "name": "FitAssessments"
     }
   ]
 }

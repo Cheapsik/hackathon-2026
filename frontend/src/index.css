@@ -95,3 +95,13 @@
     outline-offset: 2px;
   }
 }
+
+/* Printing a fit assessment (module VII): the card only, without navigation and controls. */
+@media print {
+  header,
+  nav,
+  footer,
+  .no-print {
+    display: none !important;
+  }
+}
