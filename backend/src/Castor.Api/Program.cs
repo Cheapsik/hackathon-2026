@@ -170,6 +170,7 @@ builder.Services.AddHostedService<BackgroundJobRunner>();
 
 // Seed and the bootstrap administrator
 builder.Services.AddScoped<SeedImporter>();
+builder.Services.AddScoped<DemoContentImporter>();
 builder.Services.AddScoped<AdminBootstrap>();
 
 // Account and session

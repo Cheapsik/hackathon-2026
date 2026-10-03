@@ -1,0 +1,478 @@
+{
+  "accounts": [
+    {
+      "key": "rops",
+      "email": "rops.demo@example.com",
+      "role": "ADMIN",
+      "municipalityTeryt": null,
+      "challengeAreas": [],
+      "testerProfile": null
+    },
+    {
+      "key": "ekspert",
+      "email": "ekspert.demo@example.com",
+      "role": "EXPERT",
+      "municipalityTeryt": null,
+      "challengeAreas": ["SENIORS", "MENTAL_HEALTH", "DISABILITY"],
+      "testerProfile": null
+    },
+    {
+      "key": "gmina",
+      "email": "gmina.demo@example.com",
+      "role": "MUNICIPAL_OFFICER",
+      "municipalityTeryt": "1205033",
+      "challengeAreas": [],
+      "testerProfile": null
+    },
+    {
+      "key": "mieszkanka",
+      "email": "mieszkanka.demo@example.com",
+      "role": "RESIDENT",
+      "municipalityTeryt": null,
+      "challengeAreas": [],
+      "testerProfile": {
+        "age": 67,
+        "municipalityTeryt": "1207072",
+        "accessibilityNeeds": "Słabiej widzę, potrzebuję większej czcionki.",
+        "equipment": "Smartfon z Androidem, internet w domu."
+      }
+    },
+    {
+      "key": "fundacja",
+      "email": "fundacja.demo@example.com",
+      "role": "RESIDENT",
+      "municipalityTeryt": null,
+      "challengeAreas": [],
+      "testerProfile": null
+    },
+    {
+      "key": "student",
+      "email": "student.demo@example.com",
+      "role": "RESIDENT",
+      "municipalityTeryt": null,
+      "challengeAreas": [],
+      "testerProfile": {
+        "age": 22,
+        "municipalityTeryt": "1261011",
+        "accessibilityNeeds": null,
+        "equipment": "Laptop i smartfon."
+      }
+    }
+  ],
+  "grantCalls": [
+    {
+      "title": "Inkubator Innowacji Społecznych 2026 — granty na testowanie rozwiązań",
+      "description": "Nabór dla organizacji pozarządowych, grup nieformalnych i jednostek samorządu, które chcą przetestować w swojej społeczności nowe rozwiązanie odpowiadające na wyzwania Małopolski. Grant do 60 000 zł na 6 miesięcy testów z udziałem odbiorców.",
+      "criteria": [
+        "Rozwiązanie odpowiada na realny problem opisany przez odbiorców.",
+        "Plan testów z udziałem co najmniej 15 odbiorców.",
+        "Możliwość przeniesienia rozwiązania do innych gmin Małopolski.",
+        "Realny budżet i harmonogram."
+      ],
+      "challengeAreas": ["SENIORS", "MENTAL_HEALTH", "DISABILITY"],
+      "opensInDays": -14,
+      "closesInDays": 30,
+      "status": "OPEN"
+    },
+    {
+      "title": "Nabór 2025: wsparcie opiekunów faktycznych",
+      "description": "Zakończony nabór na rozwiązania odciążające rodziny, które opiekują się bliskimi w domu.",
+      "criteria": [
+        "Rozwiązanie zmniejsza obciążenie opiekunów.",
+        "Rozwiązanie da się utrzymać po zakończeniu grantu."
+      ],
+      "challengeAreas": ["HEALTH", "FAMILY_AND_FOSTER_CARE"],
+      "opensInDays": -200,
+      "closesInDays": -150,
+      "status": "CLOSED"
+    }
+  ],
+  "problemReports": [
+    {
+      "author": null,
+      "daysAgo": 1,
+      "description": "Na naszym osiedlu mieszka coraz więcej starszych osób, które po śmierci współmałżonka zostały same. Nie wychodzą z domu, nikt ich nie odwiedza, a dzieci mieszkają za granicą. Sąsiedzi widzą to, ale nie wiedzą, jak pomóc.",
+      "municipalityTeryt": "1261011",
+      "submittedOnBehalf": false,
+      "challengeAreas": ["SENIORS"],
+      "rootCauses": ["osamotnienie po stracie bliskich", "brak sąsiedzkich więzi na nowych osiedlach"],
+      "targetGroup": "samotni seniorzy w mieście",
+      "urgency": "HIGH",
+      "keywords": ["samotność", "senior", "sąsiedzi", "osiedle", "odwiedziny"],
+      "status": "RECEIVED",
+      "messages": []
+    },
+    {
+      "author": null,
+      "daysAgo": 2,
+      "description": "Młodzież z naszej gminy po lekcjach nie ma dokąd pójść. Psycholog szkolny jest raz w tygodniu, a do poradni w mieście czeka się kilka miesięcy. Nauczyciele zauważają coraz więcej uczniów z objawami depresji.",
+      "municipalityTeryt": "1262011",
+      "submittedOnBehalf": false,
+      "challengeAreas": ["MENTAL_HEALTH"],
+      "rootCauses": ["brak dostępu do wsparcia psychologicznego", "brak miejsc spotkań dla młodzieży"],
+      "targetGroup": "młodzież szkolna",
+      "urgency": "HIGH",
+      "keywords": ["depresja", "młodzież", "psycholog", "kolejka", "szkoła"],
+      "status": "RECEIVED",
+      "messages": []
+    },
+    {
+      "author": "mieszkanka",
+      "daysAgo": 4,
+      "description": "Moja mama ma 82 lata i mieszka sama na wsi, kilka kilometrów od najbliższego sklepu i przychodni. Autobus jeździ dwa razy dziennie. Boję się, że gdy coś się stanie w nocy, nikt się nie dowie.",
+      "municipalityTeryt": "1207072",
+      "submittedOnBehalf": true,
+      "challengeAreas": ["SENIORS", "HEALTH"],
+      "rootCauses": ["wykluczenie komunikacyjne", "brak opieki na odległość"],
+      "targetGroup": "seniorzy mieszkający samotnie na wsi",
+      "urgency": "HIGH",
+      "keywords": ["senior", "wieś", "bezpieczeństwo", "opieka", "dojazd", "przychodnia"],
+      "status": "RECEIVED",
+      "messages": []
+    },
+    {
+      "author": null,
+      "daysAgo": 8,
+      "description": "Po pandemii dużo młodych ludzi w naszej okolicy zamknęło się w domu. Rodzice nie wiedzą, gdzie szukać pomocy, a w gminie nie ma żadnego punktu konsultacyjnego dla rodzin.",
+      "municipalityTeryt": "1205033",
+      "submittedOnBehalf": false,
+      "challengeAreas": ["MENTAL_HEALTH", "FAMILY_AND_FOSTER_CARE"],
+      "rootCauses": ["izolacja społeczna młodzieży", "brak punktu wsparcia dla rodzin"],
+      "targetGroup": "młodzież i ich rodzice",
+      "urgency": "HIGH",
+      "keywords": ["izolacja", "młodzież", "rodzice", "wsparcie", "konsultacje"],
+      "status": "IN_ANALYSIS",
+      "messages": [
+        { "sender": "rops", "daysAgo": 7, "text": "Dziękujemy za zgłoszenie. Czy w gminie działa szkoła średnia albo dom kultury, które mogłyby udostępnić salę na spotkania?" },
+        { "sender": null, "daysAgo": 6, "text": "Jest dom kultury, otwarty do 18. Dyrektorka mówiła, że chętnie pomoże." }
+      ]
+    },
+    {
+      "author": "mieszkanka",
+      "daysAgo": 21,
+      "description": "Sąsiad porusza się na wózku i trzy razy w tygodniu musi dojeżdżać na rehabilitację do miasta. Nie ma samochodu, a gminny bus nie ma podjazdu dla wózka. Często rezygnuje z zajęć.",
+      "municipalityTeryt": "1207072",
+      "submittedOnBehalf": true,
+      "challengeAreas": ["DISABILITY", "HEALTH"],
+      "rootCauses": ["niedostępny transport publiczny", "rehabilitacja tylko w mieście"],
+      "targetGroup": "osoby z niepełnosprawnością ruchową",
+      "urgency": "MEDIUM",
+      "keywords": ["wózek", "transport", "rehabilitacja", "dojazd", "bus"],
+      "status": "WITH_EXPERT",
+      "messages": [
+        { "sender": "rops", "daysAgo": 19, "text": "Przekazaliśmy zgłoszenie ekspertce od dostępności. Odezwie się w tym wątku." },
+        { "sender": "ekspert", "daysAgo": 17, "text": "Dzień dobry, w Bibliotece ROPS jest rozwiązanie „Dostępny transport publiczny”. Warto też sprawdzić, czy powiat ma środki PFRON na dowóz. Czy sąsiad ma orzeczenie o niepełnosprawności?" },
+        { "sender": "mieszkanka", "daysAgo": 16, "text": "Tak, ma orzeczenie o znacznym stopniu. Zapytam w powiecie o dowóz, dziękuję." }
+      ]
+    },
+    {
+      "author": null,
+      "daysAgo": 34,
+      "description": "W centrum miasta przybyło osób w kryzysie bezdomności. Zimą noclegownia jest przepełniona, a ludzie śpią na klatkach schodowych. Mieszkańcy chcą pomóc, ale nie wiedzą, czy dawać pieniądze, czy jedzenie.",
+      "municipalityTeryt": "1261011",
+      "submittedOnBehalf": false,
+      "challengeAreas": ["HOMELESSNESS", "POVERTY"],
+      "rootCauses": ["za mało miejsc noclegowych zimą", "brak koordynacji pomocy sąsiedzkiej"],
+      "targetGroup": "osoby w kryzysie bezdomności",
+      "urgency": "MEDIUM",
+      "keywords": ["bezdomność", "noclegownia", "zima", "pomoc", "mieszkańcy"],
+      "status": "ANSWERED",
+      "messages": [
+        { "sender": "rops", "daysAgo": 30, "text": "Dziękujemy. Najlepiej pomóc przez sprawdzone organizacje — w odpowiedzi przesyłamy innowację „Szlakiem ludzi bezdomnych” i kontakt do koordynatora streetworkingu w mieście." }
+      ]
+    },
+    {
+      "author": "gmina",
+      "daysAgo": 47,
+      "description": "Seniorzy z naszej gminy nie radzą sobie z e-receptą i internetowym kontem pacjenta. W przychodni tworzą się kolejki, a pielęgniarki tracą czas na tłumaczenie obsługi telefonu.",
+      "municipalityTeryt": "1205033",
+      "submittedOnBehalf": false,
+      "challengeAreas": ["SENIORS", "HEALTH"],
+      "rootCauses": ["wykluczenie cyfrowe", "brak szkoleń dla seniorów"],
+      "targetGroup": "seniorzy korzystający z ochrony zdrowia",
+      "urgency": "MEDIUM",
+      "keywords": ["wykluczenie cyfrowe", "e-recepta", "senior", "przychodnia", "smartfon"],
+      "status": "ANSWERED",
+      "messages": [
+        { "sender": "ekspert", "daysAgo": 44, "text": "Dobrze sprawdzają się dyżury „cyfrowego wolontariusza” w przychodni. Pasują tu też „Kody QR na pomoc seniorom” z Biblioteki ROPS." },
+        { "sender": "gmina", "daysAgo": 43, "text": "Kody QR wyglądają świetnie. Czy możemy je wdrożyć w dwóch przychodniach na próbę?" },
+        { "sender": "rops", "daysAgo": 41, "text": "Tak. Wysłaliśmy kontakt do autorów i opis wdrożenia. Prosimy o informację po pierwszym miesiącu." }
+      ]
+    },
+    {
+      "author": null,
+      "daysAgo": 63,
+      "description": "W naszym mieście mieszka coraz więcej rodzin z Ukrainy. Dzieci dobrze sobie radzą, ale ich mamy nie znają polskiego i nie wiedzą, jak załatwić sprawy w urzędzie i w szkole.",
+      "municipalityTeryt": "1262011",
+      "submittedOnBehalf": false,
+      "challengeAreas": ["MIGRANT_INTEGRATION"],
+      "rootCauses": ["bariera językowa", "brak informacji w urzędach"],
+      "targetGroup": "rodziny cudzoziemców",
+      "urgency": "LOW",
+      "keywords": ["cudzoziemcy", "język", "urząd", "szkoła", "integracja"],
+      "status": "CLOSED",
+      "messages": [
+        { "sender": "rops", "daysAgo": 58, "text": "Przekazaliśmy innowację „Dialog ponad kulturami”. Zamykamy zgłoszenie — w razie pytań prosimy o nowe." }
+      ]
+    },
+    {
+      "author": "fundacja",
+      "daysAgo": 78,
+      "description": "Rodziny zastępcze w powiecie są przeciążone. Nie mają z kim zostawić dzieci, gdy muszą pojechać do sądu albo do lekarza. Coraz trudniej znaleźć nowych kandydatów.",
+      "municipalityTeryt": "1209033",
+      "submittedOnBehalf": false,
+      "challengeAreas": ["FAMILY_AND_FOSTER_CARE"],
+      "rootCauses": ["brak opieki wytchnieniowej", "przeciążenie rodzin zastępczych"],
+      "targetGroup": "rodziny zastępcze",
+      "urgency": "MEDIUM",
+      "keywords": ["piecza zastępcza", "opieka wytchnieniowa", "rodzina", "dzieci"],
+      "status": "WITH_EXPERT",
+      "messages": [
+        { "sender": "rops", "daysAgo": 75, "text": "Dziękujemy. Szukamy eksperta od pieczy zastępczej, który pomoże przygotować pilotaż." }
+      ]
+    },
+    {
+      "author": null,
+      "daysAgo": 96,
+      "description": "Coraz więcej starszych sąsiadów nie stać na ogrzewanie. Zimą siedzą w jednym pokoju w kurtkach. Nie składają wniosków o dodatki, bo się wstydzą albo nie rozumieją formularzy.",
+      "municipalityTeryt": "1213011",
+      "submittedOnBehalf": false,
+      "challengeAreas": ["POVERTY", "SENIORS"],
+      "rootCauses": ["ubóstwo energetyczne", "skomplikowane wnioski"],
+      "targetGroup": "seniorzy o niskich dochodach",
+      "urgency": "HIGH",
+      "keywords": ["ubóstwo energetyczne", "ogrzewanie", "dodatek", "wniosek", "senior"],
+      "status": "ANSWERED",
+      "messages": [
+        { "sender": "rops", "daysAgo": 90, "text": "Polecamy innowację „Urzędowy ambaras” — wolontariusze pomagają wypełniać wnioski. Przekazaliśmy też kontakt do ośrodka pomocy społecznej." }
+      ]
+    },
+    {
+      "author": null,
+      "daysAgo": 115,
+      "description": "Do najbliższego kardiologa i diabetologa trzeba jechać ponad godzinę. Starsi pacjenci rezygnują z wizyt kontrolnych, bo nie mają jak dojechać.",
+      "municipalityTeryt": "1208053",
+      "submittedOnBehalf": false,
+      "challengeAreas": ["HEALTH", "SENIORS"],
+      "rootCauses": ["mała dostępność specjalistów", "brak transportu"],
+      "targetGroup": "starsi pacjenci przewlekle chorzy",
+      "urgency": "MEDIUM",
+      "keywords": ["specjalista", "dojazd", "teleporada", "pacjent", "senior"],
+      "status": "CLOSED",
+      "messages": [
+        { "sender": "rops", "daysAgo": 110, "text": "Przekazaliśmy rozwiązanie „Teleasystent” i informację o teleporadach w szpitalu powiatowym. Zamykamy zgłoszenie." }
+      ]
+    },
+    {
+      "author": null,
+      "daysAgo": 132,
+      "description": "Na nowych osiedlach pod miastem mieszkają głównie młode rodziny, ale też ich rodzice, którzy przeprowadzili się, żeby pomagać przy wnukach. Nie znają tu nikogo i czują się samotni.",
+      "municipalityTeryt": "1219043",
+      "submittedOnBehalf": false,
+      "challengeAreas": ["SENIORS"],
+      "rootCauses": ["przeprowadzka bez sieci kontaktów", "brak miejsc spotkań"],
+      "targetGroup": "seniorzy na nowych osiedlach",
+      "urgency": "LOW",
+      "keywords": ["samotność", "senior", "osiedle", "przeprowadzka", "klub"],
+      "status": "ANSWERED",
+      "messages": [
+        { "sender": "rops", "daysAgo": 126, "text": "Polecamy „Mobilne centrum pomocy dla osób starszych” i klub seniora przy parafii — przesłaliśmy kontakty." }
+      ]
+    },
+    {
+      "author": null,
+      "daysAgo": 151,
+      "description": "Opiekuję się bratem po udarze. Od roku nie miałam dnia wolnego, jestem wyczerpana i coraz częściej płaczę. Nie wiem, gdzie szukać pomocy dla siebie.",
+      "municipalityTeryt": "1207072",
+      "submittedOnBehalf": false,
+      "challengeAreas": ["MENTAL_HEALTH", "HEALTH"],
+      "rootCauses": ["wypalenie opiekuna", "brak opieki wytchnieniowej"],
+      "targetGroup": "opiekunowie osób zależnych",
+      "urgency": "HIGH",
+      "keywords": ["opiekun", "wypalenie", "udar", "wsparcie psychologiczne"],
+      "status": "CLOSED",
+      "messages": [
+        { "sender": "rops", "daysAgo": 150, "text": "Bardzo dziękujemy za zaufanie. Przesyłamy numer bezpłatnego telefonu wsparcia i informację o opiece wytchnieniowej w gminie." },
+        { "sender": null, "daysAgo": 148, "text": "Dziękuję, zadzwoniłam. Od przyszłego miesiąca mam dwa dni wytchnienia." }
+      ]
+    },
+    {
+      "author": null,
+      "daysAgo": 168,
+      "description": "Niewidomi mieszkańcy nie mogą samodzielnie zrobić zakupów na targu, bo stoiska są ustawiane co tydzień inaczej, a ceny są tylko na kartkach.",
+      "municipalityTeryt": "1205033",
+      "submittedOnBehalf": false,
+      "challengeAreas": ["DISABILITY"],
+      "rootCauses": ["niedostępna przestrzeń targu", "informacja tylko wizualna"],
+      "targetGroup": "osoby niewidome i słabowidzące",
+      "urgency": "MEDIUM",
+      "keywords": ["niewidomi", "targ", "zakupy", "dostępność"],
+      "status": "CLOSED",
+      "messages": [
+        { "sender": "ekspert", "daysAgo": 160, "text": "W Bibliotece ROPS są „Dostępny stół targowy” i „Zakupy bez barier”. Oba da się wdrożyć niewielkim kosztem." }
+      ]
+    }
+  ],
+  "ideas": [
+    {
+      "author": "fundacja",
+      "daysAgo": 26,
+      "title": "Sąsiedzki telefon dla samotnych seniorów",
+      "challengeAreas": ["SENIORS"],
+      "problemIntensity": 3,
+      "problemFrequency": 4,
+      "problemScale": 3,
+      "recipients": ["SENIORS", "LOCAL_RESIDENTS"],
+      "solution": "Wolontariusze z sąsiedztwa codziennie dzwonią do samotnych seniorów o stałej porze. Gdy senior nie odbiera, wolontariusz powiadamia wskazaną osobę z rodziny albo sąsiada. Raz w miesiącu spotkanie wszystkich przy kawie w świetlicy.",
+      "stage": "PROTOTYPE",
+      "supporters": "Koło Gospodyń Wiejskich, parafia, ośrodek pomocy społecznej",
+      "opponents": "Część seniorów nie chce „być pilnowana”",
+      "emotionalValues": ["LESS_LONELINESS", "SAFETY"],
+      "functionalValues": ["WIDER_REACH", "LOWER_COSTS"],
+      "status": "SUBMITTED",
+      "seeksTesters": true,
+      "reviews": [
+        { "expert": "ekspert", "recommendation": "DEVELOP", "comment": "Prosty, tani i łatwy do przeniesienia do innych gmin. Warto dopisać, jak szkolicie wolontariuszy i chronicie dane seniorów." }
+      ],
+      "testers": ["mieszkanka"]
+    },
+    {
+      "author": "fundacja",
+      "daysAgo": 40,
+      "title": "Wypożyczalnia sprzętu rehabilitacyjnego przy kole gospodyń",
+      "challengeAreas": ["DISABILITY", "SENIORS"],
+      "problemIntensity": 4,
+      "problemFrequency": 3,
+      "problemScale": 2,
+      "recipients": ["PEOPLE_WITH_DISABILITIES", "SENIORS"],
+      "solution": "Koło gospodyń prowadzi wypożyczalnię balkoników, wózków i łóżek rehabilitacyjnych przekazanych przez mieszkańców. Sprzęt jest sprawdzany przez fizjoterapeutę z przychodni, a rezerwacja odbywa się telefonicznie.",
+      "stage": "PROTOTYPE",
+      "supporters": "Przychodnia, OSP (transport sprzętu)",
+      "opponents": null,
+      "emotionalValues": ["INDEPENDENCE", "CALM"],
+      "functionalValues": ["LOWER_COSTS", "MORE_ACCESSIBLE"],
+      "status": "ACCEPTED",
+      "seeksTesters": true,
+      "reviews": [
+        { "expert": "ekspert", "recommendation": "DEVELOP", "comment": "Świetne wykorzystanie lokalnych zasobów. Rekomenduję do pilotażu w dwóch gminach powiatu." }
+      ],
+      "testers": ["mieszkanka", "student"]
+    },
+    {
+      "author": "student",
+      "daysAgo": 12,
+      "title": "Mapa miejsc przyjaznych osobom w kryzysie psychicznym",
+      "challengeAreas": ["MENTAL_HEALTH"],
+      "problemIntensity": 3,
+      "problemFrequency": 3,
+      "problemScale": 3,
+      "recipients": ["YOUTH", "PEOPLE_IN_CRISIS"],
+      "solution": "Prosta mapa w telefonie z miejscami, gdzie można przyjść porozmawiać bez zapisów: punkty konsultacyjne, telefony zaufania, grupy wsparcia. Każde miejsce sprawdzają studenci psychologii.",
+      "stage": "IDEA",
+      "supporters": "Samorząd studencki, poradnia psychologiczno-pedagogiczna",
+      "opponents": null,
+      "emotionalValues": ["SAFETY", "BEING_SEEN"],
+      "functionalValues": ["SAVES_TIME", "MORE_ACCESSIBLE"],
+      "status": "SUBMITTED",
+      "seeksTesters": true,
+      "reviews": [
+        { "expert": "ekspert", "recommendation": "REVISE", "comment": "Dobry kierunek. Proszę dopisać, kto będzie aktualizował dane i co się dzieje w nocy, gdy punkty są zamknięte." }
+      ],
+      "testers": []
+    },
+    {
+      "author": "mieszkanka",
+      "daysAgo": 6,
+      "title": "Kawiarenka cyfrowa w bibliotece",
+      "challengeAreas": ["SENIORS"],
+      "problemIntensity": 2,
+      "problemFrequency": 3,
+      "problemScale": 3,
+      "recipients": ["SENIORS"],
+      "solution": "Raz w tygodniu w bibliotece gminnej młodzież uczy seniorów obsługi telefonu: e-recepta, wideorozmowa z wnukami, bankowość. Przy kawie i bez pośpiechu.",
+      "stage": "IDEA",
+      "supporters": "Biblioteka gminna, szkoła podstawowa",
+      "opponents": null,
+      "emotionalValues": ["CONFIDENCE", "SOCIAL_INCLUSION"],
+      "functionalValues": ["MORE_ACCESSIBLE"],
+      "status": "SUBMITTED",
+      "seeksTesters": false,
+      "reviews": [],
+      "testers": []
+    },
+    {
+      "author": "fundacja",
+      "daysAgo": 3,
+      "title": "Rodzinny kalendarz opieki",
+      "challengeAreas": ["FAMILY_AND_FOSTER_CARE"],
+      "problemIntensity": 3,
+      "problemFrequency": 4,
+      "problemScale": 2,
+      "recipients": ["PARENTS"],
+      "solution": "Wspólny kalendarz dla rodziny zastępczej i zaufanych sąsiadów: kto i kiedy może zająć się dziećmi.",
+      "stage": "IDEA",
+      "supporters": null,
+      "opponents": null,
+      "emotionalValues": ["CALM"],
+      "functionalValues": ["SAVES_TIME"],
+      "status": "DRAFT",
+      "seeksTesters": false,
+      "reviews": [],
+      "testers": []
+    }
+  ],
+  "expertQuestions": [
+    {
+      "initiator": "mieszkanka",
+      "daysAgo": 9,
+      "subject": "Jak przekonać mamę do opaski SOS?",
+      "challengeArea": "SENIORS",
+      "innovation": null,
+      "messages": [
+        { "sender": "mieszkanka", "daysAgo": 9, "text": "Mama mieszka sama i nie chce nosić opaski z przyciskiem SOS, bo mówi, że to dla chorych. Jak z nią rozmawiać?" },
+        { "sender": "ekspert", "daysAgo": 8, "text": "Pomaga pokazanie opaski jako zwykłego zegarka i wspólne ustalenie, kto dostaje powiadomienia. Dobrze działa też próba na tydzień — wtedy mama sama decyduje, czy zostaje." }
+      ]
+    },
+    {
+      "initiator": "gmina",
+      "daysAgo": 15,
+      "subject": "Od czego zacząć wsparcie psychiczne młodzieży w małej gminie?",
+      "challengeArea": "MENTAL_HEALTH",
+      "innovation": null,
+      "messages": [
+        { "sender": "gmina", "daysAgo": 15, "text": "Mamy jednego psychologa szkolnego na trzy szkoły i rosnącą liczbę zgłoszeń od nauczycieli. Od czego zacząć przy małym budżecie?" },
+        { "sender": "ekspert", "daysAgo": 14, "text": "Najpierw punkt konsultacyjny raz w tygodniu w domu kultury i szkolenie nauczycieli z pierwszej pomocy psychologicznej. W Bibliotece ROPS warto zobaczyć „Bez presji z depresji”." },
+        { "sender": "rops", "daysAgo": 13, "text": "Dodamy gminę do listy zainteresowanych naborem na testowanie rozwiązań — otwieramy go w tym miesiącu." }
+      ]
+    }
+  ],
+  "partnerships": [
+    {
+      "initiator": "gmina",
+      "daysAgo": 40,
+      "subject": "Wdrożenie kodów QR w dwóch przychodniach w Bobowej",
+      "challengeArea": null,
+      "innovation": "kody-qr-na-pomoc-seniorom",
+      "messages": [
+        { "sender": "gmina", "daysAgo": 40, "text": "Chcemy na próbę wdrożyć kody QR w dwóch przychodniach. Kto może nam pomóc z materiałami?" },
+        { "sender": "rops", "daysAgo": 39, "text": "Łączymy Państwa z autorami. Materiały do druku są w paczce na karcie innowacji." }
+      ]
+    },
+    {
+      "initiator": "fundacja",
+      "daysAgo": 22,
+      "subject": "Partnerstwo przy mobilnym centrum pomocy dla seniorów",
+      "challengeArea": null,
+      "innovation": "mobilne-centrum-pomocy-dla-osob-starszych",
+      "messages": [
+        { "sender": "fundacja", "daysAgo": 22, "text": "Nasza fundacja ma wolontariuszy w powiecie limanowskim. Chętnie zostaniemy partnerem lokalnym mobilnego centrum." }
+      ]
+    }
+  ],
+  "feedback": [
+    { "author": "mieszkanka", "innovation": "kody-qr-na-pomoc-seniorom", "stars": 5, "whatWorks": "Mama sama sprawdza godziny przyjęć, bez dzwonienia do mnie.", "whatToImprove": "Kody mogłyby być większe i wyżej na ścianie." },
+    { "author": "student", "innovation": "kody-qr-na-pomoc-seniorom", "stars": 4, "whatWorks": "Szybko się wdraża.", "whatToImprove": "Przydałaby się wersja audio dla osób niewidomych." },
+    { "author": "mieszkanka", "innovation": "senior-cuder", "stars": 4, "whatWorks": "Zajęcia są ciekawe i nie męczą.", "whatToImprove": null },
+    { "author": "gmina", "innovation": "senior-cuder", "stars": 5, "whatWorks": "Seniorzy pytają o kolejne spotkania.", "whatToImprove": "Więcej terminów w małych miejscowościach." }
+  ]
+}

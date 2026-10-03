@@ -4,7 +4,8 @@ namespace Castor.Api.Infrastructure;
 
 /// <summary>
 /// Brings the database to a working state when the application starts, before it serves requests: migrations (in the
-/// container), the bootstrap administrator, failing jobs the last shutdown cut off, and the seed import. A hosted service rather than code after
+/// container), the bootstrap administrator, failing jobs the last shutdown cut off, and the seed import (with the demo
+/// content when it is on). A hosted service rather than code after
 /// <c>Build()</c>, because the build-time OpenAPI generator and dotnet-ef build the host without starting it — they
 /// must not touch a database.
 /// </summary>
@@ -43,6 +44,13 @@ public sealed class DatabaseStartup(
             string fullSeedPath = Path.GetFullPath(seedPath, environment.ContentRootPath);
             SeedImporter importer = services.GetRequiredService<SeedImporter>();
             await importer.ImportAsync(fullSeedPath, cancellationToken);
+
+            // Demo accounts and their activity, for the demo only: it needs the seed's areas, gminy and innovations.
+            if (configuration.GetValue<bool>("Seed:DemoContent"))
+            {
+                DemoContentImporter demo = services.GetRequiredService<DemoContentImporter>();
+                await demo.ImportAsync(fullSeedPath, configuration["Seed:DemoPassword"], cancellationToken);
+            }
         }
     }
 

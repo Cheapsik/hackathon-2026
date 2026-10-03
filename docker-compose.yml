@@ -36,6 +36,9 @@ services:
       DataProtection__KeysPath: /var/castor/keys
       Seed__Path: /var/castor/seed
       Seed__OnStartup: "true"
+      # Demo accounts (data/seed/demo_content.json) sign in with this password.
+      Seed__DemoContent: "true"
+      Seed__DemoPassword: ${DEMO_PASSWORD:-castor-demo}
     volumes:
       - backend-keys:/var/castor/keys
       # The committed seed, read-only: the import only adds content and upserts statistics (ADR 0003).
