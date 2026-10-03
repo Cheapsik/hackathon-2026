@@ -90,6 +90,7 @@ Wszystko przez zmienne środowiskowe (konwencja .NET `Sekcja__Klucz`). Wartości
 | `Embeddings__Provider`, `Embeddings__Model`, `Embeddings__ApiKey`, `Embeddings__BaseUrl` | jak wyżej, **do ustalenia**                                    |
 | `Embeddings__Dimensions`                                                                 | wymiar wektora; kolumny `vector(N)` tworzone z tej wartości    |
 | `Seed__Path`                                                                             | ścieżka do `data/seed` w kontenerze                            |
+| `Bootstrap__AdminEmail`, `Bootstrap__AdminPassword`                                      | pierwszy administrator: konto dostaje rolę `ADMIN` przy starcie (zakładane, jeśli go nie ma) — tylko z sekretów |
 | `Seed__OnStartup`                                                                        | `true`/`false`                                                 |
 
 CORS nie jest potrzebny: aplikacja, API i hub są pod jednym originem (nginx w kontenerze, proxy Vite lokalnie).
@@ -328,7 +329,7 @@ Wyszukiwanie pełnotekstowe (6.4 krok 2): konfiguracja `simple` + `unaccent` + `
 - **Wiedza:** CRUD innowacji, zatwierdzanie genomów i tekstów „Prościej”, dodanie innowacji z linku do karty ROPS lub z PDF (AI wypełnia pola, admin zatwierdza), ponowne przeliczenie genomu/embeddingów, import raportów do RAG.
 - **Nabory:** CRUD `GrantCall`, otwieranie i zamykanie.
 - **Użytkownicy i role.**
-- **API:** pod `/api/admin/*`, tylko rola `ADMIN`.
+- **API:** pod `/api/admin/*`, tylko rola `ADMIN`: `problem-reports` (lista z filtrami, szczegóły, `reply-draft` POST/PUT, `move`), `users` (+ `/{id}/role`), `genomes` (lista, PUT, `approve`, `recalculate`), `innovations` (POST, PUT), `jobs` (+ `genomes`), `radar`, `grant-calls` (CRUD, `open`, `close`, `draft`). Publicznie: `GET /api/grant-calls?open=true`, `GET /api/challenge-areas`, `GET /api/innovations?search=`.
 
 
 
@@ -443,4 +444,17 @@ Moduł VII — 2026-10-03:
 | D-32 | Liczby w tabeli „wymaganie vs gmina” bierzemy z bazy, nie od modelu: model wskazuje tylko, który wskaźnik ilustruje które wymaganie | §6.2 pkt 6 |
 | D-33 | Czat asystenta: jeden wątek na kartę i użytkownika, wiadomości anonimizowane jak zgłoszenia | §6.5, §7 VII |
 | D-34 | Mini-mapa karty dochodzi z GeoJSON-em gmin w module II; do tego czasu karta ma tabelę. Podpowiadanie gminy pracownikowi JST — gdy admin (moduł VI) przypisze mu gminę | §7 VII, [TODO](TODO.md) |
+
+Moduł VI — 2026-10-03:
+
+| # | Decyzja | Gdzie |
+|---|---|---|
+| D-35 | Pierwszy administrator z konfiguracji `Bootstrap:AdminEmail`/`AdminPassword` (promowany albo zakładany przy starcie); dalsze role nadaje admin w panelu. Admin nie odbiera roli sam sobie | §3, §5 |
+| D-36 | Klasyfikacja zwraca też pilność (`HIGH`/`MEDIUM`/`LOW`); skrzynka ją pokazuje, sugeruje do 3 ekspertów z pasującymi obszarami i liczy czas od wpłynięcia | §7 VI |
+| D-37 | Szkic odpowiedzi jest polem zgłoszenia (generowany przez asystenta, edytowany ręcznie); wysyłka dojdzie z wątkami w module V | §7 V, VI |
+| D-38 | Admin przestawia status do przodu albo zamyka z każdego stanu (`POST /api/admin/problem-reports/{id}/move`); zdarzenie `ProblemReportStatusChanged` do `admins` i `user:{autor}`. Ruchy eksperta — moduł V | §7 V |
+| D-39 | Radar: zgłoszenia po klasyfikacji w okresie (domyślnie 12 miesięcy) według obszaru, gminy i miesiąca; „bez dobrego dopasowania” = dopasowane, ale żaden wynik nie osiąga progu krzyżówki; biała plama = takie zgłoszenia w (obszar, gmina) albo obszar bez innowacji. Na razie tabele, bez wykresu i mapy | §7 VI |
+| D-40 | Nabór: `DRAFT → OPEN ↔ CLOSED`; otwarcie wymaga kryteriów; szkic z białej plamy pisze asystent i zapisuje jako `DRAFT` | §7 III, VI |
+| D-41 | Przeliczenie genomu usuwa go i zleca zadanie w tle; edycja karty innowacji nie zmienia genomu | §6.3 |
+| D-42 | Odłożone: tryb „Prościej” (II), import raportów do RAG i embeddingi, dodawanie innowacji z linku/PDF przez AI, wykres i mapa radaru | [TODO](TODO.md) |
 

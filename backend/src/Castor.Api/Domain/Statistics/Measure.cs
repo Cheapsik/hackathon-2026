@@ -8,7 +8,7 @@ namespace Castor.Api.Domain;
 /// </summary>
 public readonly record struct Measure(decimal Value)
 {
-    public const int Scale = 6;
+    public const int Scale = 8;
 
     public override string ToString()
     {

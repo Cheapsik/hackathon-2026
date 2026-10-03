@@ -22,7 +22,10 @@ Every route is under `/api`. Endpoints so far:
 - problem reports (module I): `POST /api/problem-reports`, `GET /api/problem-reports/{id}`, `POST /api/problem-reports/{id}/answers`, `GET /api/problem-reports/track/{code}`, `POST /api/problem-reports/claim`, `GET /api/problem-reports/mine` — without an account, `/{id}` needs the `X-Tracking-Code` header;
 - `GET /api/municipalities?search=`;
 - innovations and fit assessments (module VII): `GET /api/innovations/{id}`, `POST /api/innovations/{id}/fit` (signed in; 201 new, 200 stored), `GET /api/innovations/{id}/fit?teryt=`, `GET /api/innovations/{id}/fit/{fitId}`, `GET`/`POST /api/innovations/{id}/fit/{fitId}/assistant` (signed in);
-- the SignalR hub `/hubs/live` (`ProblemReportCreated` to the `admins` group).
+- administrator panel (module VI, role `ADMIN`): `/api/admin/problem-reports`, `/api/admin/users`, `/api/admin/genomes`, `/api/admin/innovations`, `/api/admin/jobs`, `/api/admin/radar`, `/api/admin/grant-calls`; public `GET /api/grant-calls?open=true`, `GET /api/challenge-areas`, `GET /api/innovations?search=`;
+- the SignalR hub `/hubs/live` (`ProblemReportCreated` and `ProblemReportStatusChanged` to the `admins` group, the latter also to `user:{author}`).
+
+The first administrator comes from configuration: set `Bootstrap__AdminEmail` and `Bootstrap__AdminPassword` (environment or user secrets) and that account is made `ADMIN` at start-up, created if it does not exist.
 
 In `Development` the API imports `../../data/seed` at start-up and generates innovation genomes in the background with the `placeholder` language model — no API key needed.
 

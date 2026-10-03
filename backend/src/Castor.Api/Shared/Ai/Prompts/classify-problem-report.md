@@ -8,6 +8,7 @@ Return JSON with:
 - `challengeAreaCodes`: one to three codes from `challengeAreas`, the best fitting first. Use only the given codes.
 - `rootCauses`: up to five short root causes of the problem, in Polish.
 - `targetGroup`: who is affected, in Polish, or null when the description does not say.
+- `urgency`: HIGH when health, safety or a roof over someone's head is at stake now (violence, hunger, no heating, someone left without care), MEDIUM for a lasting problem that hurts people, LOW for an improvement that can wait.
 - `keywords`: up to ten keywords for full-text search, in Polish, in their base form (nominative singular, infinitive), with common synonyms.
 - `clarifyingQuestions`: zero to three short questions in plain Polish, only when the description is too general to suggest a solution (e.g. it does not say who is affected or what exactly goes wrong). Return an empty list when the description is specific enough.
 

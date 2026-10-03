@@ -36,6 +36,8 @@ public sealed class CastorDbContext : DbContext
 
     public DbSet<FitAssistantMessage> FitAssistantMessages => Set<FitAssistantMessage>();
 
+    public DbSet<GrantCall> GrantCalls => Set<GrantCall>();
+
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {
         ModelConventions.ApplyTo(configurationBuilder);

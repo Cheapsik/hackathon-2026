@@ -14,6 +14,7 @@ public sealed class FitAssessmentsController(
     CreateFitAssessmentHandler create,
     FindFitAssessmentHandler find,
     GetFitAssessmentHandler get,
+    RecalculateFitAssessmentHandler recalculate,
     AskFitAssistantHandler ask,
     ListFitAssistantMessagesHandler listMessages) : ControllerBase
 {
@@ -48,6 +49,13 @@ public sealed class FitAssessmentsController(
     public Task<FitAssessmentResponse> GetById(Guid innovationId, Guid fitAssessmentId, CancellationToken cancellationToken)
     {
         return get.HandleAsync(innovationId, fitAssessmentId, cancellationToken);
+    }
+
+    [HttpPost("{fitAssessmentId:guid}/recalculate")]
+    [Authorize(Roles = nameof(UserRole.ADMIN))]
+    public Task<FitAssessmentResponse> Recalculate(Guid innovationId, Guid fitAssessmentId, CancellationToken cancellationToken)
+    {
+        return recalculate.HandleAsync(innovationId, fitAssessmentId, cancellationToken);
     }
 
     [HttpGet("{fitAssessmentId:guid}/assistant")]

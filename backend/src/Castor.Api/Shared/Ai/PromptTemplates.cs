@@ -21,6 +21,10 @@ public static class PromptTemplates
 
     public const string FitAssistant = "fit-assistant";
 
+    public const string DraftReply = "draft-reply";
+
+    public const string DraftGrantCall = "draft-grant-call";
+
     private static readonly ConcurrentDictionary<string, string> Loaded = new(StringComparer.Ordinal);
 
     public static string Get(string name)

@@ -5,6 +5,7 @@ import {
   getGetApiInnovationsInnovationIdFitQueryKey,
   useGetApiInnovationsInnovationIdFit,
   usePostApiInnovationsInnovationIdFit,
+  usePostApiInnovationsInnovationIdFitFitAssessmentIdRecalculate,
   type MunicipalityResponse,
 } from '@/api/generated/castor'
 import { MunicipalityPicker } from '@/components/MunicipalityPicker'
@@ -29,6 +30,8 @@ export function FitAssessmentSection({ innovationId }: { innovationId: string })
   const generate = usePostApiInnovationsInnovationIdFit()
   const card = stored.data?.data
   const notGeneratedYet = stored.error instanceof ApiError && stored.error.status === 404
+  const recalculate = usePostApiInnovationsInnovationIdFitFitAssessmentIdRecalculate()
+  const suggestedTeryt = session?.municipalityTeryt ?? null
 
   function choose(municipality: MunicipalityResponse | null) {
     const next = new URLSearchParams(searchParams)
@@ -46,7 +49,7 @@ export function FitAssessmentSection({ innovationId }: { innovationId: string })
     }
 
     generate.mutate(
-      { innovationId, data: { teryt, recalculate: false } },
+      { innovationId, data: { teryt } },
       {
         onSuccess: (response) =>
           queryClient.setQueryData(getGetApiInnovationsInnovationIdFitQueryKey(innovationId, { teryt }), response),
@@ -70,7 +73,16 @@ export function FitAssessmentSection({ innovationId }: { innovationId: string })
             </button>
           </p>
         ) : (
-          <MunicipalityPicker selected={null} onSelect={choose} />
+          <>
+            {suggestedTeryt && (
+              <p>
+                <button type="button" onClick={() => setSearchParams({ [municipalityParam]: suggestedTeryt }, { replace: true })}>
+                  Sprawdź dla mojej gminy (z mojego konta)
+                </button>
+              </p>
+            )}
+            <MunicipalityPicker selected={null} onSelect={choose} />
+          </>
         )}
       </div>
 
@@ -118,6 +130,23 @@ export function FitAssessmentSection({ innovationId }: { innovationId: string })
             <button type="button" onClick={() => window.print()}>
               Drukuj kartę albo zapisz jako PDF
             </button>
+            {session?.role === 'ADMIN' && (
+              <>
+                {' '}
+                <button
+                  type="button"
+                  disabled={recalculate.isPending}
+                  onClick={() =>
+                    recalculate.mutate(
+                      { innovationId, fitAssessmentId: card.id },
+                      { onSuccess: (response) => queryClient.setQueryData(getGetApiInnovationsInnovationIdFitQueryKey(innovationId, { teryt: teryt ?? undefined }), response) },
+                    )
+                  }
+                >
+                  Przelicz kartę (administrator)
+                </button>
+              </>
+            )}
           </p>
           {session?.signedIn ? (
             <FitAssistantChat innovationId={innovationId} fitAssessmentId={card.id} />

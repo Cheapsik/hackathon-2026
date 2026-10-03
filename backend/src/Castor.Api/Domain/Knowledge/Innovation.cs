@@ -123,6 +123,80 @@ public sealed class Innovation
         };
     }
 
+    /// <summary>An innovation an administrator enters by hand (module VI), e.g. one the seed does not have yet.</summary>
+    public static Innovation Create(
+        string? title,
+        string? shortDescription,
+        IReadOnlyList<string> categories,
+        InnovationCardSections sections,
+        string? organization,
+        InnovationLinks links,
+        InnovationStage stage,
+        DateTimeOffset createdAt)
+    {
+        var innovation = new Innovation
+        {
+            Id = Guid.CreateVersion7(),
+            Source = InnovationSource.ROPS,
+            CreatedAt = createdAt,
+        };
+
+        innovation.Revise(title, shortDescription, categories, sections, organization, links, stage, createdAt);
+        return innovation;
+    }
+
+    /// <summary>
+    /// An administrator rewrites the card. The genome is not touched: it describes the old text until the administrator
+    /// recalculates it.
+    /// </summary>
+    public void Revise(
+        string? title,
+        string? shortDescription,
+        IReadOnlyList<string> categories,
+        InnovationCardSections sections,
+        string? organization,
+        InnovationLinks links,
+        InnovationStage stage,
+        DateTimeOffset changedAt)
+    {
+        ArgumentNullException.ThrowIfNull(categories);
+        ArgumentNullException.ThrowIfNull(sections);
+        ArgumentNullException.ThrowIfNull(links);
+
+        if (string.IsNullOrWhiteSpace(title))
+        {
+            throw new DomainException("An innovation needs a title.");
+        }
+
+        string trimmedTitle = title.Trim();
+        if (trimmedTitle.Length > TitleMaxLength)
+        {
+            throw new DomainException($"An innovation title has at most {TitleMaxLength} characters.");
+        }
+
+        if (string.IsNullOrWhiteSpace(sections.Solution))
+        {
+            throw new DomainException("An innovation card needs section 1: what the solution is.");
+        }
+
+        Title = trimmedTitle;
+        ShortDescription = NullIfBlank(shortDescription);
+        Categories = [.. categories.Where(category => !string.IsNullOrWhiteSpace(category)).Select(category => category.Trim())];
+        Solution = NullIfBlank(sections.Solution);
+        Problems = NullIfBlank(sections.Problems);
+        TargetGroup = NullIfBlank(sections.TargetGroup);
+        Beneficiaries = NullIfBlank(sections.Beneficiaries);
+        Evidence = NullIfBlank(sections.Evidence);
+        Organization = NullIfBlank(organization);
+        CardUrl = NullIfBlank(links.CardUrl);
+        VideoUrl = NullIfBlank(links.VideoUrl);
+        MaterialsZipUrl = NullIfBlank(links.MaterialsZipUrl);
+        CardPdfUrl = NullIfBlank(links.CardPdfUrl);
+        TermsUrl = NullIfBlank(links.TermsUrl);
+        Stage = stage;
+        UpdatedAt = changedAt;
+    }
+
     private static string? NullIfBlank(string? text)
     {
         return string.IsNullOrWhiteSpace(text) ? null : text.Trim();

@@ -149,6 +149,13 @@
   {
     "indicatorId": 1,
     "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 108.24
+  },
+  {
+    "indicatorId": 1,
+    "level": "GMINA",
     "teryt": "1204023",
     "year": 2024,
     "value": 97.08
@@ -772,6 +779,13 @@
   {
     "indicatorId": 1,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 98.1
+  },
+  {
+    "indicatorId": 1,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 98.7
@@ -782,13 +796,6 @@
     "teryt": "1212011",
     "year": 2024,
     "value": 90.76
-  },
-  {
-    "indicatorId": 1,
-    "level": "GMINA",
-    "teryt": "1212032",
-    "year": 2024,
-    "value": 108.24
   },
   {
     "indicatorId": 1,
@@ -1174,13 +1181,6 @@
     "teryt": "1218052",
     "year": 2024,
     "value": 98.34
-  },
-  {
-    "indicatorId": 1,
-    "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
-    "value": 98.1
   },
   {
     "indicatorId": 1,
@@ -1573,6 +1573,13 @@
     "teryt": "1203053",
     "year": 2024,
     "value": 3206.0
+  },
+  {
+    "indicatorId": 2,
+    "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 0.0
   },
   {
     "indicatorId": 2,
@@ -2200,6 +2207,13 @@
   {
     "indicatorId": 2,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 4703.0
+  },
+  {
+    "indicatorId": 2,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 11310.0
@@ -2210,13 +2224,6 @@
     "teryt": "1212011",
     "year": 2024,
     "value": 3096.0
-  },
-  {
-    "indicatorId": 2,
-    "level": "GMINA",
-    "teryt": "1212032",
-    "year": 2024,
-    "value": 0.0
   },
   {
     "indicatorId": 2,
@@ -2602,13 +2609,6 @@
     "teryt": "1218052",
     "year": 2024,
     "value": 0.0
-  },
-  {
-    "indicatorId": 2,
-    "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
-    "value": 4703.0
   },
   {
     "indicatorId": 2,
@@ -3001,6 +3001,13 @@
     "teryt": "1203053",
     "year": 2024,
     "value": 106.03
+  },
+  {
+    "indicatorId": 3,
+    "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 92.39
   },
   {
     "indicatorId": 3,
@@ -3628,6 +3635,13 @@
   {
     "indicatorId": 3,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 101.93
+  },
+  {
+    "indicatorId": 3,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 101.32
@@ -3638,13 +3652,6 @@
     "teryt": "1212011",
     "year": 2024,
     "value": 110.18
-  },
-  {
-    "indicatorId": 3,
-    "level": "GMINA",
-    "teryt": "1212032",
-    "year": 2024,
-    "value": 92.39
   },
   {
     "indicatorId": 3,
@@ -4030,13 +4037,6 @@
     "teryt": "1218052",
     "year": 2024,
     "value": 101.69
-  },
-  {
-    "indicatorId": 3,
-    "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
-    "value": 101.93
   },
   {
     "indicatorId": 3,
@@ -4429,6 +4429,13 @@
     "teryt": "1203053",
     "year": 2024,
     "value": 57.07
+  },
+  {
+    "indicatorId": 4,
+    "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 0.0
   },
   {
     "indicatorId": 4,
@@ -5056,6 +5063,13 @@
   {
     "indicatorId": 4,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 0.0
+  },
+  {
+    "indicatorId": 4,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 0.0
@@ -5066,13 +5080,6 @@
     "teryt": "1212011",
     "year": 2024,
     "value": 100.0
-  },
-  {
-    "indicatorId": 4,
-    "level": "GMINA",
-    "teryt": "1212032",
-    "year": 2024,
-    "value": 0.0
   },
   {
     "indicatorId": 4,
@@ -5469,13 +5476,6 @@
   {
     "indicatorId": 4,
     "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
-    "value": 0.0
-  },
-  {
-    "indicatorId": 4,
-    "level": "GMINA",
     "teryt": "1218072",
     "year": 2024,
     "value": 0.0
@@ -5857,6 +5857,13 @@
     "teryt": "1203053",
     "year": 2024,
     "value": 304.4
+  },
+  {
+    "indicatorId": 7,
+    "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 73.6
   },
   {
     "indicatorId": 7,
@@ -6484,6 +6491,13 @@
   {
     "indicatorId": 7,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 146.0
+  },
+  {
+    "indicatorId": 7,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 208.3
@@ -6494,13 +6508,6 @@
     "teryt": "1212011",
     "year": 2024,
     "value": 144.0
-  },
-  {
-    "indicatorId": 7,
-    "level": "GMINA",
-    "teryt": "1212032",
-    "year": 2024,
-    "value": 73.6
   },
   {
     "indicatorId": 7,
@@ -6886,13 +6893,6 @@
     "teryt": "1218052",
     "year": 2024,
     "value": 112.3
-  },
-  {
-    "indicatorId": 7,
-    "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
-    "value": 146.0
   },
   {
     "indicatorId": 7,
@@ -7285,6 +7285,13 @@
     "teryt": "1203053",
     "year": 2024,
     "value": 3.85
+  },
+  {
+    "indicatorId": 17,
+    "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 5.94
   },
   {
     "indicatorId": 17,
@@ -7912,6 +7919,13 @@
   {
     "indicatorId": 17,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 2.66
+  },
+  {
+    "indicatorId": 17,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 2.26
@@ -7922,13 +7936,6 @@
     "teryt": "1212011",
     "year": 2024,
     "value": 3.08
-  },
-  {
-    "indicatorId": 17,
-    "level": "GMINA",
-    "teryt": "1212032",
-    "year": 2024,
-    "value": 5.94
   },
   {
     "indicatorId": 17,
@@ -8314,13 +8321,6 @@
     "teryt": "1218052",
     "year": 2024,
     "value": 3.3
-  },
-  {
-    "indicatorId": 17,
-    "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
-    "value": 2.66
   },
   {
     "indicatorId": 17,
@@ -8888,6 +8888,13 @@
     "teryt": "1203053",
     "year": 2024,
     "value": 2466.0
+  },
+  {
+    "indicatorId": 20,
+    "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 2628.0
   },
   {
     "indicatorId": 20,
@@ -9515,6 +9522,13 @@
   {
     "indicatorId": 20,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 4703.0
+  },
+  {
+    "indicatorId": 20,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 5655.0
@@ -9525,13 +9539,6 @@
     "teryt": "1212011",
     "year": 2024,
     "value": 2322.0
-  },
-  {
-    "indicatorId": 20,
-    "level": "GMINA",
-    "teryt": "1212032",
-    "year": 2024,
-    "value": 2628.0
   },
   {
     "indicatorId": 20,
@@ -9917,13 +9924,6 @@
     "teryt": "1218052",
     "year": 2024,
     "value": 1046.0
-  },
-  {
-    "indicatorId": 20,
-    "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
-    "value": 4703.0
   },
   {
     "indicatorId": 20,
@@ -10663,6 +10663,13 @@
   {
     "indicatorId": 23,
     "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2019,
+    "value": 1.14
+  },
+  {
+    "indicatorId": 23,
+    "level": "GMINA",
     "teryt": "1204023",
     "year": 2019,
     "value": 0.86
@@ -11286,6 +11293,13 @@
   {
     "indicatorId": 23,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2019,
+    "value": 1.41
+  },
+  {
+    "indicatorId": 23,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2019,
     "value": 2.53
@@ -11296,13 +11310,6 @@
     "teryt": "1212011",
     "year": 2019,
     "value": 0.66
-  },
-  {
-    "indicatorId": 23,
-    "level": "GMINA",
-    "teryt": "1212032",
-    "year": 2019,
-    "value": 1.14
   },
   {
     "indicatorId": 23,
@@ -11688,13 +11695,6 @@
     "teryt": "1218052",
     "year": 2019,
     "value": 0.0
-  },
-  {
-    "indicatorId": 23,
-    "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2019,
-    "value": 1.41
   },
   {
     "indicatorId": 23,
@@ -12087,6 +12087,13 @@
     "teryt": "1203053",
     "year": 2024,
     "value": 98.9
+  },
+  {
+    "indicatorId": 24,
+    "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 51.5
   },
   {
     "indicatorId": 24,
@@ -12714,6 +12721,13 @@
   {
     "indicatorId": 24,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 91.7
+  },
+  {
+    "indicatorId": 24,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 89.2
@@ -12724,13 +12738,6 @@
     "teryt": "1212011",
     "year": 2024,
     "value": 105.8
-  },
-  {
-    "indicatorId": 24,
-    "level": "GMINA",
-    "teryt": "1212032",
-    "year": 2024,
-    "value": 51.5
   },
   {
     "indicatorId": 24,
@@ -13116,13 +13123,6 @@
     "teryt": "1218052",
     "year": 2024,
     "value": 93.3
-  },
-  {
-    "indicatorId": 24,
-    "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
-    "value": 91.7
   },
   {
     "indicatorId": 24,
@@ -13690,6 +13690,13 @@
     "teryt": "1203053",
     "year": 2024,
     "value": 1603.0
+  },
+  {
+    "indicatorId": 27,
+    "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 2628.0
   },
   {
     "indicatorId": 27,
@@ -14317,6 +14324,13 @@
   {
     "indicatorId": 27,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 1176.0
+  },
+  {
+    "indicatorId": 27,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 2262.0
@@ -14327,13 +14341,6 @@
     "teryt": "1212011",
     "year": 2024,
     "value": 1858.0
-  },
-  {
-    "indicatorId": 27,
-    "level": "GMINA",
-    "teryt": "1212032",
-    "year": 2024,
-    "value": 2628.0
   },
   {
     "indicatorId": 27,
@@ -14719,13 +14726,6 @@
     "teryt": "1218052",
     "year": 2024,
     "value": 2092.0
-  },
-  {
-    "indicatorId": 27,
-    "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
-    "value": 1176.0
   },
   {
     "indicatorId": 27,
@@ -15472,6 +15472,13 @@
   {
     "indicatorId": 31,
     "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 41.67
+  },
+  {
+    "indicatorId": 31,
+    "level": "GMINA",
     "teryt": "1204023",
     "year": 2024,
     "value": 43.27
@@ -16095,6 +16102,13 @@
   {
     "indicatorId": 31,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 10.4
+  },
+  {
+    "indicatorId": 31,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 66.41
@@ -16105,13 +16119,6 @@
     "teryt": "1212011",
     "year": 2024,
     "value": 32.17
-  },
-  {
-    "indicatorId": 31,
-    "level": "GMINA",
-    "teryt": "1212032",
-    "year": 2024,
-    "value": 41.67
   },
   {
     "indicatorId": 31,
@@ -16497,13 +16504,6 @@
     "teryt": "1218052",
     "year": 2024,
     "value": 44.93
-  },
-  {
-    "indicatorId": 31,
-    "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
-    "value": 10.4
   },
   {
     "indicatorId": 31,
@@ -16896,6 +16896,13 @@
     "teryt": "1203053",
     "year": 2024,
     "value": 45.5
+  },
+  {
+    "indicatorId": 32,
+    "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 33.33
   },
   {
     "indicatorId": 32,
@@ -17523,6 +17530,13 @@
   {
     "indicatorId": 32,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 14.4
+  },
+  {
+    "indicatorId": 32,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 30.86
@@ -17533,13 +17547,6 @@
     "teryt": "1212011",
     "year": 2024,
     "value": 44.76
-  },
-  {
-    "indicatorId": 32,
-    "level": "GMINA",
-    "teryt": "1212032",
-    "year": 2024,
-    "value": 33.33
   },
   {
     "indicatorId": 32,
@@ -17925,13 +17932,6 @@
     "teryt": "1218052",
     "year": 2024,
     "value": 39.86
-  },
-  {
-    "indicatorId": 32,
-    "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
-    "value": 14.4
   },
   {
     "indicatorId": 32,
@@ -18324,6 +18324,13 @@
     "teryt": "1203053",
     "year": 2024,
     "value": 19.46
+  },
+  {
+    "indicatorId": 33,
+    "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 50.0
   },
   {
     "indicatorId": 33,
@@ -18951,6 +18958,13 @@
   {
     "indicatorId": 33,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 19.2
+  },
+  {
+    "indicatorId": 33,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 41.8
@@ -18961,13 +18975,6 @@
     "teryt": "1212011",
     "year": 2024,
     "value": 17.13
-  },
-  {
-    "indicatorId": 33,
-    "level": "GMINA",
-    "teryt": "1212032",
-    "year": 2024,
-    "value": 50.0
   },
   {
     "indicatorId": 33,
@@ -19353,13 +19360,6 @@
     "teryt": "1218052",
     "year": 2024,
     "value": 28.99
-  },
-  {
-    "indicatorId": 33,
-    "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
-    "value": 19.2
   },
   {
     "indicatorId": 33,
@@ -19752,6 +19752,13 @@
     "teryt": "1203053",
     "year": 2024,
     "value": 3.24
+  },
+  {
+    "indicatorId": 34,
+    "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 0.64
   },
   {
     "indicatorId": 34,
@@ -20379,6 +20386,13 @@
   {
     "indicatorId": 34,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 1.6
+  },
+  {
+    "indicatorId": 34,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 0.39
@@ -20389,13 +20403,6 @@
     "teryt": "1212011",
     "year": 2024,
     "value": 2.1
-  },
-  {
-    "indicatorId": 34,
-    "level": "GMINA",
-    "teryt": "1212032",
-    "year": 2024,
-    "value": 0.64
   },
   {
     "indicatorId": 34,
@@ -20781,13 +20788,6 @@
     "teryt": "1218052",
     "year": 2024,
     "value": 1.45
-  },
-  {
-    "indicatorId": 34,
-    "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
-    "value": 1.6
   },
   {
     "indicatorId": 34,
@@ -21180,6 +21180,13 @@
     "teryt": "1203053",
     "year": 2024,
     "value": 0.57
+  },
+  {
+    "indicatorId": 35,
+    "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 0.0
   },
   {
     "indicatorId": 35,
@@ -21807,6 +21814,13 @@
   {
     "indicatorId": 35,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 0.0
+  },
+  {
+    "indicatorId": 35,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 0.0
@@ -21815,13 +21829,6 @@
     "indicatorId": 35,
     "level": "GMINA",
     "teryt": "1212011",
-    "year": 2024,
-    "value": 0.0
-  },
-  {
-    "indicatorId": 35,
-    "level": "GMINA",
-    "teryt": "1212032",
     "year": 2024,
     "value": 0.0
   },
@@ -22220,13 +22227,6 @@
   {
     "indicatorId": 35,
     "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
-    "value": 0.0
-  },
-  {
-    "indicatorId": 35,
-    "level": "GMINA",
     "teryt": "1218072",
     "year": 2024,
     "value": 0.0
@@ -22608,6 +22608,13 @@
     "teryt": "1203053",
     "year": 2024,
     "value": 2.35
+  },
+  {
+    "indicatorId": 36,
+    "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 0.0
   },
   {
     "indicatorId": 36,
@@ -23235,6 +23242,13 @@
   {
     "indicatorId": 36,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 0.0
+  },
+  {
+    "indicatorId": 36,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 23.05
@@ -23243,13 +23257,6 @@
     "indicatorId": 36,
     "level": "GMINA",
     "teryt": "1212011",
-    "year": 2024,
-    "value": 0.0
-  },
-  {
-    "indicatorId": 36,
-    "level": "GMINA",
-    "teryt": "1212032",
     "year": 2024,
     "value": 0.0
   },
@@ -23635,13 +23642,6 @@
     "indicatorId": 36,
     "level": "GMINA",
     "teryt": "1218052",
-    "year": 2024,
-    "value": 0.0
-  },
-  {
-    "indicatorId": 36,
-    "level": "GMINA",
-    "teryt": "1218062",
     "year": 2024,
     "value": 0.0
   },
@@ -24036,6 +24036,13 @@
     "teryt": "1203053",
     "year": 2024,
     "value": 37.47
+  },
+  {
+    "indicatorId": 37,
+    "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 23.72
   },
   {
     "indicatorId": 37,
@@ -24663,6 +24670,13 @@
   {
     "indicatorId": 37,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 40.0
+  },
+  {
+    "indicatorId": 37,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 33.59
@@ -24673,13 +24687,6 @@
     "teryt": "1212011",
     "year": 2024,
     "value": 25.17
-  },
-  {
-    "indicatorId": 37,
-    "level": "GMINA",
-    "teryt": "1212032",
-    "year": 2024,
-    "value": 23.72
   },
   {
     "indicatorId": 37,
@@ -25065,13 +25072,6 @@
     "teryt": "1218052",
     "year": 2024,
     "value": 39.13
-  },
-  {
-    "indicatorId": 37,
-    "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
-    "value": 40.0
   },
   {
     "indicatorId": 37,
@@ -25464,6 +25464,13 @@
     "teryt": "1203053",
     "year": 2024,
     "value": 62.45
+  },
+  {
+    "indicatorId": 38,
+    "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 1.28
   },
   {
     "indicatorId": 38,
@@ -26091,6 +26098,13 @@
   {
     "indicatorId": 38,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 2.4
+  },
+  {
+    "indicatorId": 38,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 33.59
@@ -26101,13 +26115,6 @@
     "teryt": "1212011",
     "year": 2024,
     "value": 13.64
-  },
-  {
-    "indicatorId": 38,
-    "level": "GMINA",
-    "teryt": "1212032",
-    "year": 2024,
-    "value": 1.28
   },
   {
     "indicatorId": 38,
@@ -26493,13 +26500,6 @@
     "teryt": "1218052",
     "year": 2024,
     "value": 7.97
-  },
-  {
-    "indicatorId": 38,
-    "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
-    "value": 2.4
   },
   {
     "indicatorId": 38,
@@ -26892,6 +26892,13 @@
     "teryt": "1203053",
     "year": 2024,
     "value": 67.07
+  },
+  {
+    "indicatorId": 39,
+    "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 24.36
   },
   {
     "indicatorId": 39,
@@ -27519,6 +27526,13 @@
   {
     "indicatorId": 39,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 56.8
+  },
+  {
+    "indicatorId": 39,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 28.91
@@ -27529,13 +27543,6 @@
     "teryt": "1212011",
     "year": 2024,
     "value": 35.66
-  },
-  {
-    "indicatorId": 39,
-    "level": "GMINA",
-    "teryt": "1212032",
-    "year": 2024,
-    "value": 24.36
   },
   {
     "indicatorId": 39,
@@ -27921,13 +27928,6 @@
     "teryt": "1218052",
     "year": 2024,
     "value": 52.9
-  },
-  {
-    "indicatorId": 39,
-    "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
-    "value": 56.8
   },
   {
     "indicatorId": 39,
@@ -28320,6 +28320,13 @@
     "teryt": "1203053",
     "year": 2024,
     "value": 3.57
+  },
+  {
+    "indicatorId": 40,
+    "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 1.92
   },
   {
     "indicatorId": 40,
@@ -28947,6 +28954,13 @@
   {
     "indicatorId": 40,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 2.4
+  },
+  {
+    "indicatorId": 40,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 3.52
@@ -28957,13 +28971,6 @@
     "teryt": "1212011",
     "year": 2024,
     "value": 4.55
-  },
-  {
-    "indicatorId": 40,
-    "level": "GMINA",
-    "teryt": "1212032",
-    "year": 2024,
-    "value": 1.92
   },
   {
     "indicatorId": 40,
@@ -29349,13 +29356,6 @@
     "teryt": "1218052",
     "year": 2024,
     "value": 13.77
-  },
-  {
-    "indicatorId": 40,
-    "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
-    "value": 2.4
   },
   {
     "indicatorId": 40,
@@ -29748,6 +29748,13 @@
     "teryt": "1203053",
     "year": 2024,
     "value": 0.65
+  },
+  {
+    "indicatorId": 41,
+    "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 0.0
   },
   {
     "indicatorId": 41,
@@ -30375,6 +30382,13 @@
   {
     "indicatorId": 41,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 0.0
+  },
+  {
+    "indicatorId": 41,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 0.0
@@ -30385,13 +30399,6 @@
     "teryt": "1212011",
     "year": 2024,
     "value": 0.7
-  },
-  {
-    "indicatorId": 41,
-    "level": "GMINA",
-    "teryt": "1212032",
-    "year": 2024,
-    "value": 0.0
   },
   {
     "indicatorId": 41,
@@ -30788,13 +30795,6 @@
   {
     "indicatorId": 41,
     "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
-    "value": 0.0
-  },
-  {
-    "indicatorId": 41,
-    "level": "GMINA",
     "teryt": "1218072",
     "year": 2024,
     "value": 0.0
@@ -31176,6 +31176,13 @@
     "teryt": "1203053",
     "year": 2024,
     "value": 0.16
+  },
+  {
+    "indicatorId": 42,
+    "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 0.0
   },
   {
     "indicatorId": 42,
@@ -31803,6 +31810,13 @@
   {
     "indicatorId": 42,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 0.0
+  },
+  {
+    "indicatorId": 42,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 0.0
@@ -31811,13 +31825,6 @@
     "indicatorId": 42,
     "level": "GMINA",
     "teryt": "1212011",
-    "year": 2024,
-    "value": 0.0
-  },
-  {
-    "indicatorId": 42,
-    "level": "GMINA",
-    "teryt": "1212032",
     "year": 2024,
     "value": 0.0
   },
@@ -32216,13 +32223,6 @@
   {
     "indicatorId": 42,
     "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
-    "value": 0.0
-  },
-  {
-    "indicatorId": 42,
-    "level": "GMINA",
     "teryt": "1218072",
     "year": 2024,
     "value": 0.0
@@ -32604,6 +32604,13 @@
     "teryt": "1203053",
     "year": 2024,
     "value": 0.32
+  },
+  {
+    "indicatorId": 43,
+    "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 0.0
   },
   {
     "indicatorId": 43,
@@ -33231,6 +33238,13 @@
   {
     "indicatorId": 43,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 0.0
+  },
+  {
+    "indicatorId": 43,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 5.86
@@ -33239,13 +33253,6 @@
     "indicatorId": 43,
     "level": "GMINA",
     "teryt": "1212011",
-    "year": 2024,
-    "value": 0.0
-  },
-  {
-    "indicatorId": 43,
-    "level": "GMINA",
-    "teryt": "1212032",
     "year": 2024,
     "value": 0.0
   },
@@ -33639,13 +33646,6 @@
     "level": "GMINA",
     "teryt": "1218062",
     "year": 2024,
-    "value": 0.0
-  },
-  {
-    "indicatorId": 43,
-    "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
     "value": 1.17
   },
   {
@@ -34032,6 +34032,13 @@
     "teryt": "1203053",
     "year": 2024,
     "value": 75.5
+  },
+  {
+    "indicatorId": 48,
+    "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 60.0
   },
   {
     "indicatorId": 48,
@@ -34659,6 +34666,13 @@
   {
     "indicatorId": 48,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 67.1
+  },
+  {
+    "indicatorId": 48,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 64.1
@@ -34669,13 +34683,6 @@
     "teryt": "1212011",
     "year": 2024,
     "value": 83.1
-  },
-  {
-    "indicatorId": 48,
-    "level": "GMINA",
-    "teryt": "1212032",
-    "year": 2024,
-    "value": 60.0
   },
   {
     "indicatorId": 48,
@@ -35061,13 +35068,6 @@
     "teryt": "1218052",
     "year": 2024,
     "value": 71.3
-  },
-  {
-    "indicatorId": 48,
-    "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
-    "value": 67.1
   },
   {
     "indicatorId": 48,
@@ -35460,6 +35460,13 @@
     "teryt": "1203053",
     "year": 2024,
     "value": 26.53
+  },
+  {
+    "indicatorId": 53,
+    "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 21.84
   },
   {
     "indicatorId": 53,
@@ -36087,6 +36094,13 @@
   {
     "indicatorId": 53,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 18.41
+  },
+  {
+    "indicatorId": 53,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 17.73
@@ -36097,13 +36111,6 @@
     "teryt": "1212011",
     "year": 2024,
     "value": 30.39
-  },
-  {
-    "indicatorId": 53,
-    "level": "GMINA",
-    "teryt": "1212032",
-    "year": 2024,
-    "value": 21.84
   },
   {
     "indicatorId": 53,
@@ -36489,13 +36496,6 @@
     "teryt": "1218052",
     "year": 2024,
     "value": 21.27
-  },
-  {
-    "indicatorId": 53,
-    "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
-    "value": 18.41
   },
   {
     "indicatorId": 53,
@@ -36888,6 +36888,13 @@
     "teryt": "1203053",
     "year": 2024,
     "value": 16.48
+  },
+  {
+    "indicatorId": 55,
+    "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 15.68
   },
   {
     "indicatorId": 55,
@@ -37515,6 +37522,13 @@
   {
     "indicatorId": 55,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 21.73
+  },
+  {
+    "indicatorId": 55,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 21.34
@@ -37525,13 +37539,6 @@
     "teryt": "1212011",
     "year": 2024,
     "value": 15.0
-  },
-  {
-    "indicatorId": 55,
-    "level": "GMINA",
-    "teryt": "1212032",
-    "year": 2024,
-    "value": 15.68
   },
   {
     "indicatorId": 55,
@@ -37917,13 +37924,6 @@
     "teryt": "1218052",
     "year": 2024,
     "value": 20.36
-  },
-  {
-    "indicatorId": 55,
-    "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
-    "value": 21.73
   },
   {
     "indicatorId": 55,
@@ -38316,6 +38316,13 @@
     "teryt": "1203053",
     "year": 2024,
     "value": 56.98
+  },
+  {
+    "indicatorId": 56,
+    "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 62.48
   },
   {
     "indicatorId": 56,
@@ -38943,6 +38950,13 @@
   {
     "indicatorId": 56,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 59.86
+  },
+  {
+    "indicatorId": 56,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 60.94
@@ -38953,13 +38967,6 @@
     "teryt": "1212011",
     "year": 2024,
     "value": 54.61
-  },
-  {
-    "indicatorId": 56,
-    "level": "GMINA",
-    "teryt": "1212032",
-    "year": 2024,
-    "value": 62.48
   },
   {
     "indicatorId": 56,
@@ -39345,13 +39352,6 @@
     "teryt": "1218052",
     "year": 2024,
     "value": 58.38
-  },
-  {
-    "indicatorId": 56,
-    "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
-    "value": 59.86
   },
   {
     "indicatorId": 56,
@@ -39744,6 +39744,13 @@
     "teryt": "1203053",
     "year": 2024,
     "value": 52.76
+  },
+  {
+    "indicatorId": 59,
+    "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 24.0
   },
   {
     "indicatorId": 59,
@@ -40371,6 +40378,13 @@
   {
     "indicatorId": 59,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 20.69
+  },
+  {
+    "indicatorId": 59,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 23.26
@@ -40381,13 +40395,6 @@
     "teryt": "1212011",
     "year": 2024,
     "value": 142.86
-  },
-  {
-    "indicatorId": 59,
-    "level": "GMINA",
-    "teryt": "1212032",
-    "year": 2024,
-    "value": 24.0
   },
   {
     "indicatorId": 59,
@@ -40773,13 +40780,6 @@
     "teryt": "1218052",
     "year": 2024,
     "value": 35.71
-  },
-  {
-    "indicatorId": 59,
-    "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
-    "value": 20.69
   },
   {
     "indicatorId": 59,
@@ -41172,6 +41172,13 @@
     "teryt": "1203053",
     "year": 2024,
     "value": 30.67
+  },
+  {
+    "indicatorId": 60,
+    "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 40.0
   },
   {
     "indicatorId": 60,
@@ -41799,6 +41806,13 @@
   {
     "indicatorId": 60,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 37.93
+  },
+  {
+    "indicatorId": 60,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 44.19
@@ -41809,13 +41823,6 @@
     "teryt": "1212011",
     "year": 2024,
     "value": 57.14
-  },
-  {
-    "indicatorId": 60,
-    "level": "GMINA",
-    "teryt": "1212032",
-    "year": 2024,
-    "value": 40.0
   },
   {
     "indicatorId": 60,
@@ -42201,13 +42208,6 @@
     "teryt": "1218052",
     "year": 2024,
     "value": 42.86
-  },
-  {
-    "indicatorId": 60,
-    "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
-    "value": 37.93
   },
   {
     "indicatorId": 60,
@@ -43311,6 +43311,13 @@
   {
     "indicatorId": 67,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 941.0
+  },
+  {
+    "indicatorId": 67,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 2262.0
@@ -43685,13 +43692,6 @@
     "teryt": "1218052",
     "year": 2024,
     "value": 123.0
-  },
-  {
-    "indicatorId": 67,
-    "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
-    "value": 941.0
   },
   {
     "indicatorId": 67,
@@ -44084,6 +44084,13 @@
     "teryt": "1203053",
     "year": 2024,
     "value": 22.0
+  },
+  {
+    "indicatorId": 68,
+    "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 28.0
   },
   {
     "indicatorId": 68,
@@ -44711,6 +44718,13 @@
   {
     "indicatorId": 68,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 21.0
+  },
+  {
+    "indicatorId": 68,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 10.0
@@ -44721,13 +44735,6 @@
     "teryt": "1212011",
     "year": 2024,
     "value": 17.0
-  },
-  {
-    "indicatorId": 68,
-    "level": "GMINA",
-    "teryt": "1212032",
-    "year": 2024,
-    "value": 28.0
   },
   {
     "indicatorId": 68,
@@ -45113,13 +45120,6 @@
     "teryt": "1218052",
     "year": 2024,
     "value": 12.0
-  },
-  {
-    "indicatorId": 68,
-    "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
-    "value": 21.0
   },
   {
     "indicatorId": 68,
@@ -47091,6 +47091,13 @@
   {
     "indicatorId": 91,
     "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": -4.55
+  },
+  {
+    "indicatorId": 91,
+    "level": "GMINA",
     "teryt": "1204023",
     "year": 2024,
     "value": -1.92
@@ -47714,6 +47721,13 @@
   {
     "indicatorId": 91,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 0.64
+  },
+  {
+    "indicatorId": 91,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 0.09
@@ -47724,13 +47738,6 @@
     "teryt": "1212011",
     "year": 2024,
     "value": -13.35
-  },
-  {
-    "indicatorId": 91,
-    "level": "GMINA",
-    "teryt": "1212032",
-    "year": 2024,
-    "value": -4.55
   },
   {
     "indicatorId": 91,
@@ -48116,13 +48123,6 @@
     "teryt": "1218052",
     "year": 2024,
     "value": -2.87
-  },
-  {
-    "indicatorId": 91,
-    "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
-    "value": 0.64
   },
   {
     "indicatorId": 91,
@@ -48515,6 +48515,13 @@
     "teryt": "1203053",
     "year": 2024,
     "value": 6987.29
+  },
+  {
+    "indicatorId": 94,
+    "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 7123.67
   },
   {
     "indicatorId": 94,
@@ -49142,6 +49149,13 @@
   {
     "indicatorId": 94,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 6445.35
+  },
+  {
+    "indicatorId": 94,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 8477.34
@@ -49152,13 +49166,6 @@
     "teryt": "1212011",
     "year": 2024,
     "value": 11506.55
-  },
-  {
-    "indicatorId": 94,
-    "level": "GMINA",
-    "teryt": "1212032",
-    "year": 2024,
-    "value": 7123.67
   },
   {
     "indicatorId": 94,
@@ -49544,13 +49551,6 @@
     "teryt": "1218052",
     "year": 2024,
     "value": 8896.41
-  },
-  {
-    "indicatorId": 94,
-    "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
-    "value": 6445.35
   },
   {
     "indicatorId": 94,
@@ -49943,6 +49943,13 @@
     "teryt": "1203053",
     "year": 2024,
     "value": 2526.7
+  },
+  {
+    "indicatorId": 95,
+    "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 1701.28
   },
   {
     "indicatorId": 95,
@@ -50570,6 +50577,13 @@
   {
     "indicatorId": 95,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 3035.94
+  },
+  {
+    "indicatorId": 95,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 2466.49
@@ -50580,13 +50594,6 @@
     "teryt": "1212011",
     "year": 2024,
     "value": 2679.02
-  },
-  {
-    "indicatorId": 95,
-    "level": "GMINA",
-    "teryt": "1212032",
-    "year": 2024,
-    "value": 1701.28
   },
   {
     "indicatorId": 95,
@@ -50972,13 +50979,6 @@
     "teryt": "1218052",
     "year": 2024,
     "value": 4357.39
-  },
-  {
-    "indicatorId": 95,
-    "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
-    "value": 3035.94
   },
   {
     "indicatorId": 95,
@@ -51371,6 +51371,13 @@
     "teryt": "1203053",
     "year": 2024,
     "value": 342.82
+  },
+  {
+    "indicatorId": 96,
+    "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 303.63
   },
   {
     "indicatorId": 96,
@@ -51998,6 +52005,13 @@
   {
     "indicatorId": 96,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 214.88
+  },
+  {
+    "indicatorId": 96,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 141.45
@@ -52008,13 +52022,6 @@
     "teryt": "1212011",
     "year": 2024,
     "value": 441.74
-  },
-  {
-    "indicatorId": 96,
-    "level": "GMINA",
-    "teryt": "1212032",
-    "year": 2024,
-    "value": 303.63
   },
   {
     "indicatorId": 96,
@@ -52400,13 +52407,6 @@
     "teryt": "1218052",
     "year": 2024,
     "value": 327.05
-  },
-  {
-    "indicatorId": 96,
-    "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
-    "value": 214.88
   },
   {
     "indicatorId": 96,
@@ -52799,6 +52799,13 @@
     "teryt": "1203053",
     "year": 2024,
     "value": 554.43
+  },
+  {
+    "indicatorId": 97,
+    "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 485.62
   },
   {
     "indicatorId": 97,
@@ -53426,6 +53433,13 @@
   {
     "indicatorId": 97,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 422.88
+  },
+  {
+    "indicatorId": 97,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 321.23
@@ -53436,13 +53450,6 @@
     "teryt": "1212011",
     "year": 2024,
     "value": 393.57
-  },
-  {
-    "indicatorId": 97,
-    "level": "GMINA",
-    "teryt": "1212032",
-    "year": 2024,
-    "value": 485.62
   },
   {
     "indicatorId": 97,
@@ -53828,13 +53835,6 @@
     "teryt": "1218052",
     "year": 2024,
     "value": 398.95
-  },
-  {
-    "indicatorId": 97,
-    "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
-    "value": 422.88
   },
   {
     "indicatorId": 97,
@@ -55106,6 +55106,13 @@
   {
     "indicatorId": 126,
     "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 13.46
+  },
+  {
+    "indicatorId": 126,
+    "level": "GMINA",
     "teryt": "1204023",
     "year": 2024,
     "value": 20.72
@@ -55729,6 +55736,13 @@
   {
     "indicatorId": 126,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 24.6
+  },
+  {
+    "indicatorId": 126,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 16.35
@@ -55739,13 +55753,6 @@
     "teryt": "1212011",
     "year": 2024,
     "value": 33.33
-  },
-  {
-    "indicatorId": 126,
-    "level": "GMINA",
-    "teryt": "1212032",
-    "year": 2024,
-    "value": 13.46
   },
   {
     "indicatorId": 126,
@@ -56131,13 +56138,6 @@
     "teryt": "1218052",
     "year": 2024,
     "value": 20.0
-  },
-  {
-    "indicatorId": 126,
-    "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
-    "value": 24.6
   },
   {
     "indicatorId": 126,
@@ -56530,6 +56530,13 @@
     "teryt": "1203053",
     "year": 2024,
     "value": 2.6
+  },
+  {
+    "indicatorId": 127,
+    "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 7.6
   },
   {
     "indicatorId": 127,
@@ -57157,6 +57164,13 @@
   {
     "indicatorId": 127,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 0.2
+  },
+  {
+    "indicatorId": 127,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 3.4
@@ -57167,13 +57181,6 @@
     "teryt": "1212011",
     "year": 2024,
     "value": 3.4
-  },
-  {
-    "indicatorId": 127,
-    "level": "GMINA",
-    "teryt": "1212032",
-    "year": 2024,
-    "value": 7.6
   },
   {
     "indicatorId": 127,
@@ -57559,13 +57566,6 @@
     "teryt": "1218052",
     "year": 2024,
     "value": 5.0
-  },
-  {
-    "indicatorId": 127,
-    "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
-    "value": 0.2
   },
   {
     "indicatorId": 127,
@@ -57958,6 +57958,13 @@
     "teryt": "1203053",
     "year": 2024,
     "value": 4.63
+  },
+  {
+    "indicatorId": 128,
+    "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 6.06
   },
   {
     "indicatorId": 128,
@@ -58585,6 +58592,13 @@
   {
     "indicatorId": 128,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 8.26
+  },
+  {
+    "indicatorId": 128,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 9.26
@@ -58595,13 +58609,6 @@
     "teryt": "1212011",
     "year": 2024,
     "value": 4.7
-  },
-  {
-    "indicatorId": 128,
-    "level": "GMINA",
-    "teryt": "1212032",
-    "year": 2024,
-    "value": 6.06
   },
   {
     "indicatorId": 128,
@@ -58987,13 +58994,6 @@
     "teryt": "1218052",
     "year": 2024,
     "value": 8.38
-  },
-  {
-    "indicatorId": 128,
-    "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
-    "value": 8.26
   },
   {
     "indicatorId": 128,
@@ -59386,6 +59386,13 @@
     "teryt": "1203053",
     "year": 2024,
     "value": 12.39
+  },
+  {
+    "indicatorId": 129,
+    "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 10.61
   },
   {
     "indicatorId": 129,
@@ -60013,6 +60020,13 @@
   {
     "indicatorId": 129,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 7.63
+  },
+  {
+    "indicatorId": 129,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 9.17
@@ -60023,13 +60037,6 @@
     "teryt": "1212011",
     "year": 2024,
     "value": 18.05
-  },
-  {
-    "indicatorId": 129,
-    "level": "GMINA",
-    "teryt": "1212032",
-    "year": 2024,
-    "value": 10.61
   },
   {
     "indicatorId": 129,
@@ -60415,13 +60422,6 @@
     "teryt": "1218052",
     "year": 2024,
     "value": 11.26
-  },
-  {
-    "indicatorId": 129,
-    "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
-    "value": 7.63
   },
   {
     "indicatorId": 129,
@@ -62218,6 +62218,13 @@
   {
     "indicatorId": 175,
     "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 27.0
+  },
+  {
+    "indicatorId": 175,
+    "level": "GMINA",
     "teryt": "1204023",
     "year": 2024,
     "value": 28.0
@@ -62841,6 +62848,13 @@
   {
     "indicatorId": 175,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 18.0
+  },
+  {
+    "indicatorId": 175,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 13.0
@@ -62851,13 +62865,6 @@
     "teryt": "1212011",
     "year": 2024,
     "value": 18.0
-  },
-  {
-    "indicatorId": 175,
-    "level": "GMINA",
-    "teryt": "1212032",
-    "year": 2024,
-    "value": 27.0
   },
   {
     "indicatorId": 175,
@@ -63243,13 +63250,6 @@
     "teryt": "1218052",
     "year": 2024,
     "value": 22.0
-  },
-  {
-    "indicatorId": 175,
-    "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
-    "value": 18.0
   },
   {
     "indicatorId": 175,
@@ -63642,6 +63642,13 @@
     "teryt": "1203053",
     "year": 2024,
     "value": 15.0
+  },
+  {
+    "indicatorId": 176,
+    "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 28.0
   },
   {
     "indicatorId": 176,
@@ -64269,6 +64276,13 @@
   {
     "indicatorId": 176,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 29.0
+  },
+  {
+    "indicatorId": 176,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 18.0
@@ -64279,13 +64293,6 @@
     "teryt": "1212011",
     "year": 2024,
     "value": 17.0
-  },
-  {
-    "indicatorId": 176,
-    "level": "GMINA",
-    "teryt": "1212032",
-    "year": 2024,
-    "value": 28.0
   },
   {
     "indicatorId": 176,
@@ -64671,13 +64678,6 @@
     "teryt": "1218052",
     "year": 2024,
     "value": 16.0
-  },
-  {
-    "indicatorId": 176,
-    "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
-    "value": 29.0
   },
   {
     "indicatorId": 176,
@@ -65070,6 +65070,13 @@
     "teryt": "1203053",
     "year": 2024,
     "value": 28.0
+  },
+  {
+    "indicatorId": 177,
+    "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 46.0
   },
   {
     "indicatorId": 177,
@@ -65697,6 +65704,13 @@
   {
     "indicatorId": 177,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 22.0
+  },
+  {
+    "indicatorId": 177,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 41.0
@@ -65707,13 +65721,6 @@
     "teryt": "1212011",
     "year": 2024,
     "value": 27.0
-  },
-  {
-    "indicatorId": 177,
-    "level": "GMINA",
-    "teryt": "1212032",
-    "year": 2024,
-    "value": 46.0
   },
   {
     "indicatorId": 177,
@@ -66097,13 +66104,6 @@
     "indicatorId": 177,
     "level": "GMINA",
     "teryt": "1218052",
-    "year": 2024,
-    "value": 22.0
-  },
-  {
-    "indicatorId": 177,
-    "level": "GMINA",
-    "teryt": "1218062",
     "year": 2024,
     "value": 22.0
   },
@@ -66498,6 +66498,13 @@
     "teryt": "1203053",
     "year": 2024,
     "value": 32062.0
+  },
+  {
+    "indicatorId": 186,
+    "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 2628.0
   },
   {
     "indicatorId": 186,
@@ -67125,6 +67132,13 @@
   {
     "indicatorId": 186,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 4703.0
+  },
+  {
+    "indicatorId": 186,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 11310.0
@@ -67135,13 +67149,6 @@
     "teryt": "1212011",
     "year": 2024,
     "value": 9288.0
-  },
-  {
-    "indicatorId": 186,
-    "level": "GMINA",
-    "teryt": "1212032",
-    "year": 2024,
-    "value": 2628.0
   },
   {
     "indicatorId": 186,
@@ -67527,13 +67534,6 @@
     "teryt": "1218052",
     "year": 2024,
     "value": 4185.0
-  },
-  {
-    "indicatorId": 186,
-    "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
-    "value": 4703.0
   },
   {
     "indicatorId": 186,
@@ -72305,6 +72305,13 @@
   {
     "indicatorId": 220,
     "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 100.0
+  },
+  {
+    "indicatorId": 220,
+    "level": "GMINA",
     "teryt": "1204023",
     "year": 2024,
     "value": 84.62
@@ -72928,6 +72935,13 @@
   {
     "indicatorId": 220,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 100.0
+  },
+  {
+    "indicatorId": 220,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 100.0
@@ -72938,13 +72952,6 @@
     "teryt": "1212011",
     "year": 2024,
     "value": 80.0
-  },
-  {
-    "indicatorId": 220,
-    "level": "GMINA",
-    "teryt": "1212032",
-    "year": 2024,
-    "value": 100.0
   },
   {
     "indicatorId": 220,
@@ -73328,13 +73335,6 @@
     "indicatorId": 220,
     "level": "GMINA",
     "teryt": "1218052",
-    "year": 2024,
-    "value": 100.0
-  },
-  {
-    "indicatorId": 220,
-    "level": "GMINA",
-    "teryt": "1218062",
     "year": 2024,
     "value": 100.0
   },
@@ -73729,6 +73729,13 @@
     "teryt": "1203053",
     "year": 2024,
     "value": 10.0
+  },
+  {
+    "indicatorId": 221,
+    "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 0.0
   },
   {
     "indicatorId": 221,
@@ -74356,6 +74363,13 @@
   {
     "indicatorId": 221,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 0.0
+  },
+  {
+    "indicatorId": 221,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 0.0
@@ -74366,13 +74380,6 @@
     "teryt": "1212011",
     "year": 2024,
     "value": 20.0
-  },
-  {
-    "indicatorId": 221,
-    "level": "GMINA",
-    "teryt": "1212032",
-    "year": 2024,
-    "value": 0.0
   },
   {
     "indicatorId": 221,
@@ -74756,13 +74763,6 @@
     "indicatorId": 221,
     "level": "GMINA",
     "teryt": "1218052",
-    "year": 2024,
-    "value": 0.0
-  },
-  {
-    "indicatorId": 221,
-    "level": "GMINA",
-    "teryt": "1218062",
     "year": 2024,
     "value": 0.0
   },
@@ -75511,6 +75511,13 @@
   {
     "indicatorId": 225,
     "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 65.38
+  },
+  {
+    "indicatorId": 225,
+    "level": "GMINA",
     "teryt": "1204023",
     "year": 2024,
     "value": 90.43
@@ -76134,6 +76141,13 @@
   {
     "indicatorId": 225,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 77.6
+  },
+  {
+    "indicatorId": 225,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 76.17
@@ -76144,13 +76158,6 @@
     "teryt": "1212011",
     "year": 2024,
     "value": 76.92
-  },
-  {
-    "indicatorId": 225,
-    "level": "GMINA",
-    "teryt": "1212032",
-    "year": 2024,
-    "value": 65.38
   },
   {
     "indicatorId": 225,
@@ -76536,13 +76543,6 @@
     "teryt": "1218052",
     "year": 2024,
     "value": 82.61
-  },
-  {
-    "indicatorId": 225,
-    "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
-    "value": 77.6
   },
   {
     "indicatorId": 225,
@@ -76935,6 +76935,13 @@
     "teryt": "1203053",
     "year": 2024,
     "value": 48.09
+  },
+  {
+    "indicatorId": 226,
+    "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 80.13
   },
   {
     "indicatorId": 226,
@@ -77562,6 +77569,13 @@
   {
     "indicatorId": 226,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 73.6
+  },
+  {
+    "indicatorId": 226,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 67.58
@@ -77572,13 +77586,6 @@
     "teryt": "1212011",
     "year": 2024,
     "value": 71.33
-  },
-  {
-    "indicatorId": 226,
-    "level": "GMINA",
-    "teryt": "1212032",
-    "year": 2024,
-    "value": 80.13
   },
   {
     "indicatorId": 226,
@@ -77964,13 +77971,6 @@
     "teryt": "1218052",
     "year": 2024,
     "value": 34.78
-  },
-  {
-    "indicatorId": 226,
-    "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
-    "value": 73.6
   },
   {
     "indicatorId": 226,
@@ -78363,6 +78363,13 @@
     "teryt": "1203053",
     "year": 2024,
     "value": 142.0
+  },
+  {
+    "indicatorId": 227,
+    "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 11.0
   },
   {
     "indicatorId": 227,
@@ -78990,6 +78997,13 @@
   {
     "indicatorId": 227,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 21.0
+  },
+  {
+    "indicatorId": 227,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 3.0
@@ -79000,13 +79014,6 @@
     "teryt": "1212011",
     "year": 2024,
     "value": 49.0
-  },
-  {
-    "indicatorId": 227,
-    "level": "GMINA",
-    "teryt": "1212032",
-    "year": 2024,
-    "value": 11.0
   },
   {
     "indicatorId": 227,
@@ -79392,13 +79399,6 @@
     "teryt": "1218052",
     "year": 2024,
     "value": 6.0
-  },
-  {
-    "indicatorId": 227,
-    "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
-    "value": 21.0
   },
   {
     "indicatorId": 227,
@@ -79791,6 +79791,13 @@
     "teryt": "1203053",
     "year": 2024,
     "value": 7.0
+  },
+  {
+    "indicatorId": 228,
+    "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 0.0
   },
   {
     "indicatorId": 228,
@@ -80418,6 +80425,13 @@
   {
     "indicatorId": 228,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 3.0
+  },
+  {
+    "indicatorId": 228,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 1.0
@@ -80426,13 +80440,6 @@
     "indicatorId": 228,
     "level": "GMINA",
     "teryt": "1212011",
-    "year": 2024,
-    "value": 0.0
-  },
-  {
-    "indicatorId": 228,
-    "level": "GMINA",
-    "teryt": "1212032",
     "year": 2024,
     "value": 0.0
   },
@@ -80826,13 +80833,6 @@
     "level": "GMINA",
     "teryt": "1218062",
     "year": 2024,
-    "value": 3.0
-  },
-  {
-    "indicatorId": 228,
-    "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
     "value": 2.0
   },
   {
@@ -81219,6 +81219,13 @@
     "teryt": "1203053",
     "year": 2024,
     "value": 2.68
+  },
+  {
+    "indicatorId": 229,
+    "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 0.0
   },
   {
     "indicatorId": 229,
@@ -81846,6 +81853,13 @@
   {
     "indicatorId": 229,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 2.4
+  },
+  {
+    "indicatorId": 229,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 0.0
@@ -81856,13 +81870,6 @@
     "teryt": "1212011",
     "year": 2024,
     "value": 9.44
-  },
-  {
-    "indicatorId": 229,
-    "level": "GMINA",
-    "teryt": "1212032",
-    "year": 2024,
-    "value": 0.0
   },
   {
     "indicatorId": 229,
@@ -82248,13 +82255,6 @@
     "teryt": "1218052",
     "year": 2024,
     "value": 0.0
-  },
-  {
-    "indicatorId": 229,
-    "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
-    "value": 2.4
   },
   {
     "indicatorId": 229,
@@ -82822,6 +82822,13 @@
     "teryt": "1203053",
     "year": 2024,
     "value": 24.33
+  },
+  {
+    "indicatorId": 231,
+    "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 53.21
   },
   {
     "indicatorId": 231,
@@ -83449,6 +83456,13 @@
   {
     "indicatorId": 231,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 49.6
+  },
+  {
+    "indicatorId": 231,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 45.7
@@ -83459,13 +83473,6 @@
     "teryt": "1212011",
     "year": 2024,
     "value": 18.53
-  },
-  {
-    "indicatorId": 231,
-    "level": "GMINA",
-    "teryt": "1212032",
-    "year": 2024,
-    "value": 53.21
   },
   {
     "indicatorId": 231,
@@ -83851,13 +83858,6 @@
     "teryt": "1218052",
     "year": 2024,
     "value": 33.33
-  },
-  {
-    "indicatorId": 231,
-    "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
-    "value": 49.6
   },
   {
     "indicatorId": 231,
@@ -88104,6 +88104,13 @@
   {
     "indicatorId": 257,
     "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 25.99
+  },
+  {
+    "indicatorId": 257,
+    "level": "GMINA",
     "teryt": "1204023",
     "year": 2024,
     "value": 24.69
@@ -88727,6 +88734,13 @@
   {
     "indicatorId": 257,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 21.26
+  },
+  {
+    "indicatorId": 257,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 20.79
@@ -88737,13 +88751,6 @@
     "teryt": "1212011",
     "year": 2024,
     "value": 33.93
-  },
-  {
-    "indicatorId": 257,
-    "level": "GMINA",
-    "teryt": "1212032",
-    "year": 2024,
-    "value": 25.99
   },
   {
     "indicatorId": 257,
@@ -89129,13 +89136,6 @@
     "teryt": "1218052",
     "year": 2024,
     "value": 24.59
-  },
-  {
-    "indicatorId": 257,
-    "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
-    "value": 21.26
   },
   {
     "indicatorId": 257,
@@ -90932,6 +90932,13 @@
   {
     "indicatorId": 268,
     "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 358.0
+  },
+  {
+    "indicatorId": 268,
+    "level": "GMINA",
     "teryt": "1204023",
     "year": 2024,
     "value": 322.0
@@ -91555,6 +91562,13 @@
   {
     "indicatorId": 268,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 296.0
+  },
+  {
+    "indicatorId": 268,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 333.0
@@ -91565,13 +91579,6 @@
     "teryt": "1212011",
     "year": 2024,
     "value": 241.0
-  },
-  {
-    "indicatorId": 268,
-    "level": "GMINA",
-    "teryt": "1212032",
-    "year": 2024,
-    "value": 358.0
   },
   {
     "indicatorId": 268,
@@ -91957,13 +91964,6 @@
     "teryt": "1218052",
     "year": 2024,
     "value": 324.0
-  },
-  {
-    "indicatorId": 268,
-    "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
-    "value": 296.0
   },
   {
     "indicatorId": 268,
@@ -92356,6 +92356,13 @@
     "teryt": "1203053",
     "year": 2024,
     "value": 16.55
+  },
+  {
+    "indicatorId": 273,
+    "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 15.52
   },
   {
     "indicatorId": 273,
@@ -92983,6 +92990,13 @@
   {
     "indicatorId": 273,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 19.2
+  },
+  {
+    "indicatorId": 273,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 18.33
@@ -92993,13 +93007,6 @@
     "teryt": "1212011",
     "year": 2024,
     "value": 17.93
-  },
-  {
-    "indicatorId": 273,
-    "level": "GMINA",
-    "teryt": "1212032",
-    "year": 2024,
-    "value": 15.52
   },
   {
     "indicatorId": 273,
@@ -93385,13 +93392,6 @@
     "teryt": "1218052",
     "year": 2024,
     "value": 17.1
-  },
-  {
-    "indicatorId": 273,
-    "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
-    "value": 19.2
   },
   {
     "indicatorId": 273,
@@ -93784,6 +93784,13 @@
     "teryt": "1203053",
     "year": 2024,
     "value": 14.0
+  },
+  {
+    "indicatorId": 274,
+    "level": "GMINA",
+    "teryt": "1204012",
+    "year": 2024,
+    "value": 8.0
   },
   {
     "indicatorId": 274,
@@ -94411,6 +94418,13 @@
   {
     "indicatorId": 274,
     "level": "GMINA",
+    "teryt": "1211132",
+    "year": 2024,
+    "value": 13.0
+  },
+  {
+    "indicatorId": 274,
+    "level": "GMINA",
     "teryt": "1211142",
     "year": 2024,
     "value": 11.0
@@ -94421,13 +94435,6 @@
     "teryt": "1212011",
     "year": 2024,
     "value": 16.0
-  },
-  {
-    "indicatorId": 274,
-    "level": "GMINA",
-    "teryt": "1212032",
-    "year": 2024,
-    "value": 8.0
   },
   {
     "indicatorId": 274,
@@ -94813,13 +94820,6 @@
     "teryt": "1218052",
     "year": 2024,
     "value": 14.0
-  },
-  {
-    "indicatorId": 274,
-    "level": "GMINA",
-    "teryt": "1218062",
-    "year": 2024,
-    "value": 13.0
   },
   {
     "indicatorId": 274,

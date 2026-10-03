@@ -69,16 +69,7 @@ public sealed class InnovationGenome
             throw new InvalidOperationException($"Innovation {innovation.Id} already has a genome.");
         }
 
-        if (string.IsNullOrWhiteSpace(summary))
-        {
-            throw new DomainException("A genome needs a summary.");
-        }
-
-        string trimmedSummary = summary.Trim();
-        if (trimmedSummary.Length > SummaryMaxLength)
-        {
-            throw new DomainException($"A genome summary has at most {SummaryMaxLength} characters.");
-        }
+        string trimmedSummary = EnsureSummary(summary);
 
         return new InnovationGenome
         {
@@ -95,5 +86,69 @@ public sealed class InnovationGenome
             CreatedAt = createdAt,
             UpdatedAt = createdAt,
         };
+    }
+
+    /// <summary>An administrator corrects the genome; the corrected genome is approved at once.</summary>
+    public void Revise(
+        IReadOnlyList<string> rootCauses,
+        IReadOnlyList<string> mechanisms,
+        IReadOnlyList<string> targetGroups,
+        RequiredResources requiredResources,
+        string? scale,
+        IReadOnlyList<ChallengeArea> challengeAreas,
+        string? summary,
+        Guid approvedByUserId,
+        DateTimeOffset changedAt)
+    {
+        ArgumentNullException.ThrowIfNull(rootCauses);
+        ArgumentNullException.ThrowIfNull(mechanisms);
+        ArgumentNullException.ThrowIfNull(targetGroups);
+        ArgumentNullException.ThrowIfNull(requiredResources);
+        ArgumentNullException.ThrowIfNull(challengeAreas);
+
+        string trimmedSummary = EnsureSummary(summary);
+        RootCauses = [.. NonBlank(rootCauses)];
+        Mechanisms = [.. NonBlank(mechanisms)];
+        TargetGroups = [.. NonBlank(targetGroups)];
+        RequiredResources = requiredResources;
+        Scale = string.IsNullOrWhiteSpace(scale) ? null : scale.Trim();
+        ChallengeAreaCodes = [.. challengeAreas.Select(area => area.Code).Distinct()];
+        Summary = trimmedSummary;
+        Approve(approvedByUserId, changedAt);
+    }
+
+    /// <summary>An administrator confirms the genome as it is; matching keeps using it either way.</summary>
+    public void Approve(Guid approvedByUserId, DateTimeOffset approvedAt)
+    {
+        if (approvedByUserId == Guid.Empty)
+        {
+            throw new InvalidOperationException("The administrator approving a genome has an empty id.");
+        }
+
+        Status = InnovationGenomeStatus.APPROVED;
+        ApprovedByUserId = approvedByUserId;
+        ApprovedAt = approvedAt;
+        UpdatedAt = approvedAt;
+    }
+
+    private static string EnsureSummary(string? summary)
+    {
+        if (string.IsNullOrWhiteSpace(summary))
+        {
+            throw new DomainException("A genome needs a summary.");
+        }
+
+        string trimmed = summary.Trim();
+        if (trimmed.Length > SummaryMaxLength)
+        {
+            throw new DomainException($"A genome summary has at most {SummaryMaxLength} characters.");
+        }
+
+        return trimmed;
+    }
+
+    private static IEnumerable<string> NonBlank(IEnumerable<string> items)
+    {
+        return items.Where(item => !string.IsNullOrWhiteSpace(item)).Select(item => item.Trim());
     }
 }

@@ -4,4 +4,6 @@ namespace Castor.Api.Infrastructure;
 public static class LiveEvents
 {
     public const string ProblemReportCreated = "ProblemReportCreated";
+
+    public const string ProblemReportStatusChanged = "ProblemReportStatusChanged";
 }

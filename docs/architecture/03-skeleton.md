@@ -38,6 +38,7 @@ Konfiguracja (zmienne środowiskowe w konwencji `Sekcja__Klucz`):
 | `Seed:Path`, `Seed:OnStartup` | import `data/seed` przy starcie; w `Development` włączony ze ścieżką `../../../data/seed` |
 | `Matching:HybridThreshold`, `Matching:CandidateLimit`, `Matching:MaxMatches` | próg krzyżówki (50), liczba kandydatów dla rankingu (30), liczba wyników (5) |
 | `RateLimiting:PublicAi:PermitLimit`, `…:WindowSeconds` | limit na IP dla publicznych endpointów z LLM (10 na 60 s) |
+| `Bootstrap:AdminEmail`, `Bootstrap:AdminPassword` | pierwszy administrator (z sekretów, nie z repo) |
 | `Embeddings:*` | zarezerwowane — dostawca embeddingów do ustalenia ([`../TODO.md`](../TODO.md)) |
 
 ## Co jest w `src/Castor.Api/`
@@ -71,13 +72,24 @@ Moduł VII dołożył (SPEC §7 VII):
 
 | Miejsce | Zawartość |
 |---|---|
-| `Domain/Statistics/` | `Indicator`, `IndicatorValue` (poziom `GMINA`/`POWIAT`), `Measure` (wartość statystyczna, `NUMERIC(19,6)` z konwencji) |
+| `Domain/Statistics/` | `Indicator`, `IndicatorValue` (poziom `GMINA`/`POWIAT`), `Measure` (wartość statystyczna, `NUMERIC(19,8)` z konwencji) |
 | `Domain/FitAssessments/` | `FitAssessment` (+ `FitAssessmentContent`, `FitComparisonRow` jako JSON), `FitLevel`, `FitAssistantMessage` |
 | `Persistence/` | mapowanie, `MeasureConverter`; import seedu upsertuje wskaźniki i ich wartości |
 | `Queries/Statistics/` | `MunicipalityPortraitQuery` — wskaźniki obszarów innowacji i ogólne, wartość gminy albo powiatu, średnia regionu z SQL |
 | `Shared/Ai/` | `FitAssessor`, `FitAssistant`, prompty `assess-fit.md` i `fit-assistant.md`, odpowiedzi placeholdera |
 | `Features/` | `Innovations` (`GET /api/innovations/{id}`), `FitAssessments` (karta, odczyt, czat asystenta) |
 | `Migrations/` | `StatisticsAndFitAssessments` |
+
+Moduł VI dołożył (SPEC §7 VI):
+
+| Miejsce | Zawartość |
+|---|---|
+| `Domain/` | `User.AssignRole` (gmina JST, obszary eksperta), `ProblemReport.Urgency`, `ReplyDraft`, `MoveByAdmin`, `InnovationGenome.Approve`/`Revise`, `Innovation.Create`/`Revise`, `GrantCalls/GrantCall` |
+| `Queries/ProblemReports/` | `SuggestedExpertsQuery` |
+| `Shared/Ai/` | `ReplyDrafter`, `GrantCallDrafter`, prompty `draft-reply.md`, `draft-grant-call.md`; pilność w klasyfikacji |
+| `Infrastructure/Startup/` | `AdminBootstrap` (pierwszy administrator z konfiguracji) |
+| `Features/` | `ProblemReports/InboxProblemReportsController` (`/api/admin/problem-reports`), `Users`, `InnovationGenomes`, `Innovations/AdminInnovationsController`, `BackgroundJobs`, `Radar`, `GrantCalls` (publiczne i admin), `ChallengeAreas` |
+| `Migrations/` | `AdminPanelAndGrantCalls` (także skala `Measure` 19,8 i zapas długości tekstów po anonimizacji) |
 
 Workspace'ów i globalnego filtra izolacji **nie ma** — dane platformy są wspólne ([`00-stack.md`](00-stack.md) · Dostęp do danych).
 

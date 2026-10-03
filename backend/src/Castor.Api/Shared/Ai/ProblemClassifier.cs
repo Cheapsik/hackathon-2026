@@ -35,10 +35,14 @@ public sealed class ProblemClassifier(ILlmClient llm, ILogger<ProblemClassifier>
                 returnedCodes.Count - knownAreas.Count);
         }
 
+        // An unknown urgency is left out rather than guessed: the inbox then shows the report without one.
+        ProblemReportUrgency? urgency = NamedEnum.TryParse(result.Urgency, out ProblemReportUrgency parsed) ? parsed : null;
+
         return new ProblemClassification(
             knownAreas,
             result.RootCauses ?? [],
             result.TargetGroup,
+            urgency,
             result.Keywords ?? [],
             result.ClarifyingQuestions ?? []);
     }

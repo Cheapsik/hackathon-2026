@@ -1,10 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query'
-import {
-  getGetApiAuthSessionQueryKey,
-  getGetApiProblemReportsMineQueryKey,
-  useGetApiAuthSession,
-  type SessionResponse,
-} from '@/api/generated/castor'
+import { getGetApiAuthSessionQueryKey, useGetApiAuthSession, type SessionResponse } from '@/api/generated/castor'
 
 /** Who is signed in. Undefined while the first answer is on its way. */
 export function useSession(): SessionResponse | undefined {
@@ -13,12 +8,16 @@ export function useSession(): SessionResponse | undefined {
   return session.data?.data
 }
 
-/** After sign-in, registration or sign-out the session and everything tied to it is read again. */
+/**
+ * After sign-in, registration or sign-out every cached answer belongs to the previous user — their reports, their
+ * assistant chats — so all of it is dropped, not merely marked stale, and the session is read again.
+ */
 export function useRefreshSession() {
   const queryClient = useQueryClient()
 
   return async () => {
-    await queryClient.invalidateQueries({ queryKey: getGetApiAuthSessionQueryKey() })
-    await queryClient.invalidateQueries({ queryKey: getGetApiProblemReportsMineQueryKey() })
+    const sessionKey = getGetApiAuthSessionQueryKey()
+    queryClient.removeQueries({ predicate: (query) => query.queryKey[0] !== sessionKey[0] })
+    await queryClient.invalidateQueries({ queryKey: sessionKey })
   }
 }
