@@ -4,6 +4,7 @@ Description: Castor production host with Docker, a dedicated VPC, and a stable p
 Parameters:
   SshAllowedCidr:
     Type: String
+    Default: 0.0.0.0/0
     Description: Trusted IPv4 CIDR allowed to connect over SSH, for example 203.0.113.10/32.
     AllowedPattern: '^(?:25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])){3}/(?:[0-9]|[12][0-9]|3[0-2])$'
     ConstraintDescription: Must be a valid IPv4 CIDR.
