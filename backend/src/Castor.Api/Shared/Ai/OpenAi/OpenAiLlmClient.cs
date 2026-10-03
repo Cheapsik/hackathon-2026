@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.Json.Schema;
+using System.Text.Json.Serialization.Metadata;
 using Microsoft.Extensions.Options;
 
 namespace Castor.Api.Shared;
@@ -295,7 +296,11 @@ public sealed class OpenAiLlmClient : ILlmClient
 
     private static JsonNode CreateStrictSchema<TResult>()
     {
-        JsonNode schema = LlmJson.Options.GetJsonSchemaAsNode(typeof(TResult));
+        JsonSerializerOptions schemaOptions = new(LlmJson.Options)
+        {
+            TypeInfoResolver = new DefaultJsonTypeInfoResolver(),
+        };
+        JsonNode schema = schemaOptions.GetJsonSchemaAsNode(typeof(TResult));
         MakeObjectsStrict(schema);
         return schema;
     }
