@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Castor — audyt realizacji planu aplikacji</title>
+  <style>
+    :root {
+      --ink: #17342b;
+      --muted: #5c6f67;
+      --green: #167252;
+      --green-dark: #0d5039;
+      --green-soft: #eaf4ef;
+      --amber: #a85d13;
+      --amber-soft: #fff3df;
+      --red: #a23b34;
+      --red-soft: #faecea;
+      --line: #cad8d1;
+      --paper: #ffffff;
+      --wash: #f4f8f6;
+    }
+
+    * { box-sizing: border-box; }
+
+    @page {
+      size: A4;
+      margin: 15mm 14mm 16mm;
+      @bottom-right {
+        content: "Castor · audyt realizacji planu · " counter(page) "/" counter(pages);
+        color: #60746b;
+        font: 8.5pt "Segoe UI", Arial, sans-serif;
+      }
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font: 10.2pt/1.43 "Segoe UI", Arial, sans-serif;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { font-size: 28pt; line-height: 1.03; letter-spacing: -0.6pt; margin-bottom: 8mm; }
+    h2 { font-size: 17pt; line-height: 1.15; letter-spacing: -0.2pt; margin: 0 0 5mm; }
+    h3 { font-size: 11.5pt; margin: 0 0 2mm; }
+    p { margin-bottom: 3mm; }
+    ul, ol { margin: 1.5mm 0 3.5mm; padding-left: 5mm; }
+    li { margin-bottom: 1.2mm; }
+    strong { color: var(--green-dark); }
+
+    .cover {
+      min-height: 255mm;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 13mm 12mm 10mm;
+      border: 1.2mm solid var(--green-dark);
+      background:
+        linear-gradient(135deg, var(--green-soft) 0 34%, transparent 34%),
+        var(--paper);
+      break-after: page;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 3mm;
+      color: var(--green-dark);
+      font-size: 12pt;
+      font-weight: 700;
+      letter-spacing: 1.2pt;
+      text-transform: uppercase;
+    }
+
+    .mark {
+      width: 11mm;
+      height: 11mm;
+      display: grid;
+      place-items: center;
+      border-radius: 3mm;
+      color: white;
+      background: var(--green-dark);
+      font-size: 15pt;
+    }
+
+    .cover-copy { max-width: 152mm; margin-top: 25mm; }
+    .eyebrow { color: var(--green); font-weight: 700; text-transform: uppercase; letter-spacing: 1.3pt; }
+    .lead { max-width: 142mm; color: var(--muted); font-size: 13pt; line-height: 1.45; }
+
+    .score-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6mm;
+      margin-top: 15mm;
+    }
+
+    .score-card {
+      padding: 6mm;
+      border: 0.4mm solid var(--line);
+      border-radius: 4mm;
+      background: rgba(255,255,255,.92);
+    }
+
+    .score { color: var(--green-dark); font-size: 27pt; font-weight: 800; line-height: 1; }
+    .score-label { margin-top: 2mm; color: var(--muted); font-size: 9.5pt; }
+    .cover-meta { display: flex; justify-content: space-between; color: var(--muted); font-size: 9pt; }
+
+    section { margin-bottom: 9mm; }
+    .page { break-before: page; }
+
+    .summary {
+      padding: 5mm 6mm;
+      border-left: 1.5mm solid var(--green);
+      background: var(--green-soft);
+      border-radius: 0 3mm 3mm 0;
+      font-size: 11pt;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 3mm;
+      margin: 5mm 0 8mm;
+    }
+
+    .stat {
+      min-height: 27mm;
+      padding: 4mm;
+      border: 0.35mm solid var(--line);
+      border-radius: 3mm;
+      background: var(--wash);
+    }
+
+    .stat-number { display: block; color: var(--green-dark); font-size: 19pt; font-weight: 800; }
+    .stat-label { color: var(--muted); font-size: 8.6pt; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 3mm 0 5mm;
+      font-size: 8.7pt;
+    }
+
+    th {
+      padding: 2.7mm 2.4mm;
+      color: white;
+      background: var(--green-dark);
+      text-align: left;
+      font-weight: 700;
+    }
+
+    td {
+      padding: 2.8mm 2.4mm;
+      border-bottom: 0.25mm solid var(--line);
+      vertical-align: top;
+    }
+
+    tbody tr:nth-child(even) { background: var(--wash); }
+    .module { width: 26%; font-weight: 700; }
+    .percent { width: 12%; white-space: nowrap; font-weight: 800; color: var(--green-dark); }
+
+    .bar {
+      width: 100%;
+      height: 2.6mm;
+      margin-top: 1.2mm;
+      overflow: hidden;
+      border-radius: 9mm;
+      background: #dbe6e1;
+    }
+    .bar > span { display: block; height: 100%; background: var(--green); }
+
+    .priority {
+      display: grid;
+      grid-template-columns: 13mm 1fr;
+      gap: 4mm;
+      padding: 4mm 0;
+      border-bottom: 0.3mm solid var(--line);
+      break-inside: avoid;
+    }
+
+    .priority-number {
+      width: 11mm;
+      height: 11mm;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: white;
+      background: var(--green-dark);
+      font-weight: 800;
+    }
+
+    .tag {
+      display: inline-block;
+      margin-right: 1.5mm;
+      padding: .7mm 2mm;
+      border-radius: 9mm;
+      font-size: 7.8pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .3pt;
+    }
+    .tag-p0 { color: var(--red); background: var(--red-soft); }
+    .tag-p1 { color: var(--amber); background: var(--amber-soft); }
+    .tag-p2 { color: var(--green-dark); background: var(--green-soft); }
+
+    .two-columns { columns: 2; column-gap: 9mm; }
+    .two-columns > div { break-inside: avoid; }
+
+    .checklist {
+      list-style: none;
+      padding-left: 0;
+    }
+    .checklist li { position: relative; padding-left: 6mm; }
+    .checklist li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--green);
+      font-weight: 800;
+    }
+
+    .warning {
+      padding: 4mm 5mm;
+      border: 0.35mm solid #ebc98f;
+      border-radius: 3mm;
+      background: var(--amber-soft);
+    }
+
+    .sources {
+      color: var(--muted);
+      font-size: 8.6pt;
+    }
+
+    .footer-note {
+      margin-top: 8mm;
+      padding-top: 4mm;
+      border-top: 0.4mm solid var(--line);
+      color: var(--muted);
+      font-size: 8.5pt;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <article class="cover">
+      <div>
+        <div class="brand"><span class="mark">C</span> Castor</div>
+        <div class="cover-copy">
+          <p class="eyebrow">Audyt produktu i implementacji</p>
+          <h1>Stopień realizacji planu aplikacji</h1>
+          <p class="lead">Porównanie dokumentacji produktu z faktycznym stanem backendu, frontendu, integracji AI, danych, testów i wdrożenia.</p>
+          <div class="score-grid">
+            <div class="score-card">
+              <div class="score">85%</div>
+              <div class="score-label">bazowego MVP według SPEC</div>
+            </div>
+            <div class="score-card">
+              <div class="score">75%</div>
+              <div class="score-label">pełnego planu wraz z features.md</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="cover-meta">
+        <span>Stan repozytorium: main / 81bd04e</span>
+        <span>4 października 2026</span>
+      </div>
+    </article>
+
+    <section>
+      <p class="eyebrow">Wniosek wykonawczy</p>
+      <h2>Aplikacja jest gotowa do demonstracji, ale nie jest jeszcze kompletna produktowo</h2>
+      <div class="summary">
+        Wszystkie siedem modułów ma działające ekrany i większość kontraktów API. Główny przepływ — od zgłoszenia problemu, przez dopasowanie, komunikację i kartę gminy, po Kreator, testy oraz panel administratora — działa end-to-end. Największa luka powstała między bazowym SPEC a późniejszym doprecyzowaniem w <strong>features.md</strong>: nie ma jeszcze lokalizacji punktowej i zdjęć, decyzji „nie / tak / prawie”, dołączania do podobnego zgłoszenia ani reguł administracyjnych.
+      </div>
+
+      <div class="stats">
+        <div class="stat"><span class="stat-number">7/7</span><span class="stat-label">modułów posiada ekrany i API</span></div>
+        <div class="stat"><span class="stat-number">78</span><span class="stat-label">ścieżek OpenAPI</span></div>
+        <div class="stat"><span class="stat-number">93</span><span class="stat-label">operacje API</span></div>
+        <div class="stat"><span class="stat-number">57/57</span><span class="stat-label">testów backendu przechodzi</span></div>
+      </div>
+
+      <h2>Stan siedmiu modułów</h2>
+      <table aria-label="Stopień realizacji modułów">
+        <thead><tr><th>Moduł</th><th>Postęp</th><th>Ocena</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="module">I. Matchmaking</td>
+            <td class="percent">65%<div class="bar"><span style="width:65%"></span></div></td>
+            <td>Działa opis, anonimizacja, pytania, klasyfikacja, dopasowania, hybryda i śledzenie. Brakuje zdjęć, pinezki, konkretnego podobnego zgłoszenia, trójki decyzji oraz dołączenia do wątku.</td>
+          </tr>
+          <tr>
+            <td class="module">II. Atlas</td>
+            <td class="percent">75%<div class="bar"><span style="width:75%"></span></div></td>
+            <td>Działają obszary, biblioteka, karta innowacji, profil gminy, wskaźniki, mapa i materiały. Brakuje RAG, embeddingów, wielu lat danych i wykresu trendów.</td>
+          </tr>
+          <tr>
+            <td class="module">III. Kreator</td>
+            <td class="percent">80%<div class="bar"><span style="width:80%"></span></div></td>
+            <td>Działa Canvas, asystent, hybrydy, oceny, decyzje, nabory i wnioski. Brakuje podobieństwa wektorowego, lokalizacji/zdjęć, wycofania współautora i opcjonalnej wizualizacji.</td>
+          </tr>
+          <tr>
+            <td class="module">IV. Tester</td>
+            <td class="percent">80%<div class="bar"><span style="width:80%"></span></div></td>
+            <td>Działa profil, lista testów, zapis, opinie i podsumowanie AI. Brakuje listy zgłoszonych testerów dla zespołu oraz zdarzeń czasu rzeczywistego.</td>
+          </tr>
+          <tr>
+            <td class="module">V. Komunikacja</td>
+            <td class="percent">90%<div class="bar"><span style="width:90%"></span></div></td>
+            <td>Działają wszystkie rodzaje wątków, wiadomości, statusy i SignalR. Brakuje oznaczania wiadomości jako przeczytane i liczników.</td>
+          </tr>
+          <tr>
+            <td class="module">VI. Panel admina</td>
+            <td class="percent">65%<div class="bar"><span style="width:65%"></span></div></td>
+            <td>Działa skrzynka, radar, wiedza, genomy, nabory i role. Brakuje wykresu, importu AI z linku/PDF, RAG oraz reguł kworum i wymaganych pól.</td>
+          </tr>
+          <tr>
+            <td class="module">VII. Karta gminy</td>
+            <td class="percent">90%<div class="bar"><span style="width:90%"></span></div></td>
+            <td>Działa generowanie, zapis, porównanie, mapa, asystent i druk. Brakuje danych o wdrożeniach oraz porównań wieloletnich.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="page">
+      <p class="eyebrow">Luki krytyczne</p>
+      <h2>Co trzeba domknąć</h2>
+
+      <div class="priority">
+        <div class="priority-number">1</div>
+        <div>
+          <h3><span class="tag tag-p0">P0</span> Jedna ścieżka od problemu do decyzji</h3>
+          <p>Rozszerzyć zgłoszenie o gminę wymaganą, opcjonalną pinezkę i 1–3 zdjęcia. Zamiast samego licznika podobnych problemów pokazać konkretną bezpiecznie zanonimizowaną sprawę i jedną decyzję: „nie”, „tak” albo „prawie”. „Tak” ma dołączać do istniejącego wątku bez tworzenia duplikatu; „prawie” wymaga dopisku różnicy.</p>
+        </div>
+      </div>
+
+      <div class="priority">
+        <div class="priority-number">2</div>
+        <div>
+          <h3><span class="tag tag-p0">P0</span> Reguły administratora</h3>
+          <p>Dodać <code>ExpertApprovalRule</code> i <code>SubmissionRequirementRule</code>: kworum ocen <code>DEVELOP</code>, wymaganie zdjęcia/pinezki per typ i obszar, blokadę akceptacji bez kworum oraz informację dla autora o brakujących polach i postępie.</p>
+        </div>
+      </div>
+
+      <div class="priority">
+        <div class="priority-number">3</div>
+        <div>
+          <h3><span class="tag tag-p0">P0</span> Pomiar dostępności</h3>
+          <p>Wykonać i zapisać wyniki axe/Lighthouse, test 200% zoom, wysoki kontrast, reduced motion oraz screenshoty wymaganych viewportów. Fundamenty dostępności istnieją, ale brakuje formalnego potwierdzenia zgodności.</p>
+        </div>
+      </div>
+
+      <div class="priority">
+        <div class="priority-number">4</div>
+        <div>
+          <h3><span class="tag tag-p1">P1</span> Embeddingi i pytania do raportów</h3>
+          <p>Wybrać dostawcę, model i wymiar wektora, dodać migrację kolumny wektorowej oraz import raportów. Odblokuje to RAG, podobieństwo zgłoszeń i fiszek oraz lepsze wybieranie kandydatów do dopasowania.</p>
+        </div>
+      </div>
+
+      <div class="priority">
+        <div class="priority-number">5</div>
+        <div>
+          <h3><span class="tag tag-p1">P1</span> Dokończenie narzędzi operatora</h3>
+          <p>Dodać wykres radaru, import innowacji z linku/PDF, historię wskaźników, klasyfikację pomysłów w skrzynce oraz listę testerów widoczną dla zespołu innowacji.</p>
+        </div>
+      </div>
+
+      <div class="priority">
+        <div class="priority-number">6</div>
+        <div>
+          <h3><span class="tag tag-p2">P2</span> Uzupełnienia doświadczenia użytkownika</h3>
+          <p>Nieprzeczytane wiadomości, powiadomienia SignalR o zapisach i opiniach, wycofanie współautora, usuwanie szkiców, dane o wcześniejszych wdrożeniach innowacji oraz opcjonalne generowanie obrazu wizualizacji.</p>
+        </div>
+      </div>
+
+      <div class="warning">
+        <strong>Poza zakresem obecnego MVP:</strong> swobodne custom fieldy opisane w feature 3 są propozycją produktową, a nie częścią zatwierdzonego SPEC. Nie powinny blokować ukończenia bieżącego planu bez osobnej decyzji zespołu.
+      </div>
+    </section>
+
+    <section class="page">
+      <p class="eyebrow">Mocne strony</p>
+      <h2>Co jest już gotowe i stabilne</h2>
+      <div class="two-columns">
+        <div>
+          <h3>Produkt</h3>
+          <ul class="checklist">
+            <li>Siedem modułów ma dostępne ekrany.</li>
+            <li>Główny przepływ zgłoszenia działa end-to-end.</li>
+            <li>Atlas korzysta z danych gmin i wskaźników.</li>
+            <li>Kreator obsługuje fiszki, oceny i nabory.</li>
+            <li>Karta gminy ma porównania, mapę i asystenta.</li>
+            <li>Poletko obsługuje testerów i feedback.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Technologia</h3>
+          <ul class="checklist">
+            <li>.NET 10, PostgreSQL i migracje EF Core.</li>
+            <li>React, TanStack Query i generowany klient OpenAPI.</li>
+            <li>Sesje cookie, role i ograniczenie panelu admina.</li>
+            <li>SignalR dla zdarzeń na żywo.</li>
+            <li>Abstrakcja LLM z adapterami placeholder i OpenAI.</li>
+            <li>Deployment SSH bez zewnętrznego rejestru obrazów.</li>
+          </ul>
+        </div>
+      </div>
+
+      <h2>Wyniki weryfikacji</h2>
+      <table aria-label="Wyniki kontroli technicznych">
+        <thead><tr><th>Kontrola</th><th>Wynik</th><th>Uwagi</th></tr></thead>
+        <tbody>
+          <tr><td>Backend build</td><td><strong>Przeszedł</strong></td><td>0 błędów, 0 ostrzeżeń</td></tr>
+          <tr><td>Backend testy</td><td><strong>57/57</strong></td><td>Scenariusze, API, migracje, dane demo i radar</td></tr>
+          <tr><td>Frontend build</td><td><strong>Przeszedł</strong></td><td>Generowanie klienta, TypeScript i Vite</td></tr>
+          <tr><td>Frontend lint</td><td><strong>Przeszedł</strong></td><td>Oxlint bez błędów</td></tr>
+          <tr><td>Stan Git</td><td><strong>Czysty przed raportem</strong></td><td>main zgodny z origin/main</td></tr>
+          <tr><td>Axe / Lighthouse</td><td><strong>Niezweryfikowane</strong></td><td>Brak zapisanych artefaktów audytu</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Rekomendowana kolejność</h2>
+      <ol>
+        <li>Decyzje „nie / tak / prawie” i dołączanie do podobnego zgłoszenia.</li>
+        <li>Lokalizacja oraz bezpieczne zdjęcia dla zgłoszeń i pomysłów.</li>
+        <li>Kworum ekspertów i reguły wymaganych pól.</li>
+        <li>Audyt dostępności i poprawki wynikające z pomiaru.</li>
+        <li>Embeddingi, RAG i import raportów.</li>
+        <li>Pozostałe usprawnienia operatorskie i komunikacyjne.</li>
+      </ol>
+
+      <div class="footer-note sources">
+        <strong>Źródła:</strong> docs/SPEC.md, docs/features.md, docs/TODO.md, docs/REQUIREMENTS.md, backend/openapi/Castor.Api.json, router frontendu, kod domenowy i testy automatyczne. Oceny procentowe są szacunkiem inżynierskim wynikającym z kompletności zachowań, nie prostym stosunkiem liczby plików lub endpointów.
+      </div>
+    </section>
+  </main>
+</body>
+</html>
