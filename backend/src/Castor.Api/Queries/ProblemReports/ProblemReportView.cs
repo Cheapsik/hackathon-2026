@@ -4,8 +4,10 @@ namespace Castor.Api.Queries;
 /// <param name="Matches">Ordered by position; a match has its innovation loaded.</param>
 /// <param name="HybridSources">The innovations hybrids are made of, by id.</param>
 /// <param name="ChallengeAreas">The challenge areas of the report, in its order.</param>
+/// <param name="ConversationId">The report's thread.</param>
 public sealed record ProblemReportView(
     IReadOnlyList<MatchResult> Matches,
     IReadOnlyDictionary<Guid, Innovation> HybridSources,
     IReadOnlyList<ChallengeArea> ChallengeAreas,
-    SimilarProblemReports Similar);
+    SimilarProblemReports Similar,
+    Guid ConversationId);

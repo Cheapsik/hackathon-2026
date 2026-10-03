@@ -109,6 +109,61 @@ namespace Castor.Api.Migrations
                     b.ToTable("ChallengeAreas");
                 });
 
+            modelBuilder.Entity("Castor.Api.Domain.Conversation", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ChallengeAreaCode")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamptz");
+
+                    b.Property<Guid?>("InitiatorId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("InnovationId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Kind")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTimeOffset?>("LastMessageAt")
+                        .HasColumnType("timestamptz");
+
+                    b.Property<Guid?>("ProblemReportId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Subject")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("timestamptz");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChallengeAreaCode");
+
+                    b.HasIndex("InitiatorId");
+
+                    b.HasIndex("InnovationId");
+
+                    b.HasIndex("LastMessageAt");
+
+                    b.HasIndex("ProblemReportId")
+                        .IsUnique()
+                        .HasDatabaseName("IX_Conversations_OnePerProblemReport");
+
+                    b.ToTable("Conversations", t =>
+                        {
+                            t.HasCheckConstraint("CK_Conversations_KindFields", "(\"Kind\" = 'PROBLEM_REPORT' AND \"ProblemReportId\" IS NOT NULL AND \"ChallengeAreaCode\" IS NULL\n    AND \"InnovationId\" IS NULL AND \"InitiatorId\" IS NULL AND \"Subject\" IS NULL)\nOR (\"Kind\" = 'EXPERT_QUESTION' AND \"ProblemReportId\" IS NULL AND \"ChallengeAreaCode\" IS NOT NULL\n    AND \"InnovationId\" IS NULL AND \"InitiatorId\" IS NOT NULL AND \"Subject\" IS NOT NULL)\nOR (\"Kind\" = 'PARTNERSHIP' AND \"ProblemReportId\" IS NULL AND \"ChallengeAreaCode\" IS NULL\n    AND \"InnovationId\" IS NOT NULL AND \"InitiatorId\" IS NOT NULL AND \"Subject\" IS NOT NULL)");
+                        });
+                });
+
             modelBuilder.Entity("Castor.Api.Domain.FitAssessment", b =>
                 {
                     b.Property<Guid>("Id")
@@ -556,6 +611,41 @@ namespace Castor.Api.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Castor.Api.Domain.Message", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("AuthorId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ConversationId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("PostedAt")
+                        .HasColumnType("timestamptz");
+
+                    b.Property<string>("SenderRole")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("character varying(4000)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("ConversationId", "PostedAt");
+
+                    b.ToTable("Messages", t =>
+                        {
+                            t.HasCheckConstraint("CK_Messages_AnonymousIsInitiator", "\"AuthorId\" IS NOT NULL OR \"SenderRole\" = 'INITIATOR'");
+                        });
+                });
+
             modelBuilder.Entity("Castor.Api.Domain.Municipality", b =>
                 {
                     b.Property<Guid>("Id")
@@ -775,6 +865,36 @@ namespace Castor.Api.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("Castor.Api.Domain.Conversation", b =>
+                {
+                    b.HasOne("Castor.Api.Domain.ChallengeArea", "ChallengeArea")
+                        .WithMany()
+                        .HasForeignKey("ChallengeAreaCode")
+                        .HasPrincipalKey("Code")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Castor.Api.Domain.User", null)
+                        .WithMany()
+                        .HasForeignKey("InitiatorId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Castor.Api.Domain.Innovation", "Innovation")
+                        .WithMany()
+                        .HasForeignKey("InnovationId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Castor.Api.Domain.ProblemReport", "ProblemReport")
+                        .WithMany()
+                        .HasForeignKey("ProblemReportId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("ChallengeArea");
+
+                    b.Navigation("Innovation");
+
+                    b.Navigation("ProblemReport");
+                });
+
             modelBuilder.Entity("Castor.Api.Domain.FitAssessment", b =>
                 {
                     b.HasOne("Castor.Api.Domain.User", null)
@@ -922,6 +1042,20 @@ namespace Castor.Api.Migrations
                         .IsRequired();
 
                     b.Navigation("Innovation");
+                });
+
+            modelBuilder.Entity("Castor.Api.Domain.Message", b =>
+                {
+                    b.HasOne("Castor.Api.Domain.User", null)
+                        .WithMany()
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Castor.Api.Domain.Conversation", null)
+                        .WithMany()
+                        .HasForeignKey("ConversationId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Castor.Api.Domain.Persona", b =>

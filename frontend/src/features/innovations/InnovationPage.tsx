@@ -1,5 +1,6 @@
 import { useParams } from 'react-router'
 import { useGetApiInnovationsInnovationId, type InnovationResponse } from '@/api/generated/castor'
+import { PartnershipSection } from '@/features/conversations/PartnershipSection'
 import { FitAssessmentSection } from '@/features/fit-assessments/FitAssessmentSection'
 import { usePageTitle } from '@/hooks/use-page-title'
 import { errorMessage } from '@/lib/error-message'
@@ -12,7 +13,10 @@ const sections: { key: keyof InnovationResponse; title: string }[] = [
   { key: 'evidence', title: 'Czy to działa?' },
 ]
 
-/** An innovation card with "Sprawdź dla mojej gminy" (module VII). The full library view comes with module II. */
+/**
+ * An innovation card with "Sprawdź dla mojej gminy" (module VII) and "Napisz do zespołu innowacji" (module V). The
+ * full library view comes with module II.
+ */
 export function InnovationPage() {
   const { innovationId = '' } = useParams()
   const innovation = useGetApiInnovationsInnovationId(innovationId)
@@ -95,6 +99,7 @@ export function InnovationPage() {
       </div>
 
       <FitAssessmentSection innovationId={card.id} />
+      <PartnershipSection innovationId={card.id} innovationTitle={card.title} />
     </>
   )
 }

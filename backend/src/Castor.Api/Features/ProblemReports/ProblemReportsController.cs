@@ -17,7 +17,8 @@ public sealed class ProblemReportsController(
     GetProblemReportHandler get,
     TrackProblemReportHandler track,
     ClaimProblemReportHandler claim,
-    ListMyProblemReportsHandler listMine) : ControllerBase
+    ListMyProblemReportsHandler listMine,
+    MarkProblemReportAnsweredHandler markAnswered) : ControllerBase
 {
     public const string TrackingCodeHeader = "X-Tracking-Code";
 
@@ -73,5 +74,13 @@ public sealed class ProblemReportsController(
     public Task<IReadOnlyList<ProblemReportSummaryResponse>> Mine(CancellationToken cancellationToken)
     {
         return listMine.HandleAsync(cancellationToken);
+    }
+
+    /// <summary>An expert of the report's areas: "with an expert" → "answered". Administrators use the panel's move.</summary>
+    [Authorize(Roles = nameof(UserRole.EXPERT))]
+    [HttpPost("{problemReportId:guid}/mark-answered")]
+    public Task<ProblemReportSummaryResponse> MarkAnswered(Guid problemReportId, CancellationToken cancellationToken)
+    {
+        return markAnswered.HandleAsync(problemReportId, cancellationToken);
     }
 }

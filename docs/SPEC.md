@@ -312,13 +312,14 @@ Wyszukiwanie pełnotekstowe (6.4 krok 2): konfiguracja `simple` + `unaccent` + `
 
   | Rodzaj | Uczestnicy |
   |---|---|
-  | `PROBLEM_REPORT` | autor albo posiadacz kodu, admini, przypisany ekspert |
+  | `PROBLEM_REPORT` | autor albo posiadacz kodu, admini, eksperci obszarów zgłoszenia (bez przypisywania) |
   | `EXPERT_QUESTION` | pytający, eksperci obszaru (odpowiada którykolwiek), admini |
   | `PARTNERSHIP` | inicjator, admini, drugi użytkownik, jeśli ma konto |
 
   Wiadomość do „zespołu innowacji” ROPS (organizacja bez konta) trafia do adminów, którzy pośredniczą; przy innowacji z pomysłu użytkownika — do autora.
+  - Każde zgłoszenie ma od początku swój wątek. Wysłanie szkicu odpowiedzi publikuje go jako wiadomość ROPS, czyści szkic i ustawia `ANSWERED`.
 - **SignalR (bez e-maili):** hub `/hubs/live`. Grupy: `admins`, `experts:{obszar}`, `report:{trackingCode}`, `user:{id}`. Zdarzenia: `ProblemReportCreated`, `ProblemReportStatusChanged`, `MessagePosted`, `IdeaSubmitted`.
-- **API:** `GET/POST /api/conversations`, `POST /api/conversations/{id}/messages`, `PATCH /api/problem-reports/{id}/status`.
+- **API:** `GET /api/conversations`, `GET /api/conversations/{id}`, `POST /api/conversations/{id}/messages`, `POST /api/conversations/expert-questions`, `POST /api/conversations/partnerships`, `POST /api/problem-reports/{id}/mark-answered` (ekspert), `POST /api/admin/problem-reports/{id}/reply-draft/send`; admin zmienia status przez `POST /api/admin/problem-reports/{id}/move` (moduł VI).
 
 
 
@@ -457,4 +458,6 @@ Moduł VI — 2026-10-03:
 | D-40 | Nabór: `DRAFT → OPEN ↔ CLOSED`; otwarcie wymaga kryteriów; szkic z białej plamy pisze asystent i zapisuje jako `DRAFT` | §7 III, VI |
 | D-41 | Przeliczenie genomu usuwa go i zleca zadanie w tle; edycja karty innowacji nie zmienia genomu | §6.3 |
 | D-42 | Odłożone: tryb „Prościej” (II), import raportów do RAG i embeddingi, dodawanie innowacji z linku/PDF przez AI, wykres i mapa radaru | [TODO](TODO.md) |
-
+| D-43 | Wątek zgłoszenia bez przypisywania eksperta: widzą go i piszą w nim wszyscy eksperci z obszarów zgłoszenia | §7 V |
+| D-44 | Wysłanie szkicu odpowiedzi publikuje go jako wiadomość ROPS w wątku zgłoszenia, czyści szkic i ustawia `ANSWERED` | §7 V, VI |
+| D-45 | „Napisz do zespołu innowacji” z karty innowacji otwiera wątek `PARTNERSHIP`: inicjator i admini, którzy pośredniczą; drugi użytkownik dojdzie z modułem III | §7 V |

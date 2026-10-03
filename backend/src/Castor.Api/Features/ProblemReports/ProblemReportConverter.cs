@@ -37,6 +37,7 @@ internal static class ProblemReportConverter
             matches,
             hybridResponse,
             similar,
+            view.ConversationId,
             report.CreatedAt);
     }
 

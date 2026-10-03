@@ -157,3 +157,7 @@ _Avoid_: Thread, czat
 
 **Message** (wiadomość):
 Jedna wypowiedź w wątku.
+
+**SenderRole** (rola w wątku):
+W jakim charakterze ktoś pisze w wątku: inicjator (autor zgłoszenia, pytający, proponujący współpracę), ekspert albo ROPS (admin). To nie rola konta: ekspert pytający innych ekspertów jest inicjatorem.
+_Avoid_: rola (bez dopowiedzenia), author type

@@ -12,6 +12,9 @@ import { KnowledgePage } from '@/features/admin/KnowledgePage'
 import { RadarPage } from '@/features/admin/RadarPage'
 import { UsersPage } from '@/features/admin/UsersPage'
 import { SignInPage } from '@/features/account/SignInPage'
+import { AskExpertPage } from '@/features/conversations/AskExpertPage'
+import { ConversationPage } from '@/features/conversations/ConversationPage'
+import { ConversationsPage } from '@/features/conversations/ConversationsPage'
 import { HomePage } from '@/features/home/HomePage'
 import { InnovationPage } from '@/features/innovations/InnovationPage'
 import { NotFoundPage } from '@/features/not-found/NotFoundPage'
@@ -50,6 +53,9 @@ export const router = createBrowserRouter([
       { path: 'sledz', element: <TrackProblemReportPage /> },
       { path: 'zgloszenie/:trackingCode', element: <TrackProblemReportPage /> },
       { path: 'moje-zgloszenia', element: <MyProblemReportsPage /> },
+      { path: 'watki', element: <ConversationsPage /> },
+      { path: 'watki/:conversationId', element: <ConversationPage /> },
+      { path: 'zapytaj-eksperta', element: <AskExpertPage /> },
       { path: 'innowacje/:innovationId', element: <InnovationPage /> },
       {
         path: 'admin',

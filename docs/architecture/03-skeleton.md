@@ -91,6 +91,19 @@ Moduł VI dołożył (SPEC §7 VI):
 | `Features/` | `ProblemReports/InboxProblemReportsController` (`/api/admin/problem-reports`), `Users`, `InnovationGenomes`, `Innovations/AdminInnovationsController`, `BackgroundJobs`, `Radar`, `GrantCalls` (publiczne i admin), `ChallengeAreas` |
 | `Migrations/` | `AdminPanelAndGrantCalls` (także skala `Measure` 19,8 i zapas długości tekstów po anonimizacji) |
 
+Moduł V dołożył (SPEC §7 V):
+
+| Miejsce | Zawartość |
+|---|---|
+| `Domain/Conversations/` | `Conversation` (trzy rodzaje, widoczność `VisibleTo(ConversationReader)`, rola piszącego, `Post`), `Message`, `ConversationKind`, `SenderRole`; w `ProblemReport`: `MarkAnsweredBy` (ekspert), `ReopenAfterAuthorMessage`, `SendReplyDraft` |
+| `Persistence/Conversations/` | mapowanie; jeden wątek na zgłoszenie (indeks unikalny), `CHECK` spójności kolumn rodzaju i anonimowych wiadomości |
+| `Queries/Conversations/` | `ExpertChallengeAreasQuery` — obszary eksperta z bazy |
+| `Infrastructure/Realtime/` | `LiveHub`: grupy `experts:{obszar}` i `report:{kod}`, metoda `FollowProblemReport(kod)`, zestawy grup zgłoszenia i wątku; zdarzenie `MessagePosted` |
+| `Features/` | `Conversations` (`/api/conversations`: lista, wątek — także kodem w nagłówku `X-Tracking-Code`, wiadomość, pytanie do ekspertów, partnerstwo), `ProblemReports` (`mark-answered` eksperta, `reply-draft/send` admina; wątek zakładany razem ze zgłoszeniem) |
+| `Migrations/` | `Conversations` (wątki dla istniejących zgłoszeń) |
+
+Frontend modułu V: `features/conversations/` (wątek, „Moje wątki”, „Zapytaj eksperta”, „Napisz do zespołu innowacji”), oś statusów i wątek na „Śledź zgłoszenie”, wysyłka odpowiedzi i wątek w skrzynce admina; `useLiveEvent` słucha kilku zdarzeń i może śledzić zgłoszenie kodem.
+
 Workspace'ów i globalnego filtra izolacji **nie ma** — dane platformy są wspólne ([`00-stack.md`](00-stack.md) · Dostęp do danych).
 
 ## Co jest w `frontend/`

@@ -5,6 +5,7 @@ namespace Castor.Api.Features.ProblemReports;
 /// <param name="OriginalDescription">Only for the author and administrators, and only when consent was given.</param>
 /// <param name="AwaitsAnswers">The clarifying questions wait for answers; matching runs after them.</param>
 /// <param name="HasAuthor">False for an anonymous report that can still be claimed with its code.</param>
+/// <param name="ConversationId">The report's thread; a visitor opens it with the same tracking code.</param>
 public sealed record ProblemReportResponse(
     Guid Id,
     string TrackingCode,
@@ -22,4 +23,5 @@ public sealed record ProblemReportResponse(
     IReadOnlyList<MatchResponse> Matches,
     HybridResponse? Hybrid,
     SimilarProblemReportsResponse SimilarReports,
+    Guid ConversationId,
     DateTimeOffset CreatedAt);

@@ -12,6 +12,7 @@ public sealed class InboxProblemReportsController(
     GetInboxProblemReportHandler get,
     DraftProblemReportReplyHandler draftReply,
     SaveProblemReportReplyDraftHandler saveReplyDraft,
+    SendProblemReportReplyHandler sendReply,
     MoveProblemReportHandler move) : ControllerBase
 {
     [HttpGet]
@@ -41,6 +42,12 @@ public sealed class InboxProblemReportsController(
         CancellationToken cancellationToken)
     {
         return saveReplyDraft.HandleAsync(problemReportId, request, cancellationToken);
+    }
+
+    [HttpPost("{problemReportId:guid}/reply-draft/send")]
+    public Task<InboxProblemReportResponse> SendReply(Guid problemReportId, CancellationToken cancellationToken)
+    {
+        return sendReply.HandleAsync(problemReportId, cancellationToken);
     }
 
     [HttpPost("{problemReportId:guid}/move")]

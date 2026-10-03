@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
-import { Files, House, MessageSquareText, Search, ShieldCheck } from 'lucide-react'
+import { CircleHelp, Files, House, MessageSquareText, MessagesSquare, Search, ShieldCheck } from 'lucide-react'
 import { Link, Outlet, useLocation } from 'react-router'
+import type { SessionResponse } from '@/api/generated/castor'
 import { AccountLinks } from '@/components/layout/AccountLinks'
 import { BrandMark } from '@/components/layout/BrandMark'
 import { DisplayControls } from '@/components/layout/DisplayControls'
@@ -15,8 +16,26 @@ const navigation: AppShellNavItem[] = [
   { to: '/moje-zgloszenia', label: 'Moje zgłoszenia', icon: Files },
 ]
 
+/** Threads need an account; a report sent without one has its thread on "Śledź zgłoszenie". */
+const signedInNavigation: AppShellNavItem[] = [
+  { to: '/watki', label: 'Moje wątki', icon: MessagesSquare },
+  { to: '/zapytaj-eksperta', label: 'Zapytaj eksperta', icon: CircleHelp },
+]
+
 /** Shown only to administrators; the API refuses everyone else anyway. */
 const adminNavigation: AppShellNavItem = { to: '/admin', label: 'Panel administratora', icon: ShieldCheck }
+
+function navigationFor(session: SessionResponse | undefined): AppShellNavItem[] {
+  if (!session?.signedIn) {
+    return navigation
+  }
+
+  if (session.role === 'ADMIN') {
+    return [...navigation, ...signedInNavigation, adminNavigation]
+  }
+
+  return [...navigation, ...signedInNavigation]
+}
 
 /**
  * Castor's chrome around every page (AppShell from the design system). After a navigation the focus moves to
@@ -31,7 +50,7 @@ export function AppLayout() {
   const [preferences, setPreferences] = useDisplayPreferences()
   const fullBleed = location.pathname === '/'
   const session = useSession()
-  const links = session?.role === 'ADMIN' ? [...navigation, adminNavigation] : navigation
+  const links = navigationFor(session)
 
   useEffect(() => {
     if (previousPathname.current === location.pathname) {

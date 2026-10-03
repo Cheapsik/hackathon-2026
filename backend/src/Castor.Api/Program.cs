@@ -3,6 +3,7 @@ using System.Text.Json.Serialization;
 using System.Threading.RateLimiting;
 using Castor.Api.Features.BackgroundJobs;
 using Castor.Api.Features.ChallengeAreas;
+using Castor.Api.Features.Conversations;
 using Castor.Api.Features.FitAssessments;
 using Castor.Api.Features.GrantCalls;
 using Castor.Api.Features.InnovationGenomes;
@@ -170,7 +171,17 @@ builder.Services.AddScoped<ListInboxProblemReportsHandler>();
 builder.Services.AddScoped<GetInboxProblemReportHandler>();
 builder.Services.AddScoped<DraftProblemReportReplyHandler>();
 builder.Services.AddScoped<SaveProblemReportReplyDraftHandler>();
+builder.Services.AddScoped<SendProblemReportReplyHandler>();
 builder.Services.AddScoped<MoveProblemReportHandler>();
+builder.Services.AddScoped<MarkProblemReportAnsweredHandler>();
+
+// Conversations
+builder.Services.AddScoped<ExpertChallengeAreasQuery>();
+builder.Services.AddScoped<ListConversationsHandler>();
+builder.Services.AddScoped<GetConversationHandler>();
+builder.Services.AddScoped<PostMessageHandler>();
+builder.Services.AddScoped<CreateExpertQuestionHandler>();
+builder.Services.AddScoped<CreatePartnershipHandler>();
 
 // Innovations
 builder.Services.AddScoped<GetInnovationHandler>();

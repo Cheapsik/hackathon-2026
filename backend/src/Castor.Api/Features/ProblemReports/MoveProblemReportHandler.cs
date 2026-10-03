@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Castor.Api.Features.ProblemReports;
 
-/// <summary>An administrator moves a report forward or closes it; administrators and the author hear it live.</summary>
+/// <summary>An administrator moves a report forward or closes it; everyone who may see the report hears it live.</summary>
 public sealed class MoveProblemReportHandler(
     CastorDbContext db,
     ProblemReportViewQuery viewQuery,
@@ -33,12 +33,8 @@ public sealed class MoveProblemReportHandler(
 
         string statusText = report.Status.ToString();
         var changed = new ProblemReportStatusChangedEvent(report.Id, statusText, report.UpdatedAt);
-        await hub.Clients.Group(LiveHub.AdminsGroup).SendAsync(LiveEvents.ProblemReportStatusChanged, changed, cancellationToken);
-        if (report.AuthorId is Guid authorId)
-        {
-            string authorGroup = LiveHub.UserGroup(authorId);
-            await hub.Clients.Group(authorGroup).SendAsync(LiveEvents.ProblemReportStatusChanged, changed, cancellationToken);
-        }
+        IReadOnlyList<string> groups = LiveHub.ProblemReportGroups(report);
+        await hub.Clients.Groups(groups).SendAsync(LiveEvents.ProblemReportStatusChanged, changed, cancellationToken);
 
         ProblemReportView view = await viewQuery.OfAsync(report, cancellationToken);
         IReadOnlyList<SuggestedExpert> experts = await expertsQuery.ForAsync(report, cancellationToken);

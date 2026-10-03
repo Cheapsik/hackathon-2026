@@ -38,6 +38,10 @@ public sealed class CastorDbContext : DbContext
 
     public DbSet<GrantCall> GrantCalls => Set<GrantCall>();
 
+    public DbSet<Conversation> Conversations => Set<Conversation>();
+
+    public DbSet<Message> Messages => Set<Message>();
+
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {
         ModelConventions.ApplyTo(configurationBuilder);

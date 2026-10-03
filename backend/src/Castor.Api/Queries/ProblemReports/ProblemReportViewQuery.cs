@@ -33,7 +33,16 @@ public sealed class ProblemReportViewQuery(CastorDbContext db)
 
         SimilarProblemReports similar = await CountSimilarAsync(report, cancellationToken);
 
-        return new ProblemReportView(matches, hybridSources, orderedAreas, similar);
+        // Every report gets its thread when it is created; reports from before threads got one in the migration.
+        List<Guid> conversationIds = await db.Conversations
+            .Where(conversation => conversation.ProblemReportId == report.Id)
+            .Select(conversation => conversation.Id)
+            .ToListAsync(cancellationToken);
+        Guid conversationId = conversationIds.Count == 1
+            ? conversationIds[0]
+            : throw new InvalidOperationException($"Problem report {report.Id} has no thread.");
+
+        return new ProblemReportView(matches, hybridSources, orderedAreas, similar, conversationId);
     }
 
     /// <summary>

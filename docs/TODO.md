@@ -27,7 +27,13 @@ Kolumna `embedding vector(N)` genomu jeszcze nie istnieje — dojdzie migracją 
 - **„Prościej”** — zatwierdzanie tekstów łatwych do czytania dojdzie z trybem „Prościej” w module II.
 - **Dodanie innowacji z linku do karty ROPS albo z PDF** (AI wypełnia pola) — teraz tylko ręczny formularz.
 - **Import raportów do RAG i przeliczanie embeddingów** — czeka na decyzję o embeddingach.
-- **Skrzynka: fiszki (pomysły)** dojdą z modułem III; **wysyłka szkicu odpowiedzi** — z wątkami w module V.
+- **Skrzynka: fiszki (pomysły)** dojdą z modułem III.
+
+## Moduł V — co zostało
+
+- **Drugi użytkownik w partnerstwie** (SPEC §7 V): przy innowacji z pomysłu użytkownika wątek ma trafiać do autora — dojdzie z pomysłami w module III. Teraz pośredniczą zawsze admini.
+- **Zdarzenie `IdeaSubmitted`** — z modułem III.
+- **Nieprzeczytane wiadomości**: brak licznika i znacznika przeczytania; „Moje wątki” sortują po ostatniej wiadomości.
 
 ## Moduł VII — co zostało
 

@@ -4,8 +4,8 @@ using Microsoft.EntityFrameworkCore;
 namespace Castor.Api.Features.ProblemReports;
 
 /// <summary>
-/// "Opisz problem": the report is stored and announced to administrators first, then classified; without clarifying
-/// questions it is matched at once. Only the anonymized description reaches the language model.
+/// "Opisz problem": the report is stored with its thread and announced to administrators first, then classified;
+/// without clarifying questions it is matched at once. Only the anonymized description reaches the language model.
 /// </summary>
 public sealed class CreateProblemReportHandler(
     CastorDbContext db,
@@ -35,6 +35,8 @@ public sealed class CreateProblemReportHandler(
             trackingCode,
             clock.UtcNow);
         db.ProblemReports.Add(report);
+        var conversation = Conversation.ForProblemReport(report, report.CreatedAt);
+        db.Conversations.Add(conversation);
         await db.SaveChangesAsync(cancellationToken);
 
         ProblemReportCreatedEvent created = report.ToCreatedEvent();

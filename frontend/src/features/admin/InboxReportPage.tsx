@@ -3,20 +3,27 @@ import { useQueryClient } from '@tanstack/react-query'
 import { Link, useParams } from 'react-router'
 import {
   getGetApiAdminProblemReportsProblemReportIdQueryKey,
+  getGetApiConversationsConversationIdQueryKey,
   useGetApiAdminProblemReportsProblemReportId,
   usePostApiAdminProblemReportsProblemReportIdMove,
   usePostApiAdminProblemReportsProblemReportIdReplyDraft,
+  usePostApiAdminProblemReportsProblemReportIdReplyDraftSend,
   usePutApiAdminProblemReportsProblemReportIdReplyDraft,
   type InboxProblemReportResponse,
 } from '@/api/generated/castor'
 import { urgencyLabels } from '@/features/admin/labels'
+import { ConversationThread } from '@/features/conversations/ConversationThread'
 import { ProblemReportResults } from '@/features/problem-reports/ProblemReportResults'
 import { problemReportStatusLabels, statusLabel } from '@/features/problem-reports/status-labels'
+import { useLiveEvent } from '@/hooks/use-live-event'
 import { usePageTitle } from '@/hooks/use-page-title'
 import { errorMessage } from '@/lib/error-message'
 import { formatDateTime, timeSince } from '@/lib/format'
 
-/** One report as an administrator works on it: classification, suggested experts, the reply draft and the status. */
+/**
+ * One report as an administrator works on it: classification, suggested experts, the status, the reply draft and the
+ * report's thread.
+ */
 export function InboxReportPage() {
   const { problemReportId = '' } = useParams()
   const report = useGetApiAdminProblemReportsProblemReportId(problemReportId)
@@ -41,6 +48,14 @@ export function InboxReportPage() {
 
 function InboxReport({ item }: { item: InboxProblemReportResponse }) {
   const report = item.report
+  const queryClient = useQueryClient()
+
+  // A message from the author moves an answered report back to analysis while the page is open.
+  useLiveEvent('ProblemReportStatusChanged', (payload) => {
+    if (typeof payload === 'object' && payload !== null && 'id' in payload && payload.id === report.id) {
+      void queryClient.invalidateQueries({ queryKey: getGetApiAdminProblemReportsProblemReportIdQueryKey(report.id) })
+    }
+  })
 
   return (
     <>
@@ -86,7 +101,7 @@ function InboxReport({ item }: { item: InboxProblemReportResponse }) {
         </ul>
       )}
 
-      <StatusForm problemReportId={report.id} status={report.status} />
+      <StatusForm key={report.status} problemReportId={report.id} status={report.status} />
       {/* A new draft from the assistant starts the form again with its text. */}
       <ReplyDraftForm
         key={item.replyDraftUpdatedAt ?? 'none'}
@@ -94,6 +109,11 @@ function InboxReport({ item }: { item: InboxProblemReportResponse }) {
         draft={item.replyDraft}
         updatedAt={item.replyDraftUpdatedAt}
       />
+      <SendReplyButton problemReportId={report.id} conversationId={report.conversationId} hasDraft={item.replyDraft !== null} />
+
+      <h2>Wątek zgłoszenia</h2>
+      <p>Rozmowa z autorem zgłoszenia i ekspertami jego obszarów. Autor widzi ją na stronie „Śledź zgłoszenie”.</p>
+      <ConversationThread conversationId={report.conversationId} headingLevel={3} />
 
       {!report.awaitsAnswers && <ProblemReportResults report={report} headingLevel={2} />}
     </>
@@ -161,7 +181,7 @@ function ReplyDraftForm({ problemReportId, draft, updatedAt }: { problemReportId
   return (
     <section aria-labelledby="reply-title">
       <h2 id="reply-title">Szkic odpowiedzi</h2>
-      <p>Asystent przygotowuje szkic, który poprawiasz. Wysyłka dojdzie z wątkami zgłoszeń (moduł V).</p>
+      <p>Asystent przygotowuje szkic, który poprawiasz. Zapisany szkic wysyłasz do wątku zgłoszenia przyciskiem poniżej.</p>
       {updatedAt && <p>Ostatnia zmiana: {formatDateTime(updatedAt)}</p>}
       <p>
         <button type="button" onClick={() => generate.mutate({ problemReportId }, { onSuccess: store })} disabled={generate.isPending}>
@@ -189,6 +209,52 @@ function ReplyDraftForm({ problemReportId, draft, updatedAt }: { problemReportId
           </p>
         )}
         {(generate.isError || save.isError) && <p role="alert">{errorMessage(generate.error ?? save.error)}</p>}
+      </div>
+    </section>
+  )
+}
+
+/**
+ * Publishes the saved draft as a ROPS message in the report's thread and marks the report answered. Kept outside the
+ * draft form, which starts again empty once the draft is gone, so the confirmation stays on screen.
+ */
+function SendReplyButton({ problemReportId, conversationId, hasDraft }: { problemReportId: string; conversationId: string; hasDraft: boolean }) {
+  const queryClient = useQueryClient()
+  const send = usePostApiAdminProblemReportsProblemReportIdReplyDraftSend()
+  const store = useStoreReport(problemReportId)
+
+  function sendReply() {
+    send.mutate(
+      { problemReportId },
+      {
+        onSuccess: (response) => {
+          store(response)
+          void queryClient.invalidateQueries({ queryKey: getGetApiConversationsConversationIdQueryKey(conversationId) })
+        },
+      },
+    )
+  }
+
+  return (
+    <section aria-labelledby="send-reply-title">
+      <h2 id="send-reply-title">Wysyłka odpowiedzi</h2>
+      <p>Wysyłany jest ostatnio zapisany szkic, więc najpierw zapisz zmiany. Zgłoszenie dostanie status „odpowiedź”.</p>
+      <p>
+        <button type="button" onClick={sendReply} disabled={send.isPending || !hasDraft}>
+          Wyślij odpowiedź autorowi
+        </button>
+      </p>
+      <div aria-live="polite">
+        {send.isSuccess && (
+          <p>
+            <output>Odpowiedź wysłana do wątku zgłoszenia.</output>
+          </p>
+        )}
+        {send.isError && (
+          <p role="alert">
+            {errorMessage(send.error, { 409: 'Nie ma zapisanego szkicu albo zgłoszenie jest już zamknięte.' })}
+          </p>
+        )}
       </div>
     </section>
   )
