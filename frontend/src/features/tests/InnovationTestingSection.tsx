@@ -1,4 +1,4 @@
-import { useId, useState, type FormEvent } from 'react'
+import { useState, type FormEvent } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import { Link } from 'react-router'
 import {
@@ -11,9 +11,18 @@ import {
   usePutApiInnovationsInnovationIdSeeksTesters,
   type InnovationResponse,
 } from '@/api/generated/castor'
+import { CeramicCard, Section, SegmentedControl, SoftButton, TextAreaField, type SegmentedOption } from '@/design-system'
 import { DictationButton } from '@/features/problem-reports/DictationButton'
 import { useSession } from '@/hooks/use-session'
 import { errorMessage } from '@/lib/error-message'
+
+const linkClass = 'font-medium text-text-primary underline underline-offset-4'
+
+const starOptions: SegmentedOption<string>[] = [1, 2, 3, 4, 5].map((value) => ({
+  value: String(value),
+  label: `${value} ★`,
+  ariaLabel: `${value} na 5 gwiazdek`,
+}))
 
 /** Ratings on an innovation card, the AI summary for the team, and the "szukam testerów" switch. */
 export function InnovationTestingSection({
@@ -35,8 +44,6 @@ export function InnovationTestingSection({
   const [whatWorks, setWhatWorks] = useState('')
   const [whatToImprove, setWhatToImprove] = useState('')
   const [dictated, setDictated] = useState(false)
-  const worksId = useId()
-  const improveId = useId()
   const mine = feedback.data?.data.find((entry) => entry.mine)
 
   function submit(event: FormEvent<HTMLFormElement>) {
@@ -53,25 +60,33 @@ export function InnovationTestingSection({
   }
 
   return (
-    <section aria-labelledby="testing-title" className="no-print">
-      <h2 id="testing-title">Poletko - ocena i testy</h2>
-      {innovation.seeksTesters && (
-        <p>
-          Zespół szuka testerów. <Link to="/testy">Zapisz się na liście testów</Link>
-          {session?.signedIn ? (
-            <>
-              {' '}
-              albo <Link to="/profil-testera">uzupełnij profil testera</Link>.
-            </>
-          ) : null}
-        </p>
-      )}
-
-      {innovation.canToggleSeeksTesters && (
-        <p>
-          <button
-            type="button"
-            disabled={toggle.isPending}
+    <Section
+      title="Poletko - ocena i testy"
+      description={
+        innovation.seeksTesters ? (
+          <>
+            Zespół szuka testerów.{' '}
+            <Link to="/testy" className={linkClass}>
+              Zapisz się na liście testów
+            </Link>
+            {session?.signedIn ? (
+              <>
+                {' '}
+                albo{' '}
+                <Link to="/profil-testera" className={linkClass}>
+                  uzupełnij profil testera
+                </Link>
+                .
+              </>
+            ) : null}
+          </>
+        ) : undefined
+      }
+      action={
+        innovation.canToggleSeeksTesters ? (
+          <SoftButton
+            aria-pressed={innovation.seeksTesters}
+            loading={toggle.isPending}
             onClick={() =>
               toggle.mutate(
                 { innovationId: innovation.id, data: { seeksTesters: !innovation.seeksTesters } },
@@ -85,12 +100,14 @@ export function InnovationTestingSection({
             }
           >
             {innovation.seeksTesters ? 'Wyłącz „szukam testerów”' : 'Włącz „szukam testerów”'}
-          </button>
-        </p>
-      )}
-      <div aria-live="polite">
+          </SoftButton>
+        ) : undefined
+      }
+      className="no-print"
+    >
+      <div aria-live="polite" className="empty:hidden">
         {toggle.isError && (
-          <p role="alert">
+          <p role="alert" className="rounded-control bg-danger-soft p-3 text-body-sm text-danger">
             {errorMessage(toggle.error, {
               403: 'Tylko zespół innowacji albo ROPS włącza szukanie testerów.',
               409: 'Testerów szuka się przy etapie pomysł albo prototyp.',
@@ -99,79 +116,85 @@ export function InnovationTestingSection({
         )}
       </div>
 
-      {!session?.signedIn && (
-        <p>
-          <Link to="/logowanie">Zaloguj się</Link>, żeby ocenić innowację.
-        </p>
-      )}
+      <CeramicCard padding="lg" className="max-w-default">
+        {!session?.signedIn && (
+          <p className="text-body-sm text-text-muted">
+            <Link to="/logowanie" className={linkClass}>
+              Zaloguj się
+            </Link>
+            , żeby ocenić innowację.
+          </p>
+        )}
 
-      {session?.signedIn && (
-        <form onSubmit={submit}>
-          <fieldset>
-            <legend>{mine ? 'Popraw swoją ocenę' : 'Oceń innowację'}</legend>
-            <p>
-              {[1, 2, 3, 4, 5].map((value) => (
-                <label key={value}>
-                  <input type="radio" name="stars" checked={stars === value} onChange={() => setStars(value)} /> {value}{' '}
-                </label>
-              ))}
-              gwiazdek
-            </p>
-            <p>
-              <label htmlFor={worksId}>Co działa</label>
-              <br />
-              <textarea id={worksId} rows={3} cols={60} maxLength={4000} value={whatWorks} onChange={(event) => setWhatWorks(event.target.value)} />
-            </p>
-            <p>
-              <label htmlFor={improveId}>Co poprawić</label>
-              <br />
-              <textarea
-                id={improveId}
-                rows={3}
-                cols={60}
-                maxLength={4000}
-                value={whatToImprove}
-                onChange={(event) => setWhatToImprove(event.target.value)}
+        {session?.signedIn && (
+          <form className="grid gap-4" onSubmit={submit}>
+            <div className="grid gap-2">
+              <p className="text-label font-medium">{mine ? 'Popraw swoją ocenę' : 'Oceń innowację'}</p>
+              <SegmentedControl
+                label="Ocena w gwiazdkach, od 1 do 5"
+                options={starOptions}
+                value={String(stars)}
+                onValueChange={(value) => setStars(Number(value))}
               />
-            </p>
+            </div>
+            <TextAreaField label="Co działa" rows={3} maxLength={4000} value={whatWorks} onChange={(event) => setWhatWorks(event.target.value)} />
+            <TextAreaField
+              label="Co poprawić"
+              rows={3}
+              maxLength={4000}
+              value={whatToImprove}
+              onChange={(event) => setWhatToImprove(event.target.value)}
+            />
             <DictationButton
               onPhrase={(phrase) => {
                 setDictated(true)
                 setWhatToImprove((current) => (current ? `${current} ${phrase}` : phrase))
               }}
             />
-            <button type="submit" disabled={write.isPending}>
-              Zapisz ocenę
-            </button>
-          </fieldset>
-          <div aria-live="polite">
-            {write.isError && <p role="alert">{errorMessage(write.error, { 400: 'Podaj gwiazdki i napisz, co działa albo co poprawić.' })}</p>}
-            {write.isSuccess && <p>Ocena zapisana.</p>}
-          </div>
-        </form>
-      )}
+            <div>
+              <SoftButton type="submit" variant="primary" loading={write.isPending}>
+                Zapisz ocenę
+              </SoftButton>
+            </div>
+            <div aria-live="polite" className="empty:hidden">
+              {write.isError && (
+                <p role="alert" className="rounded-control bg-danger-soft p-3 text-body-sm text-danger">
+                  {errorMessage(write.error, { 400: 'Podaj gwiazdki i napisz, co działa albo co poprawić.' })}
+                </p>
+              )}
+              {write.isSuccess && <p className="rounded-control bg-success-soft p-3 text-body-sm text-success">Ocena zapisana.</p>}
+            </div>
+          </form>
+        )}
+      </CeramicCard>
 
       {innovation.canToggleSeeksTesters && summary.isSuccess && (
-        <section aria-labelledby="summary-title">
-          <h3 id="summary-title">Podsumowanie ocen</h3>
-          <p>
-            Ocen: {summary.data.data.ratings}
-            {Number(summary.data.data.ratings) > 0 && `, średnia ${summary.data.data.averageStars} na 5`}.
-          </p>
-          {summary.data.data.improvements.length === 0 ? (
-            <p>Brak usprawnień do zaproponowania.</p>
-          ) : (
-            <ul>
-              {summary.data.data.improvements.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          )}
-        </section>
+        <CeramicCard asChild padding="lg">
+          <section aria-labelledby="summary-title" className="grid max-w-default gap-3">
+            <h3 id="summary-title" className="text-body font-medium">
+              Podsumowanie ocen
+            </h3>
+            <p className="text-body-sm">
+              Ocen: {summary.data.data.ratings}
+              {Number(summary.data.data.ratings) > 0 && `, średnia ${summary.data.data.averageStars} na 5`}.
+            </p>
+            {summary.data.data.improvements.length === 0 ? (
+              <p className="text-body-sm text-text-muted">Brak usprawnień do zaproponowania.</p>
+            ) : (
+              <ul className="grid list-disc gap-1.5 pl-5 text-body-sm">
+                {summary.data.data.improvements.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            )}
+          </section>
+        </CeramicCard>
       )}
       {innovation.canToggleSeeksTesters && summary.isError && (
-        <p role="alert">{errorMessage(summary.error, { 403: 'Podsumowanie ocen widzi zespół innowacji i ROPS.' })}</p>
+        <p role="alert" className="rounded-control bg-danger-soft p-3 text-body-sm text-danger">
+          {errorMessage(summary.error, { 403: 'Podsumowanie ocen widzi zespół innowacji i ROPS.' })}
+        </p>
       )}
-    </section>
+    </Section>
   )
 }

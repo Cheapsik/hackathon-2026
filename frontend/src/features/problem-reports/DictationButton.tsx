@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
+import { Mic, MicOff } from 'lucide-react'
+import { SoftButton } from '@/design-system'
 import { speechRecognitionConstructor, type SpeechRecognitionLike } from '@/lib/speech-recognition'
 
 interface DictationButtonProps {
@@ -21,7 +23,11 @@ export function DictationButton({ onPhrase }: DictationButtonProps) {
   }, [])
 
   if (!Recognition) {
-    return <p>Dyktowanie głosem działa w przeglądarkach Chrome i Edge. Tutaj wpisz opis w polu tekstowym.</p>
+    return (
+      <p className="text-label text-text-muted">
+        Dyktowanie głosem działa w przeglądarkach Chrome i Edge. Tutaj wpisz opis w polu tekstowym.
+      </p>
+    )
   }
 
   function toggle() {
@@ -54,13 +60,19 @@ export function DictationButton({ onPhrase }: DictationButtonProps) {
   }
 
   return (
-    <div>
-      <button type="button" onClick={toggle} aria-pressed={listening}>
+    <div className="grid justify-items-start gap-2">
+      <SoftButton onClick={toggle} aria-pressed={listening} icon={listening ? <MicOff aria-hidden /> : <Mic aria-hidden />}>
         {listening ? 'Zatrzymaj dyktowanie' : 'Dyktuj głosem'}
-      </button>
-      <p>Mikrofon działa w Chrome i Edge. Tekst możesz zawsze poprawić w polu powyżej.</p>
-      <p><output>{listening ? 'Słucham… Mów wyraźnie, po polsku.' : ''}</output></p>
-      {failure && <p role="alert">{failure}</p>}
+      </SoftButton>
+      <p className="text-label text-text-muted">Mikrofon działa w Chrome i Edge. Tekst możesz zawsze poprawić w polu powyżej.</p>
+      <p className="text-body-sm font-medium empty:hidden">
+        <output>{listening ? 'Słucham… Mów wyraźnie, po polsku.' : ''}</output>
+      </p>
+      {failure && (
+        <p role="alert" className="rounded-control bg-danger-soft p-3 text-body-sm text-danger">
+          {failure}
+        </p>
+      )}
     </div>
   )
 }

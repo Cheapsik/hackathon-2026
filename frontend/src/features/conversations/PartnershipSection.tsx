@@ -1,6 +1,7 @@
-import { useId, useState, type FormEvent } from 'react'
+import { useState, type FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router'
 import { usePostApiConversationsPartnerships } from '@/api/generated/castor'
+import { CeramicCard, Section, SoftButton, TextAreaField, TextField } from '@/design-system'
 import { useSession } from '@/hooks/use-session'
 import { errorMessage } from '@/lib/error-message'
 
@@ -16,17 +17,24 @@ export function PartnershipSection({ innovationId, innovationTitle }: { innovati
   const session = useSession()
 
   return (
-    <section aria-labelledby="partnership-title" className="no-print">
-      <h2 id="partnership-title">Napisz do zespołu innowacji</h2>
-      <p>Chcesz wdrożyć tę innowację albo współpracować przy niej? ROPS przekaże wiadomość autorom i odpowie w wątku.</p>
-      {session?.signedIn ? (
-        <PartnershipForm innovationId={innovationId} innovationTitle={innovationTitle} />
-      ) : (
-        <p>
-          <Link to="/logowanie">Zaloguj się</Link>, żeby napisać do zespołu innowacji.
-        </p>
-      )}
-    </section>
+    <Section
+      title="Napisz do zespołu innowacji"
+      description="Chcesz wdrożyć tę innowację albo współpracować przy niej? ROPS przekaże wiadomość autorom i odpowie w wątku."
+      className="no-print"
+    >
+      <CeramicCard padding="lg" className="max-w-default">
+        {session?.signedIn ? (
+          <PartnershipForm innovationId={innovationId} innovationTitle={innovationTitle} />
+        ) : (
+          <p className="text-body-sm text-text-muted">
+            <Link to="/logowanie" className="font-medium text-text-primary underline underline-offset-4">
+              Zaloguj się
+            </Link>
+            , żeby napisać do zespołu innowacji.
+          </p>
+        )}
+      </CeramicCard>
+    </Section>
   )
 }
 
@@ -35,8 +43,6 @@ function PartnershipForm({ innovationId, innovationTitle }: { innovationId: stri
   const [text, setText] = useState('')
   const navigate = useNavigate()
   const propose = usePostApiConversationsPartnerships()
-  const subjectId = useId()
-  const textId = useId()
 
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -47,43 +53,35 @@ function PartnershipForm({ innovationId, innovationTitle }: { innovationId: stri
   }
 
   return (
-    <form onSubmit={submit}>
-      <p>
-        <label htmlFor={subjectId}>Temat</label>
-        <br />
-        <input
-          id={subjectId}
-          value={subject}
-          onChange={(event) => setSubject(event.target.value)}
-          maxLength={subjectMaxLength}
-          required
-          size={60}
-        />
-      </p>
-      <p>
-        <label htmlFor={textId}>Wiadomość</label>
-        <br />
-        <textarea
-          id={textId}
-          rows={6}
-          cols={70}
-          value={text}
-          onChange={(event) => setText(event.target.value)}
-          maxLength={messageMaxLength}
-          required
-        />
-      </p>
-      <button type="submit" disabled={propose.isPending}>
-        Wyślij wiadomość
-      </button>
-      <div aria-live="polite">
+    <form className="grid gap-4" onSubmit={submit}>
+      <TextField
+        label="Temat"
+        value={subject}
+        onChange={(event) => setSubject(event.target.value)}
+        maxLength={subjectMaxLength}
+        required
+      />
+      <TextAreaField
+        label="Wiadomość"
+        rows={6}
+        value={text}
+        onChange={(event) => setText(event.target.value)}
+        maxLength={messageMaxLength}
+        required
+      />
+      <div>
+        <SoftButton type="submit" variant="primary" loading={propose.isPending}>
+          Wyślij wiadomość
+        </SoftButton>
+      </div>
+      <div aria-live="polite" className="empty:hidden">
         {propose.isPending && (
-          <p>
+          <p className="text-body-sm text-text-muted">
             <output>Wysyłam wiadomość…</output>
           </p>
         )}
         {propose.isError && (
-          <p role="alert">
+          <p role="alert" className="rounded-control bg-danger-soft p-3 text-body-sm text-danger">
             {errorMessage(propose.error, {
               400: `Wpisz temat (do ${subjectMaxLength} znaków) i wiadomość (do ${messageMaxLength} znaków).`,
               401: 'Sesja wygasła. Zaloguj się ponownie.',
