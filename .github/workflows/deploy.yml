@@ -64,6 +64,11 @@ jobs:
             --tag "castor-frontend:${CASTOR_BRANCH_TAG}" \
             --file frontend/Dockerfile \
             .
+          docker build --pull \
+            --tag "castor-proxy:${GITHUB_SHA}" \
+            --tag "castor-proxy:${CASTOR_BRANCH_TAG}" \
+            --file deploy/nginx-proxy.Dockerfile \
+            .
 
       - name: Create image bundle
         run: |
@@ -72,7 +77,9 @@ jobs:
             "castor-backend:${GITHUB_SHA}" \
             "castor-backend:${CASTOR_BRANCH_TAG}" \
             "castor-frontend:${GITHUB_SHA}" \
-            "castor-frontend:${CASTOR_BRANCH_TAG}"
+            "castor-frontend:${CASTOR_BRANCH_TAG}" \
+            "castor-proxy:${GITHUB_SHA}" \
+            "castor-proxy:${CASTOR_BRANCH_TAG}"
           gzip --fast dist/castor-images.tar
 
       - name: Configure SSH

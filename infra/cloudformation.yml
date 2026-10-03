@@ -18,10 +18,17 @@ Parameters:
 
   ApplicationPort:
     Type: Number
-    Default: 8080
+    Default: 80
     MinValue: 1
     MaxValue: 65535
-    Description: Public TCP port exposed by the Castor frontend.
+    Description: Public HTTP port that redirects to HTTPS.
+
+  HttpsPort:
+    Type: Number
+    Default: 443
+    MinValue: 1
+    MaxValue: 65535
+    Description: Public HTTPS port exposed by the Castor reverse proxy.
 
   InstanceType:
     Type: String
@@ -122,10 +129,15 @@ Resources:
           FromPort: 22
           ToPort: 22
           CidrIp: !Ref SshAllowedCidr
-        - Description: Castor frontend
+        - Description: Castor HTTP redirect
           IpProtocol: tcp
           FromPort: !Ref ApplicationPort
           ToPort: !Ref ApplicationPort
+          CidrIp: !Ref ApplicationAllowedCidr
+        - Description: Castor HTTPS frontend
+          IpProtocol: tcp
+          FromPort: !Ref HttpsPort
+          ToPort: !Ref HttpsPort
           CidrIp: !Ref ApplicationAllowedCidr
       SecurityGroupEgress:
         - Description: Required for operating system updates and container image pulls
@@ -170,6 +182,7 @@ Resources:
 
           install --directory --owner castor --group castor --mode 0750 /opt/castor
           install --mode 0600 --owner castor --group castor /dev/null /opt/castor/.env
+          install --directory --owner castor --group castor --mode 0750 /opt/castor/certs
           install --directory --owner castor --group castor --mode 0700 /home/castor/.ssh
           install --mode 0600 --owner castor --group castor /home/ubuntu/.ssh/authorized_keys /home/castor/.ssh/authorized_keys
 
@@ -221,5 +234,9 @@ Outputs:
     Value: !Sub ssh castor@${PublicIp}
 
   ApplicationUrl:
-    Description: Public application URL before adding TLS and a domain name.
+    Description: Public HTTP endpoint that redirects to HTTPS.
     Value: !Sub http://${PublicIp}:${ApplicationPort}
+
+  HttpsEndpoint:
+    Description: HTTPS endpoint by public IP. Use a DNS name covered by the installed certificate in production.
+    Value: !Sub https://${PublicIp}:${HttpsPort}

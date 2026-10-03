@@ -115,7 +115,7 @@ activate() {
   fi
 
   local service
-  for service in db backend frontend; do
+  for service in db backend frontend proxy; do
     if [[ $(CASTOR_IMAGE_TAG=${target_version} docker compose \
       --env-file "${env_file}" \
       --file "${target_compose}" \
@@ -151,7 +151,8 @@ if [[ -n ${current_version} && ${current_version} != "${version}" ]]; then
   if [[ -n ${old_previous_version} && ${old_previous_version} != "${current_version}" ]]; then
     docker image rm \
       "castor-backend:${old_previous_version}" \
-      "castor-frontend:${old_previous_version}" >/dev/null 2>&1 || true
+      "castor-frontend:${old_previous_version}" \
+      "castor-proxy:${old_previous_version}" >/dev/null 2>&1 || true
   fi
 fi
 printf '%s\n' "${version}" > "${current_version_file}"
