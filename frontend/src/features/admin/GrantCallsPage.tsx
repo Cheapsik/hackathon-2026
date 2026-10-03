@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
+import { Plus, ScrollText } from 'lucide-react'
 import { Link } from 'react-router'
 import {
   getGetApiAdminGrantCallsQueryKey,
@@ -12,9 +13,33 @@ import {
   type GrantCallResponse,
 } from '@/api/generated/castor'
 import { grantCallStatusLabels } from '@/features/admin/labels'
+import {
+  Badge,
+  CeramicCard,
+  CheckboxField,
+  EmptyState,
+  ErrorState,
+  LoadingState,
+  Modal,
+  SoftButton,
+  TextAreaField,
+  TextField,
+  useToast,
+  type BadgeProps,
+} from '@/design-system'
 import { usePageTitle } from '@/hooks/use-page-title'
 import { errorMessage } from '@/lib/error-message'
 import { linesOf } from '@/lib/format'
+
+function statusTone(status: string): BadgeProps['tone'] {
+  if (status === 'OPEN') {
+    return 'success'
+  }
+  if (status === 'CLOSED') {
+    return 'neutral'
+  }
+  return 'warning'
+}
 
 /** "Nabory": drafts (also from the radar's blank spots), opening and closing. An open call enables the Kreator's generator. */
 export function GrantCallsPage() {
@@ -24,74 +49,160 @@ export function GrantCallsPage() {
   const grantCalls = useGetApiAdminGrantCalls()
   const open = usePostApiAdminGrantCallsGrantCallIdOpen()
   const close = usePostApiAdminGrantCallsGrantCallIdClose()
-  const refresh = () => queryClient.invalidateQueries({ queryKey: getGetApiAdminGrantCallsQueryKey() })
+  const { showToast } = useToast()
+  const rows = grantCalls.data?.data ?? []
+  const pageStatus =
+    grantCalls.isPending && !grantCalls.data
+      ? 'loading'
+      : grantCalls.isError
+        ? 'error'
+        : rows.length === 0
+          ? 'empty'
+          : 'ready'
+
+  const refresh = () => void queryClient.invalidateQueries({ queryKey: getGetApiAdminGrantCallsQueryKey() })
 
   return (
-    <>
-      <h1>Nabory</h1>
-      <p>
-        <button type="button" onClick={() => setEditing('new')}>
+    <div className="grid gap-6">
+      <header className="grid gap-4 md:flex md:items-end md:justify-between">
+        <div className="grid max-w-default gap-2">
+          <h1 className="font-display text-page-title tracking-display">Nabory</h1>
+          <p className="text-body text-text-muted">
+            Szkice z radaru, otwieranie i zamykanie naborów. Otwarty nabór włącza generator wniosków w Kreatorze.
+          </p>
+        </div>
+        <SoftButton type="button" variant="primary" icon={<Plus aria-hidden />} onClick={() => setEditing('new')}>
           Nowy nabór
-        </button>
-      </p>
-      <div aria-live="polite">
-        {(open.isError || close.isError) && (
-          <p role="alert">{errorMessage(open.error ?? close.error, { 400: 'Dodaj kryteria, zanim otworzysz nabór.', 409: 'Nabór jest już w tym stanie.' })}</p>
-        )}
-      </div>
+        </SoftButton>
+      </header>
 
-      {editing && <GrantCallForm grantCall={editing === 'new' ? undefined : editing} onDone={() => { setEditing(null); void refresh() }} />}
+      {(open.isError || close.isError) && (
+        <p role="alert" className="rounded-control bg-danger-soft p-3 text-body-sm text-danger">
+          {errorMessage(open.error ?? close.error, {
+            400: 'Dodaj kryteria, zanim otworzysz nabór.',
+            409: 'Nabór jest już w tym stanie.',
+          })}
+        </p>
+      )}
 
-      <table>
-        <caption>Nabory ({grantCalls.data?.data.length ?? 0})</caption>
-        <thead>
-          <tr>
-            <th scope="col">Tytuł</th>
-            <th scope="col">Status</th>
-            <th scope="col">Termin</th>
-            <th scope="col">Kryteria</th>
-            <th scope="col">Akcje</th>
-          </tr>
-        </thead>
-        <tbody>
-          {(grantCalls.data?.data ?? []).map((grantCall) => (
-            <tr key={grantCall.id}>
-              <th scope="row">{grantCall.title}</th>
-              <td>{grantCallStatusLabels[grantCall.status]}</td>
-              <td>
-                {grantCall.opensOn ?? '-'} - {grantCall.closesOn ?? '-'}
-              </td>
-              <td>
-                <ul>
-                  {grantCall.criteria.map((criterion) => (
-                    <li key={criterion}>{criterion}</li>
-                  ))}
-                </ul>
-              </td>
-              <td>
-                <button type="button" onClick={() => setEditing(grantCall)}>
-                  Edytuj „{grantCall.title}”
-                </button>{' '}
-                <Link to={`/admin/nabory/${grantCall.id}/wnioski`}>Wnioski do „{grantCall.title}”</Link>{' '}
-                {grantCall.status !== 'OPEN' ? (
-                  <button type="button" onClick={() => open.mutate({ grantCallId: grantCall.id }, { onSuccess: refresh })} disabled={open.isPending}>
-                    Otwórz nabór
-                  </button>
-                ) : (
-                  <button type="button" onClick={() => close.mutate({ grantCallId: grantCall.id }, { onSuccess: refresh })} disabled={close.isPending}>
-                    Zamknij nabór
-                  </button>
-                )}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </>
+      {pageStatus === 'loading' && <LoadingState label="Wczytuję nabory…" />}
+      {pageStatus === 'error' && (
+        <ErrorState
+          description={errorMessage(grantCalls.error)}
+          onRetry={() => {
+            void grantCalls.refetch()
+          }}
+        />
+      )}
+      {pageStatus === 'empty' && (
+        <EmptyState
+          title="Brak naborów"
+          description="Dodaj nabór albo zrób szkic z białej plamy na radarze."
+          icon={ScrollText}
+          action={
+            <SoftButton type="button" variant="primary" onClick={() => setEditing('new')}>
+              Nowy nabór
+            </SoftButton>
+          }
+        />
+      )}
+
+      {pageStatus === 'ready' && (
+        <CeramicCard asChild padding="none" className="p-1">
+          <ul className="grid divide-y divide-border-subtle">
+            {rows.map((grantCall) => (
+              <li key={grantCall.id}>
+                <div className="grid gap-3 px-3 py-3">
+                  <div className="flex flex-wrap items-start justify-between gap-3">
+                    <div className="grid min-w-0 gap-1">
+                      <p className="text-body font-medium text-text-primary">{grantCall.title}</p>
+                      <p className="text-body-sm text-text-muted">
+                        {grantCall.opensOn ?? 'bez daty'} - {grantCall.closesOn ?? 'bez daty'}
+                        {grantCall.criteria.length > 0 ? ` · ${grantCall.criteria.length} kryteriów` : ''}
+                      </p>
+                    </div>
+                    <Badge tone={statusTone(grantCall.status)}>
+                      {grantCallStatusLabels[grantCall.status] ?? grantCall.status}
+                    </Badge>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    <SoftButton type="button" variant="secondary" onClick={() => setEditing(grantCall)}>
+                      Edytuj
+                    </SoftButton>
+                    <SoftButton asChild variant="secondary">
+                      <Link to={`/admin/nabory/${grantCall.id}/wnioski`}>Wnioski</Link>
+                    </SoftButton>
+                    {grantCall.status !== 'OPEN' ? (
+                      <SoftButton
+                        type="button"
+                        variant="primary"
+                        loading={open.isPending}
+                        onClick={() =>
+                          open.mutate(
+                            { grantCallId: grantCall.id },
+                            {
+                              onSuccess: () => {
+                                showToast({ title: 'Nabór otwarty', tone: 'success' })
+                                refresh()
+                              },
+                            },
+                          )
+                        }
+                      >
+                        Otwórz
+                      </SoftButton>
+                    ) : (
+                      <SoftButton
+                        type="button"
+                        variant="ghost"
+                        loading={close.isPending}
+                        onClick={() =>
+                          close.mutate(
+                            { grantCallId: grantCall.id },
+                            {
+                              onSuccess: () => {
+                                showToast({ title: 'Nabór zamknięty', tone: 'neutral' })
+                                refresh()
+                              },
+                            },
+                          )
+                        }
+                      >
+                        Zamknij
+                      </SoftButton>
+                    )}
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </CeramicCard>
+      )}
+
+      {editing && (
+        <GrantCallFormModal
+          key={editing === 'new' ? 'new' : editing.id}
+          grantCall={editing === 'new' ? undefined : editing}
+          onClose={() => setEditing(null)}
+          onDone={() => {
+            setEditing(null)
+            refresh()
+          }}
+        />
+      )}
+    </div>
   )
 }
 
-function GrantCallForm({ grantCall, onDone }: { grantCall?: GrantCallResponse; onDone: () => void }) {
+function GrantCallFormModal({
+  grantCall,
+  onClose,
+  onDone,
+}: {
+  grantCall?: GrantCallResponse
+  onClose: () => void
+  onDone: () => void
+}) {
   const [title, setTitle] = useState(grantCall?.title ?? '')
   const [description, setDescription] = useState(grantCall?.description ?? '')
   const [criteria, setCriteria] = useState((grantCall?.criteria ?? []).join('\n'))
@@ -102,6 +213,7 @@ function GrantCallForm({ grantCall, onDone }: { grantCall?: GrantCallResponse; o
   const create = usePostApiAdminGrantCalls()
   const revise = usePutApiAdminGrantCallsGrantCallId()
   const mutation = grantCall ? revise : create
+  const { showToast } = useToast()
 
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -115,67 +227,99 @@ function GrantCallForm({ grantCall, onDone }: { grantCall?: GrantCallResponse; o
     }
 
     if (grantCall) {
-      revise.mutate({ grantCallId: grantCall.id, data }, { onSuccess: onDone })
+      revise.mutate(
+        { grantCallId: grantCall.id, data },
+        {
+          onSuccess: () => {
+            showToast({ title: 'Zapisano nabór', tone: 'success' })
+            onDone()
+          },
+        },
+      )
     } else {
-      create.mutate({ data }, { onSuccess: onDone })
+      create.mutate(
+        { data },
+        {
+          onSuccess: () => {
+            showToast({ title: 'Dodano szkic naboru', tone: 'success' })
+            onDone()
+          },
+        },
+      )
     }
   }
 
   return (
-    <section aria-labelledby="grant-call-form-title">
-      <h2 id="grant-call-form-title">{grantCall ? `Edycja: ${grantCall.title}` : 'Nowy nabór'}</h2>
-      <form onSubmit={submit}>
-        <p>
-          <label>
-            Tytuł <input size={70} required value={title} onChange={(event) => setTitle(event.target.value)} />
-          </label>
-        </p>
-        <p>
-          <label>
-            Opis
-            <br />
-            <textarea rows={5} cols={70} value={description} onChange={(event) => setDescription(event.target.value)} />
-          </label>
-        </p>
-        <p>
-          <label>
-            Kryteria oceny (jedno w wierszu)
-            <br />
-            <textarea rows={6} cols={70} value={criteria} onChange={(event) => setCriteria(event.target.value)} />
-          </label>
-        </p>
-        <p>
-          <label>
-            Otwarcie <input type="date" value={opensOn} onChange={(event) => setOpensOn(event.target.value)} />
-          </label>{' '}
-          <label>
-            Zamknięcie <input type="date" value={closesOn} onChange={(event) => setClosesOn(event.target.value)} />
-          </label>
-        </p>
-        <fieldset>
-          <legend>Obszary wyzwań</legend>
+    <Modal
+      open
+      onOpenChange={(open) => {
+        if (!open) {
+          onClose()
+        }
+      }}
+      title={grantCall ? 'Edycja naboru' : 'Nowy nabór'}
+      description={grantCall?.title}
+      size="default"
+      footer={
+        <>
+          <SoftButton type="button" variant="ghost" onClick={onClose}>
+            Anuluj
+          </SoftButton>
+          <SoftButton type="submit" form="grant-call-form" variant="primary" loading={mutation.isPending}>
+            {grantCall ? 'Zapisz nabór' : 'Dodaj szkic'}
+          </SoftButton>
+        </>
+      }
+    >
+      <form id="grant-call-form" className="grid gap-5" onSubmit={submit}>
+        <TextField label="Tytuł" required value={title} onChange={(event) => setTitle(event.target.value)} />
+        <TextAreaField
+          label="Opis"
+          rows={4}
+          value={description}
+          onChange={(event) => setDescription(event.target.value)}
+        />
+        <TextAreaField
+          label="Kryteria oceny"
+          hint="Jedno kryterium w wierszu."
+          rows={5}
+          value={criteria}
+          onChange={(event) => setCriteria(event.target.value)}
+        />
+        <div className="grid gap-3 sm:grid-cols-2">
+          <TextField label="Otwarcie" type="date" value={opensOn} onChange={(event) => setOpensOn(event.target.value)} />
+          <TextField
+            label="Zamknięcie"
+            type="date"
+            value={closesOn}
+            onChange={(event) => setClosesOn(event.target.value)}
+          />
+        </div>
+        <fieldset className="grid gap-2 rounded-control border border-border-subtle p-4">
+          <legend className="px-1 text-label font-medium text-text-muted">Obszary wyzwań</legend>
           {(areas.data?.data ?? []).map((area) => (
-            <label key={area.code}>
-              <input
-                type="checkbox"
-                checked={areaCodes.includes(area.code)}
-                onChange={(event) => setAreaCodes(event.target.checked ? [...areaCodes, area.code] : areaCodes.filter((code) => code !== area.code))}
-              />{' '}
-              {area.name}
-              <br />
-            </label>
+            <CheckboxField
+              key={area.code}
+              label={area.name}
+              checked={areaCodes.includes(area.code)}
+              onChange={(event) =>
+                setAreaCodes(
+                  event.target.checked
+                    ? [...areaCodes, area.code]
+                    : areaCodes.filter((code) => code !== area.code),
+                )
+              }
+            />
           ))}
         </fieldset>
-        <button type="submit" disabled={mutation.isPending}>
-          {grantCall ? 'Zapisz nabór' : 'Dodaj nabór (jako szkic)'}
-        </button>{' '}
-        <button type="button" onClick={onDone}>
-          Anuluj
-        </button>
+        {mutation.isError && (
+          <p role="alert" className="rounded-control bg-danger-soft p-3 text-body-sm text-danger">
+            {errorMessage(mutation.error, {
+              400: 'Nabór potrzebuje tytułu, a zamknięcie musi być po otwarciu.',
+            })}
+          </p>
+        )}
       </form>
-      <div aria-live="polite">
-        {mutation.isError && <p role="alert">{errorMessage(mutation.error, { 400: 'Nabór potrzebuje tytułu, a zamknięcie musi być po otwarciu.' })}</p>}
-      </div>
-    </section>
+    </Modal>
   )
 }

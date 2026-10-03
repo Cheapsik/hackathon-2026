@@ -1,7 +1,24 @@
 import { useMemo, useState, type FormEvent } from 'react'
 import { useNavigate } from 'react-router'
-import { useGetApiAdminRadar, usePostApiAdminGrantCallsDraft, useGetApiChallengeAreas } from '@/api/generated/castor'
+import { Radar } from 'lucide-react'
+import {
+  useGetApiAdminRadar,
+  useGetApiChallengeAreas,
+  usePostApiAdminGrantCallsDraft,
+} from '@/api/generated/castor'
 import { GminaMap } from '@/features/atlas/GminaMap'
+import {
+  Badge,
+  CeramicCard,
+  ChartPanel,
+  EmptyState,
+  ErrorState,
+  LoadingState,
+  Section,
+  SoftButton,
+  TextField,
+  useToast,
+} from '@/design-system'
 import { usePageTitle } from '@/hooks/use-page-title'
 import { errorMessage } from '@/lib/error-message'
 
@@ -15,7 +32,9 @@ export function RadarPage() {
   const areas = useGetApiChallengeAreas()
   const draft = usePostApiAdminGrantCallsDraft()
   const navigate = useNavigate()
+  const { showToast } = useToast()
   const data = radar.data?.data
+
   const reportsByTeryt = useMemo(() => {
     const map = new Map<string, number>()
     for (const need of data?.byMunicipality ?? []) {
@@ -23,6 +42,17 @@ export function RadarPage() {
     }
     return map
   }, [data])
+
+  const monthlyTrend = useMemo(() => {
+    const totals = new Map<string, number>()
+    for (const need of data?.byMonth ?? []) {
+      totals.set(need.month, (totals.get(need.month) ?? 0) + Number(need.reports))
+    }
+    return [...totals.entries()]
+      .sort(([left], [right]) => left.localeCompare(right))
+      .map(([label, value]) => ({ label, value }))
+  }, [data?.byMonth])
+
   const areaName = (code: string) => areas.data?.data.find((area) => area.code === code)?.name ?? code
 
   function submit(event: FormEvent<HTMLFormElement>) {
@@ -30,144 +60,161 @@ export function RadarPage() {
     setPeriod({ from: from || undefined, to: to || undefined })
   }
 
-  function draftGrantCall(challengeAreaCode: string, teryt: string | null) {
-    draft.mutate({ data: { challengeAreaCode, teryt } }, { onSuccess: () => navigate('/admin/nabory') })
+  function draftGrantCall(challengeAreaCode: string, teryt: string | null, label: string) {
+    draft.mutate(
+      { data: { challengeAreaCode, teryt } },
+      {
+        onSuccess: () => {
+          showToast({
+            title: 'Szkic naboru gotowy',
+            description: label,
+            tone: 'success',
+          })
+          navigate('/admin/nabory')
+        },
+      },
+    )
   }
 
   return (
-    <>
-      <h1>Radar potrzeb</h1>
-      <form onSubmit={submit}>
-        <label>
-          Od <input type="date" value={from} onChange={(event) => setFrom(event.target.value)} />
-        </label>{' '}
-        <label>
-          Do <input type="date" value={to} onChange={(event) => setTo(event.target.value)} />
-        </label>{' '}
-        <button type="submit">Pokaż okres</button>
+    <div className="grid gap-8">
+      <header className="grid max-w-default gap-2">
+        <h1 className="font-display text-page-title tracking-display">Radar potrzeb</h1>
+        <p className="text-body text-text-muted">
+          Trendy zgłoszeń, białe plamy w Bibliotece i mapa gmin. Z białej plamy możesz od razu zrobić szkic naboru.
+        </p>
+      </header>
+
+      <form className="grid gap-3 sm:grid-cols-[1fr_1fr_auto] sm:items-end" onSubmit={submit}>
+        <TextField label="Od" type="date" value={from} onChange={(event) => setFrom(event.target.value)} />
+        <TextField label="Do" type="date" value={to} onChange={(event) => setTo(event.target.value)} />
+        <SoftButton type="submit" variant="primary" loading={radar.isFetching && Boolean(period.from || period.to)}>
+          Pokaż okres
+        </SoftButton>
       </form>
 
-      <div aria-live="polite">
-        {radar.isPending && (
-          <p>
-            <output>Liczę…</output>
-          </p>
-        )}
-        {radar.isError && <p role="alert">{errorMessage(radar.error, { 400: 'Okres musi kończyć się po swoim początku.' })}</p>}
-        {draft.isPending && (
-          <p>
-            <output>Asystent pisze szkic naboru…</output>
-          </p>
-        )}
-        {draft.isError && <p role="alert">{errorMessage(draft.error)}</p>}
-      </div>
+      {radar.isPending && !data && <LoadingState label="Liczę radar…" />}
+      {radar.isError && (
+        <ErrorState
+          description={errorMessage(radar.error, { 400: 'Okres musi kończyć się po swoim początku.' })}
+          onRetry={() => {
+            void radar.refetch()
+          }}
+        />
+      )}
+      {draft.isError && (
+        <p role="alert" className="rounded-control bg-danger-soft p-3 text-body-sm text-danger">
+          {errorMessage(draft.error)}
+        </p>
+      )}
 
       {data && (
         <>
-          <p>
+          <p className="text-body-sm text-text-muted">
             Okres {data.from} - {data.to}: {data.reports} zgłoszeń po klasyfikacji.
           </p>
 
-          <table>
-            <caption>Potrzeby według obszaru wyzwań</caption>
-            <thead>
-              <tr>
-                <th scope="col">Obszar</th>
-                <th scope="col">Zgłoszenia</th>
-                <th scope="col">Bez dobrego dopasowania</th>
-                <th scope="col">Innowacje w Bibliotece</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.byArea.map((area) => (
-                <tr key={area.code}>
-                  <th scope="row">{area.name}</th>
-                  <td>{area.reports}</td>
-                  <td>{area.unmatched}</td>
-                  <td>{Number(area.innovations) === 0 ? '0 - biała plama' : area.innovations}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-
-          <h2>Białe plamy</h2>
-          <p>Zgłoszenia, dla których Biblioteka nie ma dopasowania na poziomie progu krzyżówki.</p>
-          {data.blankSpots.length === 0 ? (
-            <p>Brak białych plam w tym okresie.</p>
-          ) : (
-            <table>
-              <caption>Skupiska zgłoszeń bez dopasowania</caption>
-              <thead>
-                <tr>
-                  <th scope="col">Obszar</th>
-                  <th scope="col">Gmina</th>
-                  <th scope="col">Zgłoszenia</th>
-                  <th scope="col">Akcja</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.blankSpots.map((spot) => (
-                  <tr key={`${spot.challengeAreaCode}-${spot.teryt ?? 'none'}`}>
-                    <td>{spot.challengeAreaName}</td>
-                    <td>{spot.municipality ?? 'nie podano'}</td>
-                    <td>{spot.unmatchedReports}</td>
-                    <td>
-                      <button type="button" onClick={() => draftGrantCall(spot.challengeAreaCode, spot.teryt)} disabled={draft.isPending}>
-                        Szkic naboru: {spot.challengeAreaName}
-                        {spot.municipality ? `, ${spot.municipality}` : ''}
-                      </button>
-                    </td>
-                  </tr>
+          <Section title="Potrzeby według obszaru" description="Zgłoszenia, niedopasowania i innowacje w Bibliotece.">
+            <CeramicCard asChild padding="none" className="p-1">
+              <ul className="grid divide-y divide-border-subtle">
+                {data.byArea.map((area) => (
+                  <li key={area.code} className="flex flex-col gap-2 px-3 py-3 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="grid min-w-0 gap-1">
+                      <p className="text-body font-medium text-text-primary">{area.name}</p>
+                      <p className="text-body-sm text-text-muted">
+                        {area.reports} zgłoszeń · {area.unmatched} bez dopasowania · {area.innovations} innowacji
+                      </p>
+                    </div>
+                    {Number(area.innovations) === 0 && <Badge tone="warning">biała plama</Badge>}
+                  </li>
                 ))}
-              </tbody>
-            </table>
+              </ul>
+            </CeramicCard>
+          </Section>
+
+          <Section
+            title="Białe plamy"
+            description="Skupiska zgłoszeń, dla których Biblioteka nie ma dopasowania."
+          >
+            {data.blankSpots.length === 0 ? (
+              <EmptyState title="Brak białych plam" description="W tym okresie każde skupisko ma dopasowanie albo nie ma skupisk." icon={Radar} />
+            ) : (
+              <CeramicCard asChild padding="none" className="p-1">
+                <ul className="grid divide-y divide-border-subtle">
+                  {data.blankSpots.map((spot) => {
+                    const label = `${spot.challengeAreaName}${spot.municipality ? `, ${spot.municipality}` : ''}`
+                    return (
+                      <li
+                        key={`${spot.challengeAreaCode}-${spot.teryt ?? 'none'}`}
+                        className="flex flex-col gap-3 px-3 py-3 sm:flex-row sm:items-center sm:justify-between"
+                      >
+                        <div className="grid min-w-0 gap-1">
+                          <p className="text-body font-medium text-text-primary">{spot.challengeAreaName}</p>
+                          <p className="text-body-sm text-text-muted">
+                            {spot.municipality ?? 'gmina niepodana'} · {spot.unmatchedReports} bez dopasowania
+                          </p>
+                        </div>
+                        <SoftButton
+                          type="button"
+                          variant="secondary"
+                          loading={draft.isPending}
+                          onClick={() => draftGrantCall(spot.challengeAreaCode, spot.teryt, label)}
+                        >
+                          Szkic naboru
+                        </SoftButton>
+                      </li>
+                    )
+                  })}
+                </ul>
+              </CeramicCard>
+            )}
+          </Section>
+
+          <Section title="Mapa zgłoszeń" description="Ciemniejszy kolor oznacza więcej zgłoszeń. Te same liczby są na liście gmin.">
+            <GminaMap values={reportsByTeryt} label="Liczba zgłoszeń w gminach Małopolski. Liczby są w liście poniżej." />
+            <CeramicCard asChild padding="none" className="p-1">
+              <ul className="grid divide-y divide-border-subtle">
+                {data.byMunicipality.map((need) => (
+                  <li key={need.teryt} className="flex flex-col gap-1 px-3 py-3 sm:flex-row sm:items-center sm:justify-between">
+                    <p className="text-body font-medium text-text-primary">{need.name}</p>
+                    <p className="text-body-sm text-text-muted">
+                      {need.reports} zgłoszeń · {need.unmatched} bez dopasowania
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </CeramicCard>
+          </Section>
+
+          {monthlyTrend.length > 0 && (
+            <ChartPanel
+              title="Trend zgłoszeń"
+              description="Suma zgłoszeń we wszystkich obszarach w kolejnych miesiącach."
+              seriesLabel="Liczba zgłoszeń"
+              categoryLabel="Miesiąc"
+              data={monthlyTrend}
+            />
           )}
 
-          <h2>Mapa zgłoszeń</h2>
-          <p>Ciemniejszy kolor oznacza więcej zgłoszeń. Te same liczby są w tabeli.</p>
-          <GminaMap values={reportsByTeryt} label="Liczba zgłoszeń w gminach Małopolski. Liczby są w tabeli poniżej." />
-
-          <table>
-            <caption>Gminy z największą liczbą zgłoszeń</caption>
-            <thead>
-              <tr>
-                <th scope="col">Gmina</th>
-                <th scope="col">Zgłoszenia</th>
-                <th scope="col">Bez dobrego dopasowania</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.byMunicipality.map((need) => (
-                <tr key={need.teryt}>
-                  <th scope="row">{need.name}</th>
-                  <td>{need.reports}</td>
-                  <td>{need.unmatched}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-
-          <table>
-            <caption>Trend: zgłoszenia w miesiącach według obszaru</caption>
-            <thead>
-              <tr>
-                <th scope="col">Miesiąc</th>
-                <th scope="col">Obszar</th>
-                <th scope="col">Zgłoszenia</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.byMonth.map((need) => (
-                <tr key={`${need.month}-${need.challengeAreaCode}`}>
-                  <td>{need.month}</td>
-                  <td>{areaName(need.challengeAreaCode)}</td>
-                  <td>{need.reports}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <Section title="Trend według obszaru" description="Rozbicie miesięczne na obszary wyzwań.">
+            <CeramicCard asChild padding="none" className="p-1">
+              <ul className="grid divide-y divide-border-subtle">
+                {data.byMonth.map((need) => (
+                  <li
+                    key={`${need.month}-${need.challengeAreaCode}`}
+                    className="flex flex-col gap-1 px-3 py-3 sm:flex-row sm:items-center sm:justify-between"
+                  >
+                    <p className="text-body font-medium text-text-primary">
+                      {need.month} · {areaName(need.challengeAreaCode)}
+                    </p>
+                    <p className="text-body-sm text-text-muted">{need.reports} zgłoszeń</p>
+                  </li>
+                ))}
+              </ul>
+            </CeramicCard>
+          </Section>
         </>
       )}
-    </>
+    </div>
   )
 }

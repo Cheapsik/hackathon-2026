@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState, type FormEvent } from 'react'
+import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { useLocation } from 'react-router'
 import {
   usePostApiProblemReports,
@@ -6,10 +6,11 @@ import {
   type MunicipalityResponse,
   type ProblemReportResponse,
 } from '@/api/generated/castor'
+import { MunicipalityPicker } from '@/components/MunicipalityPicker'
 import { ClarifyingQuestionsStep } from '@/features/problem-reports/ClarifyingQuestionsStep'
 import { DictationButton } from '@/features/problem-reports/DictationButton'
-import { MunicipalityPicker } from '@/components/MunicipalityPicker'
 import { ProblemReportResults } from '@/features/problem-reports/ProblemReportResults'
+import { CeramicCard, CheckboxField, SoftButton, TextAreaField } from '@/design-system'
 import { usePageTitle } from '@/hooks/use-page-title'
 import { errorMessage } from '@/lib/error-message'
 
@@ -50,41 +51,58 @@ export function DescribeProblemPage() {
   }
 
   return (
-    <>
-      <h1>Opisz problem</h1>
-      <p>
-        Napisz własnymi słowami, co nie działa w Twojej okolicy. Podpowiemy sprawdzone innowacje społeczne z Biblioteki
-        ROPS i wyjaśnimy, dlaczego pasują. Nie musisz zakładać konta.
-      </p>
+    <div className="grid gap-6">
+      <header className="grid max-w-default gap-2">
+        <h1 className="font-display text-page-title tracking-display">Opisz problem</h1>
+        <p className="text-body text-text-muted">
+          Napisz własnymi słowami, co nie działa w Twojej okolicy. Podpowiemy sprawdzone innowacje z Biblioteki ROPS.
+          Nie musisz zakładać konta.
+        </p>
+      </header>
 
       {!report && (
         <DescribeProblemForm
           pending={createReport.isPending}
           initialDescription={handedOverDescription}
-          onSubmit={(request) => createReport.mutate({ data: request }, { onSuccess: (response) => setReport(response.data) })}
+          onSubmit={(request) =>
+            createReport.mutate({ data: request }, { onSuccess: (response) => setReport(response.data) })
+          }
         />
       )}
 
-      <div aria-live="polite">
-        {createReport.isPending && <p><output>Szukam rozwiązań… To może potrwać kilka sekund.</output></p>}
-        {answerQuestions.isPending && <p><output>Szukam rozwiązań na podstawie Twoich odpowiedzi…</output></p>}
-      </div>
+      {(createReport.isPending || answerQuestions.isPending) && (
+        <p aria-live="polite" className="text-body-sm text-text-muted">
+          <output>
+            {createReport.isPending
+              ? 'Szukam rozwiązań… To może potrwać kilka sekund.'
+              : 'Szukam rozwiązań na podstawie Twoich odpowiedzi…'}
+          </output>
+        </p>
+      )}
       {createReport.isError && (
-        <p role="alert">
+        <p role="alert" className="rounded-control bg-danger-soft p-3 text-body-sm text-danger">
           {errorMessage(createReport.error, {
             400: `Sprawdź opis: musi mieć od ${descriptionMinLength} do ${descriptionMaxLength} znaków.`,
           })}
         </p>
       )}
-      {answerQuestions.isError && <p role="alert">{errorMessage(answerQuestions.error)}</p>}
+      {answerQuestions.isError && (
+        <p role="alert" className="rounded-control bg-danger-soft p-3 text-body-sm text-danger">
+          {errorMessage(answerQuestions.error)}
+        </p>
+      )}
 
-      <div ref={resultsRef} tabIndex={-1}>
+      <div ref={resultsRef} tabIndex={-1} className="grid gap-6 outline-none">
         {report?.awaitsAnswers && (
-          <ClarifyingQuestionsStep questions={report.clarifyingQuestions} pending={answerQuestions.isPending} onSubmit={submitAnswers} />
+          <ClarifyingQuestionsStep
+            questions={report.clarifyingQuestions}
+            pending={answerQuestions.isPending}
+            onSubmit={submitAnswers}
+          />
         )}
         {report && !report.awaitsAnswers && <ProblemReportResults report={report} headingLevel={2} />}
       </div>
-    </>
+    </div>
   )
 }
 
@@ -96,20 +114,20 @@ interface DescribeProblemFormRequest {
   keepOriginalDescription: boolean
 }
 
-interface DescribeProblemFormProps {
+function DescribeProblemForm({
+  pending,
+  initialDescription,
+  onSubmit,
+}: {
   pending: boolean
   initialDescription: string
   onSubmit: (request: DescribeProblemFormRequest) => void
-}
-
-function DescribeProblemForm({ pending, initialDescription, onSubmit }: DescribeProblemFormProps) {
+}) {
   const [description, setDescription] = useState(initialDescription)
   const [municipality, setMunicipality] = useState<MunicipalityResponse | null>(null)
   const [submittedOnBehalf, setSubmittedOnBehalf] = useState(false)
   const [keepOriginalDescription, setKeepOriginalDescription] = useState(false)
   const [dictated, setDictated] = useState(false)
-  const descriptionId = useId()
-  const descriptionHintId = useId()
 
   function appendPhrase(phrase: string) {
     setDictated(true)
@@ -128,53 +146,42 @@ function DescribeProblemForm({ pending, initialDescription, onSubmit }: Describe
   }
 
   return (
-    <form onSubmit={submit}>
-      <p>
-        <label htmlFor={descriptionId}>Opisz, co nie działa</label>
-      </p>
-      <p id={descriptionHintId}>
-        Od {descriptionMinLength} do {descriptionMaxLength} znaków. Nie podawaj imion, nazwisk, adresów ani telefonów
-        - i tak je usuniemy, zanim opis trafi dalej.
-      </p>
-      <textarea
-        id={descriptionId}
-        aria-describedby={descriptionHintId}
-        rows={8}
-        cols={60}
-        required
-        minLength={descriptionMinLength}
-        maxLength={descriptionMaxLength}
-        value={description}
-        onChange={(event) => setDescription(event.target.value)}
-      />
-      <p>
-        Wpisano znaków: {description.length} z {descriptionMaxLength}
-      </p>
+    <CeramicCard padding="lg" className="max-w-default">
+      <form className="grid gap-5" onSubmit={submit}>
+        <TextAreaField
+          label="Opisz, co nie działa"
+          rows={8}
+          required
+          minLength={descriptionMinLength}
+          maxLength={descriptionMaxLength}
+          value={description}
+          onChange={(event) => setDescription(event.target.value)}
+          hint={`Od ${descriptionMinLength} do ${descriptionMaxLength} znaków. Nie podawaj imion, nazwisk, adresów ani telefonów - i tak je usuniemy. Wpisano: ${description.length}.`}
+        />
 
-      <DictationButton onPhrase={appendPhrase} />
+        <DictationButton onPhrase={appendPhrase} />
 
-      <MunicipalityPicker selected={municipality} onSelect={setMunicipality} />
+        <MunicipalityPicker selected={municipality} onSelect={setMunicipality} />
 
-      <p>
-        <label>
-          <input type="checkbox" checked={submittedOnBehalf} onChange={(event) => setSubmittedOnBehalf(event.target.checked)} />{' '}
-          Zgłaszam w czyimś imieniu
-        </label>
-      </p>
-      <p>
-        <label>
-          <input
-            type="checkbox"
+        <div className="grid gap-1">
+          <CheckboxField
+            label="Zgłaszam w czyimś imieniu"
+            checked={submittedOnBehalf}
+            onChange={(event) => setSubmittedOnBehalf(event.target.checked)}
+          />
+          <CheckboxField
+            label="Zgadzam się na zapisanie opisu w oryginalnej formie (zobaczy go tylko autor i pracownik ROPS)"
             checked={keepOriginalDescription}
             onChange={(event) => setKeepOriginalDescription(event.target.checked)}
-          />{' '}
-          Zgadzam się na zapisanie opisu w oryginalnej formie (zobaczy go tylko autor i pracownik ROPS)
-        </label>
-      </p>
+          />
+        </div>
 
-      <button type="submit" disabled={pending}>
-        Znajdź rozwiązania
-      </button>
-    </form>
+        <div className="flex flex-wrap gap-3">
+          <SoftButton type="submit" variant="primary" loading={pending}>
+            Znajdź rozwiązania
+          </SoftButton>
+        </div>
+      </form>
+    </CeramicCard>
   )
 }
