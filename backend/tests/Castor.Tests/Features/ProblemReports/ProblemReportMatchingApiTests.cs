@@ -74,7 +74,7 @@ public sealed class ProblemReportMatchingApiTests(PostgresFixture postgres)
         HttpResponseMessage opened = await client.SendAsync(Open(asked!));
         ProblemReportResponse? matched = await opened.Content.ReadFromJsonAsync<ProblemReportResponse>();
 
-        Assert.True(asked.AwaitsAnswers);
+        Assert.True(asked!.AwaitsAnswers);
         Assert.Equal(HttpStatusCode.OK, answered.StatusCode);
         Assert.False(unmatched!.IsMatched);
         Assert.Equal("Seniorów", unmatched.ClarifyingQuestions[0].Answer);
