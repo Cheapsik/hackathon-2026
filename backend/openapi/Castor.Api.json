@@ -66,6 +66,35 @@
         }
       }
     },
+    "/api/auth/session": {
+      "get": {
+        "tags": [
+          "Session"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/auth/register": {
       "post": {
         "tags": [
@@ -114,10 +143,743 @@
           }
         }
       }
+    },
+    "/api/problem-reports": {
+      "post": {
+        "tags": [
+          "ProblemReports"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProblemReportRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProblemReportRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProblemReportRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemReportResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemReportResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemReportResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/problem-reports/{problemReportId}": {
+      "get": {
+        "tags": [
+          "ProblemReports"
+        ],
+        "parameters": [
+          {
+            "name": "problemReportId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-Tracking-Code",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemReportResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemReportResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemReportResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/problem-reports/{problemReportId}/answers": {
+      "post": {
+        "tags": [
+          "ProblemReports"
+        ],
+        "parameters": [
+          {
+            "name": "problemReportId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-Tracking-Code",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnswerProblemReportQuestionsRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnswerProblemReportQuestionsRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnswerProblemReportQuestionsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemReportResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemReportResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemReportResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/problem-reports/track/{trackingCode}": {
+      "get": {
+        "tags": [
+          "ProblemReports"
+        ],
+        "parameters": [
+          {
+            "name": "trackingCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemReportResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemReportResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemReportResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/problem-reports/claim": {
+      "post": {
+        "tags": [
+          "ProblemReports"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClaimProblemReportRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClaimProblemReportRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClaimProblemReportRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemReportResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemReportResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemReportResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/problem-reports/mine": {
+      "get": {
+        "tags": [
+          "ProblemReports"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProblemReportSummaryResponse"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProblemReportSummaryResponse"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProblemReportSummaryResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/municipalities": {
+      "get": {
+        "tags": [
+          "Municipalities"
+        ],
+        "parameters": [
+          {
+            "name": "Search",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MunicipalityResponse"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MunicipalityResponse"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MunicipalityResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
+      "AnswerProblemReportQuestionsRequest": {
+        "required": [
+          "answers"
+        ],
+        "type": "object",
+        "properties": {
+          "answers": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ClaimProblemReportRequest": {
+        "required": [
+          "trackingCode"
+        ],
+        "type": "object",
+        "properties": {
+          "trackingCode": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "ClarifyingQuestionResponse": {
+        "required": [
+          "question",
+          "answer"
+        ],
+        "type": "object",
+        "properties": {
+          "question": {
+            "type": "string"
+          },
+          "answer": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "CreateProblemReportRequest": {
+        "required": [
+          "description",
+          "municipalityTeryt",
+          "submittedOnBehalf",
+          "dictated",
+          "keepOriginalDescription"
+        ],
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "municipalityTeryt": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "submittedOnBehalf": {
+            "type": "boolean"
+          },
+          "dictated": {
+            "type": "boolean"
+          },
+          "keepOriginalDescription": {
+            "type": "boolean"
+          }
+        }
+      },
+      "HybridResponse": {
+        "required": [
+          "name",
+          "description",
+          "whyTogether",
+          "sources"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "whyTogether": {
+            "type": "string"
+          },
+          "sources": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HybridSourceResponse"
+            }
+          }
+        }
+      },
+      "HybridSourceResponse": {
+        "required": [
+          "innovationId",
+          "title",
+          "cardUrl"
+        ],
+        "type": "object",
+        "properties": {
+          "innovationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string"
+          },
+          "cardUrl": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "MatchResponse": {
+        "required": [
+          "position",
+          "score",
+          "innovationId",
+          "title",
+          "shortDescription",
+          "justification",
+          "citedFields",
+          "adaptation",
+          "videoUrl",
+          "cardUrl"
+        ],
+        "type": "object",
+        "properties": {
+          "position": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "score": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "innovationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string"
+          },
+          "shortDescription": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "justification": {
+            "type": "string"
+          },
+          "citedFields": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "adaptation": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "videoUrl": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "cardUrl": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "MunicipalityResponse": {
+        "required": [
+          "teryt",
+          "name",
+          "qualifiedName",
+          "type",
+          "powiat"
+        ],
+        "type": "object",
+        "properties": {
+          "teryt": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "qualifiedName": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "powiat": {
+            "type": "string"
+          }
+        }
+      },
+      "ProblemReportChallengeAreaResponse": {
+        "required": [
+          "code",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "ProblemReportMunicipalityResponse": {
+        "required": [
+          "teryt",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "teryt": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "ProblemReportResponse": {
+        "required": [
+          "id",
+          "trackingCode",
+          "status",
+          "channel",
+          "submittedOnBehalf",
+          "description",
+          "originalDescription",
+          "municipality",
+          "challengeAreas",
+          "clarifyingQuestions",
+          "awaitsAnswers",
+          "isMatched",
+          "hasAuthor",
+          "matches",
+          "hybrid",
+          "similarReports",
+          "createdAt"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "trackingCode": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "channel": {
+            "type": "string"
+          },
+          "submittedOnBehalf": {
+            "type": "boolean"
+          },
+          "description": {
+            "type": "string"
+          },
+          "originalDescription": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "municipality": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/ProblemReportMunicipalityResponse"
+              }
+            ]
+          },
+          "challengeAreas": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProblemReportChallengeAreaResponse"
+            }
+          },
+          "clarifyingQuestions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ClarifyingQuestionResponse"
+            }
+          },
+          "awaitsAnswers": {
+            "type": "boolean"
+          },
+          "isMatched": {
+            "type": "boolean"
+          },
+          "hasAuthor": {
+            "type": "boolean"
+          },
+          "matches": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MatchResponse"
+            }
+          },
+          "hybrid": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/HybridResponse"
+              }
+            ]
+          },
+          "similarReports": {
+            "$ref": "#/components/schemas/SimilarProblemReportsResponse"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ProblemReportSummaryResponse": {
+        "required": [
+          "id",
+          "trackingCode",
+          "status",
+          "description",
+          "isMatched",
+          "createdAt"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "trackingCode": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "isMatched": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
       "RegisterRequest": {
         "required": [
           "email",
@@ -148,6 +910,39 @@
           "userId": {
             "type": "string",
             "format": "uuid"
+          }
+        }
+      },
+      "SessionResponse": {
+        "required": [
+          "signedIn",
+          "userId",
+          "email",
+          "role"
+        ],
+        "type": "object",
+        "properties": {
+          "signedIn": {
+            "type": "boolean"
+          },
+          "userId": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "uuid"
+          },
+          "email": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "role": {
+            "type": [
+              "null",
+              "string"
+            ]
           }
         }
       },
@@ -183,6 +978,31 @@
             "format": "uuid"
           }
         }
+      },
+      "SimilarProblemReportsResponse": {
+        "required": [
+          "reports",
+          "municipalities"
+        ],
+        "type": "object",
+        "properties": {
+          "reports": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "municipalities": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          }
+        }
       }
     }
   },
@@ -194,7 +1014,16 @@
       "name": "SignIn"
     },
     {
+      "name": "Session"
+    },
+    {
       "name": "Register"
+    },
+    {
+      "name": "ProblemReports"
+    },
+    {
+      "name": "Municipalities"
     }
   ]
 }

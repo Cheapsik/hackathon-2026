@@ -1,0 +1,125 @@
+[
+  {
+    "code": "FAMILY_AND_FOSTER_CARE",
+    "number": 1,
+    "name": "Rodzina i piecza zastępcza",
+    "definition": "Rodzinie jako podstawowej formie życia zbiorowego przypisuje się pewne role, których właściwe pełnienie stanowi fundament prawidłowo rozwijającego się społeczeństwa. Niejednokrotnie mogą pojawiać się sytuacje, w których rodziny przeżywają trudności w sprawowaniu opieki nad dziećmi i ich wychowaniu. W tym przypadku udzielane jest wsparcie w formie systemu zaplanowanych działań, mających na celu przywrócenie takim rodzinom zdolności do pełnienia funkcji opiekuńczo-wychowawczych. Jedną z tych form jest piecza zastępcza, która jest sprawowana w przypadku niemożności zapewnienia dziecku opieki i wychowania przez rodziców biologicznych oraz ma za zadanie zagwarantować dziecku bezpieczeństwo, wsparcie emocjonalne oraz odpowiednie warunki do życia i rozwoju.",
+    "keyChallenges": [
+      "Rozwój rodzinnej pieczy zastępczej poprzez zwiększenie liczby pozytywnie zweryfikowanych kandydatów do pełnienia funkcji rodziny zastępczej.",
+      "Priorytety dla rodzinnej pieczy zastępczej.",
+      "Wdrażanie rozwiązań skutkujących poprawą współpracy między powiatami w zakresie funkcjonowania systemu pieczy zastępczej.",
+      "Podejmowanie wszelkich działań prowadzących do nierozdzielania rodzeństwa w toku prowadzonych procedur w zakresie umieszczenia w pieczy zastępczej.",
+      "Dążenie do nie przedłużania ponad miarę pobytu wychowanków w pieczy zastępczej i jak najszybszego kierowania dzieci z uregulowaną sytuacją prawną do docelowej formy opieki.",
+      "Zapewnienie spójnego funkcjonowania systemu adopcyjnego, gdyż brak jednolitych wymogów jakościowych i kryteriów wykonywania zadań powoduje, że praktyka adopcyjna znacząco różni się w poszczególnych ośrodkach."
+    ],
+    "source": "Mapa Wyzwań Społecznych, ROPS w Krakowie — dane krajowe"
+  },
+  {
+    "code": "HOMELESSNESS",
+    "number": 2,
+    "name": "Bezdomność",
+    "definition": "Doświadczenie bezdomności jest przejawem najbardziej jaskrawego, wyraźnego i brutalnego wykluczenia społecznego. Nie ma jednej uznanej definicji bezdomności. Mianem bezdomności określa się m.in. sytuację osób, które w danym czasie nie posiadają i własnym staraniem nie mogą zapewnić sobie takiego schronienia, które mogłyby uważać za swoje i które spełniałoby minimalne warunki, pozwalające uznać je za pomieszczenie mieszkalne. Z kolei zgodnie z „ustawą o pomocy społecznej”, osoba bezdomna to osoba niezamieszkująca w lokalu mieszkalnym w rozumieniu przepisów o ochronie praw lokatorów i mieszkaniowym zasobie gminy i niezameldowana na pobyt stały, w rozumieniu przepisów o ewidencji ludności, a także osoba niezamieszkująca w lokalu mieszkalnym i zameldowana na pobyt stały w lokalu, w którym nie ma możliwości zamieszkania. Bezdomność jest zjawiskiem społecznym, wynikającym z wielu współistniejących i przenikających się przyczyn. Należą do nich najczęściej: bezrobocie, ubóstwo, uzależnienia, przemoc domowa, zadłużenie, eksmisje, rozpad rodziny, zaburzenia psychiczne, zaburzenia osobowości, zakłócony proces socjalizacji. Bardzo rzadko zdarza się, że tylko jeden czynnik jest powodem bezdomności konkretnej osoby.",
+    "keyChallenges": [
+      "rośnie liczba młodych bezdomnych (w wieku 0-25 r.ż)",
+      "„niewidzialność” i „niepoliczalność” młodych bezdomnych - często noszą modne ubrania, mają staranny makijaż, spędzają czas na kanapie w kawiarni, galeriach handlowych, sprawiając wrażenie beztroskich młodych ludzi,",
+      "konieczność odrębnego traktowania doświadczenia bezdomności młodych dorosłych i nastolatków - niepełnoletność powoduje problemy formalno-prawne, przez które szanse instytucjonalnego wsparcia bezdomnych nastolatków są niewielkie,",
+      "instytucjonalna bezsilność wobec potrzeb młodych osób coraz częściej zgłaszających się do noclegowni i schronisk dla bezdomnych - brak dostosowanej oferty wsparcia dla tej grupy beneficjentów,",
+      "luka w transferze pomocy międzyinstytucjonalnej w przypadku młodych bezdomnych, będących wcześniej wychowankami placówek opiekuńczo-wychowawczych,",
+      "„bezrodzinowość” młodych bezdomnych - brak warunków do zawiązania silnych więzi emocjonalnych i społecznych w okresie dorastania, a także ich utrata w okresie wczesnej dorosłości (np. w związku z uzależnieniem młodego człowieka)."
+    ],
+    "source": "Mapa Wyzwań Społecznych, ROPS w Krakowie — dane krajowe"
+  },
+  {
+    "code": "DISABILITY",
+    "number": 3,
+    "name": "Niepełnosprawność",
+    "definition": "Niepełnosprawność to trwała zmiana w prawidłowym funkcjonowaniu organizmu człowieka. Jest długotrwałym naruszeniem sprawności organizmu. Powoduje w sposób istotny obniżenie zdolności do pracy i samodzielnego życia. Może być wrodzona, lub powstać na skutek wypadku lub choroby. Z niepełnosprawnością można się urodzić, osobą z niepełnosprawnością można się stać, niepełnosprawności można dożyć. Brak pełnej sprawności dotyczy, w różny sposób i na różnych etapach życia, dużej części społeczeństwa. Dotyka bezpośrednio osób z niepełnosprawnościami jak i osób z ich otoczenia. Utrudniony dostęp do edukacji, zarówno na etapie edukacji szkolnej, jak i wyższej, dostęp do kursów, szkoleń specjalizacyjnych, wiąże się z ograniczeniami w pozyskaniu pracy, rozwoju zawodowym, realizacji swoich pasji i budowania sieci kontaktów społecznych. Wskaźnik zatrudnienia osób z niepełnosprawnością w wieku 16-64 lata, wyniósł pod koniec 2023 roku 30,1%. Źródła: https://bdl.stat.gov.pl/",
+    "keyChallenges": [
+      "Zwiększenie dostępu do rynku pracy.",
+      "Trudność z uzyskaniem wykształcenia pozwalającego na samodzielność życiową, rozwój zawodowy.",
+      "Budowanie samodzielnych relacji społecznych i towarzyskich.",
+      "Wsparcie emocjonalne.",
+      "Wsparcie techniczne, infrastrukturalne, dostępność.",
+      "Możliwość samodzielnego przemieszczania się, korzystania z usług bez asysty.",
+      "Dostęp do adekwatnej opieki medycznej, fizjoterapii, farmakoterapii i pomocy w codziennych czynnościach (jeśli jest to konieczne).",
+      "Rozwój zainteresowań.",
+      "Dostosowane mieszkań i wyposażenia ich pod kątem potrzeb osób z niepełnosprawnością i ich ograniczeń funkcjonalnych."
+    ],
+    "source": "Mapa Wyzwań Społecznych, ROPS w Krakowie — dane krajowe"
+  },
+  {
+    "code": "POVERTY",
+    "number": 4,
+    "name": "Ubóstwo",
+    "definition": "W 2023 roku ubóstwo skrajne w Polsce, dotyczyło 6,6% gospodarstw domowych, co stanowi wzrost względem roku poprzedniego na poziomie 2 pp. Do grup najczęściej doświadczających ubóstwa skrajnego, można zaliczyć w szczególności beneficjentów świadczeń społecznych, rolników, mieszkańców wsi, zwłaszcza poza aglomeracyjnych terenów wiejskich. W 2023 roku progi określające granice ubóstwa dla 1-osobowych gospodarstw wyniosły 776 zł w przypadku ubóstwa ustawowego, 1 092 zł – ubóstwa relatywnego, 913 zł – ubóstwa skrajnego. Blisko 78% osób ubogich korzystających z bezpłatnej pomocy żywnościowej stwierdziło, że ich sytuacja ekonomiczna pogorszyła w ostatnim roku. Ponad 53% ankietowanych przyznało, że ich środki finansowe nie wystarczają na zaspokojenie podstawowych potrzeb (badanie Federacji Banków Żywności z 2023 r.). Źródła: Raport o biedzie 2023. Szlachetna Paczka. POVERTY WATCH 2023 monitoring ubóstwa i polityki społecznej przeciw ubóstwu w Polsce 2022-2023. Polski Komitet Europejskiej Sieci Przeciwdziałania Ubóstwu (EAP Polska) Zasięg ubóstwa ekonomicznego w Polsce w 2023 roku. Główny Urząd Statystyczny",
+    "keyChallenges": [
+      "ubóstwo dzieci - np. dobrej jakości usługi wczesnej opieki i edukacji (żłobki, przedszkola) zwiększające szanse dzieci z rodzin o niskich dochodach na to, że będą sobie lepiej radziły w szkole i w dorosłym życiu",
+      "ubóstwo seniorów",
+      "ubóstwo osób z niepełnosprawnościami",
+      "ubóstwo osób pracujących (np. rolników gospodarujących na niewielkich areałach)",
+      "ubóstwo osób bezrobotnych i bezdomnych – np. zatrudnienie socjalne (reintegracja zawodowa i społeczna oraz zatrudnienie wspomagane) oraz spółdzielczość socjalna ubogich osób bezrobotnych",
+      "ubóstwo uchodźców z Ukrainy",
+      "ubóstwo energetyczne",
+      "głód i niedożywienie"
+    ],
+    "source": "Mapa Wyzwań Społecznych, ROPS w Krakowie — dane krajowe"
+  },
+  {
+    "code": "MIGRANT_INTEGRATION",
+    "number": 5,
+    "name": "Integracja cudzoziemców",
+    "definition": "Integracja cudzoziemców jest elementem polityk włączających, czyli takich, które oferują wszystkim mieszkańcom gmin równe szanse uczestnictwa w życiu ekonomicznym, społecznym, kulturowym i politycznym. Polityki integrujące cudzoziemców zapewniają wszystkim, także tym nie mówiącym w języku polskim równe szanse korzystania z publicznych usług.",
+    "keyChallenges": [
+      "Zapewnienie migrantom równego dostępu do usług społecznych.",
+      "Zindywidualizowanie niektórych usług publicznych, zgodnie z potrzebami i problemami migrantów (np. zapewnienie tłumacza, asysta kulturowa, indywidualne programy integracji).",
+      "Włączenie kulturowe cudzoziemców, w tym dzieci i młodzieży w wieku szkolnym.",
+      "Rynek pracy otwarty na cudzoziemców, zapewniający formy wsparcia zgodne z kwalifikacjami, wykształceniem itp. (w tym m.in. nauka języka branżowego, uznawania kwalifikacji zdobytych za granicą).",
+      "Integracja dzieci migrantów w polskim w systemie edukacyjnym.",
+      "Zmiana/wzmacnianie postaw wolnych od stereotypów, względem cudzoziemców przebywających na terenie Polski.",
+      "Zabezpieczenie potrzeb w zakresie zdrowia psychicznego cudzoziemców."
+    ],
+    "source": "Mapa Wyzwań Społecznych, ROPS w Krakowie — dane krajowe"
+  },
+  {
+    "code": "HEALTH",
+    "number": 6,
+    "name": "Zdrowie",
+    "definition": "W dzisiejszym świecie pełnym wyzwań związanych ze stylem życia, środowiskiem czy presją społeczną, promowanie zdrowego stylu życia staje się coraz istotniejsze. Edukacja zdrowotna, dostęp do opieki medycznej, prewencja chorób czy promocja zdrowego środowiska to kluczowe obszary, które wspierają zdrowie psychiczne i fizyczne jednostek i społeczeństw jako całości.",
+    "keyChallenges": [
+      "Wzrost świadomości i edukacja w zakresie zdrowego stylu życia, prewencji chorób oraz znaczenia zdrowej diety i aktywności fizycznej.",
+      "Zapewnienie równego dostępu do wysokiej jakości opieki zdrowotnej dla wszystkich warstw społeczeństwa.",
+      "Dostosowanie systemów opieki zdrowotnej do rosnącej liczby osób starszych, ze szczególnym uwzględnieniem opieki długoterminowej.",
+      "Promocja zdrowia wśród młodych: inwestowanie w zdrowie dzieci i młodzieży, aby zbudować zdrową przyszłość społeczeństwa.",
+      "Świadomość zdrowia psychicznego: Zwiększenie świadomości na temat znaczenia zdrowia psychicznego i przeciwdziałanie stygmatyzacji związanej z problemami psychicznymi."
+    ],
+    "source": "Mapa Wyzwań Społecznych, ROPS w Krakowie — dane krajowe"
+  },
+  {
+    "code": "MENTAL_HEALTH",
+    "number": 7,
+    "name": "Zdrowie psychiczne",
+    "definition": "Dobrostan jednostki obejmuje równowagę emocjonalną, psychiczną i społeczną. Osoba ciesząca się dobrym zdrowiem psychicznym ma zdolność radzenia sobie ze stresem, utrzymywania satysfakcjonujących relacji z otoczeniem, czy podejmowania skutecznych decyzji. Zdrowie psychiczne nie oznacza jedynie braku chorób psychicznych, ale jest także warunkiem pozytywnego samopoczucia, rozwoju osobistego oraz umiejętności adaptacji do zmian w życiu.",
+    "keyChallenges": [
+      "Zwiększenie działań na rzecz rozwoju edukacji prozdrowotnej w tym zdrowia psychicznego, szczególnie wśród dzieci, młodzieży i osób w podeszłym wieku.",
+      "Wzmacnianie kompetencji rodzicielskich w zakresie prawidłowego rozpoznawania oraz reagowania na sygnały mogące świadczyć o problemach natury psychicznej swoich dzieci.",
+      "Zmiana modelu funkcjonowania systemu ochrony zdrowia psychicznego w Polsce - przejście z opieki instytucjonalnej na środowiskową.",
+      "Ograniczanie zjawiska stygmatyzacji osób zmagających się z problemami natury psychicznej, co wpływa znacznie na niechęć do uzyskania specjalistycznej pomocy oraz może prowadzić do pogłębienia tego rodzaju problemów."
+    ],
+    "source": "Mapa Wyzwań Społecznych, ROPS w Krakowie — dane krajowe"
+  },
+  {
+    "code": "SENIORS",
+    "number": 8,
+    "name": "Seniorzy",
+    "definition": "Sytuacja społeczna Seniorów jest często odzwierciedleniem aktualnych wyzwań socjalnych i obywatelskich. Współcześnie stajemy przed zadaniem dostosowania się do starzejącej się populacji, co wymaga skutecznych działań w obszarze opieki zdrowotnej i opiekuńczej, ale także wsparcia w zapewnieniu godnej starości. Osoby starsze powinny mieć możliwość pełnego i efektywnego bycia częścią społeczeństwa, mieć zapewnione prawo do życia w sposób bezpieczny, wolny od dyskryminacji, izolacji, zaniedbania i na tyle niezależny jak to tylko możliwe.",
+    "keyChallenges": [
+      "Konieczność dostosowania bazy instytucjonalnej i usług zdrowotnych do potrzeb starzejącego się społeczeństwa, również w oparciu o nowoczesne technologie.",
+      "Wdrażanie standardów uniwersalnego projektowania w przestrzeni wspólnej oraz w budownictwie mieszkalnym, m.in. we współpracy z samymi odbiorcami oraz organizacjami działającymi na ich rzecz, w tym rozwój mieszkalnictwa senioralnego.",
+      "Kształtowanie odpowiedzialnej postawy seniorów względem sięgania po leki i suplementy oraz uwrażliwienie opiekunów osób starszych na to zjawisko.",
+      "Poszerzanie oferty aktywizacji i integracji seniorów, z uwzględnieniem ich możliwości psychofizycznych, sytuacji materialnej oraz innych istotnych czynników.",
+      "Rozwój kompetencji cyfrowych seniorów, które mogłyby stanowić odpowiedź na problemy w obszarze zdrowia oraz relacji towarzyskich.",
+      "Poprawa dostępności do usług opiekuńczych (w obrębie gmin), w tym specjalistycznych usług opiekuńczych, które są osobami samotnymi lub samotnie gospodarującymi, a także tych, które pozostają w rodzinie."
+    ],
+    "source": "Mapa Wyzwań Społecznych, ROPS w Krakowie — dane krajowe"
+  }
+]

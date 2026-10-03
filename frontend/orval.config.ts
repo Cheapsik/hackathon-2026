@@ -9,6 +9,8 @@ export default defineConfig({
       client: 'react-query',
       httpClient: 'fetch',
       clean: true,
+      // Header parameters (X-Tracking-Code) become arguments of the generated functions.
+      headers: true,
       override: {
         mutator: {
           path: 'src/api/castor-fetch.ts',

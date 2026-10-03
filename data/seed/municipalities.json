@@ -1,0 +1,1100 @@
+[
+  {
+    "teryt": "1201011",
+    "name": "Bochnia",
+    "type": "URBAN",
+    "powiat": "bocheński"
+  },
+  {
+    "teryt": "1201022",
+    "name": "Bochnia",
+    "type": "RURAL",
+    "powiat": "bocheński"
+  },
+  {
+    "teryt": "1201032",
+    "name": "Drwinia",
+    "type": "RURAL",
+    "powiat": "bocheński"
+  },
+  {
+    "teryt": "1201042",
+    "name": "Lipnica Murowana",
+    "type": "RURAL",
+    "powiat": "bocheński"
+  },
+  {
+    "teryt": "1201052",
+    "name": "Łapanów",
+    "type": "RURAL",
+    "powiat": "bocheński"
+  },
+  {
+    "teryt": "1201063",
+    "name": "Nowy Wiśnicz",
+    "type": "URBAN_RURAL",
+    "powiat": "bocheński"
+  },
+  {
+    "teryt": "1201072",
+    "name": "Rzezawa",
+    "type": "RURAL",
+    "powiat": "bocheński"
+  },
+  {
+    "teryt": "1201082",
+    "name": "Trzciana",
+    "type": "RURAL",
+    "powiat": "bocheński"
+  },
+  {
+    "teryt": "1201092",
+    "name": "Żegocina",
+    "type": "RURAL",
+    "powiat": "bocheński"
+  },
+  {
+    "teryt": "1202012",
+    "name": "Borzęcin",
+    "type": "RURAL",
+    "powiat": "brzeski"
+  },
+  {
+    "teryt": "1202023",
+    "name": "Brzesko",
+    "type": "URBAN_RURAL",
+    "powiat": "brzeski"
+  },
+  {
+    "teryt": "1202033",
+    "name": "Czchów",
+    "type": "URBAN_RURAL",
+    "powiat": "brzeski"
+  },
+  {
+    "teryt": "1202042",
+    "name": "Dębno",
+    "type": "RURAL",
+    "powiat": "brzeski"
+  },
+  {
+    "teryt": "1202052",
+    "name": "Gnojnik",
+    "type": "RURAL",
+    "powiat": "brzeski"
+  },
+  {
+    "teryt": "1202062",
+    "name": "Iwkowa",
+    "type": "RURAL",
+    "powiat": "brzeski"
+  },
+  {
+    "teryt": "1202072",
+    "name": "Szczurowa",
+    "type": "RURAL",
+    "powiat": "brzeski"
+  },
+  {
+    "teryt": "1203013",
+    "name": "Alwernia",
+    "type": "URBAN_RURAL",
+    "powiat": "chrzanowski"
+  },
+  {
+    "teryt": "1203022",
+    "name": "Babice",
+    "type": "RURAL",
+    "powiat": "chrzanowski"
+  },
+  {
+    "teryt": "1203033",
+    "name": "Chrzanów",
+    "type": "URBAN_RURAL",
+    "powiat": "chrzanowski"
+  },
+  {
+    "teryt": "1203043",
+    "name": "Libiąż",
+    "type": "URBAN_RURAL",
+    "powiat": "chrzanowski"
+  },
+  {
+    "teryt": "1203053",
+    "name": "Trzebinia",
+    "type": "URBAN_RURAL",
+    "powiat": "chrzanowski"
+  },
+  {
+    "teryt": "1204012",
+    "name": "Bolesław",
+    "type": "RURAL",
+    "powiat": "dąbrowski"
+  },
+  {
+    "teryt": "1204023",
+    "name": "Dąbrowa Tarnowska",
+    "type": "URBAN_RURAL",
+    "powiat": "dąbrowski"
+  },
+  {
+    "teryt": "1204032",
+    "name": "Gręboszów",
+    "type": "RURAL",
+    "powiat": "dąbrowski"
+  },
+  {
+    "teryt": "1204042",
+    "name": "Mędrzechów",
+    "type": "RURAL",
+    "powiat": "dąbrowski"
+  },
+  {
+    "teryt": "1204052",
+    "name": "Olesno",
+    "type": "RURAL",
+    "powiat": "dąbrowski"
+  },
+  {
+    "teryt": "1204062",
+    "name": "Radgoszcz",
+    "type": "RURAL",
+    "powiat": "dąbrowski"
+  },
+  {
+    "teryt": "1204073",
+    "name": "Szczucin",
+    "type": "URBAN_RURAL",
+    "powiat": "dąbrowski"
+  },
+  {
+    "teryt": "1205011",
+    "name": "Gorlice",
+    "type": "URBAN",
+    "powiat": "gorlicki"
+  },
+  {
+    "teryt": "1205023",
+    "name": "Biecz",
+    "type": "URBAN_RURAL",
+    "powiat": "gorlicki"
+  },
+  {
+    "teryt": "1205033",
+    "name": "Bobowa",
+    "type": "URBAN_RURAL",
+    "powiat": "gorlicki"
+  },
+  {
+    "teryt": "1205042",
+    "name": "Gorlice",
+    "type": "RURAL",
+    "powiat": "gorlicki"
+  },
+  {
+    "teryt": "1205052",
+    "name": "Lipinki",
+    "type": "RURAL",
+    "powiat": "gorlicki"
+  },
+  {
+    "teryt": "1205062",
+    "name": "Łużna",
+    "type": "RURAL",
+    "powiat": "gorlicki"
+  },
+  {
+    "teryt": "1205072",
+    "name": "Moszczenica",
+    "type": "RURAL",
+    "powiat": "gorlicki"
+  },
+  {
+    "teryt": "1205082",
+    "name": "Ropa",
+    "type": "RURAL",
+    "powiat": "gorlicki"
+  },
+  {
+    "teryt": "1205092",
+    "name": "Sękowa",
+    "type": "RURAL",
+    "powiat": "gorlicki"
+  },
+  {
+    "teryt": "1205102",
+    "name": "Uście Gorlickie",
+    "type": "RURAL",
+    "powiat": "gorlicki"
+  },
+  {
+    "teryt": "1206012",
+    "name": "Czernichów",
+    "type": "RURAL",
+    "powiat": "krakowski"
+  },
+  {
+    "teryt": "1206022",
+    "name": "Igołomia-Wawrzeńczyce",
+    "type": "RURAL",
+    "powiat": "krakowski"
+  },
+  {
+    "teryt": "1206032",
+    "name": "Iwanowice",
+    "type": "RURAL",
+    "powiat": "krakowski"
+  },
+  {
+    "teryt": "1206042",
+    "name": "Jerzmanowice-Przeginia",
+    "type": "RURAL",
+    "powiat": "krakowski"
+  },
+  {
+    "teryt": "1206052",
+    "name": "Kocmyrzów-Luborzyca",
+    "type": "RURAL",
+    "powiat": "krakowski"
+  },
+  {
+    "teryt": "1206063",
+    "name": "Krzeszowice",
+    "type": "URBAN_RURAL",
+    "powiat": "krakowski"
+  },
+  {
+    "teryt": "1206072",
+    "name": "Liszki",
+    "type": "RURAL",
+    "powiat": "krakowski"
+  },
+  {
+    "teryt": "1206082",
+    "name": "Michałowice",
+    "type": "RURAL",
+    "powiat": "krakowski"
+  },
+  {
+    "teryt": "1206092",
+    "name": "Mogilany",
+    "type": "RURAL",
+    "powiat": "krakowski"
+  },
+  {
+    "teryt": "1206103",
+    "name": "Skała",
+    "type": "URBAN_RURAL",
+    "powiat": "krakowski"
+  },
+  {
+    "teryt": "1206113",
+    "name": "Skawina",
+    "type": "URBAN_RURAL",
+    "powiat": "krakowski"
+  },
+  {
+    "teryt": "1206123",
+    "name": "Słomniki",
+    "type": "URBAN_RURAL",
+    "powiat": "krakowski"
+  },
+  {
+    "teryt": "1206132",
+    "name": "Sułoszowa",
+    "type": "RURAL",
+    "powiat": "krakowski"
+  },
+  {
+    "teryt": "1206143",
+    "name": "Świątniki Górne",
+    "type": "URBAN_RURAL",
+    "powiat": "krakowski"
+  },
+  {
+    "teryt": "1206152",
+    "name": "Wielka Wieś",
+    "type": "RURAL",
+    "powiat": "krakowski"
+  },
+  {
+    "teryt": "1206162",
+    "name": "Zabierzów",
+    "type": "RURAL",
+    "powiat": "krakowski"
+  },
+  {
+    "teryt": "1206172",
+    "name": "Zielonki",
+    "type": "RURAL",
+    "powiat": "krakowski"
+  },
+  {
+    "teryt": "1207011",
+    "name": "Limanowa",
+    "type": "URBAN",
+    "powiat": "limanowski"
+  },
+  {
+    "teryt": "1207021",
+    "name": "Mszana Dolna",
+    "type": "URBAN",
+    "powiat": "limanowski"
+  },
+  {
+    "teryt": "1207032",
+    "name": "Dobra",
+    "type": "RURAL",
+    "powiat": "limanowski"
+  },
+  {
+    "teryt": "1207042",
+    "name": "Jodłownik",
+    "type": "RURAL",
+    "powiat": "limanowski"
+  },
+  {
+    "teryt": "1207052",
+    "name": "Kamienica",
+    "type": "RURAL",
+    "powiat": "limanowski"
+  },
+  {
+    "teryt": "1207062",
+    "name": "Laskowa",
+    "type": "RURAL",
+    "powiat": "limanowski"
+  },
+  {
+    "teryt": "1207072",
+    "name": "Limanowa",
+    "type": "RURAL",
+    "powiat": "limanowski"
+  },
+  {
+    "teryt": "1207082",
+    "name": "Łukowica",
+    "type": "RURAL",
+    "powiat": "limanowski"
+  },
+  {
+    "teryt": "1207092",
+    "name": "Mszana Dolna",
+    "type": "RURAL",
+    "powiat": "limanowski"
+  },
+  {
+    "teryt": "1207102",
+    "name": "Niedźwiedź",
+    "type": "RURAL",
+    "powiat": "limanowski"
+  },
+  {
+    "teryt": "1207112",
+    "name": "Słopnice",
+    "type": "RURAL",
+    "powiat": "limanowski"
+  },
+  {
+    "teryt": "1207122",
+    "name": "Tymbark",
+    "type": "RURAL",
+    "powiat": "limanowski"
+  },
+  {
+    "teryt": "1207132",
+    "name": "Szczawa",
+    "type": "RURAL",
+    "powiat": "limanowski"
+  },
+  {
+    "teryt": "1208012",
+    "name": "Charsznica",
+    "type": "RURAL",
+    "powiat": "miechowski"
+  },
+  {
+    "teryt": "1208022",
+    "name": "Gołcza",
+    "type": "RURAL",
+    "powiat": "miechowski"
+  },
+  {
+    "teryt": "1208032",
+    "name": "Kozłów",
+    "type": "RURAL",
+    "powiat": "miechowski"
+  },
+  {
+    "teryt": "1208043",
+    "name": "Książ Wielki",
+    "type": "URBAN_RURAL",
+    "powiat": "miechowski"
+  },
+  {
+    "teryt": "1208053",
+    "name": "Miechów",
+    "type": "URBAN_RURAL",
+    "powiat": "miechowski"
+  },
+  {
+    "teryt": "1208062",
+    "name": "Racławice",
+    "type": "RURAL",
+    "powiat": "miechowski"
+  },
+  {
+    "teryt": "1208072",
+    "name": "Słaboszów",
+    "type": "RURAL",
+    "powiat": "miechowski"
+  },
+  {
+    "teryt": "1209013",
+    "name": "Dobczyce",
+    "type": "URBAN_RURAL",
+    "powiat": "myślenicki"
+  },
+  {
+    "teryt": "1209022",
+    "name": "Lubień",
+    "type": "RURAL",
+    "powiat": "myślenicki"
+  },
+  {
+    "teryt": "1209033",
+    "name": "Myślenice",
+    "type": "URBAN_RURAL",
+    "powiat": "myślenicki"
+  },
+  {
+    "teryt": "1209042",
+    "name": "Pcim",
+    "type": "RURAL",
+    "powiat": "myślenicki"
+  },
+  {
+    "teryt": "1209052",
+    "name": "Raciechowice",
+    "type": "RURAL",
+    "powiat": "myślenicki"
+  },
+  {
+    "teryt": "1209062",
+    "name": "Siepraw",
+    "type": "RURAL",
+    "powiat": "myślenicki"
+  },
+  {
+    "teryt": "1209073",
+    "name": "Sułkowice",
+    "type": "URBAN_RURAL",
+    "powiat": "myślenicki"
+  },
+  {
+    "teryt": "1209082",
+    "name": "Tokarnia",
+    "type": "RURAL",
+    "powiat": "myślenicki"
+  },
+  {
+    "teryt": "1209092",
+    "name": "Wiśniowa",
+    "type": "RURAL",
+    "powiat": "myślenicki"
+  },
+  {
+    "teryt": "1210011",
+    "name": "Grybów",
+    "type": "URBAN",
+    "powiat": "nowosądecki"
+  },
+  {
+    "teryt": "1210022",
+    "name": "Chełmiec",
+    "type": "RURAL",
+    "powiat": "nowosądecki"
+  },
+  {
+    "teryt": "1210032",
+    "name": "Gródek nad Dunajcem",
+    "type": "RURAL",
+    "powiat": "nowosądecki"
+  },
+  {
+    "teryt": "1210042",
+    "name": "Grybów",
+    "type": "RURAL",
+    "powiat": "nowosądecki"
+  },
+  {
+    "teryt": "1210052",
+    "name": "Kamionka Wielka",
+    "type": "RURAL",
+    "powiat": "nowosądecki"
+  },
+  {
+    "teryt": "1210062",
+    "name": "Korzenna",
+    "type": "RURAL",
+    "powiat": "nowosądecki"
+  },
+  {
+    "teryt": "1210073",
+    "name": "Krynica-Zdrój",
+    "type": "URBAN_RURAL",
+    "powiat": "nowosądecki"
+  },
+  {
+    "teryt": "1210082",
+    "name": "Łabowa",
+    "type": "RURAL",
+    "powiat": "nowosądecki"
+  },
+  {
+    "teryt": "1210092",
+    "name": "Łącko",
+    "type": "RURAL",
+    "powiat": "nowosądecki"
+  },
+  {
+    "teryt": "1210102",
+    "name": "Łososina Dolna",
+    "type": "RURAL",
+    "powiat": "nowosądecki"
+  },
+  {
+    "teryt": "1210113",
+    "name": "Muszyna",
+    "type": "URBAN_RURAL",
+    "powiat": "nowosądecki"
+  },
+  {
+    "teryt": "1210122",
+    "name": "Nawojowa",
+    "type": "RURAL",
+    "powiat": "nowosądecki"
+  },
+  {
+    "teryt": "1210133",
+    "name": "Piwniczna-Zdrój",
+    "type": "URBAN_RURAL",
+    "powiat": "nowosądecki"
+  },
+  {
+    "teryt": "1210142",
+    "name": "Podegrodzie",
+    "type": "RURAL",
+    "powiat": "nowosądecki"
+  },
+  {
+    "teryt": "1210152",
+    "name": "Rytro",
+    "type": "RURAL",
+    "powiat": "nowosądecki"
+  },
+  {
+    "teryt": "1210163",
+    "name": "Stary Sącz",
+    "type": "URBAN_RURAL",
+    "powiat": "nowosądecki"
+  },
+  {
+    "teryt": "1211011",
+    "name": "Nowy Targ",
+    "type": "URBAN",
+    "powiat": "nowotarski"
+  },
+  {
+    "teryt": "1211023",
+    "name": "Szczawnica",
+    "type": "URBAN_RURAL",
+    "powiat": "nowotarski"
+  },
+  {
+    "teryt": "1211033",
+    "name": "Czarny Dunajec",
+    "type": "URBAN_RURAL",
+    "powiat": "nowotarski"
+  },
+  {
+    "teryt": "1211042",
+    "name": "Czorsztyn",
+    "type": "RURAL",
+    "powiat": "nowotarski"
+  },
+  {
+    "teryt": "1211052",
+    "name": "Jabłonka",
+    "type": "RURAL",
+    "powiat": "nowotarski"
+  },
+  {
+    "teryt": "1211062",
+    "name": "Krościenko nad Dunajcem",
+    "type": "RURAL",
+    "powiat": "nowotarski"
+  },
+  {
+    "teryt": "1211072",
+    "name": "Lipnica Wielka",
+    "type": "RURAL",
+    "powiat": "nowotarski"
+  },
+  {
+    "teryt": "1211082",
+    "name": "Łapsze Niżne",
+    "type": "RURAL",
+    "powiat": "nowotarski"
+  },
+  {
+    "teryt": "1211092",
+    "name": "Nowy Targ",
+    "type": "RURAL",
+    "powiat": "nowotarski"
+  },
+  {
+    "teryt": "1211102",
+    "name": "Ochotnica Dolna",
+    "type": "RURAL",
+    "powiat": "nowotarski"
+  },
+  {
+    "teryt": "1211112",
+    "name": "Raba Wyżna",
+    "type": "RURAL",
+    "powiat": "nowotarski"
+  },
+  {
+    "teryt": "1211123",
+    "name": "Rabka-Zdrój",
+    "type": "URBAN_RURAL",
+    "powiat": "nowotarski"
+  },
+  {
+    "teryt": "1211132",
+    "name": "Spytkowice",
+    "type": "RURAL",
+    "powiat": "nowotarski"
+  },
+  {
+    "teryt": "1211142",
+    "name": "Szaflary",
+    "type": "RURAL",
+    "powiat": "nowotarski"
+  },
+  {
+    "teryt": "1212011",
+    "name": "Bukowno",
+    "type": "URBAN",
+    "powiat": "olkuski"
+  },
+  {
+    "teryt": "1212032",
+    "name": "Bolesław",
+    "type": "RURAL",
+    "powiat": "olkuski"
+  },
+  {
+    "teryt": "1212042",
+    "name": "Klucze",
+    "type": "RURAL",
+    "powiat": "olkuski"
+  },
+  {
+    "teryt": "1212053",
+    "name": "Olkusz",
+    "type": "URBAN_RURAL",
+    "powiat": "olkuski"
+  },
+  {
+    "teryt": "1212062",
+    "name": "Trzyciąż",
+    "type": "RURAL",
+    "powiat": "olkuski"
+  },
+  {
+    "teryt": "1212073",
+    "name": "Wolbrom",
+    "type": "URBAN_RURAL",
+    "powiat": "olkuski"
+  },
+  {
+    "teryt": "1213011",
+    "name": "Oświęcim",
+    "type": "URBAN",
+    "powiat": "oświęcimski"
+  },
+  {
+    "teryt": "1213023",
+    "name": "Brzeszcze",
+    "type": "URBAN_RURAL",
+    "powiat": "oświęcimski"
+  },
+  {
+    "teryt": "1213033",
+    "name": "Chełmek",
+    "type": "URBAN_RURAL",
+    "powiat": "oświęcimski"
+  },
+  {
+    "teryt": "1213043",
+    "name": "Kęty",
+    "type": "URBAN_RURAL",
+    "powiat": "oświęcimski"
+  },
+  {
+    "teryt": "1213052",
+    "name": "Osiek",
+    "type": "RURAL",
+    "powiat": "oświęcimski"
+  },
+  {
+    "teryt": "1213062",
+    "name": "Oświęcim",
+    "type": "RURAL",
+    "powiat": "oświęcimski"
+  },
+  {
+    "teryt": "1213072",
+    "name": "Polanka Wielka",
+    "type": "RURAL",
+    "powiat": "oświęcimski"
+  },
+  {
+    "teryt": "1213082",
+    "name": "Przeciszów",
+    "type": "RURAL",
+    "powiat": "oświęcimski"
+  },
+  {
+    "teryt": "1213093",
+    "name": "Zator",
+    "type": "URBAN_RURAL",
+    "powiat": "oświęcimski"
+  },
+  {
+    "teryt": "1214012",
+    "name": "Koniusza",
+    "type": "RURAL",
+    "powiat": "proszowicki"
+  },
+  {
+    "teryt": "1214023",
+    "name": "Koszyce",
+    "type": "URBAN_RURAL",
+    "powiat": "proszowicki"
+  },
+  {
+    "teryt": "1214033",
+    "name": "Nowe Brzesko",
+    "type": "URBAN_RURAL",
+    "powiat": "proszowicki"
+  },
+  {
+    "teryt": "1214042",
+    "name": "Pałecznica",
+    "type": "RURAL",
+    "powiat": "proszowicki"
+  },
+  {
+    "teryt": "1214053",
+    "name": "Proszowice",
+    "type": "URBAN_RURAL",
+    "powiat": "proszowicki"
+  },
+  {
+    "teryt": "1214062",
+    "name": "Radziemice",
+    "type": "RURAL",
+    "powiat": "proszowicki"
+  },
+  {
+    "teryt": "1215011",
+    "name": "Jordanów",
+    "type": "URBAN",
+    "powiat": "suski"
+  },
+  {
+    "teryt": "1215021",
+    "name": "Sucha Beskidzka",
+    "type": "URBAN",
+    "powiat": "suski"
+  },
+  {
+    "teryt": "1215032",
+    "name": "Budzów",
+    "type": "RURAL",
+    "powiat": "suski"
+  },
+  {
+    "teryt": "1215042",
+    "name": "Bystra-Sidzina",
+    "type": "RURAL",
+    "powiat": "suski"
+  },
+  {
+    "teryt": "1215052",
+    "name": "Jordanów",
+    "type": "RURAL",
+    "powiat": "suski"
+  },
+  {
+    "teryt": "1215063",
+    "name": "Maków Podhalański",
+    "type": "URBAN_RURAL",
+    "powiat": "suski"
+  },
+  {
+    "teryt": "1215072",
+    "name": "Stryszawa",
+    "type": "RURAL",
+    "powiat": "suski"
+  },
+  {
+    "teryt": "1215082",
+    "name": "Zawoja",
+    "type": "RURAL",
+    "powiat": "suski"
+  },
+  {
+    "teryt": "1215092",
+    "name": "Zembrzyce",
+    "type": "RURAL",
+    "powiat": "suski"
+  },
+  {
+    "teryt": "1216013",
+    "name": "Ciężkowice",
+    "type": "URBAN_RURAL",
+    "powiat": "tarnowski"
+  },
+  {
+    "teryt": "1216022",
+    "name": "Gromnik",
+    "type": "RURAL",
+    "powiat": "tarnowski"
+  },
+  {
+    "teryt": "1216032",
+    "name": "Lisia Góra",
+    "type": "RURAL",
+    "powiat": "tarnowski"
+  },
+  {
+    "teryt": "1216042",
+    "name": "Pleśna",
+    "type": "RURAL",
+    "powiat": "tarnowski"
+  },
+  {
+    "teryt": "1216053",
+    "name": "Radłów",
+    "type": "URBAN_RURAL",
+    "powiat": "tarnowski"
+  },
+  {
+    "teryt": "1216063",
+    "name": "Ryglice",
+    "type": "URBAN_RURAL",
+    "powiat": "tarnowski"
+  },
+  {
+    "teryt": "1216072",
+    "name": "Rzepiennik Strzyżewski",
+    "type": "RURAL",
+    "powiat": "tarnowski"
+  },
+  {
+    "teryt": "1216082",
+    "name": "Skrzyszów",
+    "type": "RURAL",
+    "powiat": "tarnowski"
+  },
+  {
+    "teryt": "1216092",
+    "name": "Tarnów",
+    "type": "RURAL",
+    "powiat": "tarnowski"
+  },
+  {
+    "teryt": "1216103",
+    "name": "Tuchów",
+    "type": "URBAN_RURAL",
+    "powiat": "tarnowski"
+  },
+  {
+    "teryt": "1216112",
+    "name": "Wierzchosławice",
+    "type": "RURAL",
+    "powiat": "tarnowski"
+  },
+  {
+    "teryt": "1216122",
+    "name": "Wietrzychowice",
+    "type": "RURAL",
+    "powiat": "tarnowski"
+  },
+  {
+    "teryt": "1216133",
+    "name": "Wojnicz",
+    "type": "URBAN_RURAL",
+    "powiat": "tarnowski"
+  },
+  {
+    "teryt": "1216143",
+    "name": "Zakliczyn",
+    "type": "URBAN_RURAL",
+    "powiat": "tarnowski"
+  },
+  {
+    "teryt": "1216153",
+    "name": "Żabno",
+    "type": "URBAN_RURAL",
+    "powiat": "tarnowski"
+  },
+  {
+    "teryt": "1216162",
+    "name": "Szerzyny",
+    "type": "RURAL",
+    "powiat": "tarnowski"
+  },
+  {
+    "teryt": "1217011",
+    "name": "Zakopane",
+    "type": "URBAN",
+    "powiat": "tatrzański"
+  },
+  {
+    "teryt": "1217022",
+    "name": "Biały Dunajec",
+    "type": "RURAL",
+    "powiat": "tatrzański"
+  },
+  {
+    "teryt": "1217032",
+    "name": "Bukowina Tatrzańska",
+    "type": "RURAL",
+    "powiat": "tatrzański"
+  },
+  {
+    "teryt": "1217042",
+    "name": "Kościelisko",
+    "type": "RURAL",
+    "powiat": "tatrzański"
+  },
+  {
+    "teryt": "1217052",
+    "name": "Poronin",
+    "type": "RURAL",
+    "powiat": "tatrzański"
+  },
+  {
+    "teryt": "1218013",
+    "name": "Andrychów",
+    "type": "URBAN_RURAL",
+    "powiat": "wadowicki"
+  },
+  {
+    "teryt": "1218022",
+    "name": "Brzeźnica",
+    "type": "RURAL",
+    "powiat": "wadowicki"
+  },
+  {
+    "teryt": "1218033",
+    "name": "Kalwaria Zebrzydowska",
+    "type": "URBAN_RURAL",
+    "powiat": "wadowicki"
+  },
+  {
+    "teryt": "1218042",
+    "name": "Lanckorona",
+    "type": "RURAL",
+    "powiat": "wadowicki"
+  },
+  {
+    "teryt": "1218052",
+    "name": "Mucharz",
+    "type": "RURAL",
+    "powiat": "wadowicki"
+  },
+  {
+    "teryt": "1218062",
+    "name": "Spytkowice",
+    "type": "RURAL",
+    "powiat": "wadowicki"
+  },
+  {
+    "teryt": "1218072",
+    "name": "Stryszów",
+    "type": "RURAL",
+    "powiat": "wadowicki"
+  },
+  {
+    "teryt": "1218082",
+    "name": "Tomice",
+    "type": "RURAL",
+    "powiat": "wadowicki"
+  },
+  {
+    "teryt": "1218093",
+    "name": "Wadowice",
+    "type": "URBAN_RURAL",
+    "powiat": "wadowicki"
+  },
+  {
+    "teryt": "1218102",
+    "name": "Wieprz",
+    "type": "RURAL",
+    "powiat": "wadowicki"
+  },
+  {
+    "teryt": "1219012",
+    "name": "Biskupice",
+    "type": "RURAL",
+    "powiat": "wielicki"
+  },
+  {
+    "teryt": "1219022",
+    "name": "Gdów",
+    "type": "RURAL",
+    "powiat": "wielicki"
+  },
+  {
+    "teryt": "1219032",
+    "name": "Kłaj",
+    "type": "RURAL",
+    "powiat": "wielicki"
+  },
+  {
+    "teryt": "1219043",
+    "name": "Niepołomice",
+    "type": "URBAN_RURAL",
+    "powiat": "wielicki"
+  },
+  {
+    "teryt": "1219053",
+    "name": "Wieliczka",
+    "type": "URBAN_RURAL",
+    "powiat": "wielicki"
+  },
+  {
+    "teryt": "1261011",
+    "name": "Kraków",
+    "type": "URBAN",
+    "powiat": "m. Kraków"
+  },
+  {
+    "teryt": "1262011",
+    "name": "Nowy Sącz",
+    "type": "URBAN",
+    "powiat": "m. Nowy Sącz"
+  },
+  {
+    "teryt": "1263011",
+    "name": "Tarnów",
+    "type": "URBAN",
+    "powiat": "m. Tarnów"
+  }
+]

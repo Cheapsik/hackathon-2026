@@ -43,7 +43,7 @@ Jedna z dziewięciu kategorii, w których ROPS porządkuje Bibliotekę innowacji
 _Avoid_: obszar, temat
 
 **InnovationGenome** (genom innowacji):
-Ustrukturyzowany opis innowacji: przyczyny problemu, mechanizmy działania, grupy docelowe, wymagane zasoby, skala i obszary wyzwań; obowiązuje dopiero po zatwierdzeniu przez administratora.
+Ustrukturyzowany opis innowacji: przyczyny problemu, mechanizmy działania, grupy docelowe, wymagane zasoby, skala i obszary wyzwań. Powstaje jako szkic, który administrator zatwierdza albo poprawia; do tego czasu dopasowanie korzysta ze szkicu.
 _Avoid_: profil innowacji, metadane
 
 **Required resources** (wymagane zasoby):
@@ -85,6 +85,9 @@ _Avoid_: Report, problem, potrzeba, ticket
 **Tracking code** (kod śledzenia):
 Krótki kod zgłoszenia, który daje jego posiadaczowi dostęp do statusu, dopasowań i wątku bez logowania.
 _Avoid_: numer zgłoszenia, token
+
+**Main challenge area** (główny obszar zgłoszenia):
+Pierwszy z obszarów wyzwań przypisanych zgłoszeniu; po nim liczymy podobne zgłoszenia.
 
 **Clarifying question** (pytanie doprecyzowujące):
 Jedno z najwyżej trzech pytań, które platforma zadaje, gdy opis zgłoszenia jest zbyt ogólny.

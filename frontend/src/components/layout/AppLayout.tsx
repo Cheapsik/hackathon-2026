@@ -1,9 +1,15 @@
 import { useEffect, useRef } from 'react'
 import { Link, NavLink, Outlet, useLocation } from 'react-router'
+import { AccountLinks } from '@/components/layout/AccountLinks'
 import { DisplayControls } from '@/components/layout/DisplayControls'
 import { cn } from '@/lib/utils'
 
-const navigation = [{ to: '/', label: 'Strona główna' }]
+const navigation = [
+  { to: '/', label: 'Strona główna' },
+  { to: '/opisz-problem', label: 'Opisz problem' },
+  { to: '/sledz', label: 'Śledź zgłoszenie' },
+  { to: '/moje-zgloszenia', label: 'Moje zgłoszenia' },
+]
 
 /**
  * Landmarks, skip link and display switches shared by every page. After a navigation the focus moves to <main>,
@@ -53,6 +59,7 @@ export function AppLayout() {
               ))}
             </ul>
           </nav>
+          <AccountLinks />
           <DisplayControls />
         </div>
       </header>

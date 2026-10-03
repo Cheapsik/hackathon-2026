@@ -19,10 +19,16 @@ Blokuje:
 - podobieństwo wektorowe zgłoszeń (§6.4 krok 5) i fiszek (§6.6),
 - pytania do raportów — RAG (§6.7, moduł II).
 
+Kolumna `embedding vector(N)` genomu jeszcze nie istnieje — dojdzie migracją razem z wymiarem z `Embeddings:Dimensions`.
+
 ## LLM — dostawca i pierwsze adaptery
 
 SPEC §1 i §3 wymagają abstrakcji `ILlmClient` z adapterami wybieranymi przez `Llm__Provider`. Nie ustalono, którego dostawcę obsługujemy pierwszego ani do którego jest klucz na demo.
 
 Propozycja z sesji projektowej: adapter `anthropic` i `openai-compatible` (obejmuje OpenAI, Ollama, vLLM) na `HttpClient`, bez SDK dostawców.
 
-Blokuje: **każdą funkcję AI** — klasyfikację i ranking zgłoszeń (moduł I), genomy innowacji, kartę dopasowania (moduł VII), asystentów, szkice odpowiedzi i naborów (moduł VI), tryb „Prościej”. Przed demem musi istnieć co najmniej jeden działający adapter.
+Stan: działa dostawca `placeholder` (`Shared/Ai/Placeholder/`, SPEC D-19) — bez usługi zewnętrznej, z deterministycznymi odpowiedziami z pokrycia słów. Dzięki niemu przepływy modułu I działają od końca do końca, ale wyniki są tylko wiarygodne, nie trafne.
+
+Prawdziwy adapter dokłada się w `Shared/Ai/` jako kolejna implementacja `ILlmClient` i kolejny `case` w `Program.cs` (`Llm:Provider`); prompty i potoki (`ProblemClassifier`, `Matchmaker`, `GenomeGenerator`) zostają bez zmian. Wymagania z SPEC §9: timeout, ponowienie przy 429/5xx, log czasu i tokenów bez treści.
+
+Blokuje: **trafność** każdej funkcji AI — klasyfikacji i rankingu zgłoszeń (moduł I), genomów innowacji, karty dopasowania (moduł VII), asystentów, szkiców odpowiedzi i naborów (moduł VI), trybu „Prościej”. Po podłączeniu adaptera genomy policzone placeholderem trzeba przeliczyć (usunąć wiersze `InnovationGenomes`; zadanie po imporcie policzy brakujące).

@@ -6,7 +6,8 @@ Szkielet **już istnieje** w `backend/`, `frontend/` i w korzeniu repo — ten d
 
 | Plik | Po co |
 |---|---|
-| `docker-compose.yml` | całe demo: `db` (`pgvector/pgvector:pg17`, port 5432 tylko na `127.0.0.1`), `backend` (migruje bazę przy starcie, klucze cookie na wolumenie), `frontend` (nginx na porcie 8080, proxy `/api` i `/hubs`) |
+| `docker-compose.yml` | całe demo: `db` (`pgvector/pgvector:pg17`, port 5432 tylko na `127.0.0.1`), `backend` (migruje bazę i importuje seed z `data/seed` przy starcie, klucze cookie na wolumenie), `frontend` (nginx na porcie 8080, proxy `/api` i `/hubs`) |
+| `data/` | skrypty Python pobierające dane (`scrapers/`) i ich wynik (`seed/`, commitowany) — [`../../data/README.md`](../../data/README.md) |
 | `.env.example` | wszystkie zmienne konfiguracji bez wartości; kopia jako `.env` (poza gitem) |
 | `.dockerignore` | kontekst budowania obrazu frontendu (korzeń repo) |
 | `GLOSSARY.md` | słownik pojęć — nazwy encji i enumów |
@@ -33,7 +34,11 @@ Konfiguracja (zmienne środowiskowe w konwencji `Sekcja__Klucz`):
 | `ConnectionStrings:Castor` | połączenie z bazą; domyślnie `localhost:5432`, baza/użytkownik/hasło `castor` |
 | `Database:MigrateOnStartup` | `true` — API wykonuje migracje przy starcie (w kontenerze); lokalnie domyślnie `false` |
 | `DataProtection:KeysPath` | katalog kluczy podpisujących cookie; bez niego klucze żyją w pamięci i restart wylogowuje wszystkich |
-| `Llm:*`, `Embeddings:*`, `Seed:*` | zarezerwowane dla adapterów AI i importu seedu — patrz [`../SPEC.md`](../SPEC.md) §3 |
+| `Llm:Provider` | adapter `ILlmClient`; zaimplementowany jest `placeholder` (domyślny w `appsettings.json`), nieznana wartość zatrzymuje start |
+| `Seed:Path`, `Seed:OnStartup` | import `data/seed` przy starcie; w `Development` włączony ze ścieżką `../../../data/seed` |
+| `Matching:HybridThreshold`, `Matching:CandidateLimit`, `Matching:MaxMatches` | próg krzyżówki (50), liczba kandydatów dla rankingu (30), liczba wyników (5) |
+| `RateLimiting:PublicAi:PermitLimit`, `…:WindowSeconds` | limit na IP dla publicznych endpointów z LLM (10 na 60 s) |
+| `Embeddings:*` | zarezerwowane — dostawca embeddingów do ustalenia ([`../TODO.md`](../TODO.md)) |
 
 ## Co jest w `src/Castor.Api/`
 
@@ -47,7 +52,20 @@ Konfiguracja (zmienne środowiskowe w konwencji `Sekcja__Klucz`):
 | `Migrations/` | `Initial` — tabela `Users` z unikalnym indeksem na `Email`; `UserRoleAndSearchExtensions` — kolumna `Role` (istniejące konta dostają `RESIDENT`) i rozszerzenia `vector`, `unaccent`, `pg_trgm` |
 | `Program.cs` | kontrolery z prefiksem `/api`, globalnym `AuthorizeFilter` i `DomainExceptionFilter`, enumy w JSON jako tekst, cookie `Castor.Auth` (`HttpOnly`, `SameSite=Lax`, 401/403 zamiast przekierowań), opcjonalnie trwałe klucze cookie, SignalR, Npgsql z pgvector, opcjonalna migracja przy starcie, jawna rejestracja handlerów, OpenAPI + Scalar tylko w `Development` |
 
-`Queries/` jeszcze nie istnieje — powstaje z pierwszym `…Query`, razem z linią `global using Castor.Api.Queries;` w `GlobalUsings.cs`.
+Moduł I dołożył (SPEC §7 I):
+
+| Miejsce | Zawartość |
+|---|---|
+| `Domain/Knowledge/` | `Innovation` (karta, linki, etap, źródło), `InnovationGenome` (+ `RequiredResources` jako JSON), `ChallengeArea` (klucz alternatywny `Code`), `Persona`, `Municipality` (TERYT, `QualifiedName` z typem gminy) |
+| `Domain/ProblemReports/` | `ProblemReport` (cykl: zgłoszenie → klasyfikacja → pytania → dopasowanie; dostęp: autor, admin albo kod), `TrackingCode` (Crockford base32, 8 znaków), `Anonymizer` (e-mail, PESEL, telefon, adres, imię z nazwiskiem), `MatchResult` (`MATCH` / `HYBRID`) |
+| `Domain/Jobs/` | `BackgroundJob` — stan i postęp zadania w tle |
+| `Persistence/` | mapowanie nowych encji; `Seeding/SeedImporter` (treści dopisywane, gminy upsertowane, potem zlecenie genomów); kolumna `Innovations.SearchVector` (`tsvector`, `simple` + `castor_unaccent`, GIN) |
+| `Queries/` | `InnovationCandidatesQuery` (pełnotekstowe po prefiksach słów → obszar → reszta), `ProblemReportViewQuery` (wyniki, obszary, podobne zgłoszenia) |
+| `Shared/Ai/` | prompty `Prompts/*.md` (zasoby assembly), kontrakty wejścia i wyjścia (`Contracts/`), `ProblemClassifier`, `Matchmaker`, `GenomeGenerator`, `Placeholder/PlaceholderLlmClient` |
+| `Shared/Jobs/` | `BackgroundJobQueue` (`Channel`), `BackgroundJobScheduler`, `BackgroundJobRunner` (`BackgroundService`), `GenerateGenomesJob` |
+| `Infrastructure/` | `Startup/DatabaseStartup` (migracje, zadania przerwane restartem → `FAILED`, import seedu — jako `IHostedService`, którego generator OpenAPI i dotnet-ef nie uruchamiają), `RateLimitPolicies`, `LiveEvents`, `CurrentUser.UserIdOrNull` i `IsAdmin` |
+| `Features/` | `ProblemReports` (tworzenie, odpowiedzi, odczyt, śledzenie kodem, przypięcie, moje), `Municipalities` (wyszukiwarka gmin), `Session` (`GET /api/auth/session`) |
+| `Migrations/` | `MatchmakingKnowledgeAndProblemReports` — tabele modułu I i funkcja `castor_unaccent` |
 
 Workspace'ów i globalnego filtra izolacji **nie ma** — dane platformy są wspólne ([`00-stack.md`](00-stack.md) · Dostęp do danych).
 

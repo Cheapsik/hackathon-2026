@@ -8,19 +8,21 @@ namespace Castor.Api.Infrastructure;
 /// </summary>
 public sealed class CurrentUser(IHttpContextAccessor httpContextAccessor)
 {
-    public Guid UserId => ClaimedId(ClaimTypes.NameIdentifier);
+    /// <summary>The signed-in user; a request without a session is refused with 401.</summary>
+    public Guid UserId => UserIdOrNull
+        ?? throw new DomainException("The request is not signed in.", StatusCodes.Status401Unauthorized);
 
-    private Guid ClaimedId(string claimType)
+    /// <summary>The signed-in user, or null for a visitor without an account — for endpoints open to both.</summary>
+    public Guid? UserIdOrNull
     {
-        ClaimsPrincipal principal = httpContextAccessor.HttpContext?.User
-            ?? throw new DomainException("The request is not signed in.", StatusCodes.Status401Unauthorized);
-
-        string? value = principal.FindFirstValue(claimType);
-        if (!Guid.TryParse(value, out Guid id))
+        get
         {
-            throw new DomainException("The request is not signed in.", StatusCodes.Status401Unauthorized);
-        }
+            ClaimsPrincipal? principal = httpContextAccessor.HttpContext?.User;
+            string? value = principal?.FindFirstValue(ClaimTypes.NameIdentifier);
 
-        return id;
+            return Guid.TryParse(value, out Guid id) ? id : null;
+        }
     }
+
+    public bool IsAdmin => httpContextAccessor.HttpContext?.User.IsInRole(nameof(UserRole.ADMIN)) == true;
 }

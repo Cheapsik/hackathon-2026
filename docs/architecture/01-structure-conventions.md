@@ -180,7 +180,9 @@ Namespace: `Castor.Api.Shared`.
 
 ## `Infrastructure/` — mechanika żądania
 
-Filtr zamieniający `DomainException` na odpowiedź, `ApiRoutePrefixConvention` (prefiks `/api`), cookie logowania, `CurrentUser`, zegar, hub SignalR. Nie trafiają tu encje ani przypadki użycia.
+Filtr zamieniający `DomainException` na odpowiedź, `ApiRoutePrefixConvention` (prefiks `/api`), polityki rate limitingu, cookie logowania, `CurrentUser`, zegar, hub SignalR i start aplikacji (`Startup/DatabaseStartup`: migracje, zadania przerwane restartem, import seedu). Nie trafiają tu encje ani przypadki użycia.
+
+**Praca przy starcie** idzie do `IHostedService`, nie do `Program.cs` za `Build()`: generator OpenAPI przy buildzie (`GetDocument.Insider`) i `dotnet-ef` (`ef`) wykonują `Program.cs`, a nie mają bazy — `Program.cs` nie rejestruje dla nich `DatabaseStartup`.
 
 **SignalR:** `LiveHub` pod `/hubs/live`. Połączenie zalogowanego dołącza do grupy `user:{id}`, administratora także do `admins`; anonim łączy się, żeby śledzić jedno zgłoszenie po kodzie (`report:{trackingCode}`), a ekspert dochodzi do `experts:{obszar}` razem z obszarami. Handler wysyła zdarzenie przez `IHubContext<LiveHub>` po `SaveChanges` — powiadomienie o zapisie, który się nie udał, byłoby fałszywe.
 
