@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
+import { Link } from 'react-router'
 import {
   getGetApiAdminGrantCallsQueryKey,
   useGetApiAdminGrantCalls,
@@ -71,6 +72,7 @@ export function GrantCallsPage() {
                 <button type="button" onClick={() => setEditing(grantCall)}>
                   Edytuj „{grantCall.title}”
                 </button>{' '}
+                <Link to={`/admin/nabory/${grantCall.id}/wnioski`}>Wnioski do „{grantCall.title}”</Link>{' '}
                 {grantCall.status !== 'OPEN' ? (
                   <button type="button" onClick={() => open.mutate({ grantCallId: grantCall.id }, { onSuccess: refresh })} disabled={open.isPending}>
                     Otwórz nabór

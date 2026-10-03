@@ -44,7 +44,9 @@ export function InnovationPage() {
     <>
       <h1>{card.title}</h1>
       {card.shortDescription && <p>{card.shortDescription}</p>}
-      <p>Kategoria Biblioteki ROPS: {card.categories.join(', ')}</p>
+      {card.categories.length > 0 && <p>Kategoria Biblioteki ROPS: {card.categories.join(', ')}</p>}
+      {card.source === 'USER' && <p>Innowacja wyrosła z pomysłu zgłoszonego w Kreatorze pomysłów.</p>}
+      {card.seeksTesters && <p>Zespół szuka miejsc do przetestowania innowacji — napisz do niego poniżej.</p>}
       {card.featured && <p>Innowacja wybrana do upowszechniania.</p>}
       {card.inServiceModel && <p>Innowacja jest częścią Małopolskich Modeli Usług Społecznych.</p>}
 

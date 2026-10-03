@@ -1384,6 +1384,795 @@
         }
       }
     },
+    "/api/admin/ideas": {
+      "get": {
+        "tags": [
+          "AdminIdeas"
+        ],
+        "parameters": [
+          {
+            "name": "Status",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IdeaSummaryResponse"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IdeaSummaryResponse"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IdeaSummaryResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/ideas/{ideaId}/decision": {
+      "post": {
+        "tags": [
+          "AdminIdeas"
+        ],
+        "parameters": [
+          {
+            "name": "ideaId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DecideIdeaRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DecideIdeaRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DecideIdeaRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdeaResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdeaResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdeaResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/ideas/{ideaId}/innovation": {
+      "post": {
+        "tags": [
+          "AdminIdeas"
+        ],
+        "parameters": [
+          {
+            "name": "ideaId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdeaResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdeaResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdeaResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ideas/canvas": {
+      "get": {
+        "tags": [
+          "Ideas"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdeaCanvasResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdeaCanvasResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdeaCanvasResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ideas": {
+      "get": {
+        "tags": [
+          "Ideas"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IdeaSummaryResponse"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IdeaSummaryResponse"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IdeaSummaryResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Ideas"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateIdeaRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateIdeaRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateIdeaRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdeaResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdeaResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdeaResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ideas/submitted": {
+      "get": {
+        "tags": [
+          "Ideas"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IdeaSummaryResponse"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IdeaSummaryResponse"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IdeaSummaryResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ideas/for-review": {
+      "get": {
+        "tags": [
+          "Ideas"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IdeaSummaryResponse"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IdeaSummaryResponse"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IdeaSummaryResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ideas/from-hybrid": {
+      "post": {
+        "tags": [
+          "Ideas"
+        ],
+        "parameters": [
+          {
+            "name": "X-Tracking-Code",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateIdeaFromHybridRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateIdeaFromHybridRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateIdeaFromHybridRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdeaResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdeaResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdeaResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ideas/{ideaId}": {
+      "get": {
+        "tags": [
+          "Ideas"
+        ],
+        "parameters": [
+          {
+            "name": "ideaId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdeaResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdeaResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdeaResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Ideas"
+        ],
+        "parameters": [
+          {
+            "name": "ideaId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReviseIdeaRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReviseIdeaRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReviseIdeaRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdeaResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdeaResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdeaResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ideas/{ideaId}/submit": {
+      "post": {
+        "tags": [
+          "Ideas"
+        ],
+        "parameters": [
+          {
+            "name": "ideaId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdeaResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdeaResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdeaResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ideas/{ideaId}/similar": {
+      "post": {
+        "tags": [
+          "Ideas"
+        ],
+        "parameters": [
+          {
+            "name": "ideaId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdeaResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdeaResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdeaResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ideas/{ideaId}/join": {
+      "post": {
+        "tags": [
+          "Ideas"
+        ],
+        "parameters": [
+          {
+            "name": "ideaId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdeaResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdeaResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdeaResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ideas/{ideaId}/assistant": {
+      "get": {
+        "tags": [
+          "Ideas"
+        ],
+        "parameters": [
+          {
+            "name": "ideaId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IdeaAssistantMessageResponse"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IdeaAssistantMessageResponse"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IdeaAssistantMessageResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Ideas"
+        ],
+        "parameters": [
+          {
+            "name": "ideaId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AskIdeaAssistantRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AskIdeaAssistantRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AskIdeaAssistantRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IdeaAssistantMessageResponse"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IdeaAssistantMessageResponse"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IdeaAssistantMessageResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ideas/{ideaId}/review": {
+      "put": {
+        "tags": [
+          "Ideas"
+        ],
+        "parameters": [
+          {
+            "name": "ideaId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReviewIdeaRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReviewIdeaRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReviewIdeaRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdeaResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdeaResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdeaResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/admin/grant-calls": {
       "get": {
         "tags": [
@@ -1697,6 +2486,233 @@
                   "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/GrantCallResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ideas/{ideaId}/grant-applications": {
+      "post": {
+        "tags": [
+          "GrantApplications"
+        ],
+        "parameters": [
+          {
+            "name": "ideaId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateGrantApplicationRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateGrantApplicationRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateGrantApplicationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GrantApplicationResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GrantApplicationResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GrantApplicationResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GrantApplicationResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GrantApplicationResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GrantApplicationResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/grant-applications/{grantApplicationId}": {
+      "get": {
+        "tags": [
+          "GrantApplications"
+        ],
+        "parameters": [
+          {
+            "name": "grantApplicationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GrantApplicationResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GrantApplicationResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GrantApplicationResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "GrantApplications"
+        ],
+        "parameters": [
+          {
+            "name": "grantApplicationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReviseGrantApplicationRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReviseGrantApplicationRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReviseGrantApplicationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GrantApplicationResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GrantApplicationResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GrantApplicationResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/grant-calls/{grantCallId}/applications": {
+      "get": {
+        "tags": [
+          "GrantApplications"
+        ],
+        "parameters": [
+          {
+            "name": "grantCallId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GrantApplicationSummaryResponse"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GrantApplicationSummaryResponse"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GrantApplicationSummaryResponse"
                   }
                 }
               }
@@ -2476,6 +3492,20 @@
           }
         }
       },
+      "AskIdeaAssistantRequest": {
+        "required": [
+          "message"
+        ],
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
       "AssignUserRoleRequest": {
         "required": [
           "role",
@@ -2618,6 +3648,52 @@
               "string"
             ],
             "format": "int32"
+          }
+        }
+      },
+      "CanvasOptionResponse": {
+        "required": [
+          "code",
+          "label",
+          "hint"
+        ],
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "hint": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "CanvasScaleLevelResponse": {
+        "required": [
+          "level",
+          "label",
+          "hint"
+        ],
+        "type": "object",
+        "properties": {
+          "level": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "label": {
+            "type": "string"
+          },
+          "hint": {
+            "type": "string"
           }
         }
       },
@@ -2936,6 +4012,21 @@
           }
         }
       },
+      "CreateGrantApplicationRequest": {
+        "required": [
+          "grantCallId"
+        ],
+        "type": "object",
+        "properties": {
+          "grantCallId": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "uuid"
+          }
+        }
+      },
       "CreateGrantCallRequest": {
         "required": [
           "title",
@@ -2990,6 +4081,155 @@
               "string"
             ],
             "format": "date"
+          }
+        }
+      },
+      "CreateIdeaFromHybridRequest": {
+        "required": [
+          "problemReportId"
+        ],
+        "type": "object",
+        "properties": {
+          "problemReportId": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "uuid"
+          }
+        }
+      },
+      "CreateIdeaRequest": {
+        "required": [
+          "title",
+          "challengeAreaCodes",
+          "problemIntensity",
+          "problemFrequency",
+          "problemScale",
+          "recipients",
+          "otherRecipients",
+          "solution",
+          "stage",
+          "supporters",
+          "opponents",
+          "emotionalValues",
+          "functionalValues",
+          "differenceNote",
+          "startingInnovationId"
+        ],
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "challengeAreaCodes": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "problemIntensity": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "null",
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "problemFrequency": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "null",
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "problemScale": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "null",
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "recipients": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "otherRecipients": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "solution": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "stage": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "supporters": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "opponents": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "emotionalValues": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "functionalValues": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "differenceNote": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "startingInnovationId": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "uuid"
           }
         }
       },
@@ -3167,6 +4407,20 @@
           },
           "keepOriginalDescription": {
             "type": "boolean"
+          }
+        }
+      },
+      "DecideIdeaRequest": {
+        "required": [
+          "decision"
+        ],
+        "type": "object",
+        "properties": {
+          "decision": {
+            "type": [
+              "null",
+              "string"
+            ]
           }
         }
       },
@@ -3389,6 +4643,138 @@
           }
         }
       },
+      "GrantApplicationAnswerResponse": {
+        "required": [
+          "criterion",
+          "answer"
+        ],
+        "type": "object",
+        "properties": {
+          "criterion": {
+            "type": "string"
+          },
+          "answer": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "GrantApplicationResponse": {
+        "required": [
+          "id",
+          "ideaId",
+          "ideaTitle",
+          "grantCallId",
+          "grantCallTitle",
+          "grantCallOpen",
+          "title",
+          "summary",
+          "answers",
+          "canEdit",
+          "createdAt",
+          "updatedAt"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "ideaId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "ideaTitle": {
+            "type": "string"
+          },
+          "grantCallId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "grantCallTitle": {
+            "type": "string"
+          },
+          "grantCallOpen": {
+            "type": "boolean"
+          },
+          "title": {
+            "type": "string"
+          },
+          "summary": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "answers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GrantApplicationAnswerResponse"
+            }
+          },
+          "canEdit": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "GrantApplicationSummaryResponse": {
+        "required": [
+          "id",
+          "ideaId",
+          "ideaTitle",
+          "title",
+          "answeredCriteria",
+          "criteria",
+          "updatedAt"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "ideaId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "ideaTitle": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "answeredCriteria": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "criteria": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
       "GrantCallResponse": {
         "required": [
           "id",
@@ -3501,6 +4887,535 @@
               "null",
               "string"
             ]
+          }
+        }
+      },
+      "IdeaAssistantMessageResponse": {
+        "required": [
+          "id",
+          "role",
+          "text",
+          "createdAt"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "role": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "IdeaCanvasResponse": {
+        "required": [
+          "intensity",
+          "frequency",
+          "scale",
+          "recipients",
+          "emotionalValues",
+          "functionalValues",
+          "stages",
+          "maxValues",
+          "maxChallengeAreas"
+        ],
+        "type": "object",
+        "properties": {
+          "intensity": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CanvasScaleLevelResponse"
+            }
+          },
+          "frequency": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CanvasScaleLevelResponse"
+            }
+          },
+          "scale": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CanvasScaleLevelResponse"
+            }
+          },
+          "recipients": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CanvasOptionResponse"
+            }
+          },
+          "emotionalValues": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CanvasOptionResponse"
+            }
+          },
+          "functionalValues": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CanvasOptionResponse"
+            }
+          },
+          "stages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CanvasOptionResponse"
+            }
+          },
+          "maxValues": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "maxChallengeAreas": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          }
+        }
+      },
+      "IdeaChallengeAreaResponse": {
+        "required": [
+          "code",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "IdeaGrantApplicationResponse": {
+        "required": [
+          "id",
+          "grantCallId",
+          "grantCallTitle"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "grantCallId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "grantCallTitle": {
+            "type": "string"
+          }
+        }
+      },
+      "IdeaInnovationResponse": {
+        "required": [
+          "id",
+          "title"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string"
+          }
+        }
+      },
+      "IdeaResponse": {
+        "required": [
+          "id",
+          "status",
+          "title",
+          "challengeAreas",
+          "problemIntensity",
+          "problemFrequency",
+          "problemScale",
+          "recipients",
+          "otherRecipients",
+          "solution",
+          "stage",
+          "supporters",
+          "opponents",
+          "emotionalValues",
+          "functionalValues",
+          "differenceNote",
+          "fromHybridOf",
+          "startingInnovation",
+          "similar",
+          "similarCheckedAt",
+          "similarIsCurrent",
+          "missingForSubmission",
+          "coAuthorCount",
+          "isAuthor",
+          "canEdit",
+          "canSubmit",
+          "canJoin",
+          "canReview",
+          "canDecide",
+          "canConvert",
+          "canApply",
+          "reviews",
+          "myReview",
+          "innovationId",
+          "grantApplications",
+          "submittedAt",
+          "decidedAt",
+          "createdAt",
+          "updatedAt"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "challengeAreas": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IdeaChallengeAreaResponse"
+            }
+          },
+          "problemIntensity": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "null",
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "problemFrequency": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "null",
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "problemScale": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "null",
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "recipients": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "otherRecipients": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "solution": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "stage": {
+            "type": "string"
+          },
+          "supporters": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "opponents": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "emotionalValues": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "functionalValues": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "differenceNote": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "fromHybridOf": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IdeaInnovationResponse"
+            }
+          },
+          "startingInnovation": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/IdeaInnovationResponse"
+              }
+            ]
+          },
+          "similar": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IdeaSimilarityResponse"
+            }
+          },
+          "similarCheckedAt": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date-time"
+          },
+          "similarIsCurrent": {
+            "type": "boolean"
+          },
+          "missingForSubmission": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "coAuthorCount": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "isAuthor": {
+            "type": "boolean"
+          },
+          "canEdit": {
+            "type": "boolean"
+          },
+          "canSubmit": {
+            "type": "boolean"
+          },
+          "canJoin": {
+            "type": "boolean"
+          },
+          "canReview": {
+            "type": "boolean"
+          },
+          "canDecide": {
+            "type": "boolean"
+          },
+          "canConvert": {
+            "type": "boolean"
+          },
+          "canApply": {
+            "type": "boolean"
+          },
+          "reviews": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/IdeaReviewResponse"
+            }
+          },
+          "myReview": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/IdeaReviewResponse"
+              }
+            ]
+          },
+          "innovationId": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "uuid"
+          },
+          "grantApplications": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IdeaGrantApplicationResponse"
+            }
+          },
+          "submittedAt": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date-time"
+          },
+          "decidedAt": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date-time"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "IdeaReviewResponse": {
+        "required": [
+          "id",
+          "recommendation",
+          "comment",
+          "mine",
+          "updatedAt"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "recommendation": {
+            "type": "string"
+          },
+          "comment": {
+            "type": "string"
+          },
+          "mine": {
+            "type": "boolean"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "IdeaSimilarityResponse": {
+        "required": [
+          "kind",
+          "targetId",
+          "title",
+          "score",
+          "justification"
+        ],
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": "string"
+          },
+          "targetId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string"
+          },
+          "score": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "justification": {
+            "type": "string"
+          }
+        }
+      },
+      "IdeaSummaryResponse": {
+        "required": [
+          "id",
+          "title",
+          "status",
+          "challengeAreaCodes",
+          "stage",
+          "mine",
+          "reviewedByMe",
+          "submittedAt",
+          "updatedAt"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "challengeAreaCodes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "stage": {
+            "type": "string"
+          },
+          "mine": {
+            "type": "boolean"
+          },
+          "reviewedByMe": {
+            "type": "boolean"
+          },
+          "submittedAt": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },
@@ -3745,7 +5660,9 @@
           "featured",
           "inServiceModel",
           "stage",
-          "challengeAreaCodes"
+          "challengeAreaCodes",
+          "source",
+          "seeksTesters"
         ],
         "type": "object",
         "properties": {
@@ -3848,6 +5765,12 @@
             "items": {
               "type": "string"
             }
+          },
+          "source": {
+            "type": "string"
+          },
+          "seeksTesters": {
+            "type": "boolean"
           }
         }
       },
@@ -4361,6 +6284,58 @@
           }
         }
       },
+      "ReviewIdeaRequest": {
+        "required": [
+          "recommendation",
+          "comment"
+        ],
+        "type": "object",
+        "properties": {
+          "recommendation": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "comment": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "ReviseGrantApplicationRequest": {
+        "required": [
+          "title",
+          "summary",
+          "answers"
+        ],
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "summary": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "answers": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
       "ReviseGrantCallRequest": {
         "required": [
           "title",
@@ -4415,6 +6390,140 @@
               "string"
             ],
             "format": "date"
+          }
+        }
+      },
+      "ReviseIdeaRequest": {
+        "required": [
+          "title",
+          "challengeAreaCodes",
+          "problemIntensity",
+          "problemFrequency",
+          "problemScale",
+          "recipients",
+          "otherRecipients",
+          "solution",
+          "stage",
+          "supporters",
+          "opponents",
+          "emotionalValues",
+          "functionalValues",
+          "differenceNote",
+          "startingInnovationId"
+        ],
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "challengeAreaCodes": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "problemIntensity": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "null",
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "problemFrequency": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "null",
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "problemScale": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "null",
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "recipients": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "otherRecipients": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "solution": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "stage": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "supporters": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "opponents": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "emotionalValues": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "functionalValues": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "differenceNote": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "startingInnovationId": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "uuid"
           }
         }
       },
@@ -4864,10 +6973,19 @@
       "name": "InnovationGenomes"
     },
     {
+      "name": "AdminIdeas"
+    },
+    {
+      "name": "Ideas"
+    },
+    {
       "name": "AdminGrantCalls"
     },
     {
       "name": "GrantCalls"
+    },
+    {
+      "name": "GrantApplications"
     },
     {
       "name": "FitAssessments"

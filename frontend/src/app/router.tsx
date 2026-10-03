@@ -4,7 +4,9 @@ import { RegisterPage } from '@/features/account/RegisterPage'
 import { AdminHomePage } from '@/features/admin/AdminHomePage'
 import { AdminLayout } from '@/features/admin/AdminLayout'
 import { GenomePage } from '@/features/admin/GenomePage'
+import { GrantCallApplicationsPage } from '@/features/admin/GrantCallApplicationsPage'
 import { GrantCallsPage } from '@/features/admin/GrantCallsPage'
+import { IdeasAdminPage } from '@/features/admin/IdeasAdminPage'
 import { InboxPage } from '@/features/admin/InboxPage'
 import { InboxReportPage } from '@/features/admin/InboxReportPage'
 import { InnovationFormPage } from '@/features/admin/InnovationFormPage'
@@ -16,6 +18,10 @@ import { AskExpertPage } from '@/features/conversations/AskExpertPage'
 import { ConversationPage } from '@/features/conversations/ConversationPage'
 import { ConversationsPage } from '@/features/conversations/ConversationsPage'
 import { HomePage } from '@/features/home/HomePage'
+import { GrantApplicationPage } from '@/features/ideas/GrantApplicationPage'
+import { IdeaPage } from '@/features/ideas/IdeaPage'
+import { IdeasPage } from '@/features/ideas/IdeasPage'
+import { NewIdeaPage } from '@/features/ideas/NewIdeaPage'
 import { InnovationPage } from '@/features/innovations/InnovationPage'
 import { NotFoundPage } from '@/features/not-found/NotFoundPage'
 import { DescribeProblemPage } from '@/features/problem-reports/DescribeProblemPage'
@@ -57,6 +63,10 @@ export const router = createBrowserRouter([
       { path: 'watki/:conversationId', element: <ConversationPage /> },
       { path: 'zapytaj-eksperta', element: <AskExpertPage /> },
       { path: 'innowacje/:innovationId', element: <InnovationPage /> },
+      { path: 'pomysly', element: <IdeasPage /> },
+      { path: 'pomysly/nowy', element: <NewIdeaPage /> },
+      { path: 'pomysly/:ideaId', element: <IdeaPage /> },
+      { path: 'wnioski/:grantApplicationId', element: <GrantApplicationPage /> },
       {
         path: 'admin',
         element: <AdminLayout />,
@@ -69,7 +79,9 @@ export const router = createBrowserRouter([
           { path: 'wiedza/genomy/:genomeId', element: <GenomePage /> },
           { path: 'wiedza/innowacje/nowa', element: <InnovationFormPage /> },
           { path: 'wiedza/innowacje/:innovationId', element: <InnovationFormPage /> },
+          { path: 'pomysly', element: <IdeasAdminPage /> },
           { path: 'nabory', element: <GrantCallsPage /> },
+          { path: 'nabory/:grantCallId/wnioski', element: <GrantCallApplicationsPage /> },
           { path: 'uzytkownicy', element: <UsersPage /> },
         ],
       },

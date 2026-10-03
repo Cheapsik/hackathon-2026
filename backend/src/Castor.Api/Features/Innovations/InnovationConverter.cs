@@ -5,6 +5,7 @@ internal static class InnovationConverter
     public static InnovationResponse ToResponse(this Innovation innovation)
     {
         string stage = innovation.Stage.ToString();
+        string source = innovation.Source.ToString();
         IReadOnlyList<string> areas = innovation.Genome?.ChallengeAreaCodes ?? [];
 
         return new InnovationResponse(
@@ -26,6 +27,8 @@ internal static class InnovationConverter
             innovation.Featured,
             innovation.InServiceModel,
             stage,
-            areas);
+            areas,
+            source,
+            innovation.SeeksTesters);
     }
 }

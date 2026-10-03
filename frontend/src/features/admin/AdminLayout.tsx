@@ -3,6 +3,7 @@ import { useSession } from '@/hooks/use-session'
 
 const sections = [
   { to: '/admin/zgloszenia', label: 'Skrzynka zgłoszeń' },
+  { to: '/admin/pomysly', label: 'Pomysły z Kreatora' },
   { to: '/admin/radar', label: 'Radar potrzeb' },
   { to: '/admin/wiedza', label: 'Wiedza: innowacje i genomy' },
   { to: '/admin/nabory', label: 'Nabory' },

@@ -5,7 +5,9 @@ using Castor.Api.Features.BackgroundJobs;
 using Castor.Api.Features.ChallengeAreas;
 using Castor.Api.Features.Conversations;
 using Castor.Api.Features.FitAssessments;
+using Castor.Api.Features.GrantApplications;
 using Castor.Api.Features.GrantCalls;
+using Castor.Api.Features.Ideas;
 using Castor.Api.Features.InnovationGenomes;
 using Castor.Api.Features.Innovations;
 using Castor.Api.Features.Municipalities;
@@ -127,6 +129,10 @@ builder.Services.AddScoped<FitAssessor>();
 builder.Services.AddScoped<FitAssistant>();
 builder.Services.AddScoped<ReplyDrafter>();
 builder.Services.AddScoped<GrantCallDrafter>();
+builder.Services.AddScoped<SimilarIdeasQuery>();
+builder.Services.AddScoped<DuplicateChecker>();
+builder.Services.AddScoped<IdeaAssistant>();
+builder.Services.AddScoped<GrantApplicationWriter>();
 
 // Start-up: schema, interrupted jobs, seed — registered before the job runner, so the runner starts on a ready database.
 // The build-time OpenAPI generator (GetDocument.Insider) and dotnet-ef (ef) run this file too; they get no database.
@@ -224,6 +230,34 @@ builder.Services.AddScoped<RecalculateFitAssessmentHandler>();
 builder.Services.AddScoped<GetFitAssessmentHandler>();
 builder.Services.AddScoped<AskFitAssistantHandler>();
 builder.Services.AddScoped<ListFitAssistantMessagesHandler>();
+
+// Ideas (the Kreator)
+builder.Services.AddScoped<IdeaViewQuery>();
+builder.Services.AddScoped<IdeaReaderFactory>();
+builder.Services.AddScoped<IdeaCardResolver>();
+builder.Services.AddScoped<GetIdeaCanvasHandler>();
+builder.Services.AddScoped<ListMyIdeasHandler>();
+builder.Services.AddScoped<ListSubmittedIdeasHandler>();
+builder.Services.AddScoped<ListIdeasForReviewHandler>();
+builder.Services.AddScoped<CreateIdeaHandler>();
+builder.Services.AddScoped<CreateIdeaFromHybridHandler>();
+builder.Services.AddScoped<GetIdeaHandler>();
+builder.Services.AddScoped<ReviseIdeaHandler>();
+builder.Services.AddScoped<SubmitIdeaHandler>();
+builder.Services.AddScoped<CheckIdeaSimilarityHandler>();
+builder.Services.AddScoped<JoinIdeaHandler>();
+builder.Services.AddScoped<ListIdeaAssistantMessagesHandler>();
+builder.Services.AddScoped<AskIdeaAssistantHandler>();
+builder.Services.AddScoped<ReviewIdeaHandler>();
+builder.Services.AddScoped<ListAdminIdeasHandler>();
+builder.Services.AddScoped<DecideIdeaHandler>();
+builder.Services.AddScoped<ConvertIdeaToInnovationHandler>();
+
+// Grant applications
+builder.Services.AddScoped<CreateGrantApplicationHandler>();
+builder.Services.AddScoped<GetGrantApplicationHandler>();
+builder.Services.AddScoped<ReviseGrantApplicationHandler>();
+builder.Services.AddScoped<ListGrantCallApplicationsHandler>();
 
 // Each resource adds its queries and handlers here, one line each.
 

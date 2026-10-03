@@ -5,7 +5,7 @@ namespace Castor.Api.Features.Conversations;
 
 /// <summary>
 /// "Napisz do zespołu innowacji": the organizations behind library innovations have no accounts, so administrators
-/// receive the proposal and mediate (SPEC 7 V).
+/// receive the proposal and mediate (SPEC 7 V); an innovation grown from an idea also has its authors in the thread.
 /// </summary>
 public sealed class CreatePartnershipHandler(
     CastorDbContext db,
@@ -23,7 +23,10 @@ public sealed class CreatePartnershipHandler(
             throw new DomainException("A partnership is about an innovation.");
         }
 
-        Innovation innovation = await db.Innovations.SingleOrDefaultAsync(candidate => candidate.Id == innovationId, cancellationToken)
+        Innovation innovation = await db.Innovations
+                .Include(candidate => candidate.SourceIdea!)
+                .ThenInclude(idea => idea.CoAuthors)
+                .SingleOrDefaultAsync(candidate => candidate.Id == innovationId, cancellationToken)
             ?? throw new DomainException("The innovation does not exist.", StatusCodes.Status404NotFound);
 
         DateTimeOffset now = clock.UtcNow;

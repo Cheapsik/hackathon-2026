@@ -11,4 +11,7 @@ public enum SenderRole
 
     /// <summary>An administrator (ROPS).</summary>
     ADMIN,
+
+    /// <summary>An author or co-author of the idea a partnership's innovation grew from.</summary>
+    INNOVATION_TEAM,
 }

@@ -53,8 +53,9 @@ public sealed class Conversation
 
     /// <summary>
     /// The conversations a reader may open: administrators all of them; a signed-in user those they started; for a
-    /// report's thread its author and code holder; experts the threads and questions of their areas. An expression,
-    /// so lists filter in the database by the same rule. In memory it needs <see cref="ProblemReport"/> loaded.
+    /// report's thread its author and code holder; experts the threads and questions of their areas; for a
+    /// partnership the authors of the idea its innovation grew from. An expression, so lists filter in the database by
+    /// the same rule. In memory it needs the related rows loaded (<see cref="EnsureLoaded"/>).
     /// </summary>
     public static Expression<Func<Conversation, bool>> VisibleTo(ConversationReader reader)
     {
@@ -71,7 +72,12 @@ public sealed class Conversation
                 && ((userId != null && conversation.ProblemReport.AuthorId == userId)
                     || (trackingCode != null && conversation.ProblemReport.TrackingCode == trackingCode)
                     || conversation.ProblemReport.ChallengeAreaCodes.Any(code => expertAreas.Contains(code))))
-            || (conversation.ChallengeAreaCode != null && expertAreas.Contains(conversation.ChallengeAreaCode));
+            || (conversation.ChallengeAreaCode != null && expertAreas.Contains(conversation.ChallengeAreaCode))
+            || (userId != null
+                && conversation.Innovation != null
+                && conversation.Innovation.SourceIdea != null
+                && (conversation.Innovation.SourceIdea.AuthorId == userId
+                    || conversation.Innovation.SourceIdea.CoAuthors.Any(coAuthor => coAuthor.UserId == userId)));
     }
 
     public static Conversation ForProblemReport(ProblemReport report, DateTimeOffset createdAt)
@@ -111,6 +117,7 @@ public sealed class Conversation
         };
     }
 
+    /// <param name="innovation">With <see cref="Innovation.SourceIdea"/> and its co-authors loaded.</param>
     public static Conversation ProposePartnership(Guid initiatorId, Innovation innovation, string? subject, DateTimeOffset createdAt)
     {
         ArgumentNullException.ThrowIfNull(innovation);
@@ -118,6 +125,12 @@ public sealed class Conversation
         if (initiatorId == Guid.Empty)
         {
             throw new InvalidOperationException("The initiator of a new partnership has an empty id.");
+        }
+
+        EnsureSourceIdeaLoaded(innovation);
+        if (innovation.SourceIdea?.IsAuthoredBy(initiatorId) == true)
+        {
+            throw new DomainException("You are on the team of this innovation.", StatusCodes.Status409Conflict);
         }
 
         return new Conversation
@@ -136,12 +149,12 @@ public sealed class Conversation
     /// <summary>
     /// The side the reader writes on, or null when the reader takes no part. An administrator always writes as
     /// <see cref="SenderRole.ADMIN"/>; whoever started the conversation (or holds the report) as
-    /// <see cref="SenderRole.INITIATOR"/>, before being an expert. Needs <see cref="ProblemReport"/> loaded.
+    /// <see cref="SenderRole.INITIATOR"/>, then the innovation's team, then experts. Needs <see cref="EnsureLoaded"/>.
     /// </summary>
     public SenderRole? SenderRoleOf(ConversationReader reader)
     {
         ArgumentNullException.ThrowIfNull(reader);
-        EnsureReportLoaded();
+        EnsureLoaded();
 
         if (reader.IsAdmin)
         {
@@ -153,15 +166,34 @@ public sealed class Conversation
             return SenderRole.INITIATOR;
         }
 
+        if (TeamIdea()?.IsAuthoredBy(reader.UserId) == true)
+        {
+            return SenderRole.INNOVATION_TEAM;
+        }
+
         IReadOnlyList<string> areas = ExpertAreaCodes();
         bool isAreaExpert = areas.Any(reader.ExpertChallengeAreaCodes.Contains);
         return isAreaExpert ? SenderRole.EXPERT : null;
     }
 
+    /// <summary>The authors of the idea a partnership's innovation grew from; empty otherwise. Needs <see cref="EnsureLoaded"/>.</summary>
+    public IReadOnlyList<Guid> TeamUserIds()
+    {
+        EnsureLoaded();
+
+        Idea? idea = TeamIdea();
+        if (idea is null)
+        {
+            return [];
+        }
+
+        return [idea.AuthorId, .. idea.CoAuthors.Select(coAuthor => coAuthor.UserId)];
+    }
+
     /// <summary>The challenge areas whose experts take part. Needs <see cref="ProblemReport"/> loaded.</summary>
     public IReadOnlyList<string> ExpertAreaCodes()
     {
-        EnsureReportLoaded();
+        EnsureLoaded();
 
         if (ProblemReport is not null)
         {
@@ -179,7 +211,7 @@ public sealed class Conversation
     /// <summary>A closed report takes no more messages; its thread stays readable. Needs <see cref="ProblemReport"/> loaded.</summary>
     public bool AcceptsMessages()
     {
-        EnsureReportLoaded();
+        EnsureLoaded();
 
         return ProblemReport?.Status != ProblemReportStatus.CLOSED;
     }
@@ -235,11 +267,38 @@ public sealed class Conversation
             || (reader.TrackingCode is not null && ProblemReport.TrackingCode == reader.TrackingCode);
     }
 
-    private void EnsureReportLoaded()
+    private static void EnsureSourceIdeaLoaded(Innovation innovation)
+    {
+        if (innovation.SourceIdeaId is not null && innovation.SourceIdea is null)
+        {
+            throw new InvalidOperationException($"Innovation {innovation.Id} was loaded without the idea it grew from.");
+        }
+    }
+
+    private Idea? TeamIdea()
+    {
+        return Innovation?.SourceIdea;
+    }
+
+    /// <summary>
+    /// The rules read the report of a report's thread, and the innovation with its source idea and co-authors of a
+    /// partnership. Co-authors cannot be checked: an empty list looks the same loaded or not.
+    /// </summary>
+    private void EnsureLoaded()
     {
         if (Kind == ConversationKind.PROBLEM_REPORT && ProblemReport is null)
         {
             throw new InvalidOperationException($"Conversation {Id} was loaded without its problem report.");
+        }
+
+        if (Kind == ConversationKind.PARTNERSHIP)
+        {
+            if (Innovation is null)
+            {
+                throw new InvalidOperationException($"Conversation {Id} was loaded without its innovation.");
+            }
+
+            EnsureSourceIdeaLoaded(Innovation);
         }
     }
 }

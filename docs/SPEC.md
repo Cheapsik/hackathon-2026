@@ -276,17 +276,20 @@ Wyszukiwanie pełnotekstowe (6.4 krok 2): konfiguracja `simple` + `unaccent` + `
 ### III. Kreator pomysłów — „Szkółka”
 
 - **Fiszka** (zawsze dostępna): pola z Canvasu (`seed/canvas_schema.json`): problem (intensywność, częstotliwość, skala jako **klikane skale 4-stopniowe**), odbiorcy (lista wyboru), istota rozwiązania, etap (pomysł/prototyp/przetestowane/gotowe), aktorzy zmiany, wartość dla odbiorcy (lista wyboru).
-- **Sprawdzanie duplikatów** (6.6) przy zapisie i na żądanie.
+- **Obszar wyzwań:** autor wybiera na fiszce od 1 do 3 obszarów; bez nich pomysłu nie da się wysłać. Według nich pomysł trafia do ekspertów.
+- **Sprawdzanie duplikatów** (6.6) przy wysłaniu (gdy fiszka zmieniła się od ostatniego sprawdzenia) i na żądanie; nie przy każdym zapisie szkicu.
 - **Asystent kreatora:** czat obok fiszki: dopytuje pole po polu, proponuje nieoczywiste warianty, generuje opis wizualizacji przedmiotu (generowanie obrazu opcjonalne, za tą samą abstrakcją).
 - **Start z krzyżówki:** fiszka wypełniona wstępnie danymi hybrydy, z listą innowacji źródłowych.
 - **Generator wniosku** widoczny **tylko gdy jakiś** `GrantCall.isOpen`: przekształca fiszkę w wniosek pod kryteria konkretnego naboru (formularz do edycji, nie wysyłka automatyczna).
 - **Reguły pomysłu:**
   - Statusy `DRAFT → SUBMITTED → ACCEPTED | REJECTED`. `DRAFT` widzi tylko autor (i współautorzy). Po wysłaniu (`IdeaSubmitted` do `admins`) pomysł widzą wszyscy zalogowani — inaczej sprawdzanie duplikatów nie miałoby czego pokazać.
   - „Dołącz do istniejącego pomysłu” robi z użytkownika **współautora** tego pomysłu.
-  - Ekspert widzi wysłane pomysły ze swoich obszarów i zostawia ocenę (`IdeaReview`): rekomendację `DEVELOP` | `REVISE` | `DECLINE` i komentarz. Ocenę widzą autor i admin. `ACCEPTED`/`REJECTED` ustawia admin.
-  - Admin może przekształcić pomysł `ACCEPTED` w innowację (`source = USER`) powiązaną z tym pomysłem.
+  - Autorzy edytują fiszkę w `DRAFT` i `SUBMITTED`; po decyzji jest zamknięta. Wysłany pomysł nadal musi mieć wymagane pola.
+  - Ekspert widzi wysłane pomysły ze swoich obszarów i zostawia ocenę (`IdeaReview`, jedna na eksperta, można poprawiać do decyzji): rekomendację `DEVELOP` | `REVISE` | `DECLINE` i komentarz. Ocenę widzą autor i admin, bez nazwiska eksperta. `ACCEPTED`/`REJECTED` ustawia admin.
+  - Admin może przekształcić pomysł `ACCEPTED` w innowację (`source = USER`, jedna na pomysł) powiązaną z tym pomysłem; innowacja dostaje genom zadaniem w tle, a na etapie pomysłu lub prototypu — `seeksTesters`.
+  - Autorzy i współautorzy pomysłu są stroną wątków `PARTNERSHIP` innowacji, która z niego wyrosła (rola nadawcy `INNOVATION_TEAM`).
 - **Wniosek** (`GrantApplication`) nie ma obiegu: to edytowalny szkic pod jeden nabór, bez wysyłki i statusów oceny; użytkownik go poprawia i drukuje. Admin widzi listę wniosków w każdym naborze.
-- **API:** `POST/GET/PUT /api/ideas`, `POST /api/ideas/{id}/similar`, `POST /api/ideas/{id}/assistant`, `GET /api/grant-calls?open=true`, `POST /api/ideas/{id}/grant-applications`.
+- **API:** `GET /api/ideas/canvas` (opcje Canvasu, publicznie), `GET /api/ideas` (moje), `GET /api/ideas/submitted`, `GET /api/ideas/for-review` (ekspert), `POST /api/ideas`, `POST /api/ideas/from-hybrid` `{ problemReportId }` (bez konta zgłoszenia — nagłówek `X-Tracking-Code`), `GET`/`PUT /api/ideas/{id}`, `POST /api/ideas/{id}/submit`, `POST /api/ideas/{id}/similar`, `POST /api/ideas/{id}/join`, `GET`/`POST /api/ideas/{id}/assistant`, `PUT /api/ideas/{id}/review` (ekspert), `GET /api/grant-calls?open=true`, `POST /api/ideas/{id}/grant-applications` `{ grantCallId }` (201 nowy szkic, 200 istniejący), `GET`/`PUT /api/grant-applications/{id}`. Admin: `GET /api/admin/ideas?status=`, `POST /api/admin/ideas/{id}/decision`, `POST /api/admin/ideas/{id}/innovation`, `GET /api/admin/grant-calls/{id}/applications`.
 
 
 
@@ -314,7 +317,7 @@ Wyszukiwanie pełnotekstowe (6.4 krok 2): konfiguracja `simple` + `unaccent` + `
   |---|---|
   | `PROBLEM_REPORT` | autor albo posiadacz kodu, admini, eksperci obszarów zgłoszenia (bez przypisywania) |
   | `EXPERT_QUESTION` | pytający, eksperci obszaru (odpowiada którykolwiek), admini |
-  | `PARTNERSHIP` | inicjator, admini, drugi użytkownik, jeśli ma konto |
+  | `PARTNERSHIP` | inicjator, admini, autorzy i współautorzy pomysłu, z którego wyrosła innowacja |
 
   Wiadomość do „zespołu innowacji” ROPS (organizacja bez konta) trafia do adminów, którzy pośredniczą; przy innowacji z pomysłu użytkownika — do autora.
   - Każde zgłoszenie ma od początku swój wątek. Wysłanie szkicu odpowiedzi publikuje go jako wiadomość ROPS, czyści szkic i ustawia `ANSWERED`.
@@ -461,3 +464,13 @@ Moduł VI — 2026-10-03:
 | D-43 | Wątek zgłoszenia bez przypisywania eksperta: widzą go i piszą w nim wszyscy eksperci z obszarów zgłoszenia | §7 V |
 | D-44 | Wysłanie szkicu odpowiedzi publikuje go jako wiadomość ROPS w wątku zgłoszenia, czyści szkic i ustawia `ANSWERED` | §7 V, VI |
 | D-45 | „Napisz do zespołu innowacji” z karty innowacji otwiera wątek `PARTNERSHIP`: inicjator i admini, którzy pośredniczą; drugi użytkownik dojdzie z modułem III | §7 V |
+
+Moduł III — 2026-10-03:
+
+| # | Decyzja | Gdzie |
+|---|---|---|
+| D-46 | Obszary wyzwań pomysłu wybiera autor na fiszce (1–3, wymagane przy wysłaniu); według nich pomysł widzą eksperci i dostają `IdeaSubmitted` | §7 III |
+| D-47 | Wątek `PARTNERSHIP` innowacji z pomysłu obejmuje autorów i współautorów pomysłu (rola `INNOVATION_TEAM`); członek zespołu nie otwiera wątku z własną innowacją | §7 III, V |
+| D-48 | Sprawdzanie duplikatów przy wysłaniu i na żądanie, z odciskiem fiszki: wynik dla niezmienionej fiszki nie liczy się drugi raz | §6.6 |
+| D-49 | `IdeaSubmitted` trafia do `admins` i `experts:{obszar}` każdego obszaru pomysłu | §7 V |
+| D-50 | Jeden szkic wniosku na parę (pomysł, nabór); ponowne „Przygotuj wniosek” zwraca istniejący | §7 III |

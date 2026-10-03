@@ -28,6 +28,16 @@ public sealed class InnovationConfiguration : IEntityTypeConfiguration<Innovatio
             .HasForeignKey<InnovationGenome>(genome => genome.InnovationId)
             .OnDelete(DeleteBehavior.Restrict);
 
+        builder.HasOne(innovation => innovation.SourceIdea)
+            .WithMany()
+            .HasForeignKey(innovation => innovation.SourceIdeaId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        // An accepted idea grows into one innovation, also when two administrators click at once.
+        builder.HasIndex(innovation => innovation.SourceIdeaId)
+            .IsUnique()
+            .HasDatabaseName("IX_Innovations_OnePerSourceIdea");
+
         builder.Property<NpgsqlTsVector>(SearchVectorColumn)
             .HasComputedColumnSql(
                 """

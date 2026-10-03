@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { CircleHelp, Files, House, MessageSquareText, MessagesSquare, Search, ShieldCheck } from 'lucide-react'
+import { CircleHelp, Files, House, Lightbulb, MessageSquareText, MessagesSquare, Search, ShieldCheck } from 'lucide-react'
 import { Link, Outlet, useLocation } from 'react-router'
 import type { SessionResponse } from '@/api/generated/castor'
 import { AccountLinks } from '@/components/layout/AccountLinks'
@@ -20,6 +20,7 @@ const navigation: AppShellNavItem[] = [
 const signedInNavigation: AppShellNavItem[] = [
   { to: '/watki', label: 'Moje wątki', icon: MessagesSquare },
   { to: '/zapytaj-eksperta', label: 'Zapytaj eksperta', icon: CircleHelp },
+  { to: '/pomysly', label: 'Kreator pomysłów', icon: Lightbulb },
 ]
 
 /** Shown only to administrators; the API refuses everyone else anyway. */

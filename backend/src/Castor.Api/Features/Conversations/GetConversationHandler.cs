@@ -23,7 +23,9 @@ public sealed class GetConversationHandler(
                 .AsNoTracking()
                 .Include(candidate => candidate.ProblemReport)
                 .Include(candidate => candidate.ChallengeArea)
-                .Include(candidate => candidate.Innovation)
+                .Include(candidate => candidate.Innovation!)
+                .ThenInclude(innovation => innovation.SourceIdea!)
+                .ThenInclude(idea => idea.CoAuthors)
                 .SingleOrDefaultAsync(candidate => candidate.Id == conversationId, cancellationToken)
             ?? throw new DomainException("The conversation does not exist.", StatusCodes.Status404NotFound);
 

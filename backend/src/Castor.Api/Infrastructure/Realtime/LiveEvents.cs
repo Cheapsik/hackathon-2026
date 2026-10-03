@@ -8,4 +8,6 @@ public static class LiveEvents
     public const string ProblemReportStatusChanged = "ProblemReportStatusChanged";
 
     public const string MessagePosted = "MessagePosted";
+
+    public const string IdeaSubmitted = "IdeaSubmitted";
 }

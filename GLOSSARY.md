@@ -124,8 +124,15 @@ Opis, kto realizuje innowację w gminie (OPS, CUS, NGO) i w jakiej formie (zadan
 Pomysł na innowację opisany polami Canvasu innowacji społecznych.
 _Avoid_: wniosek, propozycja
 
-**Co-author** (współautor):
-Użytkownik, który dołączył do cudzego pomysłu zamiast zgłaszać podobny.
+**Co-author** (współautor, `IdeaCoAuthor`):
+Użytkownik, który dołączył do cudzego pomysłu zamiast zgłaszać podobny; ma te same prawa co autor.
+
+**Idea similarity** (podobna innowacja lub pomysł):
+Wynik sprawdzania duplikatów fiszki: innowacja z Biblioteki albo inny wysłany pomysł z oceną podobieństwa i uzasadnieniem.
+_Avoid_: duplikat (dopóki autor sam tak nie uzna)
+
+**Starting innovation** (punkt wyjścia):
+Innowacja z Biblioteki, którą autor wskazał jako podstawę swojego pomysłu.
 
 **IdeaReview** (ocena eksperta):
 Rekomendacja eksperta dla wysłanego pomysłu — rozwijać, poprawić albo odrzucić — z komentarzem.
@@ -159,5 +166,5 @@ _Avoid_: Thread, czat
 Jedna wypowiedź w wątku.
 
 **SenderRole** (rola w wątku):
-W jakim charakterze ktoś pisze w wątku: inicjator (autor zgłoszenia, pytający, proponujący współpracę), ekspert albo ROPS (admin). To nie rola konta: ekspert pytający innych ekspertów jest inicjatorem.
+W jakim charakterze ktoś pisze w wątku: inicjator (autor zgłoszenia, pytający, proponujący współpracę), zespół innowacji (`INNOVATION_TEAM`: autorzy pomysłu, z którego wyrosła innowacja), ekspert albo ROPS (admin). To nie rola konta: ekspert pytający innych ekspertów jest inicjatorem.
 _Avoid_: rola (bez dopowiedzenia), author type

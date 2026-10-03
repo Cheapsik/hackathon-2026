@@ -104,6 +104,21 @@ Moduł V dołożył (SPEC §7 V):
 
 Frontend modułu V: `features/conversations/` (wątek, „Moje wątki”, „Zapytaj eksperta”, „Napisz do zespołu innowacji”), oś statusów i wątek na „Śledź zgłoszenie”, wysyłka odpowiedzi i wątek w skrzynce admina; `useLiveEvent` słucha kilku zdarzeń i może śledzić zgłoszenie kodem.
 
+Moduł III dołożył (SPEC §7 III):
+
+| Miejsce | Zawartość |
+|---|---|
+| `Domain/Ideas/` | `Idea` (fiszka, statusy, `Submit`, `Revise`, `Join`, `Decide`, odcisk do duplikatów, `MissingForSubmission`), `CanvasOptions` (opcje Canvasu v1.0), `IdeaCoAuthor`, `IdeaSimilarity`, `IdeaReview`, `IdeaAssistantMessage`; `Innovation.FromIdea`; w `Conversation` strona `INNOVATION_TEAM` |
+| `Domain/GrantCalls/` | `GrantApplication`, `GrantApplicationAnswer` |
+| `Persistence/Ideas/`, `Persistence/GrantCalls/` | mapowanie; `CHECK` skal i najwyżej 3 obszarów, jedna ocena na eksperta, jeden wniosek na (pomysł, nabór), jedna innowacja na pomysł |
+| `Queries/Ideas/` | `SimilarIdeasQuery` (kandydaci do duplikatów), `IdeaViewQuery` (obszary, tytuły innowacji, oceny, wnioski) |
+| `Shared/Ai/` | `DuplicateChecker`, `IdeaAssistant`, `GrantApplicationWriter`, prompty `find-similar.md`, `idea-assistant.md`, `draft-grant-application.md` |
+| `Infrastructure/Realtime/` | zdarzenie `IdeaSubmitted` (do `admins` i `experts:{obszar}`); członkowie zespołu innowacji w grupach wątku |
+| `Features/` | `Ideas` (`/api/ideas`, `/api/admin/ideas`), `GrantApplications` (`/api/ideas/{id}/grant-applications`, `/api/grant-applications/{id}`, `/api/admin/grant-calls/{id}/applications`); `InnovationResponse` z `source` i `seeksTesters` |
+| `Migrations/` | `Ideas` |
+
+Frontend modułu III: `features/ideas/` (Kreator: lista, nowa fiszka, strona pomysłu z Canvasem, duplikatami, asystentem, ocenami, decyzją admina i generatorem wniosku; strona wniosku z wydrukiem), „Rozwiń w Kreatorze” przy krzyżówce, w panelu admina „Pomysły z Kreatora” i wnioski naboru.
+
 Workspace'ów i globalnego filtra izolacji **nie ma** — dane platformy są wspólne ([`00-stack.md`](00-stack.md) · Dostęp do danych).
 
 ## Co jest w `frontend/`

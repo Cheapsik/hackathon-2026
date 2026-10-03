@@ -1,15 +1,18 @@
 import { Link } from 'react-router'
 import type { ProblemReportResponse } from '@/api/generated/castor'
+import { DevelopHybridButton } from '@/features/ideas/DevelopHybridButton'
 import { statusLabel } from '@/features/problem-reports/status-labels'
 
 interface ProblemReportResultsProps {
   report: ProblemReportResponse
   /** The heading level of this block, so it fits the page it is on. */
   headingLevel: 2 | 3
+  /** Whether the reader may turn the hybrid into their own idea — the reporter, not ROPS reviewing it. */
+  developable?: boolean
 }
 
 /** The tracking code, status and matches of a report: 3–5 innovations, the similar-reports counter and a hybrid. */
-export function ProblemReportResults({ report, headingLevel }: ProblemReportResultsProps) {
+export function ProblemReportResults({ report, headingLevel, developable = true }: ProblemReportResultsProps) {
   const Heading = `h${headingLevel}` as const
   const Subheading = `h${headingLevel + 1}` as 'h3' | 'h4'
   const matchCount = report.matches.length
@@ -100,6 +103,7 @@ export function ProblemReportResults({ report, headingLevel }: ProblemReportResu
               </li>
             ))}
           </ul>
+          {developable && <DevelopHybridButton problemReportId={report.id} trackingCode={report.trackingCode} />}
         </section>
       )}
     </section>

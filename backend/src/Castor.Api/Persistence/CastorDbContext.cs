@@ -42,6 +42,16 @@ public sealed class CastorDbContext : DbContext
 
     public DbSet<Message> Messages => Set<Message>();
 
+    public DbSet<Idea> Ideas => Set<Idea>();
+
+    public DbSet<IdeaCoAuthor> IdeaCoAuthors => Set<IdeaCoAuthor>();
+
+    public DbSet<IdeaReview> IdeaReviews => Set<IdeaReview>();
+
+    public DbSet<IdeaAssistantMessage> IdeaAssistantMessages => Set<IdeaAssistantMessage>();
+
+    public DbSet<GrantApplication> GrantApplications => Set<GrantApplication>();
+
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {
         ModelConventions.ApplyTo(configurationBuilder);

@@ -32,6 +32,8 @@ public sealed class PlaceholderLlmClient(ILogger<PlaceholderLlmClient> logger) :
                 => AdviseOnFit(LlmJson.Deserialize<FitAssistantInput>(prompt.Input)),
             string instructions when instructions == PromptTemplates.Get(PromptTemplates.DraftReply)
                 => DraftReply(LlmJson.Deserialize<ReplyDraftInput>(prompt.Input)),
+            string instructions when instructions == PromptTemplates.Get(PromptTemplates.IdeaAssistant)
+                => AdviseOnIdea(LlmJson.Deserialize<IdeaAssistantInput>(prompt.Input)),
             _ => "Odpowiedź przykładowa: dostawca modelu językowego nie jest jeszcze skonfigurowany.",
         };
 
@@ -50,6 +52,8 @@ public sealed class PlaceholderLlmClient(ILogger<PlaceholderLlmClient> logger) :
             Type type when type == typeof(GenomeResult) => DescribeGenome(LlmJson.Deserialize<GenomeInput>(prompt.Input)),
             Type type when type == typeof(FitAssessmentResult) => AssessFit(LlmJson.Deserialize<FitAssessmentInput>(prompt.Input)),
             Type type when type == typeof(GrantCallDraftResult) => DraftGrantCall(LlmJson.Deserialize<GrantCallDraftInput>(prompt.Input)),
+            Type type when type == typeof(SimilarityResult) => FindSimilar(LlmJson.Deserialize<SimilarityInput>(prompt.Input)),
+            Type type when type == typeof(GrantApplicationDraftResult) => DraftGrantApplication(LlmJson.Deserialize<GrantApplicationDraftInput>(prompt.Input)),
             _ => throw new NotSupportedException($"The placeholder language model cannot answer with {typeof(TResult).Name}."),
         };
 
@@ -256,6 +260,78 @@ public sealed class PlaceholderLlmClient(ILogger<PlaceholderLlmClient> logger) :
             + $"{input.MunicipalityName}: {firstStep} Realizatorem może być {input.ServiceProvider ?? "OPS"}, "
             + $"w formie: {input.ServiceForm ?? "zadanie publiczne"}. Napisałeś: „{input.Message}” — "
             + "z prawdziwym modelem dostaniesz tu plan dopasowany do Twoich zasobów.";
+    }
+
+    /// <summary>The same arithmetic as the ranking: shared word stems and a shared challenge area.</summary>
+    private static SimilarityResult FindSimilar(SimilarityInput input)
+    {
+        HashSet<string> ideaStems = PlaceholderText.Stems(input.Idea);
+
+        List<SimilarityMatch> similar = [.. input.Candidates
+            .Select(candidate =>
+            {
+                HashSet<string> candidateStems = PlaceholderText.Stems([candidate.Title, candidate.Summary]);
+                List<string> shared = [.. ideaStems.Where(candidateStems.Contains)];
+                bool sameArea = candidate.ChallengeAreaCodes.Any(input.ChallengeAreaCodes.Contains);
+                int score = Math.Min(90, (shared.Count * 10) + (sameArea ? 20 : 0));
+                string justification = shared.Count > 0
+                    ? $"Pomysł i „{candidate.Title}” mają wspólne wątki: {string.Join(", ", shared.Take(5))}."
+                    : $"„{candidate.Title}” dotyczy tego samego obszaru wyzwań.";
+                return new SimilarityMatch(candidate.Id, score, justification);
+            })
+            .Where(match => match.Score > 0)
+            .OrderByDescending(match => match.Score)
+            .Take(5)];
+
+        return new SimilarityResult(similar);
+    }
+
+    private static string AdviseOnIdea(IdeaAssistantInput input)
+    {
+        const string Prefix = "(Asystent w trybie przykładowym, bez modelu językowego.) ";
+        string title = input.Card.Split('\n', 2)[0].Trim();
+
+        if (PlaceholderText.Stems(input.Message).Contains(PlaceholderText.Stem("wizualizacja")))
+        {
+            return Prefix + $"Wizualizacja pomysłu „{title}”: w środku plakatu odbiorca i jego problem, wokół trzy kroki "
+                + "rozwiązania, na dole zmiana, którą odczuje. Jedno zdanie na górze: co się zmieni i dla kogo.";
+        }
+
+        string? question = input.MissingFields.Count == 0
+            ? null
+            : input.MissingFields[0] switch
+            {
+                "challengeAreaCodes" => "Którego obszaru wyzwań dotyczy pomysł? Wybierz od jednego do trzech.",
+                "problemIntensity" => "Jak bardzo problem przeszkadza odbiorcom, zanim pojawi się Twoje rozwiązanie?",
+                "problemFrequency" => "Jak często odbiorcy spotykają się z tym problemem?",
+                "problemScale" => "Ilu osób dotyczy problem — kilku, konkretnej społeczności czy dużej części regionu?",
+                "recipients" => "Do kogo jest skierowane rozwiązanie?",
+                "solution" => "Opisz w dwóch, trzech zdaniach, na czym polega rozwiązanie.",
+                _ => null,
+            };
+
+        return Prefix + (question
+            ?? $"Karta „{title}” ma wszystko, czego trzeba do wysłania. Zastanów się, jak najtaniej sprawdzić pomysł z pięcioma odbiorcami.");
+    }
+
+    /// <summary>Each criterion gets the sentences of the card that share words with it, or stays open.</summary>
+    private static GrantApplicationDraftResult DraftGrantApplication(GrantApplicationDraftInput input)
+    {
+        string[] lines = input.Idea.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+        string title = lines.Length > 0 ? lines[0] : input.GrantCallTitle;
+        List<string> sentences = PlaceholderText.Sentences(input.Idea, 40);
+
+        List<string?> answers = [.. input.Criteria.Select(criterion =>
+        {
+            HashSet<string> criterionStems = PlaceholderText.Stems(criterion);
+            List<string> matching = [.. sentences.Where(sentence => Overlap(criterionStems, PlaceholderText.Stems(sentence)) > 0).Take(3)];
+            return matching.Count == 0 ? null : $"{string.Join(". ", matching)}. (Szkic przykładowy — do edycji.)";
+        })];
+
+        return new GrantApplicationDraftResult(
+            title,
+            PlaceholderText.Shorten(string.Join(" ", lines.Skip(1)), 600),
+            answers);
     }
 
     /// <summary>

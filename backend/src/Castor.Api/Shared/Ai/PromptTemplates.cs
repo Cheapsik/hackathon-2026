@@ -25,6 +25,12 @@ public static class PromptTemplates
 
     public const string DraftGrantCall = "draft-grant-call";
 
+    public const string FindSimilar = "find-similar";
+
+    public const string IdeaAssistant = "idea-assistant";
+
+    public const string DraftGrantApplication = "draft-grant-application";
+
     private static readonly ConcurrentDictionary<string, string> Loaded = new(StringComparer.Ordinal);
 
     public static string Get(string name)

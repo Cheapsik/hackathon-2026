@@ -2,7 +2,7 @@ namespace Castor.Api.Domain;
 
 /// <summary>
 /// A proven social solution, described by a card of six sections. Innovations from the ROPS library come from the
-/// seed; an innovation grown from a user's idea comes later (module III). Materials are linked, never copied.
+/// seed; an innovation grown from a user's idea comes from the Kreator (module III). Materials are linked, never copied.
 /// </summary>
 public sealed class Innovation
 {
@@ -68,6 +68,11 @@ public sealed class Innovation
     public bool SeeksTesters { get; private set; }
 
     public InnovationGenome? Genome { get; private set; }
+
+    /// <summary>The accepted idea the innovation grew from; its authors answer the partnership threads.</summary>
+    public Guid? SourceIdeaId { get; private set; }
+
+    public Idea? SourceIdea { get; private set; }
 
     public DateTimeOffset CreatedAt { get; private set; }
 
@@ -143,6 +148,40 @@ public sealed class Innovation
 
         innovation.Revise(title, shortDescription, categories, sections, organization, links, stage, createdAt);
         return innovation;
+    }
+
+    /// <summary>
+    /// An administrator turns an accepted idea into a user innovation (SPEC 7 III). An untested idea or prototype seeks
+    /// testers. One idea grows into one innovation; the database keeps it so.
+    /// </summary>
+    public static Innovation FromIdea(Idea idea, DateTimeOffset createdAt)
+    {
+        ArgumentNullException.ThrowIfNull(idea);
+
+        if (idea.Status != IdeaStatus.ACCEPTED)
+        {
+            throw new DomainException("Only an accepted idea becomes an innovation.", StatusCodes.Status409Conflict);
+        }
+
+        if (idea.Solution is null)
+        {
+            throw new InvalidOperationException($"Accepted idea {idea.Id} has no solution.");
+        }
+
+        return new Innovation
+        {
+            Id = Guid.CreateVersion7(),
+            Title = idea.Title,
+            Solution = idea.Solution,
+            Problems = idea.DescribeProblem(),
+            TargetGroup = idea.DescribeRecipients(),
+            Stage = idea.Stage,
+            Source = InnovationSource.USER,
+            SeeksTesters = idea.Stage is InnovationStage.IDEA or InnovationStage.PROTOTYPE,
+            SourceIdeaId = idea.Id,
+            CreatedAt = createdAt,
+            UpdatedAt = createdAt,
+        };
     }
 
     /// <summary>

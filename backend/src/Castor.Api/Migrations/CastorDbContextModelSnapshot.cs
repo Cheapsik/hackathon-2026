@@ -261,6 +261,48 @@ namespace Castor.Api.Migrations
                     b.ToTable("FitAssistantMessages");
                 });
 
+            modelBuilder.Entity("Castor.Api.Domain.GrantApplication", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamptz");
+
+                    b.Property<Guid>("CreatedByUserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("GrantCallId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("IdeaId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Summary")
+                        .HasMaxLength(4000)
+                        .HasColumnType("character varying(4000)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("timestamptz");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedByUserId");
+
+                    b.HasIndex("GrantCallId");
+
+                    b.HasIndex("IdeaId", "GrantCallId")
+                        .IsUnique()
+                        .HasDatabaseName("IX_GrantApplications_OnePerIdeaAndCall");
+
+                    b.ToTable("GrantApplications");
+                });
+
             modelBuilder.Entity("Castor.Api.Domain.GrantCall", b =>
                 {
                     b.Property<Guid>("Id")
@@ -307,6 +349,206 @@ namespace Castor.Api.Migrations
                         {
                             t.HasCheckConstraint("CK_GrantCalls_ClosesAfterOpening", "\"OpensOn\" IS NULL OR \"ClosesOn\" IS NULL OR \"ClosesOn\" >= \"OpensOn\"");
                         });
+                });
+
+            modelBuilder.Entity("Castor.Api.Domain.Idea", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("AuthorId")
+                        .HasColumnType("uuid");
+
+                    b.PrimitiveCollection<List<string>>("ChallengeAreaCodes")
+                        .IsRequired()
+                        .HasColumnType("text[]");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamptz");
+
+                    b.Property<DateTimeOffset?>("DecidedAt")
+                        .HasColumnType("timestamptz");
+
+                    b.Property<string>("DifferenceNote")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.PrimitiveCollection<List<string>>("EmotionalValues")
+                        .IsRequired()
+                        .HasColumnType("text[]");
+
+                    b.PrimitiveCollection<List<Guid>>("FromHybridOf")
+                        .IsRequired()
+                        .HasColumnType("uuid[]");
+
+                    b.PrimitiveCollection<List<string>>("FunctionalValues")
+                        .IsRequired()
+                        .HasColumnType("text[]");
+
+                    b.Property<string>("Opponents")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<string>("OtherRecipients")
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)");
+
+                    b.Property<int?>("ProblemFrequency")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("ProblemIntensity")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("ProblemScale")
+                        .HasColumnType("integer");
+
+                    b.PrimitiveCollection<List<string>>("Recipients")
+                        .IsRequired()
+                        .HasColumnType("text[]");
+
+                    b.Property<DateTimeOffset?>("SimilarCheckedAt")
+                        .HasColumnType("timestamptz");
+
+                    b.Property<string>("SimilarFingerprint")
+                        .HasMaxLength(64)
+                        .HasColumnType("character(64)")
+                        .IsFixedLength();
+
+                    b.Property<string>("Solution")
+                        .HasMaxLength(4000)
+                        .HasColumnType("character varying(4000)");
+
+                    b.Property<string>("Stage")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid?>("StartingInnovationId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTimeOffset?>("SubmittedAt")
+                        .HasColumnType("timestamptz");
+
+                    b.Property<string>("Supporters")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("timestamptz");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("StartingInnovationId");
+
+                    b.HasIndex("Status", "SubmittedAt");
+
+                    b.ToTable("Ideas", t =>
+                        {
+                            t.HasCheckConstraint("CK_Ideas_AtMostThreeChallengeAreas", "cardinality(\"ChallengeAreaCodes\") <= 3");
+
+                            t.HasCheckConstraint("CK_Ideas_DecidedHasDate", "\"Status\" NOT IN ('ACCEPTED', 'REJECTED') OR \"DecidedAt\" IS NOT NULL");
+
+                            t.HasCheckConstraint("CK_Ideas_ProblemScales", "(\"ProblemIntensity\" IS NULL OR \"ProblemIntensity\" BETWEEN 1 AND 4) AND (\"ProblemFrequency\" IS NULL OR \"ProblemFrequency\" BETWEEN 1 AND 4) AND (\"ProblemScale\" IS NULL OR \"ProblemScale\" BETWEEN 1 AND 4)");
+
+                            t.HasCheckConstraint("CK_Ideas_SubmittedHasDate", "\"Status\" = 'DRAFT' OR \"SubmittedAt\" IS NOT NULL");
+                        });
+                });
+
+            modelBuilder.Entity("Castor.Api.Domain.IdeaAssistantMessage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamptz");
+
+                    b.Property<Guid>("IdeaId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("character varying(4000)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("IdeaId", "UserId", "CreatedAt");
+
+                    b.ToTable("IdeaAssistantMessages");
+                });
+
+            modelBuilder.Entity("Castor.Api.Domain.IdeaCoAuthor", b =>
+                {
+                    b.Property<Guid>("IdeaId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("JoinedAt")
+                        .HasColumnType("timestamptz");
+
+                    b.HasKey("IdeaId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("IdeaCoAuthors");
+                });
+
+            modelBuilder.Entity("Castor.Api.Domain.IdeaReview", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamptz");
+
+                    b.Property<Guid>("ExpertId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("IdeaId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Recommendation")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("timestamptz");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExpertId");
+
+                    b.HasIndex("IdeaId", "ExpertId")
+                        .IsUnique()
+                        .HasDatabaseName("IX_IdeaReviews_OnePerIdeaAndExpert");
+
+                    b.ToTable("IdeaReviews");
                 });
 
             modelBuilder.Entity("Castor.Api.Domain.Indicator", b =>
@@ -452,6 +694,9 @@ namespace Castor.Api.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<Guid?>("SourceIdeaId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("SourceKey")
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
@@ -483,6 +728,10 @@ namespace Castor.Api.Migrations
                         .HasDatabaseName("IX_Innovations_Search");
 
                     NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("SearchVector"), "GIN");
+
+                    b.HasIndex("SourceIdeaId")
+                        .IsUnique()
+                        .HasDatabaseName("IX_Innovations_OnePerSourceIdea");
 
                     b.HasIndex("SourceKey")
                         .IsUnique()
@@ -975,6 +1224,146 @@ namespace Castor.Api.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Castor.Api.Domain.GrantApplication", b =>
+                {
+                    b.HasOne("Castor.Api.Domain.User", null)
+                        .WithMany()
+                        .HasForeignKey("CreatedByUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Castor.Api.Domain.GrantCall", null)
+                        .WithMany()
+                        .HasForeignKey("GrantCallId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Castor.Api.Domain.Idea", null)
+                        .WithMany()
+                        .HasForeignKey("IdeaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.OwnsMany("Castor.Api.Domain.GrantApplicationAnswer", "Answers", b1 =>
+                        {
+                            b1.Property<Guid>("GrantApplicationId");
+
+                            b1.Property<int>("__synthesizedOrdinal")
+                                .ValueGeneratedOnAdd();
+
+                            b1.Property<string>("Answer");
+
+                            b1.Property<string>("Criterion")
+                                .IsRequired();
+
+                            b1.HasKey("GrantApplicationId", "__synthesizedOrdinal");
+
+                            b1.ToTable("GrantApplications");
+
+                            b1
+                                .ToJson("Answers")
+                                .HasColumnType("jsonb");
+
+                            b1.WithOwner()
+                                .HasForeignKey("GrantApplicationId");
+                        });
+
+                    b.Navigation("Answers");
+                });
+
+            modelBuilder.Entity("Castor.Api.Domain.Idea", b =>
+                {
+                    b.HasOne("Castor.Api.Domain.User", null)
+                        .WithMany()
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Castor.Api.Domain.Innovation", null)
+                        .WithMany()
+                        .HasForeignKey("StartingInnovationId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.OwnsMany("Castor.Api.Domain.IdeaSimilarity", "Similar", b1 =>
+                        {
+                            b1.Property<Guid>("IdeaId");
+
+                            b1.Property<int>("__synthesizedOrdinal")
+                                .ValueGeneratedOnAdd();
+
+                            b1.Property<string>("Justification")
+                                .IsRequired();
+
+                            b1.Property<string>("Kind")
+                                .IsRequired();
+
+                            b1.Property<int>("Score");
+
+                            b1.Property<Guid>("TargetId");
+
+                            b1.Property<string>("Title")
+                                .IsRequired();
+
+                            b1.HasKey("IdeaId", "__synthesizedOrdinal");
+
+                            b1.ToTable("Ideas");
+
+                            b1
+                                .ToJson("Similar")
+                                .HasColumnType("jsonb");
+
+                            b1.WithOwner()
+                                .HasForeignKey("IdeaId");
+                        });
+
+                    b.Navigation("Similar");
+                });
+
+            modelBuilder.Entity("Castor.Api.Domain.IdeaAssistantMessage", b =>
+                {
+                    b.HasOne("Castor.Api.Domain.Idea", null)
+                        .WithMany()
+                        .HasForeignKey("IdeaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Castor.Api.Domain.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Castor.Api.Domain.IdeaCoAuthor", b =>
+                {
+                    b.HasOne("Castor.Api.Domain.Idea", null)
+                        .WithMany("CoAuthors")
+                        .HasForeignKey("IdeaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Castor.Api.Domain.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Castor.Api.Domain.IdeaReview", b =>
+                {
+                    b.HasOne("Castor.Api.Domain.User", null)
+                        .WithMany()
+                        .HasForeignKey("ExpertId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Castor.Api.Domain.Idea", null)
+                        .WithMany()
+                        .HasForeignKey("IdeaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Castor.Api.Domain.IndicatorValue", b =>
                 {
                     b.HasOne("Castor.Api.Domain.Indicator", null)
@@ -982,6 +1371,16 @@ namespace Castor.Api.Migrations
                         .HasForeignKey("IndicatorId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Castor.Api.Domain.Innovation", b =>
+                {
+                    b.HasOne("Castor.Api.Domain.Idea", "SourceIdea")
+                        .WithMany()
+                        .HasForeignKey("SourceIdeaId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("SourceIdea");
                 });
 
             modelBuilder.Entity("Castor.Api.Domain.InnovationGenome", b =>
@@ -1115,6 +1514,11 @@ namespace Castor.Api.Migrations
                         .WithMany()
                         .HasForeignKey("MunicipalityId")
                         .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("Castor.Api.Domain.Idea", b =>
+                {
+                    b.Navigation("CoAuthors");
                 });
 
             modelBuilder.Entity("Castor.Api.Domain.Innovation", b =>

@@ -27,12 +27,10 @@ Kolumna `embedding vector(N)` genomu jeszcze nie istnieje — dojdzie migracją 
 - **„Prościej”** — zatwierdzanie tekstów łatwych do czytania dojdzie z trybem „Prościej” w module II.
 - **Dodanie innowacji z linku do karty ROPS albo z PDF** (AI wypełnia pola) — teraz tylko ręczny formularz.
 - **Import raportów do RAG i przeliczanie embeddingów** — czeka na decyzję o embeddingach.
-- **Skrzynka: fiszki (pomysły)** dojdą z modułem III.
+- **Fiszki w skrzynce zgłoszeń**: pomysły mają osobną listę „Pomysły z Kreatora” (odświeżaną przez `IdeaSubmitted`), bez klasyfikacji AI i pilności jak zgłoszenia.
 
 ## Moduł V — co zostało
 
-- **Drugi użytkownik w partnerstwie** (SPEC §7 V): przy innowacji z pomysłu użytkownika wątek ma trafiać do autora — dojdzie z pomysłami w module III. Teraz pośredniczą zawsze admini.
-- **Zdarzenie `IdeaSubmitted`** — z modułem III.
 - **Nieprzeczytane wiadomości**: brak licznika i znacznika przeczytania; „Moje wątki” sortują po ostatniej wiadomości.
 
 ## Moduł VII — co zostało
@@ -40,6 +38,13 @@ Kolumna `embedding vector(N)` genomu jeszcze nie istnieje — dojdzie migracją 
 - **Mini-mapa karty dopasowania** (SPEC §7 VII): potrzebny GeoJSON gmin Małopolski w `data/geo/` (np. z PRG GUGiK) i Leaflet — dojdzie z mapą w module II. Karta ma już tabelę z tymi samymi danymi.
 - **Gminy, które już wdrożyły innowację**: brak danych źródłowych; pole karty czeka na nie.
 - **Wiele lat danych**: skrypt bierze ostatni rok każdego wskaźnika; trendy (moduł VI, II) potrzebują wcześniejszych lat z formularza Obserwatora.
+
+## Moduł III — co zostało
+
+- **Generowanie obrazu wizualizacji** (SPEC §7 III, opcjonalne): asystent opisuje wizualizację tekstem; obraz za tą samą abstrakcją dojdzie z dostawcą.
+- **Podobieństwo wektorowe fiszek** (SPEC §6.6): kandydatów do sprawdzania duplikatów wybieramy po wspólnym obszarze (do 20 innowacji i 20 pomysłów) — czeka na embeddingi.
+- **Wycofanie się współautora** i usunięcie szkicu: brak; pomysł i współautorstwo zostają.
+- **Formularze bez React Hook Form i Zod** — jak w module I (D-26).
 
 ## LLM — dostawca i pierwsze adaptery
 

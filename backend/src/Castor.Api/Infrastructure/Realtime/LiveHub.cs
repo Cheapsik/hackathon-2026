@@ -46,7 +46,10 @@ public sealed class LiveHub(CastorDbContext db, ExpertChallengeAreasQuery expert
         return groups;
     }
 
-    /// <summary>Everyone who takes part in the conversation. Needs <see cref="Conversation.ProblemReport"/> loaded.</summary>
+    /// <summary>
+    /// Everyone who takes part in the conversation. Needs <see cref="Conversation.ProblemReport"/>, or for a partnership
+    /// the innovation's source idea with its co-authors, loaded.
+    /// </summary>
     public static IReadOnlyList<string> ConversationGroups(Conversation conversation)
     {
         ArgumentNullException.ThrowIfNull(conversation);
@@ -62,6 +65,8 @@ public sealed class LiveHub(CastorDbContext db, ExpertChallengeAreasQuery expert
             groups.Add(UserGroup(initiatorId));
         }
 
+        IReadOnlyList<Guid> team = conversation.TeamUserIds();
+        groups.AddRange(team.Select(UserGroup));
         IReadOnlyList<string> areas = conversation.ExpertAreaCodes();
         groups.AddRange(areas.Select(ExpertsGroup));
         return groups;

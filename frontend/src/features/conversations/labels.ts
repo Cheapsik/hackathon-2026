@@ -15,6 +15,8 @@ export function senderLabel(senderRole: string, mine: boolean, kind: string): st
       return 'ROPS'
     case 'EXPERT':
       return 'Ekspert'
+    case 'INNOVATION_TEAM':
+      return 'Zespół innowacji'
     case 'INITIATOR':
       return kind === 'PROBLEM_REPORT' ? 'Autor zgłoszenia' : 'Autor wątku'
     default:
