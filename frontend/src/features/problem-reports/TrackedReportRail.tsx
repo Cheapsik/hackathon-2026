@@ -10,13 +10,15 @@ const COPIED_FOR_MS = 2500
 
 /**
  * The report as a dusk column beside its matches: the code in lamplight with a copy button, the text of the report,
- * where it is about and how many others reported the same; the lookup of another code sits at the foot. Everything
- * the person needs to recognise their report, nothing they need to act on - the matches are the other column.
+ * its clarifying questions and answers, where it is about and how many others reported the same; the lookup of
+ * another code sits at the foot. Everything the person needs to recognise their report, nothing they need to act
+ * on - the matches are the other column.
  */
 export function TrackedReportRail({ report }: { report: ProblemReportResponse }) {
   const [copied, setCopied] = useState(false)
   const reports = Number(report.similarReports.reports)
   const municipalities = Number(report.similarReports.municipalities)
+  const questions = report.clarifyingQuestions
 
   useEffect(() => {
     if (!copied) {
@@ -64,6 +66,27 @@ export function TrackedReportRail({ report }: { report: ProblemReportResponse })
         </h2>
         <p className="whitespace-pre-line text-lead">{report.description}</p>
       </section>
+
+      {questions.length > 0 && (
+        <section
+          aria-labelledby={`rail-questions-${report.id}`}
+          className="grid gap-4 border-t border-on-frame-line pt-6"
+        >
+          <h2 id={`rail-questions-${report.id}`} className="text-label font-medium text-on-frame-muted">
+            Pytania i odpowiedzi
+          </h2>
+          <dl className="grid gap-4">
+            {questions.map((item) => (
+              <div key={item.question} className="grid gap-1">
+                <dt className="text-body-sm text-on-frame-muted">{item.question}</dt>
+                <dd className="whitespace-pre-line text-body font-medium">
+                  {item.answer ?? 'Pominięto'}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      )}
 
       {(report.municipality || report.challengeAreas.length > 0 || reports > 0) && (
         <dl className="grid gap-4 border-t border-on-frame-line pt-6 text-body-sm">
