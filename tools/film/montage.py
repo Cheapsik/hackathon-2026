@@ -1,5 +1,6 @@
 """Cuts the recorded scenes to the narration, overlays the captions and joins everything into out/castor-film.mp4,
-plus out/castor-film.srt and a lighter out/castor-film-podglad.mp4 for sharing.
+plus a lighter out/castor-film-podglad.mp4 for sharing. The captions are burnt into the picture only: a separate .srt
+next to the film made players such as VLC show them twice.
 
 Each segment lasts max(narration + PAD, video / MAX_SPEED): a longer recording is sped up (at most MAX_SPEED),
 a shorter one holds its last frame. Narration starts VOICE_DELAY seconds into the segment; captions split the narration
@@ -46,15 +47,7 @@ def voice_of(segment_id: str) -> pathlib.Path:
     return own[0] if own else OUT / "voice" / f"{segment_id}.mp3"
 
 
-def srt_time(seconds: float) -> str:
-    millis = round(seconds * 1000)
-    hours, millis = divmod(millis, 3_600_000)
-    minutes, millis = divmod(millis, 60_000)
-    secs, millis = divmod(millis, 1000)
-    return f"{hours:02}:{minutes:02}:{secs:02},{millis:03}"
-
-
-def build_segment(number: int, segment: dict, last: bool, clock: float, srt: list[str], work: pathlib.Path) -> tuple[pathlib.Path, float]:
+def build_segment(number: int, segment: dict, last: bool, work: pathlib.Path) -> tuple[pathlib.Path, float]:
     sid = segment["id"]
     voice = voice_of(sid)
     spoken = duration(voice)
@@ -101,7 +94,6 @@ def build_segment(number: int, segment: dict, last: bool, clock: float, srt: lis
         end = at + share + (0.6 if index == len(captions) - 1 else 0)
         inputs += ["-i", str(OUT / "overlay" / f"{sid}_{index}.png")]
         chains.append(f"{current}[{picture_inputs + index}:v]overlay=0:0:enable='between(t,{at:.3f},{end:.3f})'[c{index}]")
-        srt.append(f"{len(srt) + 1}\n{srt_time(clock + at)} --> {srt_time(clock + end)}\n{text}\n")
         at += share
         current = f"[c{index}]"
 
@@ -155,12 +147,11 @@ def main() -> None:
     work = OUT / "work"
     work.mkdir(parents=True, exist_ok=True)
     pieces: list[pathlib.Path] = []
-    srt: list[str] = []
     clock = 0.0
 
     for number, segment in enumerate(script["segments"]):
         last = number == len(script["segments"]) - 1
-        piece, length = build_segment(number, segment, last, clock, srt, work)
+        piece, length = build_segment(number, segment, last, work)
         pieces.append(piece)
         clock += length
 
@@ -176,7 +167,6 @@ def main() -> None:
         run(["-f", "concat", "-safe", "0", "-i", str(listing), "-c", "copy", "-movflags", "+faststart", str(film)])
     run(["-i", str(film), "-c:v", "libx264", "-preset", "slow", "-crf", "27", "-c:a", "aac", "-b:a", "128k",
          "-movflags", "+faststart", str(OUT / "castor-film-podglad.mp4")])
-    (OUT / "castor-film.srt").write_text("\n".join(srt), encoding="utf-8")
     print(f"film: {film} ({clock:.1f} s)")
 
 

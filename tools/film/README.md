@@ -8,7 +8,6 @@ Wynik trafia do `out/` (poza gitem):
 |---|---|
 | `out/castor-film.mp4` | film w pełnej jakości (1080p, około 45 MB) |
 | `out/castor-film-podglad.mp4` | lżejsza kopia do wysłania na czat (około 15 MB) |
-| `out/castor-film.srt` | napisy, jeśli platforma przyjmuje je osobno |
 
 ## Jednorazowe przygotowanie
 

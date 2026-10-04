@@ -69,7 +69,7 @@ Film nagrywa się sam, bez ręcznego klikania. Wszystko jest w [tools/film](../t
 
 1. **Obraz:** Playwright przeklikuje sceny w przeglądarce na lokalnej kopii aplikacji z treściami demo.
 2. **Głos:** syntetyczny polski głos neuronowy (Marek) czyta tekst lektora.
-3. **Montaż:** ffmpeg przycina i przyspiesza sceny pod długość głosu, nakłada napisy, dodaje planszę końcową i robi plik `.srt`.
+3. **Montaż:** ffmpeg przycina i przyspiesza sceny pod długość głosu, wtapia napisy w obraz i dodaje planszę końcową. Osobnego pliku `.srt` nie ma: odtwarzacz (np. VLC) pokazywałby napisy podwójnie.
 
 Nagrywamy lokalnie z LLM-placeholderem. Film ma pokazać, jak aplikacja wygląda i działa, a nie jakość odpowiedzi modelu, więc sztuczne teksty AI nam nie przeszkadzają. Dzięki temu nagranie nie zależy od produkcji ani od klucza OpenAI.
 
