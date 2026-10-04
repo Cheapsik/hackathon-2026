@@ -15,9 +15,15 @@
     },
     {
       "id": "C",
-      "video": [{ "file": "s23_describe", "from": "results", "to": "end" }],
+      "video": [{ "file": "s23_describe", "from": "results", "to": "verdicts" }],
       "narration": "pokazuje sprawdzone rozwiązania z Biblioteki Innowacji ROPS: prawie dwieście pomysłów, które już zadziałały w Małopolsce. Mówi też wprost, dlaczego pasują. Anna dostaje kod, którym sprawdzi, co dzieje się z jej zgłoszeniem.",
       "captions": ["Sprawdzone rozwiązania z Biblioteki Innowacji ROPS.", "Prawie 200 innowacji, które działają w Małopolsce.", "Z wyjaśnieniem, dlaczego pasują.", "Kod zgłoszenia, żeby śledzić, co się dzieje."]
+    },
+    {
+      "id": "C2",
+      "video": [{ "file": "s23_describe", "from": "verdicts", "to": "end" }],
+      "narration": "Ktoś zgłosił już podobną sprawę? Anna dołącza do niej jednym kliknięciem, zamiast zakładać kolejną, i widzi jej status. Pod każdym rozwiązaniem mówi też, czy jej pomaga.",
+      "captions": ["Ktoś zgłosił już podobną sprawę?", "Dołącz jednym kliknięciem, zamiast zakładać kolejną.", "Pod każdym wynikiem: to nie to, pomogło albo prawie."]
     },
     {
       "id": "D",
@@ -28,8 +34,8 @@
     {
       "id": "E",
       "video": [{ "file": "s5_rops", "from": 0, "to": "end" }],
-      "narration": "A Regionalny Ośrodek Polityki Społecznej? Widzi zgłoszenia na bieżąco i ma radar potrzeb regionu: gdzie problemów przybywa i, co najważniejsze, gdzie są białe plamy. To problemy, na które w Bibliotece nie ma jeszcze rozwiązania.",
-      "captions": ["ROPS widzi zgłoszenia na bieżąco.", "Radar potrzeb regionu.", "Białe plamy: problemy bez gotowego rozwiązania."]
+      "narration": "A Regionalny Ośrodek Polityki Społecznej? Widzi zgłoszenia na bieżąco, a sprawy, do których dołączyło więcej osób, są na samej górze. Ma też radar potrzeb regionu: gdzie problemów przybywa i, co najważniejsze, gdzie są białe plamy. To problemy, na które w Bibliotece nie ma jeszcze rozwiązania.",
+      "captions": ["ROPS widzi zgłoszenia na bieżąco.", "Sprawy, do których dołączyło więcej osób, są na górze.", "Radar potrzeb regionu.", "Białe plamy: problemy bez gotowego rozwiązania."]
     },
     {
       "id": "F",

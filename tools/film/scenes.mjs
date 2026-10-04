@@ -2,8 +2,10 @@
 // — no names records all. Selectors follow the current screens; when a screen changes, fix its scene here.
 import { base, closeBrowser, scene } from './stage.mjs'
 
+// "Seniorka" puts the report in the Seniorzy area on the placeholder model, which scores area names by shared words;
+// without it "mieszka" pulls it towards Bezdomność ("mieszkalny") and the similar case would be about homelessness.
 const problem =
-  'Moja mama ma 82 lata i mieszka sama na wsi pod Gorlicami. Autobus jeździ dwa razy dziennie, do przychodni jest kilka kilometrów. Boję się, że gdy coś się stanie w nocy, nikt się nie dowie.'
+  'Moja mama ma 82 lata, jest samotną seniorką i mieszka na wsi pod Gorlicami. Autobus jeździ dwa razy dziennie, do przychodni jest kilka kilometrów. Boję się, że gdy coś się stanie w nocy, nikt się nie dowie.'
 
 const scenes = {
   /** 0:00–0:20 — the hook: the empty home page, the field waiting. */
@@ -27,9 +29,9 @@ const scenes = {
     await page.waitForURL('**/opisz-problem')
     await s.wait(1200)
     await s.blur()
-    await s.type(page.getByRole('searchbox').first(), 'Bobo', { delay: 120 })
+    await s.type(page.getByPlaceholder('Wpisz nazwę gminy'), 'Bobo', { delay: 120 })
     await s.wait(900)
-    await s.click(page.getByText('Bobowa').first())
+    await s.click(page.getByRole('button', { name: /^Bobowa/ }).first())
     await s.wait(700)
     await s.click(page.getByRole('button', { name: 'Znajdź rozwiązania' }))
     await page.getByText(/Kilka pytań|Wyniki dla Twojego zgłoszenia/).first().waitFor()
@@ -49,15 +51,35 @@ const scenes = {
     await s.moveTo(page.getByText(/Kod zgłoszenia|Kod śledzenia/).first(), { steps: 40 })
     await s.wait(3000)
     const firstMatch = page.getByText('Dlaczego pasuje').first()
+    await s.scrollTo(firstMatch, { offset: 260, ms: 2000 })
     await s.moveTo(firstMatch, { steps: 40 })
     await s.wait(4000)
     await s.scroll(420, 2200)
-    await s.wait(3500)
-    await s.scroll(420, 2200)
-    await s.wait(3500)
-    await s.scroll(-840, 1800)
-    await s.moveTo(page.getByRole('link', { name: /Szczegóły/ }).first(), { steps: 40 })
+    await s.wait(3000)
+
+    // "Nie / tak / prawie": the same problem was reported before, so Anna joins that case, then says an innovation helps.
+    mark('verdicts')
+    const similar = page.getByRole('region', { name: 'Podobne zgłoszenia' })
+    await s.scrollTo(similar, { offset: 90, ms: 2000 })
+    await s.wait(1500)
+    const mothers = similar.locator('li').filter({ hasText: '82 lata' })
+    const sameCase = (await mothers.count()) ? mothers.first() : similar.locator('li').first()
+    await s.moveTo(sameCase.locator('p').first(), { steps: 40 })
     await s.wait(2500)
+    await s.click(sameCase.getByRole('button', { name: 'To moja sprawa' }))
+    const joined = page.getByRole('heading', { name: 'Dołączono do sprawy' })
+    await joined.waitFor()
+    await s.wait(600)
+    await s.scrollTo(joined, { offset: 110, ms: 1400 })
+    await s.wait(3500)
+    const helped = page.getByRole('button', { name: 'To mi pomogło' }).first()
+    await s.scrollTo(helped, { offset: 420, ms: 1800 })
+    await s.wait(1200)
+    await s.click(helped)
+    await page.locator('button[aria-pressed="true"]', { hasText: 'To mi pomogło' }).first().waitFor()
+    await s.wait(2500)
+    await s.moveTo(page.getByRole('link', { name: /Szczegóły/ }).first(), { steps: 40 })
+    await s.wait(2000)
     return finish()
   },
 
@@ -100,12 +122,14 @@ const scenes = {
     return finish()
   },
 
-  /** 1:55–2:25 — ROPS: the inbox with Anna's report on top, then the needs radar. */
+  /** 1:55–2:25 — ROPS: the inbox with the case Anna joined on top, then the needs radar. */
   async s5_rops() {
     const { page, s, mark, finish } = await scene('s5_rops', { email: 'rops.demo@example.com', start: '/admin/zgloszenia' })
     await s.wait(2500)
+    await s.moveTo(page.getByText(/^dołączyło:/).first(), { steps: 40 })
+    await s.wait(2500)
     await s.moveTo(page.getByRole('link', { name: /Otwórz/ }).first().or(page.getByRole('button', { name: /Otwórz/ }).first()), { steps: 40 })
-    await s.wait(3000)
+    await s.wait(2000)
     await s.scroll(380, 2000)
     await s.wait(2000)
     await s.click(page.getByRole('link', { name: 'Radar potrzeb' }).first())
@@ -113,10 +137,10 @@ const scenes = {
     mark('radar')
     await s.blur()
     await s.wait(2000)
-    await s.scrollTo(page.getByRole('heading', { name: 'Potrzeby według obszaru' }), { offset: 120, ms: 1800 })
+    await s.scrollTo(page.getByRole('heading', { name: 'Potrzeby według obszaru' }).first(), { offset: 120, ms: 1800 })
     await s.moveTo(page.getByText('biała plama').first(), { steps: 40 })
     await s.wait(3500)
-    await s.scrollTo(page.getByRole('heading', { name: 'Mapa zgłoszeń' }), { offset: 120, ms: 2000 })
+    await s.scrollTo(page.getByRole('heading', { name: 'Mapa zgłoszeń' }).first(), { offset: 120, ms: 2000 })
     await s.wait(4000)
     await s.scrollTo(page.getByText('Trend zgłoszeń').first(), { offset: 120, ms: 2000 })
     await s.wait(3000)
