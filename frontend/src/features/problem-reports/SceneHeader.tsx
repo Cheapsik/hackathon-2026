@@ -1,19 +1,17 @@
 import type { FormEvent } from 'react'
 import { Search } from 'lucide-react'
-import { Link, useNavigate } from 'react-router'
+import { Link, useLocation, useNavigate } from 'react-router'
 import { AccountMenu } from '@/components/layout/AccountMenu'
 import { BrandMark } from '@/components/layout/BrandMark'
-
-const nav = [
-  { to: '/opisz-problem', label: 'Rozwiązania' },
-  { to: '/biblioteka', label: 'Wiedza' },
-  { to: '/pomysly', label: 'Pomysły' },
-  { to: '/testy', label: 'Testy' },
-] as const
+import { primaryNavFor } from '@/components/layout/primary-nav'
+import { useSession } from '@/hooks/use-session'
 
 /** Header laid over the Rynek photo of "Opisz problem": brand, the home page destinations, library search, account. */
 export function SceneHeader() {
   const navigate = useNavigate()
+  const { pathname } = useLocation()
+  const session = useSession()
+  const nav = primaryNavFor(session?.role)
 
   function search(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -32,7 +30,10 @@ export function SceneHeader() {
           <ul>
             {nav.map((item) => (
               <li key={item.to}>
-                <Link to={item.to} aria-current={item.to === '/opisz-problem' ? 'page' : undefined}>
+                <Link
+                  to={item.to}
+                  aria-current={pathname === item.to || (item.to !== '/' && pathname.startsWith(`${item.to}/`)) ? 'page' : undefined}
+                >
                   {item.label}
                 </Link>
               </li>

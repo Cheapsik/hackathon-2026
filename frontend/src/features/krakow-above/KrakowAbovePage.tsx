@@ -1,7 +1,9 @@
 import { Fragment, useEffect, useRef, useState, type CSSProperties, type FormEvent, type KeyboardEvent } from 'react'
 import { Link, useNavigate } from 'react-router'
 import { ArrowRight, Mic, UserRound } from 'lucide-react'
+import { primaryNavFor } from '@/components/layout/primary-nav'
 import { usePageTitle } from '@/hooks/use-page-title'
+import { useSession } from '@/hooks/use-session'
 import { useSpeechInput } from '@/hooks/use-speech-input'
 import { rynekChurchMask, rynekPhoto } from '@/lib/rynek-scene'
 import { prefersReducedMotion } from './motion'
@@ -19,13 +21,6 @@ const UNSUPPORTED_NOTE = 'Dyktowanie działa w Chrome i Edge. W tej przeglądarc
 /** Length of the entry sequence in krakow-above.css, with the last hint's stagger. */
 const ENTRY_MS = 2300
 
-const nav = [
-  { to: '/opisz-problem', label: 'Rozwiązania' },
-  { to: '/biblioteka', label: 'Wiedza' },
-  { to: '/pomysly', label: 'Pomysły' },
-  { to: '/testy', label: 'Testy' },
-] as const
-
 /** Two sentences, one per line: what the person does, then what the system does. */
 const headlineLines = [['Opisz', 'problem.'], ['Dopasujemy', 'rozwiązania.']] as const
 
@@ -40,6 +35,8 @@ export function KrakowAbovePage() {
   usePageTitle('Opisz problem, dopasujemy rozwiązania')
 
   const navigate = useNavigate()
+  const session = useSession()
+  const nav = primaryNavFor(session?.role)
   const rootRef = useRef<HTMLDivElement>(null)
   const photoRef = useRef<HTMLDivElement>(null)
   const wordmarkRef = useRef<HTMLDivElement>(null)

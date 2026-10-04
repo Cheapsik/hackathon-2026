@@ -19,12 +19,16 @@ function navigationFor(session: SessionResponse | undefined): AppShellNavGroup[]
 
   const groups: AppShellNavGroup[] = [
     {
-      label: 'Rozwiązania',
+      label: 'Opisz problem',
       to: '/opisz-problem',
+      items: [{ to: '/opisz-problem', label: 'Opisz problem' }],
+    },
+    {
+      label: 'Rozwiązania',
+      to: '/moje-zgloszenia',
       items: [
-        { to: '/opisz-problem', label: 'Opisz problem' },
-        { to: '/sledz', label: 'Śledź zgłoszenie' },
         { to: '/moje-zgloszenia', label: 'Moje zgłoszenia' },
+        { to: '/sledz', label: 'Śledź zgłoszenie' },
         ...only(signedIn, [
           { to: '/watki', label: 'Moje wątki' },
           { to: '/zapytaj-eksperta', label: 'Zapytaj eksperta' },
@@ -84,12 +88,18 @@ export function AppLayout() {
   const session = useSession()
 
   useEffect(() => {
+    // Route changes keep the previous window scroll (no ScrollRestoration). Coming from a tall scene
+    // like /opisz-problem then lands mid-page or at the clamped bottom — especially noticeable on
+    // /biblioteka once the short loading state clamps a large scrollY.
+    window.scrollTo(0, 0)
+
     if (previousPathname.current === location.pathname) {
       return
     }
 
     previousPathname.current = location.pathname
-    mainRef.current?.focus()
+    // Keep the a11y move into <main>, but do not let focus() scroll the page again.
+    mainRef.current?.focus({ preventScroll: true })
   }, [location.pathname])
 
   return (
