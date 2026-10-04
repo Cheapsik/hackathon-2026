@@ -1,4 +1,4 @@
-# Castor
+# Castor (MVP)
 
 Platforma Małopolskiego Hubu Innowacji Społecznych (ROPS Kraków): kojarzy problemy zgłaszane przez mieszkańców, organizacje i gminy ze sprawdzonymi innowacjami społecznymi i wspiera ich rozwój, testowanie i upowszechnianie.
 

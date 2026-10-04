@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: Castor production host with Docker, a dedicated VPC, and a stable public IPv4 address.
+Description: Castor MVP production host with Docker, a dedicated VPC, and a stable public IPv4 address.
 
 Parameters:
   SshAllowedCidr:

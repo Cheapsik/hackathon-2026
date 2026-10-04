@@ -1,4 +1,4 @@
-# Repository Agent Guide
+# Repository Agent Guide (Castor MVP)
 
 These instructions apply to the entire repository. More deeply nested `AGENTS.md` files may define additional or narrower rules for their directories.
 

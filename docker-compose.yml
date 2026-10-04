@@ -1,6 +1,6 @@
 name: castor
 
-# The whole demo: `docker compose up -d --build` → http://localhost:8080.
+# Castor MVP local demo: `docker compose up -d --build` → http://localhost:8080.
 # Backend development: `docker compose up -d --wait db` and run the API from backend/ (see backend/README.md).
 services:
   db:

@@ -1,5 +1,6 @@
 name: castor
 
+# Castor MVP production stack (images from CI, reverse proxy, database).
 services:
   db:
     image: pgvector/pgvector:pg17

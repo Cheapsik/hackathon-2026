@@ -1,5 +1,5 @@
 .idea
 .vcs
 .env
-# Vite dependency cache, wherever Vite was started from.
+# Castor MVP — Vite dependency cache, wherever Vite was started from.
 .vite/

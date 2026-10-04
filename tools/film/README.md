@@ -1,4 +1,4 @@
-# Film o Castorze
+# Film o Castorze (MVP)
 
 Narzędzia, które same nagrywają film prezentujący Castora: przeglądarka przeklikuje sceny, syntetyczny głos czyta tekst lektora, a ffmpeg skleja wszystko z napisami w gotowe MP4. Scenariusz i jego uzasadnienie są w [docs/film.md](../../docs/film.md).
 

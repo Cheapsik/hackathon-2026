@@ -1,6 +1,6 @@
 # Castor — backend
 
-REST API for the Castor platform of the Małopolska Social Innovation Hub (.NET 10, ASP.NET Core controllers, EF Core, PostgreSQL 17 + pgvector, SignalR).
+REST API for the Castor MVP (.NET 10, ASP.NET Core controllers, EF Core, PostgreSQL 17 + pgvector, SignalR).
 
 ## Run locally
 
