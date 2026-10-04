@@ -1,8 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useState, type ReactNode } from 'react'
 import { ExternalLink } from 'lucide-react'
 import { Link } from 'react-router'
 import {
   getApiProblemReportsProblemReportIdSimilar,
+  usePostApiProblemReportsProblemReportIdMatchesInnovationIdVerdict,
+  usePostApiProblemReportsProblemReportIdSimilarSimilarProblemReportIdVerdict,
+  type JoinedCaseResponse,
   type MatchResponse,
   type ProblemReportResponse,
   type SimilarProblemReportResponse,
@@ -10,7 +13,10 @@ import {
 } from '@/api/generated/castor'
 import { CeramicCard, SoftButton } from '@/design-system'
 import { DevelopHybridButton } from '@/features/ideas/DevelopHybridButton'
+import { statusLabel } from '@/features/problem-reports/status-labels'
 import { TrackingTicket } from '@/features/problem-reports/TrackingTicket'
+import { VerdictChoice } from '@/features/problem-reports/VerdictChoice'
+import { errorMessage } from '@/lib/error-message'
 import { formatDateTime, pluralPl } from '@/lib/format'
 
 const similarPageSize = 5
@@ -21,6 +27,10 @@ interface ProblemReportResultsProps {
   headingLevel: 2 | 3
   /** Whether the reader may turn the hybrid into their own idea - the reporter, not ROPS reviewing it. */
   developable?: boolean
+  /** Whether the reader says "nie / tak / prawie" under the results - the reporter, not ROPS reviewing them. */
+  decidable?: boolean
+  /** The report as the API returns it after a verdict, for the page to keep. */
+  onReportChange?: (report: ProblemReportResponse) => void
   /** Opening the report retries matching; the tracking page passes a refetch here. */
   onRecheck?: () => void
   rechecking?: boolean
@@ -42,6 +52,8 @@ export function ProblemReportResults({
   report,
   headingLevel,
   developable = true,
+  decidable = true,
+  onReportChange,
   onRecheck,
   rechecking = false,
   trackingLink = false,
@@ -51,8 +63,28 @@ export function ProblemReportResults({
   const Subheading = `h${headingLevel + 1}` as 'h3' | 'h4'
   const matchCount = report.matches.length
   const similarCount = Number(report.similarReports.reports)
+  const joinedCount = Number(report.joinedCount)
   const stillMatching = !report.isMatched && !report.awaitsAnswers
   const trackingPath = `/zgloszenie/${encodeURIComponent(report.trackingCode)}`
+  const decideOnMatch = usePostApiProblemReportsProblemReportIdMatchesInnovationIdVerdict()
+
+  function onMatchVerdict(innovationId: string, verdict: string, note: string | null) {
+    decideOnMatch.mutate(
+      {
+        problemReportId: report.id,
+        innovationId,
+        data: { verdict, note },
+        headers: { 'X-Tracking-Code': report.trackingCode },
+      },
+      {
+        onSuccess: (response) => {
+          if (response.status === 200) {
+            onReportChange?.(response.data)
+          }
+        },
+      },
+    )
+  }
 
   return (
     <section aria-labelledby={`report-${report.id}-results`} className="@container">
@@ -87,6 +119,12 @@ export function ProblemReportResults({
                 pomóc. Najlepiej pasujące są pierwsze.
               </p>
             )}
+            {joinedCount > 0 && (
+              <p>
+                Do Twojej sprawy {pluralPl(joinedCount, 'dołączyła', 'dołączyły', 'dołączyło')} {joinedCount}{' '}
+                {pluralPl(joinedCount, 'osoba', 'osoby', 'osób')} z podobnym problemem.
+              </p>
+            )}
           </div>
         </header>
 
@@ -99,19 +137,47 @@ export function ProblemReportResults({
           </aside>
         )}
 
-        {similarCount > 0 && (
-          <SimilarReportsSection
-            reportId={report.id}
-            trackingCode={report.trackingCode}
-            similar={report.similarReports}
-            Subheading={Subheading}
-          />
+        {report.joinedCase ? (
+          <JoinedCaseSection reportId={report.id} joinedCase={report.joinedCase} Subheading={Subheading} />
+        ) : (
+          similarCount > 0 && (
+            <SimilarReportsSection
+              key={report.id}
+              reportId={report.id}
+              trackingCode={report.trackingCode}
+              similar={report.similarReports}
+              Subheading={Subheading}
+              decidable={decidable}
+              onReportChange={onReportChange}
+            />
+          )
         )}
 
         {matchCount > 0 && (
           <ol className="border-t border-border-subtle @min-[56rem]:col-start-1">
             {report.matches.map((match, index) => (
-              <MatchItem key={match.innovationId} match={match} rank={index + 1} Subheading={Subheading} />
+              <MatchItem
+                key={match.innovationId}
+                match={match}
+                rank={index + 1}
+                Subheading={Subheading}
+                verdict={
+                  decidable && (
+                    <VerdictChoice
+                      current={match.verdict}
+                      yesLabel="To mi pomogło"
+                      subject={match.title}
+                      pending={decideOnMatch.isPending && decideOnMatch.variables?.innovationId === match.innovationId}
+                      error={
+                        decideOnMatch.isError && decideOnMatch.variables?.innovationId === match.innovationId
+                          ? errorMessage(decideOnMatch.error)
+                          : null
+                      }
+                      onDecide={(verdict, note) => onMatchVerdict(match.innovationId, verdict, note)}
+                    />
+                  )
+                }
+              />
             ))}
           </ol>
         )}
@@ -170,28 +236,52 @@ export function ProblemReportResults({
   )
 }
 
-/** Full count up front; first page comes with the report, further pages load on demand. */
+/**
+ * Full count up front; first page comes with the report, further pages load on demand. Under every case the reporter
+ * says whether it is theirs: "To moja sprawa" joins it.
+ */
 function SimilarReportsSection({
   reportId,
   trackingCode,
   similar,
   Subheading,
+  decidable,
+  onReportChange,
 }: {
   reportId: string
   trackingCode: string
   similar: SimilarProblemReportsResponse
   Subheading: 'h3' | 'h4'
+  decidable: boolean
+  onReportChange?: (report: ProblemReportResponse) => void
 }) {
   const total = Number(similar.reports)
+  const cases = Number(similar.cases)
   const [items, setItems] = useState<SimilarProblemReportResponse[]>(() => similar.items ?? [])
   const [loadingMore, setLoadingMore] = useState(false)
   const [loadError, setLoadError] = useState<string | null>(null)
-  const hasMore = items.length < total
+  const hasMore = items.length < cases
+  const decide = usePostApiProblemReportsProblemReportIdSimilarSimilarProblemReportIdVerdict()
 
-  useEffect(() => {
-    setItems(similar.items ?? [])
-    setLoadError(null)
-  }, [reportId, similar.items])
+  function onVerdict(similarProblemReportId: string, verdict: string, note: string | null) {
+    decide.mutate(
+      {
+        problemReportId: reportId,
+        similarProblemReportId,
+        data: { verdict, note },
+        headers: { 'X-Tracking-Code': trackingCode },
+      },
+      {
+        onSuccess: (response) => {
+          // The loaded pages stay; only the decided case changes. A new report remounts the section (its key).
+          setItems((current) => current.map((item) => (item.id === similarProblemReportId ? { ...item, verdict } : item)))
+          if (response.status === 200) {
+            onReportChange?.(response.data)
+          }
+        },
+      },
+    )
+  }
 
   async function loadMore() {
     if (loadingMore || !hasMore) {
@@ -231,12 +321,31 @@ function SimilarReportsSection({
           {total} {pluralPl(total, 'osoba', 'osoby', 'osób')} z tego samego obszaru{' '}
           {pluralPl(total, 'zgłosiła', 'zgłosiły', 'zgłosiło')} podobny problem. Poniżej przykłady (bez danych
           osobowych).
+          {decidable && ' Jeśli to Twoja sprawa, dołącz do niej - zobaczysz jej status, a ROPS potraktuje ją jako ważniejszą.'}
         </p>
       </div>
       <ul className="grid gap-3">
         {items.map((item) => (
           <li key={item.id}>
-            <SimilarReportCard item={item} />
+            <SimilarReportCard
+              item={item}
+              verdict={
+                decidable && (
+                  <VerdictChoice
+                    current={item.verdict}
+                    yesLabel="To moja sprawa"
+                    subject={`podobne zgłoszenie z ${formatDateTime(item.createdAt)}`}
+                    pending={decide.isPending && decide.variables?.similarProblemReportId === item.id}
+                    error={
+                      decide.isError && decide.variables?.similarProblemReportId === item.id
+                        ? errorMessage(decide.error, { 409: 'To zgłoszenie dołączyło już do innej sprawy.' })
+                        : null
+                    }
+                    onDecide={(verdict, note) => onVerdict(item.id, verdict, note)}
+                  />
+                )
+              }
+            />
           </li>
         ))}
       </ul>
@@ -253,20 +362,74 @@ function SimilarReportsSection({
 }
 
 /** Anonymized excerpt of another report in the same challenge area — never shows a tracking code. */
-function SimilarReportCard({ item }: { item: SimilarProblemReportResponse }) {
+function SimilarReportCard({ item, verdict }: { item: SimilarProblemReportResponse; verdict?: ReactNode }) {
   return (
-    <CeramicCard padding="md" className="grid gap-2">
-      <p className="text-body text-text-primary">{item.description}</p>
-      <p className="text-body-sm text-text-muted">
-        {item.municipality ? `${item.municipality} · ` : ''}
-        {formatDateTime(item.createdAt)}
-      </p>
+    <CeramicCard padding="md" className="grid gap-4">
+      <div className="grid gap-2">
+        <p className="text-body text-text-primary">{item.description}</p>
+        <p className="text-body-sm text-text-muted">
+          {item.municipality ? `${item.municipality} · ` : ''}
+          {formatDateTime(item.createdAt)} · status: {statusLabel(item.status)}
+        </p>
+      </div>
+      {verdict}
     </CeramicCard>
   )
 }
 
-/** One ranked innovation: title and fit, why it fits, what to adapt, and where to read more. */
-function MatchItem({ match, rank, Subheading }: { match: MatchResponse; rank: number; Subheading: 'h3' | 'h4' }) {
+/**
+ * The case the report joined with "To moja sprawa": the reporter follows its status from here, without its thread,
+ * and sees how many people joined it.
+ */
+function JoinedCaseSection({
+  reportId,
+  joinedCase,
+  Subheading,
+}: {
+  reportId: string
+  joinedCase: JoinedCaseResponse
+  Subheading: 'h3' | 'h4'
+}) {
+  const joinedCount = Number(joinedCase.joinedCount)
+
+  return (
+    <section
+      aria-labelledby={`report-${reportId}-joined`}
+      className="grid gap-4 border-t border-border-subtle pt-8 @min-[56rem]:col-start-1"
+    >
+      <div className="grid gap-2">
+        <Subheading id={`report-${reportId}-joined`} className="text-section-title font-medium tracking-display">
+          Dołączono do sprawy
+        </Subheading>
+        <p className="max-w-default text-body text-text-muted">
+          To Twoja sprawa, więc ROPS zajmuje się nią raz dla wszystkich. Tu widzisz jej status. Razem z Tobą{' '}
+          {pluralPl(joinedCount, 'dołączyła', 'dołączyły', 'dołączyło')} {joinedCount}{' '}
+          {pluralPl(joinedCount, 'osoba', 'osoby', 'osób')}.
+        </p>
+      </div>
+      <CeramicCard padding="md" className="grid gap-2">
+        <p className="text-body text-text-primary">{joinedCase.description}</p>
+        <p className="text-body-sm text-text-muted">
+          {joinedCase.municipality ? `${joinedCase.municipality} · ` : ''}
+          {formatDateTime(joinedCase.createdAt)} · status: <strong>{statusLabel(joinedCase.status)}</strong>
+        </p>
+      </CeramicCard>
+    </section>
+  )
+}
+
+/** One ranked innovation: title and fit, why it fits, what to adapt, where to read more, and the reporter's verdict. */
+function MatchItem({
+  match,
+  rank,
+  Subheading,
+  verdict,
+}: {
+  match: MatchResponse
+  rank: number
+  Subheading: 'h3' | 'h4'
+  verdict?: ReactNode
+}) {
   const score = Math.max(0, Math.min(100, Number(match.score)))
 
   return (
@@ -326,6 +489,8 @@ function MatchItem({ match, rank, Subheading }: { match: MatchResponse; rank: nu
             </a>
           )}
         </div>
+
+        {verdict}
       </article>
     </li>
   )

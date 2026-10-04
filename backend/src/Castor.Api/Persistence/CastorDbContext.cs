@@ -26,6 +26,8 @@ public sealed class CastorDbContext : DbContext
 
     public DbSet<MatchResult> MatchResults => Set<MatchResult>();
 
+    public DbSet<SimilarReportVerdict> SimilarReportVerdicts => Set<SimilarReportVerdict>();
+
     public DbSet<BackgroundJob> BackgroundJobs => Set<BackgroundJob>();
 
     public DbSet<Indicator> Indicators => Set<Indicator>();

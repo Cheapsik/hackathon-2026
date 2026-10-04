@@ -23,6 +23,8 @@ public sealed class ProblemReport
 
     public const int ReplyDraftMaxLength = 4000;
 
+    public const int VerdictNoteMaxLength = 500;
+
     private ProblemReport()
     {
     }
@@ -79,6 +81,12 @@ public sealed class ProblemReport
     public DateTimeOffset? MatchedAt { get; private set; }
 
     public DateTimeOffset? ClaimedAt { get; private set; }
+
+    /// <summary>
+    /// The case this report joined with "To moja sprawa"; null while it is a case of its own. The reporter follows that
+    /// case's status, never its thread, and the inbox counts this report there instead of listing it.
+    /// </summary>
+    public Guid? JoinedProblemReportId { get; private set; }
 
     public DateTimeOffset CreatedAt { get; private set; }
 
@@ -338,6 +346,77 @@ public sealed class ProblemReport
         AuthorId = userId;
         ClaimedAt = claimedAt;
         UpdatedAt = claimedAt;
+    }
+
+    /// <summary>
+    /// The reporter's verdict on a similar report shown with this one — a report with the same main challenge area.
+    /// Yes joins this report into that report's case; a report that already joined a case decides nothing more.
+    /// </summary>
+    /// <param name="earlier">The verdict already given on <paramref name="similar"/>; it is replaced.</param>
+    /// <returns>The new verdict, or <paramref name="earlier"/> revised.</returns>
+    public SimilarReportVerdict DecideOnSimilar(
+        ProblemReport similar,
+        SimilarReportVerdict? earlier,
+        Verdict verdict,
+        string? note,
+        DateTimeOffset decidedAt)
+    {
+        ArgumentNullException.ThrowIfNull(similar);
+
+        if (earlier is not null && (earlier.ProblemReportId != Id || earlier.SimilarProblemReportId != similar.Id))
+        {
+            throw new InvalidOperationException("The earlier verdict is about another pair of reports.");
+        }
+
+        bool isSimilar = similar.Id != Id && MainChallengeAreaCode is not null && similar.MainChallengeAreaCode == MainChallengeAreaCode;
+        if (!isSimilar)
+        {
+            throw new DomainException("The problem report does not exist.", StatusCodes.Status404NotFound);
+        }
+
+        if (JoinedProblemReportId is not null)
+        {
+            throw new DomainException("This report has already joined a case.", StatusCodes.Status409Conflict);
+        }
+
+        // A report that joined a case stands for that case, so joining it joins the case itself.
+        Guid joinedCase = similar.JoinedProblemReportId ?? similar.Id;
+        if (verdict == Verdict.YES && joinedCase == Id)
+        {
+            throw new DomainException("This report is the case the similar report joined.", StatusCodes.Status409Conflict);
+        }
+
+        string? checkedNote = CheckVerdictNote(verdict, note);
+        SimilarReportVerdict decision = earlier ?? SimilarReportVerdict.Record(this, similar, verdict, checkedNote, decidedAt);
+        decision.Revise(verdict, checkedNote, decidedAt);
+
+        if (verdict == Verdict.YES)
+        {
+            JoinedProblemReportId = joinedCase;
+        }
+
+        UpdatedAt = decidedAt;
+        return decision;
+    }
+
+    /// <summary>
+    /// The note of a verdict, anonymized like the description: optional, except for almost, which says what differs or
+    /// is missing.
+    /// </summary>
+    internal static string? CheckVerdictNote(Verdict verdict, string? note)
+    {
+        string trimmed = note?.Trim() ?? string.Empty;
+        if (verdict == Verdict.ALMOST && trimmed.Length == 0)
+        {
+            throw new DomainException("Say what differs or what is missing.");
+        }
+
+        if (trimmed.Length > VerdictNoteMaxLength)
+        {
+            throw new DomainException($"A note has at most {VerdictNoteMaxLength} characters.");
+        }
+
+        return trimmed.Length == 0 ? null : Anonymizer.Anonymize(trimmed);
     }
 
     /// <summary>

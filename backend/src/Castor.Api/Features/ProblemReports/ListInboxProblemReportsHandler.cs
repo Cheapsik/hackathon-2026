@@ -2,7 +2,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Castor.Api.Features.ProblemReports;
 
-/// <summary>The administrators' inbox, newest first; it refreshes live on ProblemReportCreated (module VI).</summary>
+/// <summary>
+/// The administrators' inbox: one row per case, the ones more people joined first, then newest first. A report that
+/// joined a case is counted there instead of listed. It refreshes live on ProblemReportCreated (module VI).
+/// </summary>
 public sealed class ListInboxProblemReportsHandler(CastorDbContext db)
 {
     private const int Limit = 200;
@@ -15,7 +18,10 @@ public sealed class ListInboxProblemReportsHandler(CastorDbContext db)
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        IQueryable<ProblemReport> query = db.ProblemReports.AsNoTracking().Include(report => report.Municipality);
+        IQueryable<ProblemReport> query = db.ProblemReports
+            .AsNoTracking()
+            .Include(report => report.Municipality)
+            .Where(report => report.JoinedProblemReportId == null);
 
         if (request.Status is not null)
         {
@@ -39,8 +45,18 @@ public sealed class ListInboxProblemReportsHandler(CastorDbContext db)
             query = query.Where(report => report.Municipality != null && report.Municipality.Teryt == teryt);
         }
 
-        List<ProblemReport> reports = await query.OrderByDescending(report => report.CreatedAt).Take(Limit).ToListAsync(cancellationToken);
+        List<ProblemReport> reports = await query
+            .OrderByDescending(report => db.ProblemReports.Count(joined => joined.JoinedProblemReportId == report.Id))
+            .ThenByDescending(report => report.CreatedAt)
+            .Take(Limit)
+            .ToListAsync(cancellationToken);
         List<Guid> reportIds = [.. reports.Select(report => report.Id)];
+
+        Dictionary<Guid, int> joinedCounts = await db.ProblemReports
+            .Where(joined => joined.JoinedProblemReportId != null && reportIds.Contains(joined.JoinedProblemReportId.Value))
+            .GroupBy(joined => joined.JoinedProblemReportId!.Value)
+            .Select(group => new { CaseId = group.Key, Count = group.Count() })
+            .ToDictionaryAsync(row => row.CaseId, row => row.Count, cancellationToken);
 
         Dictionary<Guid, int?> bestScores = await db.MatchResults
             .Where(match => reportIds.Contains(match.ProblemReportId) && match.Kind == MatchKind.MATCH)
@@ -50,12 +66,19 @@ public sealed class ListInboxProblemReportsHandler(CastorDbContext db)
 
         Dictionary<string, string> areaNames = await db.ChallengeAreas.ToDictionaryAsync(area => area.Code, area => area.Name, cancellationToken);
 
-        return [.. reports.Select(report => Summarize(report, bestScores.GetValueOrDefault(report.Id), areaNames))];
+        return [.. reports.Select(report => Summarize(report, bestScores.GetValueOrDefault(report.Id), JoinedCountOf(report, joinedCounts), areaNames))];
+    }
+
+    /// <summary>A case nobody joined has no group in the count: zero people joined it.</summary>
+    private static int JoinedCountOf(ProblemReport report, Dictionary<Guid, int> joinedCounts)
+    {
+        return joinedCounts.TryGetValue(report.Id, out int count) ? count : 0;
     }
 
     private static InboxProblemReportSummaryResponse Summarize(
         ProblemReport report,
         int? bestScore,
+        int joinedCount,
         Dictionary<string, string> areaNames)
     {
         string trackingCode = TrackingCode.Format(report.TrackingCode);
@@ -75,6 +98,7 @@ public sealed class ListInboxProblemReportsHandler(CastorDbContext db)
             report.MatchedAt is not null,
             bestScore,
             report.ReplyDraft is not null,
+            joinedCount,
             report.CreatedAt);
     }
 }

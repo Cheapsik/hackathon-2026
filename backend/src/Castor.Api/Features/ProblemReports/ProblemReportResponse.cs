@@ -6,6 +6,8 @@ namespace Castor.Api.Features.ProblemReports;
 /// <param name="AwaitsAnswers">The clarifying questions wait for answers; matching runs after them.</param>
 /// <param name="HasAuthor">False for an anonymous report that can still be claimed with its code.</param>
 /// <param name="ConversationId">The report's thread; a visitor opens it with the same tracking code.</param>
+/// <param name="JoinedCount">How many people joined this report's case with "To moja sprawa".</param>
+/// <param name="JoinedCase">The case this report joined; null while it is a case of its own.</param>
 public sealed record ProblemReportResponse(
     Guid Id,
     string TrackingCode,
@@ -24,4 +26,6 @@ public sealed record ProblemReportResponse(
     HybridResponse? Hybrid,
     SimilarProblemReportsResponse SimilarReports,
     Guid ConversationId,
+    int JoinedCount,
+    JoinedCaseResponse? JoinedCase,
     DateTimeOffset CreatedAt);

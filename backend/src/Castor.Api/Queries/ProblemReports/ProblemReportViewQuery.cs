@@ -42,7 +42,12 @@ public sealed class ProblemReportViewQuery(CastorDbContext db)
             ? conversationIds[0]
             : throw new InvalidOperationException($"Problem report {report.Id} has no thread.");
 
-        return new ProblemReportView(matches, hybridSources, orderedAreas, similar, conversationId);
+        int joinedCount = await db.ProblemReports.CountAsync(other => other.JoinedProblemReportId == report.Id, cancellationToken);
+        JoinedCase? joinedCase = report.JoinedProblemReportId is Guid caseId
+            ? await JoinedCaseAsync(caseId, cancellationToken)
+            : null;
+
+        return new ProblemReportView(matches, hybridSources, orderedAreas, similar, conversationId, joinedCount, joinedCase);
     }
 
     /// <summary>First page of similar reports embedded in a problem-report response.</summary>
@@ -56,7 +61,8 @@ public sealed class ProblemReportViewQuery(CastorDbContext db)
     /// <summary>
     /// Other reports with the same main challenge area. Causes come from the model as free text and cannot be compared;
     /// vector similarity joins once embeddings are decided (docs/TODO.md). Returns the full counts and one page of
-    /// examples (anonymized text only — never another report's tracking code).
+    /// examples (anonymized text only — never another report's tracking code). A report that joined a case counts as
+    /// a person but is not an example: its case is.
     /// </summary>
     public async Task<SimilarProblemReports> SimilarAsync(
         ProblemReport report,
@@ -78,7 +84,7 @@ public sealed class ProblemReportViewQuery(CastorDbContext db)
         string? mainArea = report.MainChallengeAreaCode;
         if (mainArea is null)
         {
-            return new SimilarProblemReports(0, 0, []);
+            return new SimilarProblemReports(0, 0, 0, []);
         }
 
         IQueryable<ProblemReport> similar = db.ProblemReports
@@ -92,9 +98,12 @@ public sealed class ProblemReportViewQuery(CastorDbContext db)
             .Distinct()
             .CountAsync(cancellationToken);
 
+        IQueryable<ProblemReport> cases = similar.Where(other => other.JoinedProblemReportId == null);
+        int caseCount = await cases.CountAsync(cancellationToken);
+
+        Guid reportId = report.Id;
         Guid? municipalityId = report.MunicipalityId;
-        List<SimilarProblemReportItem> items = await similar
-            .Include(other => other.Municipality)
+        List<SimilarProblemReportItem> items = await cases
             .OrderByDescending(other => municipalityId != null && other.MunicipalityId == municipalityId)
             .ThenByDescending(other => other.CreatedAt)
             .Skip(skip)
@@ -103,13 +112,36 @@ public sealed class ProblemReportViewQuery(CastorDbContext db)
                 other.Id,
                 other.Description,
                 other.Municipality != null ? other.Municipality.QualifiedName : null,
+                other.Status,
+                db.SimilarReportVerdicts
+                    .Where(verdict => verdict.ProblemReportId == reportId && verdict.SimilarProblemReportId == other.Id)
+                    .Select(verdict => (Verdict?)verdict.Verdict)
+                    .FirstOrDefault(),
                 other.CreatedAt))
             .ToListAsync(cancellationToken);
 
         return new SimilarProblemReports(
             reports,
             municipalities,
+            caseCount,
             [.. items.Select(item => item with { Description = Excerpt(item.Description) })]);
+    }
+
+    private async Task<JoinedCase> JoinedCaseAsync(Guid caseId, CancellationToken cancellationToken)
+    {
+        ProblemReport joined = await db.ProblemReports
+            .AsNoTracking()
+            .Include(candidate => candidate.Municipality)
+            .SingleAsync(candidate => candidate.Id == caseId, cancellationToken);
+        int joinedCount = await db.ProblemReports.CountAsync(other => other.JoinedProblemReportId == caseId, cancellationToken);
+
+        return new JoinedCase(
+            joined.Id,
+            joined.Description,
+            joined.Municipality?.QualifiedName,
+            joined.Status,
+            joinedCount,
+            joined.CreatedAt);
     }
 
     private static string Excerpt(string description)

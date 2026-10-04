@@ -19,6 +19,8 @@ public sealed class ProblemReportsController(
     ClaimProblemReportHandler claim,
     ListMyProblemReportsHandler listMine,
     ListSimilarProblemReportsHandler listSimilar,
+    DecideOnSimilarProblemReportHandler decideOnSimilar,
+    DecideOnMatchHandler decideOnMatch,
     MarkProblemReportAnsweredHandler markAnswered) : ControllerBase
 {
     public const string TrackingCodeHeader = "X-Tracking-Code";
@@ -80,6 +82,39 @@ public sealed class ProblemReportsController(
         CancellationToken cancellationToken)
     {
         return listSimilar.HandleAsync(problemReportId, trackingCode, request, cancellationToken);
+    }
+
+    /// <summary>"To nie to" / "To moja sprawa" (joins its case) / "Prawie — brakuje mi…" under a similar report.</summary>
+    [AllowAnonymous]
+    [HttpPost("{problemReportId:guid}/similar/{similarProblemReportId:guid}/verdict")]
+    [EnableRateLimiting(RateLimitPolicies.TrackingCode)]
+    [ProducesResponseType<ProblemReportResponse>(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
+    public Task<ProblemReportResponse> DecideOnSimilar(
+        Guid problemReportId,
+        Guid similarProblemReportId,
+        [FromHeader(Name = TrackingCodeHeader)] string? trackingCode,
+        [FromBody] DecideOnSimilarProblemReportRequest request,
+        CancellationToken cancellationToken)
+    {
+        return decideOnSimilar.HandleAsync(problemReportId, similarProblemReportId, trackingCode, request, cancellationToken);
+    }
+
+    /// <summary>"To nie to" / "To mi pomogło" / "Prawie — brakuje mi…" under a matched innovation.</summary>
+    [AllowAnonymous]
+    [HttpPost("{problemReportId:guid}/matches/{innovationId:guid}/verdict")]
+    [EnableRateLimiting(RateLimitPolicies.TrackingCode)]
+    [ProducesResponseType<ProblemReportResponse>(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public Task<ProblemReportResponse> DecideOnMatch(
+        Guid problemReportId,
+        Guid innovationId,
+        [FromHeader(Name = TrackingCodeHeader)] string? trackingCode,
+        [FromBody] DecideOnMatchRequest request,
+        CancellationToken cancellationToken)
+    {
+        return decideOnMatch.HandleAsync(problemReportId, innovationId, trackingCode, request, cancellationToken);
     }
 
     [HttpPost("claim")]

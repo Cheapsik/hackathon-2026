@@ -1,6 +1,7 @@
 namespace Castor.Api.Features.ProblemReports;
 
 /// <summary>A row of the administrators' inbox.</summary>
+/// <param name="JoinedCount">How many people joined this case with "To moja sprawa".</param>
 public sealed record InboxProblemReportSummaryResponse(
     Guid Id,
     string TrackingCode,
@@ -14,4 +15,5 @@ public sealed record InboxProblemReportSummaryResponse(
     bool IsMatched,
     int? BestScore,
     bool HasReplyDraft,
+    int JoinedCount,
     DateTimeOffset CreatedAt);

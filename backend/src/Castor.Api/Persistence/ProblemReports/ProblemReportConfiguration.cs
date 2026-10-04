@@ -29,6 +29,13 @@ public sealed class ProblemReportConfiguration : IEntityTypeConfiguration<Proble
 
         builder.HasIndex(report => report.AuthorId);
 
+        builder.HasOne<ProblemReport>()
+            .WithMany()
+            .HasForeignKey(report => report.JoinedProblemReportId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasIndex(report => report.JoinedProblemReportId);
+
         builder.OwnsMany(report => report.ClarifyingQuestions, questions => questions.ToJson());
 
         builder.Ignore(report => report.AwaitsAnswers);

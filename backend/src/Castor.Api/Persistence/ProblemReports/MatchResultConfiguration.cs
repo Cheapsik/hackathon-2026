@@ -14,6 +14,9 @@ public sealed class MatchResultConfiguration : IEntityTypeConfiguration<MatchRes
             .HasForeignKey(match => match.ProblemReportId)
             .OnDelete(DeleteBehavior.Restrict);
 
+        // Anonymization can lengthen the text, as with the description.
+        builder.Property(match => match.VerdictNote).HasMaxLength(2 * ProblemReport.VerdictNoteMaxLength);
+
         builder.HasOne(match => match.Innovation)
             .WithMany()
             .HasForeignKey(match => match.InnovationId)

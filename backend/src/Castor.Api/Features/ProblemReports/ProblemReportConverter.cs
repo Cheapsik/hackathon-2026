@@ -18,9 +18,8 @@ internal static class ProblemReportConverter
         List<MatchResponse> matches = [.. view.Matches.Where(match => match.Kind == MatchKind.MATCH).Select(ToMatchResponse)];
         MatchResult? hybrid = view.Matches.FirstOrDefault(match => match.Kind == MatchKind.HYBRID);
         HybridResponse? hybridResponse = hybrid is null ? null : ToHybridResponse(hybrid, view.HybridSources);
-        List<SimilarProblemReportResponse> similarItems = [.. view.Similar.Items.Select(item =>
-            new SimilarProblemReportResponse(item.Id, item.Description, item.Municipality, item.CreatedAt))];
-        var similar = new SimilarProblemReportsResponse(view.Similar.Reports, view.Similar.Municipalities, similarItems);
+        SimilarProblemReportsResponse similar = view.Similar.ToResponse();
+        JoinedCaseResponse? joinedCase = view.JoinedCase is null ? null : ToJoinedCaseResponse(view.JoinedCase);
 
         return new ProblemReportResponse(
             report.Id,
@@ -40,7 +39,22 @@ internal static class ProblemReportConverter
             hybridResponse,
             similar,
             view.ConversationId,
+            view.JoinedCount,
+            joinedCase,
             report.CreatedAt);
+    }
+
+    public static SimilarProblemReportsResponse ToResponse(this SimilarProblemReports similar)
+    {
+        List<SimilarProblemReportResponse> items = [.. similar.Items.Select(item => new SimilarProblemReportResponse(
+            item.Id,
+            item.Description,
+            item.Municipality,
+            item.Status.ToString(),
+            item.Verdict?.ToString(),
+            item.CreatedAt))];
+
+        return new SimilarProblemReportsResponse(similar.Reports, similar.Municipalities, similar.Cases, items);
     }
 
     public static ProblemReportSummaryResponse ToSummaryResponse(this ProblemReport report)
@@ -81,7 +95,19 @@ internal static class ProblemReportConverter
             match.CitedFields,
             match.Adaptation,
             innovation.VideoUrl,
-            innovation.CardUrl);
+            innovation.CardUrl,
+            match.Verdict?.ToString());
+    }
+
+    private static JoinedCaseResponse ToJoinedCaseResponse(JoinedCase joinedCase)
+    {
+        return new JoinedCaseResponse(
+            joinedCase.Id,
+            joinedCase.Description,
+            joinedCase.Municipality,
+            joinedCase.Status.ToString(),
+            joinedCase.JoinedCount,
+            joinedCase.CreatedAt);
     }
 
     private static HybridResponse ToHybridResponse(MatchResult hybrid, IReadOnlyDictionary<Guid, Innovation> sources)

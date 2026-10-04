@@ -53,6 +53,14 @@ public sealed class MatchResult
 
     public DateTimeOffset CreatedAt { get; private set; }
 
+    /// <summary>The reporter's verdict on this innovation; null until they decide. A later one replaces it.</summary>
+    public Verdict? Verdict { get; private set; }
+
+    /// <summary>Anonymized; for almost, what the innovation lacks — it never changes the ROPS card.</summary>
+    public string? VerdictNote { get; private set; }
+
+    public DateTimeOffset? DecidedAt { get; private set; }
+
     public static MatchResult ForProblemReport(
         ProblemReport report,
         Innovation innovation,
@@ -121,6 +129,19 @@ public sealed class MatchResult
             SourceInnovationIds = sourceIds,
             CreatedAt = createdAt,
         };
+    }
+
+    /// <summary>"Czy to spełnia Twoją potrzebę?" under a matched innovation — a signal of how well matching hit.</summary>
+    public void Decide(Verdict verdict, string? note, DateTimeOffset decidedAt)
+    {
+        if (Kind != MatchKind.MATCH)
+        {
+            throw new InvalidOperationException($"Match {Id} is a hybrid; verdicts are given on innovations.");
+        }
+
+        VerdictNote = ProblemReport.CheckVerdictNote(verdict, note);
+        Verdict = verdict;
+        DecidedAt = decidedAt;
     }
 
     private static void EnsurePosition(int position)

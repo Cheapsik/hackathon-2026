@@ -218,6 +218,8 @@ builder.Services.AddScoped<TrackProblemReportHandler>();
 builder.Services.AddScoped<ClaimProblemReportHandler>();
 builder.Services.AddScoped<ListMyProblemReportsHandler>();
 builder.Services.AddScoped<ListSimilarProblemReportsHandler>();
+builder.Services.AddScoped<DecideOnSimilarProblemReportHandler>();
+builder.Services.AddScoped<DecideOnMatchHandler>();
 builder.Services.AddScoped<SuggestedExpertsQuery>();
 builder.Services.AddScoped<ListInboxProblemReportsHandler>();
 builder.Services.AddScoped<GetInboxProblemReportHandler>();

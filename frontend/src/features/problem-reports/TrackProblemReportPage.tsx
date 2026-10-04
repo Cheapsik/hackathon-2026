@@ -53,7 +53,8 @@ export function TrackProblemReportPage() {
   return (
     <div className="flex flex-1 flex-col">
       <h1 className="sr-only">Śledź zgłoszenie</h1>
-      <StatusTimeline status={loaded.status} />
+      {/* A report that joined a case follows that case's status. */}
+      <StatusTimeline status={loaded.joinedCase?.status ?? loaded.status} />
       <div className="grid flex-1 lg:grid-cols-[minmax(0,24rem)_minmax(0,1fr)]">
         <aside aria-label="Twoje zgłoszenie" className="on-frame">
           <TrackedReportRail report={loaded} />
@@ -127,18 +128,24 @@ function TrackedProblemReport({
         <ProblemReportResults
           report={report}
           headingLevel={2}
+          onReportChange={() => {
+            void queryClient.invalidateQueries({ queryKey: getGetApiProblemReportsTrackTrackingCodeQueryKey(trackingCode) })
+          }}
           onRecheck={onRecheck}
           rechecking={rechecking}
           ticket={false}
         />
       )}
 
-      <section aria-label="Wątek z ROPS" className="grid max-w-default gap-3 border-t border-border-subtle pt-10">
-        <p className="text-body-sm text-text-muted">
-          Masz pytanie albo coś się zmieniło? Napisz do ROPS w wątku zgłoszenia. Odpowiedź pojawi się tutaj.
-        </p>
-        <ConversationThread conversationId={report.conversationId} trackingCode={report.trackingCode} headingLevel={3} />
-      </section>
+      {/* A joined report is no longer in the inbox, so its own thread would reach nobody; ROPS works on the case. */}
+      {!report.joinedCase && (
+        <section aria-label="Wątek z ROPS" className="grid max-w-default gap-3 border-t border-border-subtle pt-10">
+          <p className="text-body-sm text-text-muted">
+            Masz pytanie albo coś się zmieniło? Napisz do ROPS w wątku zgłoszenia. Odpowiedź pojawi się tutaj.
+          </p>
+          <ConversationThread conversationId={report.conversationId} trackingCode={report.trackingCode} headingLevel={3} />
+        </section>
+      )}
     </div>
   )
 }

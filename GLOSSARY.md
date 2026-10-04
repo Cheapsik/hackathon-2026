@@ -100,6 +100,17 @@ Jedno z najwyżej trzech pytań, które platforma zadaje, gdy opis zgłoszenia j
 Innowacja albo krzyżówka zaproponowana dla zgłoszenia lub pomysłu, z pozycją, oceną i uzasadnieniem.
 _Avoid_: rekomendacja, wynik wyszukiwania
 
+**Verdict** (decyzja „nie / tak / prawie”):
+Odpowiedź zgłaszającego na „Czy to spełnia Twoją potrzebę?” pod podobnym zgłoszeniem albo dopasowaną innowacją: `NO`, `YES` albo `ALMOST` (z dopiskiem, czego brakuje).
+_Avoid_: ocena, feedback, reakcja
+
+**SimilarReportVerdict** (decyzja przy podobnym zgłoszeniu):
+Decyzja zgłaszającego o jednym podobnym zgłoszeniu pokazanym przy jego własnym.
+
+**Joined case** (sprawa, do której dołączono):
+Zgłoszenie, do którego inne zgłoszenie dołączyło przez „To moja sprawa”; dołączony śledzi jej status, a skrzynka liczy go przy niej.
+_Avoid_: duplikat, scalenie
+
 **Hybrid** (krzyżówka):
 Propozycja łącząca dwie lub trzy innowacje, gdy żadna pojedyncza nie pasuje wystarczająco dobrze.
 _Avoid_: hybryda, mix

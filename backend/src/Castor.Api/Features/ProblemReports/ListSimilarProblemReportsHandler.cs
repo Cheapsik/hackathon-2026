@@ -43,9 +43,6 @@ public sealed class ListSimilarProblemReportsHandler(
         }
 
         SimilarProblemReports similar = await viewQuery.SimilarAsync(report, skip, take, cancellationToken);
-        List<SimilarProblemReportResponse> items = [.. similar.Items.Select(item =>
-            new SimilarProblemReportResponse(item.Id, item.Description, item.Municipality, item.CreatedAt))];
-
-        return new SimilarProblemReportsResponse(similar.Reports, similar.Municipalities, items);
+        return similar.ToResponse();
     }
 }

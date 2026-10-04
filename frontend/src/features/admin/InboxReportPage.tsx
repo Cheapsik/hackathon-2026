@@ -115,7 +115,9 @@ function InboxReport({ item }: { item: InboxProblemReportResponse }) {
       <p>Rozmowa z autorem zgłoszenia i ekspertami jego obszarów. Autor widzi ją na stronie „Śledź zgłoszenie”.</p>
       <ConversationThread conversationId={report.conversationId} headingLevel={3} />
 
-      {!report.awaitsAnswers && <ProblemReportResults report={report} headingLevel={2} developable={false} />}
+      {!report.awaitsAnswers && (
+        <ProblemReportResults report={report} headingLevel={2} developable={false} decidable={false} />
+      )}
     </>
   )
 }

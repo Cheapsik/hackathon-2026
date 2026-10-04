@@ -21,6 +21,15 @@ Blokuje:
 
 Kolumna `embedding vector(N)` genomu jeszcze nie istnieje — dojdzie migracją razem z wymiarem z `Embeddings:Dimensions`.
 
+## Moduł I — co zostało
+
+- **Lista zgłoszeń z przyciskiem „Dołącz”** (bez opisywania własnego problemu, dla zalogowanych) — etap 2 trójki „nie / tak / prawie”; wygląd do ustalenia.
+- **Dopiski „prawie” i sygnały „pomogło” w panelu admina** (features.md §1: admin widzi odrzucenia i trafność) — zapisane w bazie (`SimilarReportVerdicts`, `MatchResults.Verdict`), jeszcze nie pokazane.
+- **Status sprawy na żywo dla dołączonych**: `ProblemReportStatusChanged` idzie do kodu sprawy, więc dołączony widzi nowy status po odświeżeniu.
+- **„Moje zgłoszenia”** pokazują status własnego zgłoszenia, nie sprawy, do której dołączyło.
+- **Trójka przy krzyżówce** — jest tylko przy pojedynczych innowacjach.
+- **Pinezka i zdjęcia przy zgłoszeniu** (features.md §1).
+
 ## Moduł VI — co zostało
 
 - ~~**Wykres radaru** (SPEC §7 VI)~~ — `ChartPanel` na `/admin/radar`: trendy wg obszaru i miesiąca (dane z `byArea` / `byMonth`).

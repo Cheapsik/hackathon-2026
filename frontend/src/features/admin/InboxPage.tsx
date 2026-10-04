@@ -24,7 +24,7 @@ import {
 import { useLiveEvent } from '@/hooks/use-live-event'
 import { usePageTitle } from '@/hooks/use-page-title'
 import { errorMessage } from '@/lib/error-message'
-import { timeSince } from '@/lib/format'
+import { pluralPl, timeSince } from '@/lib/format'
 
 const statusOptions = Object.entries(problemReportStatusLabels).map(([value, label]) => ({ value, label }))
 
@@ -58,7 +58,10 @@ function matchSummary(row: InboxProblemReportSummaryResponse): string {
   return 'brak dopasowania'
 }
 
-/** "Skrzynka zgłoszeń na żywo": new reports arrive without a reload (SignalR, ProblemReportCreated). */
+/**
+ * "Skrzynka zgłoszeń na żywo": new reports arrive without a reload (SignalR, ProblemReportCreated). One row per case:
+ * the cases more people joined come first.
+ */
 export function InboxPage() {
   usePageTitle('Skrzynka zgłoszeń')
   const [search, setSearch] = useState('')
@@ -194,6 +197,11 @@ export function InboxPage() {
                   <div className="flex flex-wrap items-center gap-2 md:justify-end">
                     {row.urgency && <Badge tone={urgencyTone(row.urgency)}>{urgencyLabels[row.urgency]}</Badge>}
                     <Badge tone={statusTone(row.status)}>{statusLabel(row.status)}</Badge>
+                    {Number(row.joinedCount) > 0 && (
+                      <Badge tone="warning">
+                        {`dołączyło: ${row.joinedCount} ${pluralPl(Number(row.joinedCount), 'osoba', 'osoby', 'osób')}`}
+                      </Badge>
+                    )}
                     {row.hasReplyDraft && <Badge>szkic odpowiedzi</Badge>}
                     <SoftButton asChild variant="secondary">
                       <Link to={`/admin/zgloszenia/${row.id}`}>Otwórz</Link>
