@@ -31,7 +31,7 @@ public sealed class ProblemReportViewQuery(CastorDbContext db)
             .ToListAsync(cancellationToken);
         List<ChallengeArea> orderedAreas = [.. areas.OrderBy(area => report.ChallengeAreaCodes.IndexOf(area.Code))];
 
-        SimilarProblemReports similar = await CountSimilarAsync(report, cancellationToken);
+        SimilarProblemReports similar = await SimilarAsync(report, skip: 0, take: DefaultSimilarPageSize, cancellationToken);
 
         // Every report gets its thread when it is created; reports from before threads got one in the migration.
         List<Guid> conversationIds = await db.Conversations
@@ -45,19 +45,44 @@ public sealed class ProblemReportViewQuery(CastorDbContext db)
         return new ProblemReportView(matches, hybridSources, orderedAreas, similar, conversationId);
     }
 
+    /// <summary>First page of similar reports embedded in a problem-report response.</summary>
+    public const int DefaultSimilarPageSize = 5;
+
+    /// <summary>Hard cap on one page so a client cannot pull the whole inbox in one go.</summary>
+    public const int MaxSimilarPageSize = 20;
+
+    private const int DescriptionExcerptLength = 220;
+
     /// <summary>
     /// Other reports with the same main challenge area. Causes come from the model as free text and cannot be compared;
-    /// vector similarity joins once embeddings are decided (docs/TODO.md).
+    /// vector similarity joins once embeddings are decided (docs/TODO.md). Returns the full counts and one page of
+    /// examples (anonymized text only — never another report's tracking code).
     /// </summary>
-    private async Task<SimilarProblemReports> CountSimilarAsync(ProblemReport report, CancellationToken cancellationToken)
+    public async Task<SimilarProblemReports> SimilarAsync(
+        ProblemReport report,
+        int skip,
+        int take,
+        CancellationToken cancellationToken)
     {
+        ArgumentNullException.ThrowIfNull(report);
+        if (skip < 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(skip));
+        }
+
+        if (take < 1 || take > MaxSimilarPageSize)
+        {
+            throw new ArgumentOutOfRangeException(nameof(take));
+        }
+
         string? mainArea = report.MainChallengeAreaCode;
         if (mainArea is null)
         {
-            return new SimilarProblemReports(0, 0);
+            return new SimilarProblemReports(0, 0, []);
         }
 
         IQueryable<ProblemReport> similar = db.ProblemReports
+            .AsNoTracking()
             .Where(other => other.Id != report.Id && other.ChallengeAreaCodes.Count > 0 && other.ChallengeAreaCodes[0] == mainArea);
 
         int reports = await similar.CountAsync(cancellationToken);
@@ -67,6 +92,34 @@ public sealed class ProblemReportViewQuery(CastorDbContext db)
             .Distinct()
             .CountAsync(cancellationToken);
 
-        return new SimilarProblemReports(reports, municipalities);
+        Guid? municipalityId = report.MunicipalityId;
+        List<SimilarProblemReportItem> items = await similar
+            .Include(other => other.Municipality)
+            .OrderByDescending(other => municipalityId != null && other.MunicipalityId == municipalityId)
+            .ThenByDescending(other => other.CreatedAt)
+            .Skip(skip)
+            .Take(take)
+            .Select(other => new SimilarProblemReportItem(
+                other.Id,
+                other.Description,
+                other.Municipality != null ? other.Municipality.QualifiedName : null,
+                other.CreatedAt))
+            .ToListAsync(cancellationToken);
+
+        return new SimilarProblemReports(
+            reports,
+            municipalities,
+            [.. items.Select(item => item with { Description = Excerpt(item.Description) })]);
+    }
+
+    private static string Excerpt(string description)
+    {
+        string trimmed = description.Trim();
+        if (trimmed.Length <= DescriptionExcerptLength)
+        {
+            return trimmed;
+        }
+
+        return $"{trimmed[..DescriptionExcerptLength].TrimEnd()}…";
     }
 }

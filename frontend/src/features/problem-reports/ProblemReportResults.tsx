@@ -1,10 +1,19 @@
+import { useEffect, useState } from 'react'
 import { ExternalLink } from 'lucide-react'
 import { Link } from 'react-router'
-import type { MatchResponse, ProblemReportResponse } from '@/api/generated/castor'
-import { SoftButton } from '@/design-system'
+import {
+  getApiProblemReportsProblemReportIdSimilar,
+  type MatchResponse,
+  type ProblemReportResponse,
+  type SimilarProblemReportResponse,
+  type SimilarProblemReportsResponse,
+} from '@/api/generated/castor'
+import { CeramicCard, SoftButton } from '@/design-system'
 import { DevelopHybridButton } from '@/features/ideas/DevelopHybridButton'
 import { TrackingTicket } from '@/features/problem-reports/TrackingTicket'
-import { pluralPl } from '@/lib/format'
+import { formatDateTime, pluralPl } from '@/lib/format'
+
+const similarPageSize = 5
 
 interface ProblemReportResultsProps {
   report: ProblemReportResponse
@@ -41,6 +50,7 @@ export function ProblemReportResults({
   const Heading = `h${headingLevel}` as const
   const Subheading = `h${headingLevel + 1}` as 'h3' | 'h4'
   const matchCount = report.matches.length
+  const similarCount = Number(report.similarReports.reports)
   const stillMatching = !report.isMatched && !report.awaitsAnswers
   const trackingPath = `/zgloszenie/${encodeURIComponent(report.trackingCode)}`
 
@@ -87,6 +97,15 @@ export function ProblemReportResults({
           >
             <TrackingTicket report={report} headingLevel={(headingLevel + 1) as 3 | 4} trackingLink={trackingLink} />
           </aside>
+        )}
+
+        {similarCount > 0 && (
+          <SimilarReportsSection
+            reportId={report.id}
+            trackingCode={report.trackingCode}
+            similar={report.similarReports}
+            Subheading={Subheading}
+          />
         )}
 
         {matchCount > 0 && (
@@ -148,6 +167,101 @@ export function ProblemReportResults({
         )}
       </div>
     </section>
+  )
+}
+
+/** Full count up front; first page comes with the report, further pages load on demand. */
+function SimilarReportsSection({
+  reportId,
+  trackingCode,
+  similar,
+  Subheading,
+}: {
+  reportId: string
+  trackingCode: string
+  similar: SimilarProblemReportsResponse
+  Subheading: 'h3' | 'h4'
+}) {
+  const total = Number(similar.reports)
+  const [items, setItems] = useState<SimilarProblemReportResponse[]>(() => similar.items ?? [])
+  const [loadingMore, setLoadingMore] = useState(false)
+  const [loadError, setLoadError] = useState<string | null>(null)
+  const hasMore = items.length < total
+
+  useEffect(() => {
+    setItems(similar.items ?? [])
+    setLoadError(null)
+  }, [reportId, similar.items])
+
+  async function loadMore() {
+    if (loadingMore || !hasMore) {
+      return
+    }
+
+    setLoadingMore(true)
+    setLoadError(null)
+    try {
+      const page = await getApiProblemReportsProblemReportIdSimilar(
+        reportId,
+        { Skip: items.length, Take: similarPageSize },
+        { 'X-Tracking-Code': trackingCode },
+      )
+      const nextItems = page.data.items ?? []
+      setItems((current) => {
+        const seen = new Set(current.map((item) => item.id))
+        return [...current, ...nextItems.filter((item) => !seen.has(item.id))]
+      })
+    } catch {
+      setLoadError('Nie udało się doładować podobnych zgłoszeń. Spróbuj ponownie.')
+    } finally {
+      setLoadingMore(false)
+    }
+  }
+
+  return (
+    <section
+      aria-labelledby={`report-${reportId}-similar`}
+      className="grid gap-4 border-t border-border-subtle pt-8 @min-[56rem]:col-start-1"
+    >
+      <div className="grid gap-2">
+        <Subheading id={`report-${reportId}-similar`} className="text-section-title font-medium tracking-display">
+          Podobne zgłoszenia
+        </Subheading>
+        <p className="max-w-default text-body text-text-muted">
+          {total} {pluralPl(total, 'osoba', 'osoby', 'osób')} z tego samego obszaru{' '}
+          {pluralPl(total, 'zgłosiła', 'zgłosiły', 'zgłosiło')} podobny problem. Poniżej przykłady (bez danych
+          osobowych).
+        </p>
+      </div>
+      <ul className="grid gap-3">
+        {items.map((item) => (
+          <li key={item.id}>
+            <SimilarReportCard item={item} />
+          </li>
+        ))}
+      </ul>
+      {hasMore && (
+        <div className="grid gap-2 justify-items-start">
+          <SoftButton type="button" variant="secondary" loading={loadingMore} onClick={() => void loadMore()}>
+            Pokaż więcej
+          </SoftButton>
+          {loadError && <p className="text-body-sm text-text-muted">{loadError}</p>}
+        </div>
+      )}
+    </section>
+  )
+}
+
+/** Anonymized excerpt of another report in the same challenge area — never shows a tracking code. */
+function SimilarReportCard({ item }: { item: SimilarProblemReportResponse }) {
+  return (
+    <CeramicCard padding="md" className="grid gap-2">
+      <p className="text-body text-text-primary">{item.description}</p>
+      <p className="text-body-sm text-text-muted">
+        {item.municipality ? `${item.municipality} · ` : ''}
+        {formatDateTime(item.createdAt)}
+      </p>
+    </CeramicCard>
   )
 }
 

@@ -18,6 +18,7 @@ public sealed class ProblemReportsController(
     TrackProblemReportHandler track,
     ClaimProblemReportHandler claim,
     ListMyProblemReportsHandler listMine,
+    ListSimilarProblemReportsHandler listSimilar,
     MarkProblemReportAnsweredHandler markAnswered) : ControllerBase
 {
     public const string TrackingCodeHeader = "X-Tracking-Code";
@@ -64,6 +65,21 @@ public sealed class ProblemReportsController(
     public Task<ProblemReportResponse> Track(string trackingCode, CancellationToken cancellationToken)
     {
         return track.HandleAsync(trackingCode, cancellationToken);
+    }
+
+    /// <summary>
+    /// Further pages of similar reports. The report response already carries the full counts and the first page.
+    /// </summary>
+    [AllowAnonymous]
+    [HttpGet("{problemReportId:guid}/similar")]
+    [EnableRateLimiting(RateLimitPolicies.TrackingCode)]
+    public Task<SimilarProblemReportsResponse> Similar(
+        Guid problemReportId,
+        [FromHeader(Name = TrackingCodeHeader)] string? trackingCode,
+        [FromQuery] ListSimilarProblemReportsRequest request,
+        CancellationToken cancellationToken)
+    {
+        return listSimilar.HandleAsync(problemReportId, trackingCode, request, cancellationToken);
     }
 
     [HttpPost("claim")]

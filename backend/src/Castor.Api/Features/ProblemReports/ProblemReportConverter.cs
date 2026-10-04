@@ -18,7 +18,9 @@ internal static class ProblemReportConverter
         List<MatchResponse> matches = [.. view.Matches.Where(match => match.Kind == MatchKind.MATCH).Select(ToMatchResponse)];
         MatchResult? hybrid = view.Matches.FirstOrDefault(match => match.Kind == MatchKind.HYBRID);
         HybridResponse? hybridResponse = hybrid is null ? null : ToHybridResponse(hybrid, view.HybridSources);
-        var similar = new SimilarProblemReportsResponse(view.Similar.Reports, view.Similar.Municipalities);
+        List<SimilarProblemReportResponse> similarItems = [.. view.Similar.Items.Select(item =>
+            new SimilarProblemReportResponse(item.Id, item.Description, item.Municipality, item.CreatedAt))];
+        var similar = new SimilarProblemReportsResponse(view.Similar.Reports, view.Similar.Municipalities, similarItems);
 
         return new ProblemReportResponse(
             report.Id,

@@ -980,6 +980,77 @@
         }
       }
     },
+    "/api/problem-reports/{problemReportId}/similar": {
+      "get": {
+        "tags": [
+          "ProblemReports"
+        ],
+        "parameters": [
+          {
+            "name": "problemReportId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-Tracking-Code",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Skip",
+            "in": "query",
+            "schema": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Take",
+            "in": "query",
+            "schema": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SimilarProblemReportsResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SimilarProblemReportsResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SimilarProblemReportsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/problem-reports/claim": {
       "post": {
         "tags": [
@@ -8341,10 +8412,39 @@
           }
         }
       },
+      "SimilarProblemReportResponse": {
+        "required": [
+          "id",
+          "description",
+          "municipality",
+          "createdAt"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "description": {
+            "type": "string"
+          },
+          "municipality": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
       "SimilarProblemReportsResponse": {
         "required": [
           "reports",
-          "municipalities"
+          "municipalities",
+          "items"
         ],
         "type": "object",
         "properties": {
@@ -8363,6 +8463,12 @@
               "string"
             ],
             "format": "int32"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SimilarProblemReportResponse"
+            }
           }
         }
       },
