@@ -1,4 +1,4 @@
-# Dane
+# Dane (Castor MVP)
 
 Skrypty w `scrapers/` pobierają dane źródłowe raz i zapisują wynik w `seed/` (commitowany). Backend importuje `seed/` przy starcie, gdy `Seed__OnStartup=true` ([ADR 0003](../docs/adr/0003-seed-import-without-overwriting-content.md)).
 

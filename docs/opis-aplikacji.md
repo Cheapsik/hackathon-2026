@@ -1,6 +1,6 @@
 # Castor — do czego jest ta aplikacja
 
-Castor to cyfrowe serce Małopolskiego Hubu Innowacji Społecznych. Prowadzi je Regionalny Ośrodek Polityki Społecznej w Krakowie (ROPS Kraków), instytucja Samorządu Województwa Małopolskiego odpowiedzialna za politykę społeczną w regionie.
+Castor (MVP konkursowy) to cyfrowe serce Małopolskiego Hubu Innowacji Społecznych. Prowadzi je Regionalny Ośrodek Polityki Społecznej w Krakowie (ROPS Kraków), instytucja Samorządu Województwa Małopolskiego odpowiedzialna za politykę społeczną w regionie.
 
 ROPS od dziesięciu lat działa jako regionalny inkubator innowacji: szuka, testuje i wdraża rozwiązania na realne problemy mieszkańców. W portfolio jest już blisko 200 innowacji — od prostych przedmiotów codziennego użytku, przez nowe metody pracy, po technologie i aplikacje. Obok tego w gminach, organizacjach i wśród mieszkańców powstają wartościowe pomysły w mikroskali, które rzadko wychodzą poza jedno miejsce.
 

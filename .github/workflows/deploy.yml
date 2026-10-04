@@ -1,5 +1,6 @@
 name: Deploy production
 
+# Castor MVP — build images in CI and deploy over SSH.
 on:
   push:
     branches:
