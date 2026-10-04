@@ -34,18 +34,7 @@ Na mapie gminy w karcie dopasowania zostawiamy około 3 sekund ciszy. To ma być
 
 ### Napisy
 
-Pełny tekst lektora jest za długi do czytania, kiedy widz patrzy na ekran. Napisy to krótka wersja, około 150 słów, czyli 1–2 linijki na raz przez około 4–5 sekund. Trzymają się czasów scen, więc pasują i do głosu syntetycznego, i do lektora nagranego później.
-
-| Czas | Napisy, po kolei |
-|---|---|
-| **0:00–0:20** | Mama Anny ma 82 lata. / Mieszka sama na wsi pod Gorlicami. / Autobus dwa razy dziennie. Do przychodni kilka kilometrów. / Gdzie z tym pójść? |
-| **0:20–0:50** | Opisz problem własnymi słowami. / Bez konta. Bez formularzy. Nawet głosem. / Castor dopyta o 2–3 rzeczy. |
-| **0:50–1:20** | Sprawdzone rozwiązania z Biblioteki Innowacji ROPS. / Prawie 200 innowacji, które działają w Małopolsce. / Z wyjaśnieniem, dlaczego pasują. / Kod zgłoszenia, żeby śledzić, co się dzieje. |
-| **1:20–1:35** | Ktoś zgłosił już podobną sprawę? / Dołącz jednym kliknięciem, zamiast zakładać kolejną. / Pod każdym wynikiem: to nie to, pomogło albo prawie. |
-| **1:35–1:55** | Gmina sprawdza na swoich danych, czy to zadziała. / Co zostaje bez zmian. Co dostosować. Czego brakuje. / Asystent AI odpowie na resztę pytań. |
-| **1:55–2:25** | ROPS widzi zgłoszenia na bieżąco. / Sprawy, do których dołączyło więcej osób, są na górze. / Radar potrzeb regionu. / Białe plamy: problemy bez gotowego rozwiązania. |
-| **2:25–2:45** | Pomysł mieszkańca może wypełnić białą plamę. / Castor sprawdzi, czy podobny już istnieje. / Pomoże napisać wniosek do naboru. / Znajdzie testerów i eksperta. |
-| **2:45–3:00** | Castor / Od problemu do rozwiązania. W minuty, nie miesiące. / link do demo |
+Napisy to tekst lektora słowo w słowo, zdanie po zdaniu (długie zdania dzielone na przecinkach, najwyżej dwie linijki). Każdy napis pojawia się w chwili, gdy lektor mówi jego pierwsze słowo: czasy pochodzą z syntezy głosu. Na planszy końcowej napisów nie ma, bo tekst jest na planszy. Decyzja zespołu z 4 października 2026: napisy mają się pokrywać z lektorem, zamiast być skrótem.
 
 Sam obraz musi mówić więcej niż przy lektorze:
 - zbliżenia i podświetlenia na tym, o czym jest napis;

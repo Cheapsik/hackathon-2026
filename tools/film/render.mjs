@@ -1,5 +1,6 @@
 // Renders the overlays as 1920x1080 PNGs with the site's font: one per caption, plus the end card (out/overlay).
-// FILM_DEMO_URL sets the link on the end card.
+// The captions come from voice.py (out/voice/<id>.json), which cuts the narration and times it. FILM_DEMO_URL sets the
+// link on the end card.
 import { chromium } from 'playwright'
 import { mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { pathToFileURL } from 'node:url'
@@ -58,7 +59,8 @@ async function render(html, path, transparent) {
 }
 
 for (const segment of script.segments) {
-  for (const [index, text] of segment.captions.entries()) {
+  const { captions } = JSON.parse(readFileSync(`${out}voice/${segment.id}.json`, 'utf8'))
+  for (const [index, { text }] of captions.entries()) {
     await render(caption(text), `${overlays}${segment.id}_${index}.png`, true)
   }
 }

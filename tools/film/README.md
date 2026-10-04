@@ -48,9 +48,9 @@ Całość trwa kilka minut. Nagrywanie odbywa się w tle i nic nie trzeba klika�
 
 Wszystko jest w [script.json](script.json). Każdy segment to jedna scena filmu:
 
-- `narration` to tekst, który czyta głos;
-- `captions` to krótkie napisy, które pojawiają się po kolei;
-- `video` mówi, który kawałek nagrania pokazać.
+- `narration` to tekst, który czyta głos. **Napisy to ten sam tekst, słowo w słowo.** `voice.py` tnie go na zdania (długie zdania także na przecinkach) i zapisuje, w której chwili głos mówi każde z nich (`out/voice/<id>.json`). Napis pojawia się razem z pierwszym słowem;
+- `video` mówi, który kawałek nagrania pokazać;
+- `captions` jest opcjonalne: własna lista napisów zamiast tekstu lektora, rozłożona równo po czasie głosu. `"captions": []` wyłącza napisy w segmencie, tak jak na planszy końcowej.
 
 Po zmianie tekstu nie trzeba nagrywać scen od nowa:
 
@@ -58,7 +58,7 @@ Po zmianie tekstu nie trzeba nagrywać scen od nowa:
 tools/film/film.ps1 -SkipScenes
 ```
 
-Długość każdej sceny dopasowuje się do głosu. Nagranie przyspiesza się co najwyżej 1,9 raza, a jeśli jest za krótkie, ostatnia klatka trzyma się dłużej. Liczby pisz słowami („osiemdziesiąt dwa”), bo głos czyta je wtedy naturalniej. W napisach mogą zostać cyfry.
+Długość każdej sceny dopasowuje się do głosu. Nagranie przyspiesza się co najwyżej 1,9 raza, a jeśli jest za krótkie, ostatnia klatka trzyma się dłużej. Liczby pisz słowami („osiemdziesiąt dwa”), bo głos czyta je wtedy naturalniej, a napisy pokażą je tak samo.
 
 ## Zmiana głosu
 
@@ -70,7 +70,7 @@ W `script.json` zmień `"voice"`. Polskie głosy to `pl-PL-MarekNeural` (męski,
 2. Zapisz pliki jako `tools/film/voice-own/A.m4a`, `B.m4a` i tak dalej. Działa każdy format audio, nazwa musi być identyfikatorem segmentu.
 3. Uruchom `tools/film/film.ps1 -SkipScenes -SkipVoice`.
 
-Brakujące segmenty zostaną z głosem syntetycznym, więc można podmieniać je po jednym. Sceny same wydłużą się pod dłuższe nagranie.
+Brakujące segmenty zostaną z głosem syntetycznym, więc można podmieniać je po jednym. Sceny same wydłużą się pod dłuższe nagranie. Czasy napisów pochodzą z głosu syntetycznego i rozciągają się do długości Twojego nagrania, więc czytaj tekst dokładnie i w równym tempie.
 
 ## Zmiana scenariusza
 

@@ -3,8 +3,8 @@ plus a lighter out/castor-film-podglad.mp4 for sharing. The captions are burnt i
 next to the film made players such as VLC show them twice.
 
 Each segment lasts max(narration + PAD, video / MAX_SPEED): a longer recording is sped up (at most MAX_SPEED),
-a shorter one holds its last frame. Narration starts VOICE_DELAY seconds into the segment; captions split the narration
-time in proportion to their length. A file voice-own/<id>.<any audio extension> replaces the synthetic voice of that
+a shorter one holds its last frame. Narration starts VOICE_DELAY seconds into the segment; the captions are the narration
+itself, shown at the times voice.py measured (out/voice/<id>.json). A file voice-own/<id>.<any audio extension> replaces the synthetic voice of that
 segment, so a narrator can record some or all of them. A file music.<any audio extension> next to this script adds
 its first MUSIC_SECONDS under the end of the film.
 """
@@ -83,18 +83,18 @@ def build_segment(number: int, segment: dict, last: bool, work: pathlib.Path) ->
             f"trim=duration={length:.3f},format=yuv420p[pic]"
         )
 
-    # Captions over the narration time, in proportion to their length. Their inputs follow the picture inputs.
+    # Captions at the times voice.py measured on the synthetic voice; an own narrator's recording stretches them to its
+    # length. Their inputs follow the picture inputs.
     picture_inputs = inputs.count("-i")
-    captions = segment["captions"]
-    total_chars = sum(len(text) for text in captions) or 1
-    at = VOICE_DELAY
+    captions = json.loads((OUT / "voice" / f"{sid}.json").read_text(encoding="utf-8"))["captions"]
+    synthetic = OUT / "voice" / f"{sid}.mp3"
+    stretch = spoken / duration(synthetic) if voice != synthetic else 1.0
     current = "[pic]"
-    for index, text in enumerate(captions):
-        share = spoken * len(text) / total_chars
-        end = at + share + (0.6 if index == len(captions) - 1 else 0)
+    for index, caption in enumerate(captions):
+        start = VOICE_DELAY + caption["start"] * stretch
+        end = VOICE_DELAY + caption["end"] * stretch
         inputs += ["-i", str(OUT / "overlay" / f"{sid}_{index}.png")]
-        chains.append(f"{current}[{picture_inputs + index}:v]overlay=0:0:enable='between(t,{at:.3f},{end:.3f})'[c{index}]")
-        at += share
+        chains.append(f"{current}[{picture_inputs + index}:v]overlay=0:0:enable='between(t,{start:.3f},{end:.3f})'[c{index}]")
         current = f"[c{index}]"
 
     if last:
