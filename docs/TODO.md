@@ -23,7 +23,7 @@ Kolumna `embedding vector(N)` genomu jeszcze nie istnieje — dojdzie migracją 
 
 ## Moduł I — co zostało
 
-- **Lista zgłoszeń z przyciskiem „Dołącz”** (bez opisywania własnego problemu, dla zalogowanych) — etap 2 trójki „nie / tak / prawie”; wygląd do ustalenia.
+- ~~**Lista zgłoszeń z przyciskiem „Dołącz”**~~ — nie robimy (decyzja 2026-10-04: na hackathon tylko to, co widać w filmie); dołącza się z wyników „Opisz problem”.
 - **Dopiski „prawie” i sygnały „pomogło” w panelu admina** (features.md §1: admin widzi odrzucenia i trafność) — zapisane w bazie (`SimilarReportVerdicts`, `MatchResults.Verdict`), jeszcze nie pokazane.
 - **Status sprawy na żywo dla dołączonych**: `ProblemReportStatusChanged` idzie do kodu sprawy, więc dołączony widzi nowy status po odświeżeniu.
 - **„Moje zgłoszenia”** pokazują status własnego zgłoszenia, nie sprawy, do której dołączyło.
