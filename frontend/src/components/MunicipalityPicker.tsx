@@ -1,6 +1,7 @@
-import { useDeferredValue, useState } from 'react'
-import { useGetApiMunicipalities, type MunicipalityResponse } from '@/api/generated/castor'
+import { useState } from 'react'
+import type { MunicipalityResponse } from '@/api/generated/castor'
 import { SoftButton, TextField } from '@/design-system'
+import { useMunicipalitySearch } from '@/hooks/use-municipality-search'
 
 interface MunicipalityPickerProps {
   selected: MunicipalityResponse | null
@@ -10,8 +11,6 @@ interface MunicipalityPickerProps {
   /** Line under the field before the search starts. */
   hint?: string
 }
-
-const minimumSearchLength = 2
 
 /**
  * Optional gmina of a report: a search field and the matching gminy as radio buttons - plain controls a keyboard and
@@ -24,10 +23,7 @@ export function MunicipalityPicker({
   hint = 'Wpisz co najmniej 2 znaki.',
 }: MunicipalityPickerProps) {
   const [search, setSearch] = useState('')
-  const deferredSearch = useDeferredValue(search.trim())
-  const enabled = deferredSearch.length >= minimumSearchLength
-  const suggestions = useGetApiMunicipalities({ Search: deferredSearch }, { query: { enabled } })
-  const municipalities = suggestions.data?.data ?? []
+  const { enabled, suggestions, municipalities } = useMunicipalitySearch(search)
 
   if (selected) {
     return (

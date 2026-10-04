@@ -48,7 +48,7 @@ frontend/
 
 ## Dostępność — co daje szkielet
 
-- `AppLayout`: landmarki `header` / `nav` / `main` / `footer`, link „Przejdź do treści” (pierwszy element w kolejności Tab), po zmianie trasy focus przechodzi na `main`.
+- `AppLayout`: landmarki `header` / `nav` / `main` (bez stopki), link „Przejdź do treści” (pierwszy element w kolejności Tab), po zmianie trasy focus przechodzi na `main`.
 - `DisplayControls` w panelu „Dostępność” w nagłówku (`UtilityMenu`): **A / A+ / A++** (atrybut `data-text-size` na `<html>`, cały layout w `rem`), **Motyw** Jasny / Ciemny / System (`data-theme`, tokeny w `tokens.css`), **Wysoki kontrast** (przełącznik, `data-contrast="high"`, nadpisuje motyw) i **Ogranicz animacje** (`data-motion="reduce"`, obok ustawienia systemu) — zapamiętane w `localStorage` (przy blokadzie storage działają do końca wizyty), nakładane przed pierwszym renderem.
 - Tokeny kolorów: tekst pomocniczy, obramowania pól i obwódka focusu spełniają 4.5:1 / 3:1; globalny `:focus-visible` dla każdego elementu.
 - `usePageTitle` — każda strona ustawia tytuł karty („… · Castor”); każda strona ma dokładnie jedno `h1`.

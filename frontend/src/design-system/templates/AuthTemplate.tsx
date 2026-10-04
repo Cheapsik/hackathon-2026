@@ -16,7 +16,7 @@ export type AuthTemplateProps = {
 /** Sign in, register, reset: one focused column, a small brand mark, a ceramic form, no dashboard chrome. */
 export function AuthTemplate({ brand, title, lead, children, footer }: AuthTemplateProps) {
   return (
-    <div className="grid min-h-[75dvh] place-items-center py-10">
+    <div className="grid min-h-[75dvh] place-items-center pt-10 pb-16">
       <PageContainer width="narrow" className="grid gap-6">
         <header className="grid justify-items-center gap-3 text-center">
           {brand}

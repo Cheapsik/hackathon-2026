@@ -12,7 +12,7 @@ export function AdminLayout() {
 
   if (!session) {
     return (
-      <PageContainer width="wide" className="grid gap-8 pt-6 pb-10 md:pt-8">
+      <PageContainer width="wide" className="grid gap-8 pt-6 pb-16 md:pt-8">
         <LoadingState label="Sprawdzam uprawnienia…" />
       </PageContainer>
     )
@@ -20,7 +20,7 @@ export function AdminLayout() {
 
   if (session.role !== 'ADMIN') {
     return (
-      <PageContainer width="wide" className="grid gap-8 pt-6 pb-10 md:pt-8">
+      <PageContainer width="wide" className="grid gap-8 pt-6 pb-16 md:pt-8">
         <header className="grid max-w-default gap-2">
           <h1 className="font-display text-page-title tracking-display">Panel administratora</h1>
           <p className="text-body text-text-muted">Ta część jest tylko dla pracowników ROPS.</p>
@@ -46,7 +46,7 @@ export function AdminLayout() {
   }
 
   return (
-    <PageContainer width="wide" className="grid gap-6 pt-6 pb-10 md:pt-8">
+    <PageContainer width="wide" className="grid gap-6 pt-6 pb-16 md:pt-8">
       {!isHome && (
         <nav aria-label="Sekcje panelu administratora" className="grid gap-3">
           <SoftButton asChild variant="ghost" icon={<ArrowLeft aria-hidden />}>

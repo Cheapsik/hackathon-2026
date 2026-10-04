@@ -64,7 +64,8 @@ export function LibraryPage() {
   const [category, setCategory] = useState('')
   const [stage, setStage] = useState('')
   const [targetGroup, setTargetGroup] = useState('')
-  const [search, setSearch] = useState('')
+  // `szukaj` comes from the search field in the "Opisz problem" header.
+  const [search, setSearch] = useState(() => searchParams.get('szukaj') ?? '')
   const [layout, setLayout] = useState<LibraryLayout>(readStoredLayout)
   const areas = useGetApiChallengeAreas()
   const catalog = useGetApiInnovations()
@@ -222,6 +223,16 @@ export function LibraryPage() {
   )
 }
 
+/** Stage as a chip: capitalised, green once the innovation has been tested. */
+function StageChip({ stage }: { stage: string }) {
+  const label = stageLabels[stage] ?? stage
+  return (
+    <Badge tone={stage === 'TESTED' || stage === 'READY' ? 'success' : 'neutral'} className="w-fit">
+      {label.charAt(0).toUpperCase() + label.slice(1)}
+    </Badge>
+  )
+}
+
 function innovationMeta(innovation: InnovationSummaryResponse, areaNameByCode: Map<string, string>) {
   const areaNames = innovation.challengeAreaCodes.map((code) => areaNameByCode.get(code) ?? code)
   return [...areaNames, ...innovation.categories].filter(Boolean).join(' · ')
@@ -259,7 +270,7 @@ function InnovationCard({
             )}
           </span>
           <span className="grid gap-2">
-            <Badge>{stageLabels[innovation.stage] ?? innovation.stage}</Badge>
+            <StageChip stage={innovation.stage} />
             {meta && <span className="text-label text-text-muted">{meta}</span>}
           </span>
         </span>
@@ -285,7 +296,7 @@ function InnovationListRow({
           to={`/innowacje/${innovation.id}`}
           title={innovation.title}
           description={description || undefined}
-          trailing={<Badge>{stageLabels[innovation.stage] ?? innovation.stage}</Badge>}
+          trailing={<StageChip stage={innovation.stage} />}
         />
       </div>
     </CeramicCard>

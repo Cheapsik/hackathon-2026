@@ -17,6 +17,8 @@ interface ProblemReportResultsProps {
   rechecking?: boolean
   /** Link from the ticket to the report's own page; for the page the report was just sent from. */
   trackingLink?: boolean
+  /** The ticket beside the matches; off where the page already shows the code, which also makes the list one column. */
+  ticket?: boolean
 }
 
 const externalLinkClassName =
@@ -34,6 +36,7 @@ export function ProblemReportResults({
   onRecheck,
   rechecking = false,
   trackingLink = false,
+  ticket = true,
 }: ProblemReportResultsProps) {
   const Heading = `h${headingLevel}` as const
   const Subheading = `h${headingLevel + 1}` as 'h3' | 'h4'
@@ -43,7 +46,7 @@ export function ProblemReportResults({
 
   return (
     <section aria-labelledby={`report-${report.id}-results`} className="@container">
-      <div className="split-aside">
+      <div className={ticket ? 'split-aside' : 'grid gap-8'}>
         <header className="grid gap-3 @min-[56rem]:col-start-1 @min-[56rem]:row-start-1">
           <Heading id={`report-${report.id}-results`} className="text-section-title font-medium tracking-display">
             Wyniki dla Twojego zgłoszenia
@@ -77,12 +80,14 @@ export function ProblemReportResults({
           </div>
         </header>
 
-        <aside
-          aria-label="Twoje zgłoszenie"
-          className="@min-[56rem]:sticky @min-[56rem]:top-6 @min-[56rem]:col-start-2 @min-[56rem]:row-span-3 @min-[56rem]:row-start-1 @min-[56rem]:self-start"
-        >
-          <TrackingTicket report={report} headingLevel={(headingLevel + 1) as 3 | 4} trackingLink={trackingLink} />
-        </aside>
+        {ticket && (
+          <aside
+            aria-label="Twoje zgłoszenie"
+            className="@min-[56rem]:sticky @min-[56rem]:top-6 @min-[56rem]:col-start-2 @min-[56rem]:row-span-3 @min-[56rem]:row-start-1 @min-[56rem]:self-start"
+          >
+            <TrackingTicket report={report} headingLevel={(headingLevel + 1) as 3 | 4} trackingLink={trackingLink} />
+          </aside>
+        )}
 
         {matchCount > 0 && (
           <ol className="border-t border-border-subtle @min-[56rem]:col-start-1">

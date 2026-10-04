@@ -76,11 +76,11 @@ export function AppLayout() {
   const previousPathname = useRef(location.pathname)
   const [preferences, setPreferences] = useDisplayPreferences()
   const fullBleed =
-    location.pathname === '/opisz-problem' ||
     location.pathname === '/logowanie' ||
     location.pathname === '/rejestracja' ||
     location.pathname === '/biblioteka' ||
     location.pathname.startsWith('/admin')
+  const workspace = location.pathname === '/sledz' || location.pathname.startsWith('/zgloszenie/')
   const session = useSession()
 
   useEffect(() => {
@@ -103,13 +103,12 @@ export function AppLayout() {
       account={<AccountMenu />}
       accountLinks={<AccountLinks />}
       utilities={<DisplayControls preferences={preferences} onChange={setPreferences} />}
-      footer="Regionalny Ośrodek Polityki Społecznej w Krakowie"
       mainRef={mainRef}
     >
-      {fullBleed ? (
+      {fullBleed || workspace ? (
         <Outlet />
       ) : (
-        <PageContainer className="grid gap-6 py-10">
+        <PageContainer className="grid gap-6 pt-10 pb-16">
           <Outlet />
         </PageContainer>
       )}

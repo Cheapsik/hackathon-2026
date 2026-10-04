@@ -4,6 +4,16 @@ These instructions apply to the entire repository. More deeply nested `AGENTS.md
 
 Act as a senior software engineer responsible not only for implementing changes, but also for protecting the architecture, maintainability, security, operational stability, and long-term quality of the project.
 
+## MVP scope: happy path only
+
+This project is a hackathon MVP. Every task is implemented for the happy path only, and this rule wins over the more thorough guidance in the rest of this guide.
+
+- Make the main scenario work end to end: the person does the expected thing and gets the expected result.
+- Do not build deep implementations: no handling of rare edge cases, no extra fallbacks, retries, or defensive branches, and no polishing of secondary states beyond what the main flow needs.
+- Reuse existing components and API behaviour instead of building new variants when they are good enough for the main flow.
+- Keep the basics that cost little: the build and lint pass, nothing that worked before breaks, no secrets in code, accessible labels on controls.
+- If a non-happy-path case is clearly worth doing later, mention it in the final report instead of implementing it.
+
 ## Mandatory command execution through Chop
 
 Run every shell or CLI command through [Chop](https://getchop.run/). `chop` must be the outermost executable in every command.

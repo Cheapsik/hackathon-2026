@@ -68,6 +68,7 @@ W treściach UI (etykiety, opisy, komunikaty, tytuły) **nie używamy długich m
 
 - Maksymalnie: jedna główna powierzchnia interaktywna, jedna opcjonalna drugorzędna i popover po otwarciu. Sekcji informacyjnych nie opakowujemy w karty, szkło, bento ani ikony w kółkach: używamy typografii, linii, numeracji, odstępów i zmiany tła.
 - Główna powierzchnia: promień 22, padding 20–24, tło `surface-strong`, obrys `border-strong`, jedna warstwa cienia (`shadow-card`). Bez blura i gradientu.
+- Wyjątek: **scena Rynku** (strona główna `/` i `/opisz-problem`) — zdjęcie Rynku o zmierzchu, napis CASTOR za wieżami Mariackiego i ciemny szklany panel z formularzem. Style w `krakow-above.css` i `describe-problem.css`; zdjęcie i maska wież w `src/lib/rynek-scene.ts`. Pytania i wyniki po wysłaniu zgłoszenia wracają na jasny arkusz z tokenami systemu.
 - Promienie: control 10 · button i pole 14 · card 16 · panel 22. Koła tylko dla statusu, przełącznika i awatara. Nie ma promienia pill.
 - Przyciski: główny min. 48 px, ciemna zieleń, tekst `text-inverse`, wewnętrzne światło 1 px zamiast cienia; drugorzędny z obrysem `border-strong`.
 

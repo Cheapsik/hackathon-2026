@@ -41,7 +41,6 @@ export type AppShellProps = {
   utilities?: ReactNode
   /** Label of the utilities button and title of its panel. */
   utilitiesLabel?: string
-  footer: ReactNode
   /** Receives focus after each navigation (see AppLayout). */
   mainRef?: Ref<HTMLElement>
   children: ReactNode
@@ -53,9 +52,10 @@ function belongsTo(pathname: string, group: AppShellNavGroup): boolean {
 }
 
 /**
- * Chrome shared by every page, continuing the home page: the page is a sheet inside a dusk frame. The header on
+ * Chrome shared by every page, continuing the home page: dusk header, then the page as a sheet that runs edge to
+ * edge and to the bottom of the screen, with no frame and no footer. The header on
  * the frame carries the same destinations as the home page, the current one marked with lamplight; the sheet
- * opens with the pages of the current destination. Skip link, `main` and footer as landmarks.
+ * opens with the pages of the current destination. Skip link and `main` as landmarks.
  */
 export function AppShell({
   brand,
@@ -65,7 +65,6 @@ export function AppShell({
   accountLinks,
   utilities,
   utilitiesLabel = 'Dostępność',
-  footer,
   mainRef,
   children,
 }: AppShellProps) {
@@ -137,7 +136,7 @@ export function AppShell({
       </header>
 
       {/* The sheet: the page itself, in the frame's edge. Text and focus go back to the light-surface tokens. */}
-      <div className="mx-frame flex flex-1 flex-col rounded-shell bg-canvas text-text-primary [--color-focus:var(--color-accent)]">
+      <div className="flex flex-1 flex-col bg-canvas text-text-primary [--color-focus:var(--color-accent)]">
         {sectionPages.length > 0 && (
           <PageContainer>
             <nav aria-label={currentGroup?.label} className="border-b border-border-subtle">
@@ -166,14 +165,10 @@ export function AppShell({
           </PageContainer>
         )}
 
-        <main id="main" ref={mainRef} tabIndex={-1} className="flex-1 outline-none">
+        <main id="main" ref={mainRef} tabIndex={-1} className="flex flex-1 flex-col outline-none">
           {children}
         </main>
       </div>
-
-      <footer>
-        <PageContainer className="py-6 text-label text-on-frame-muted">{footer}</PageContainer>
-      </footer>
 
       <BottomSheet open={menuOpen} onOpenChange={setMenuOpen} title="Menu">
         <nav aria-label={navigationLabel} className="grid gap-6">

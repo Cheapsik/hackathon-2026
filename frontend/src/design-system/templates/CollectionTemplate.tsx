@@ -61,7 +61,7 @@ export function CollectionTemplate<T>({
   const listClass = cn('grid', layout === 'grid' ? 'gap-3 sm:grid-cols-2 lg:grid-cols-3' : 'gap-2')
 
   return (
-    <PageContainer width="wide" className="grid gap-6 pt-6 pb-10 md:pt-8">
+    <PageContainer width="wide" className="grid gap-6 pt-6 pb-16 md:pt-8">
       <header className="grid gap-4 md:flex md:items-end md:justify-between">
         <div className="grid max-w-default gap-2">
           <h1 className="font-display text-page-title tracking-display">{title}</h1>

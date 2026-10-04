@@ -5,6 +5,8 @@
 
 @layer base {
   html {
+    /* The dusk frame also behind the page: overscroll and any gap around the sheet stay dark, never a light strip. */
+    background-color: var(--color-frame);
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;

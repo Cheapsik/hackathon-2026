@@ -3,16 +3,13 @@ import { Link, useNavigate } from 'react-router'
 import { ArrowRight, Mic, UserRound } from 'lucide-react'
 import { usePageTitle } from '@/hooks/use-page-title'
 import { useSpeechInput } from '@/hooks/use-speech-input'
+import { rynekChurchMask, rynekPhoto } from '@/lib/rynek-scene'
 import { prefersReducedMotion } from './motion'
 import { placeholderLines, suggestionsFor, type Suggestion } from './suggestions'
 import { useCursorRing } from './use-cursor-ring'
 import { useHeroMotion } from './use-hero-motion'
 import { useMagnetic } from './use-magnetic'
 import './krakow-above.css'
-
-const aerialPhoto = '/krakow-rynek.png'
-// Alpha mask of the basilica on that same photo, cut by scripts/cut-krakow-rynek-church.py. Replace both together.
-const churchMask = 'url(/krakow-rynek-church-mask.png)'
 
 const MAX_LENGTH = 3000
 /** The counter turns to a warning this close to the limit. */
@@ -237,10 +234,10 @@ function ScenePlate({ front = false }: { front?: boolean }) {
   return (
     <div
       className={front ? 'ka-plate ka-plate-front' : 'ka-plate'}
-      style={front ? { maskImage: churchMask, WebkitMaskImage: churchMask } : undefined}
+      style={front ? { maskImage: rynekChurchMask, WebkitMaskImage: rynekChurchMask } : undefined}
       aria-hidden="true"
     >
-      <img src={aerialPhoto} alt="" decoding="async" />
+      <img src={rynekPhoto} alt="" decoding="async" />
       <div className="ka-grade" />
     </div>
   )

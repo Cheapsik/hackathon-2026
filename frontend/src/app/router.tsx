@@ -62,10 +62,14 @@ export const router = createBrowserRouter([
     path: '/',
     element: <KrakowAbovePage />,
   },
+  // The Rynek scene with its own header, like the home page.
+  {
+    path: '/opisz-problem',
+    element: <DescribeProblemPage />,
+  },
   {
     element: <AppLayout />,
     children: [
-      { path: 'opisz-problem', element: <DescribeProblemPage /> },
       { path: 'sledz', element: <TrackProblemReportPage /> },
       { path: 'zgloszenie/:trackingCode', element: <TrackProblemReportPage /> },
       { path: 'moje-zgloszenia', element: <MyProblemReportsPage /> },
