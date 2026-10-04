@@ -4,8 +4,16 @@ import { base, closeBrowser, scene } from './stage.mjs'
 
 // "Seniorka" puts the report in the Seniorzy area on the placeholder model, which scores area names by shared words;
 // without it "mieszka" pulls it towards Bezdomność ("mieszkalny") and the similar case would be about homelessness.
+// Under twelve content words, so the placeholder asks its three clarifying questions, which the film shows.
 const problem =
-  'Moja mama ma 82 lata, jest samotną seniorką i mieszka na wsi pod Gorlicami. Autobus jeździ dwa razy dziennie, do przychodni jest kilka kilometrów. Boję się, że gdy coś się stanie w nocy, nikt się nie dowie.'
+  'Moja mama ma 82 lata, jest samotną seniorką i mieszka na wsi pod Gorlicami. Boję się, że w nocy nikt się nie dowie, gdy coś się stanie.'
+
+/** Answers to the placeholder's questions: who it concerns, for how long, whether anyone tried something. */
+const answers = [
+  'Mojej mamy i innych samotnych seniorów ze wsi.',
+  'Od roku, odkąd mama mieszka sama.',
+  'Sąsiadka czasem zagląda, ale to za mało.',
+]
 
 const scenes = {
   /** 0:00–0:20 — the hook: the empty home page, the field waiting. */
@@ -36,7 +44,6 @@ const scenes = {
     await s.click(page.getByRole('button', { name: 'Znajdź rozwiązania' }))
     await page.getByText(/Kilka pytań|Wyniki dla Twojego zgłoszenia/).first().waitFor()
     await s.wait(800)
-    const answers = ['Mama nie korzysta z internetu, ma tylko zwykły telefon.', 'Najbliżej mieszka sąsiadka.', 'Najważniejsza jest szybka pomoc w nagłej sytuacji.']
     for (let index = 0; index < 3 && (await page.getByText('Kilka pytań').isVisible()); index++) {
       await s.type(page.getByRole('textbox').first(), answers[index], { delay: 30 })
       await s.wait(500)
@@ -49,7 +56,12 @@ const scenes = {
     mark('results')
     await s.wait(2500)
     await s.moveTo(page.getByText(/Kod zgłoszenia|Kod śledzenia/).first(), { steps: 40 })
-    await s.wait(3000)
+    await s.wait(2500)
+    const railAnswers = page.getByText('Pytania i odpowiedzi').first()
+    if (await railAnswers.isVisible()) {
+      await s.moveTo(railAnswers, { steps: 30 })
+      await s.wait(2000)
+    }
     const firstMatch = page.getByText('Dlaczego pasuje').first()
     await s.scrollTo(firstMatch, { offset: 260, ms: 2000 })
     await s.moveTo(firstMatch, { steps: 40 })

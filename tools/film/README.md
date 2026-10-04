@@ -75,7 +75,7 @@ Brakujące segmenty zostaną z głosem syntetycznym, więc można podmieniać je
 ## Zmiana scenariusza
 
 - **Nowa albo inna scena:** dopisz funkcję w `scenes.mjs`. Narzędzia są w `stage.mjs`: `s.click`, `s.type`, `s.scrollTo`, `s.wait`, a `mark('nazwa')` zapisuje moment do cięcia.
-- **Kolejność i teksty:** ustaw je w `script.json`. W `video` podaj `file` (nazwę sceny) oraz `from` i `to`. Mogą to być sekundy, znacznik z `mark()` albo `"end"`. Segment może sklejać kilka nagrań.
+- **Kolejność i teksty:** ustaw je w `script.json`. W `video` podaj `file` (nazwę sceny) oraz `from` i `to`. Mogą to być sekundy, znacznik z `mark()`, `"ready"` (pierwsza chwila, gdy strona jest narysowana: od niej zaczynaj, bo wcześniej nagranie jest białe) albo `"end"`. Segment może sklejać kilka nagrań.
 - **Plansza końcowa:** tekst i wygląd są w `render.mjs`, a link do demo ustawisz zmienną `FILM_DEMO_URL`.
 - Jeśli zmienia się historia, zaktualizuj też [docs/film.md](../../docs/film.md).
 

@@ -3,13 +3,13 @@
   "segments": [
     {
       "id": "A",
-      "video": [{ "file": "s1_hook", "from": 0, "to": "end" }],
+      "video": [{ "file": "s1_hook", "from": "ready", "to": "end" }],
       "narration": "Anna mieszka w Krakowie. Jej mama ma osiemdziesiąt dwa lata i mieszka sama pod Gorlicami. Autobus jeździ dwa razy dziennie, do przychodni jest kilka kilometrów. Anna boi się, że jak coś stanie się w nocy, nikt się nie dowie. Gdzie z tym pójść? Do gminy? Do ośrodka pomocy? Do internetu?"
     },
     {
       "id": "B",
-      "video": [{ "file": "s23_describe", "from": 0, "to": "results" }],
-      "narration": "W Castorze wystarczy powiedzieć, co nie działa. Bez konta i bez formularzy, nawet głosem. Castor dopyta o dwie, trzy rzeczy i po chwili..."
+      "video": [{ "file": "s23_describe", "from": "ready", "to": "results" }],
+      "narration": "W Castorze wystarczy powiedzieć, co nie działa. Bez konta i bez formularzy, nawet głosem. Castor dopyta o dwie, trzy rzeczy: kogo dotyczy problem, od jak dawna trwa i czy ktoś już próbował coś z tym zrobić. I po chwili..."
     },
     {
       "id": "C",
@@ -23,20 +23,20 @@
     },
     {
       "id": "D",
-      "video": [{ "file": "s4_gmina", "from": 0, "to": "end" }],
+      "video": [{ "file": "s4_gmina", "from": "ready", "to": "end" }],
       "narration": "Urzędniczka z Bobowej nie musi wierzyć na słowo. Castor zestawia wymagania innowacji z danymi statystycznymi jej gminy. Mówi, co zostaje bez zmian, co trzeba dostosować, czego brakuje i kto mógłby to prowadzić. O resztę zapyta asystenta."
     },
     {
       "id": "E",
-      "video": [{ "file": "s5_rops", "from": 0, "to": "end" }],
+      "video": [{ "file": "s5_rops", "from": "ready", "to": "end" }],
       "narration": "A Regionalny Ośrodek Polityki Społecznej? Widzi zgłoszenia na bieżąco, a sprawy, do których dołączyło więcej osób, są na samej górze. Ma też radar potrzeb regionu: gdzie problemów przybywa i, co najważniejsze, gdzie są białe plamy. To problemy, na które w Bibliotece nie ma jeszcze rozwiązania."
     },
     {
       "id": "F",
       "video": [
-        { "file": "s6a_ideas", "from": 0, "to": "end" },
-        { "file": "s6b_tests", "from": 0, "to": "end" },
-        { "file": "s6c_expert", "from": 0, "to": "end" }
+        { "file": "s6a_ideas", "from": "ready", "to": "end" },
+        { "file": "s6b_tests", "from": "ready", "to": "end" },
+        { "file": "s6c_expert", "from": "ready", "to": "end" }
       ],
       "narration": "I tu koło się zamyka. Białą plamę może wypełnić pomysł mieszkańca albo organizacji. Castor sprawdzi, czy podobny już istnieje, pomoże napisać wniosek do naboru, znajdzie testerów i eksperta."
     },

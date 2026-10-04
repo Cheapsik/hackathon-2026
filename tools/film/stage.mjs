@@ -74,6 +74,11 @@ export async function scene(name, { email, start = '/' } = {}) {
   const markers = {}
   await page.goto(`${base}${start}`, { waitUntil: 'networkidle' })
   await page.mouse.move(viewport.width * 0.62, viewport.height * 0.58)
+  // The recording starts on an empty white page: "ready" marks the first moment the page is drawn, and the montage
+  // cuts from there (script.json "from": "ready"), so no white frame flashes before a dark scene.
+  await page.evaluate(() => document.fonts.ready)
+  await page.waitForTimeout(500)
+  markers.ready = (Date.now() - startedAt) / 1000
 
   return {
     page,
